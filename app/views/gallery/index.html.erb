@@ -1,1 +1,14 @@
 <%= link_to 'Back', welcome_index_path %>
+<table>
+	<th>Title</th>
+	<th>Url</th>
+	<th>Maintainer</th>
+<% @galleries.each do |gallery|%>
+<tr>
+	<td><%= @galleries.title %></td>
+	<td><%= @galleries.blueprints_url %></td>
+</tr>
+
+<% end %>
+
+</table>
