@@ -6,16 +6,7 @@ class EngineGallery
   #Galleries are to do drawn in from several sources
   #local  Yaml files  for custom galleries
   #an array of yaml files from a gallery list server for public galleries which are drawn from yaml files on disk
-  
-  
-  
-  def initialize(short_name,title,url,licence,description,maintainer)
-    @title = title
-    @short_name = short_name
-    @blueprints_url = url
-    @licence_type = licence #Free | Non Commercial use | Commercial |mixture
-    @maintainer =  maintainer
-  end
+
 
   def title
     return @title
@@ -36,6 +27,14 @@ class EngineGallery
   def maintainer
     return @maintainer
   end
+  
+  def initialize(short_name,title,url,licence,description,maintainer)
+      @title = title
+      @short_name = short_name
+      @blueprints_url = url
+      @licence_type = licence #Free | Non Commercial use | Commercial |mixture
+      @maintainer =  maintainer
+    end
   
 def self.from_yaml( yaml )
       engineGallery = YAML::load( yaml )
@@ -61,9 +60,11 @@ end
     
     gallery_dirs.each do |gallery_dir |
           gallery_file_name = SysConfig.galleriesDir + "/" + gallery_dir + "/gallery.yaml"
-            puts gallery_file_name
+          
             if File.exists?(gallery_file_name)            
               gallery = EngineGallery.load(gallery_file_name)
+              puts gallery_file_name
+              p gallery
               galleries.push(gallery)
             end
         end
