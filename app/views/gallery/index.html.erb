@@ -12,8 +12,13 @@
 	
 
 
-<% blueprints_uri = URI::HTTP.new('http',nil,'192.168.108.243',3001,'/json_published_softwares',  "query", 'fragment')
- http_response = Net::HTTP.get_response(blueprints_uri) %>
+<% blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares')
+Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
+  request = Net::HTTP::Get.new blueprints_uri
+
+  response = http.request request # Net::HTTPResponse object
+end
+  %>
 <tr><td>
 <%=response.body %> //this must show the JSON contents
 </td>
