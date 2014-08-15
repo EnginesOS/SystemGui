@@ -9,7 +9,7 @@
 	<td><%= gallery.title %></td>
 	<td><%= gallery.blueprints_url %></td>
 </tr>
-	<%end%>
+	
 
 
 <% blueprints_uri = URI(gallery.blueprints_url)
@@ -18,5 +18,6 @@
 <%=response.body %> //this must show the JSON contents
 </td>
 </tr>
+	<%end%>
 <% end %>
 </table>
