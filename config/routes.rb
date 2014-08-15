@@ -25,6 +25,11 @@ Rails.application.routes.draw do
      get :deregister_site, :on => :member
      
   end
+  
+  resources :gallerys do
+  get :listLocalGalleries, :on => :collection
+  end
+  
   resources :engines do
     get :pause, :on => :member
     get :unpause, :on => :member

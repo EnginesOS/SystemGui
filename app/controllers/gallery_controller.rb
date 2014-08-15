@@ -3,7 +3,7 @@ class GalleryController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @galleries=EngineGallery.listLocalGalleries()
+    @galleries=EngineGallery.listLocalGalleries
   end
   
   def filter_blueprints(blueprinttype)
