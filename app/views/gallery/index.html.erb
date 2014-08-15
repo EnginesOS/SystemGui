@@ -4,10 +4,12 @@
 	<th>Url</th>
 	<th>Maintainer</th>
 <% @galleries.each do |gallery|%>
+	<% if gallery != nill %>
 <tr>
 	<td><%= @gallery.title %></td>
 	<td><%= @gallery.blueprints_url %></td>
 </tr>
+	<%end%>
 
 <% end %>
 
