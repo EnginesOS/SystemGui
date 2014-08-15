@@ -12,7 +12,7 @@
 	
 
 
-<% blueprints_uri = URI(gallery.blueprints_url)
+<% blueprints_uri = URI('http',nil,'192.168.108.243',3001,nil,'/json_published_softwares',  "query", 'fragment'))
  http_response = Net::HTTP.get_response(blueprints_uri) %>
 <tr><td>
 <%=response.body %> //this must show the JSON contents
