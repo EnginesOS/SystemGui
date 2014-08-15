@@ -54,7 +54,7 @@ def EngineGallery.load(gallery_file_name)
 end
      
   def EngineGallery.list_local       
-    galleries = Array.new()
+    @galleries = Array.new()
     gallery_dirs = Dir.entries(SysConfig.galleriesDir)
 #Fixme should only match yaml files also catch exceptions on bad reads of yaml or file io
     
@@ -65,10 +65,10 @@ end
               gallery = EngineGallery.load(gallery_file_name)
               puts gallery_file_name
               p gallery
-              galleries.push(gallery)
+              @galleries.push(gallery)
             end
         end
-    return galleries
+    return @galleries
     
   end   
   
