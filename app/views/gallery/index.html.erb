@@ -19,6 +19,7 @@ Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
   request = Net::HTTP::Get.new blueprints_uri
 %> <%= request %> <%= http %> <%
   response = http.request request # Net::HTTPResponse object
+  %>
   <%=response.body %>
   <%=response.msg %>
   <%=response.code %>
