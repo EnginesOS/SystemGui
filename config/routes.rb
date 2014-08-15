@@ -22,12 +22,11 @@ Rails.application.routes.draw do
         get :recreate, :on => :member
         get :create_service, :on => :member
     get :register_site, :on => :member
-     get :deregister_site, :on => :member
-     
+     get :deregister_site, :on => :member     
   end
   
   resources :gallerys do
-  get :listLocalGalleries, :on => :collection
+  get :list_local, :on => :collection
   end
   
   resources :engines do

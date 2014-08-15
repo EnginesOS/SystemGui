@@ -46,6 +46,7 @@ def save
 end
        
 def   save_serialized(serialized_object)
+
         gallery_dir=SysConfig.galleriesDir + "/" + @short_name
              if File.directory?(gallery_dir) ==false
                Dir.mkdir(gallery_dir)
@@ -56,8 +57,9 @@ def   save_serialized(serialized_object)
        gallery_config_file.puts(serialized_object)
        gallery_config_file.close
 end
-         
-  def listLocalGalleries
+
+      
+  def list_local
     galleries = Array.new()
     gallery_files = Dir.entries(SysConfig.galleriesDir)
 #Fixme should only match yaml files also catch exceptions on bad reads of yaml or file io
