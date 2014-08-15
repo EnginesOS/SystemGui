@@ -34,11 +34,12 @@ end
      
   def EngineGallery.list_local
     galleries = Array.new()
-    gallery_files = Dir.entries(SysConfig.galleriesDir)
+    gallery_dirs = Dir.entries(SysConfig.galleriesDir)
 #Fixme should only match yaml files also catch exceptions on bad reads of yaml or file io
     
-        gallery_files.each do |gallery_file |
-          gallery = EngineGallery.load(gallery_file)
+    gallery_dirs.each do |gallery_dir |
+          gallery_file_name = SysConfig.galleriesDir + "/" + gallery_dir + "/gallery.yaml"
+          gallery = EngineGallery.load(gallery_file_name)
           galleries.push(gallery)
         end
     return galleries
