@@ -12,7 +12,9 @@
 	
 
 
-<% blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares')
+<% blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares') %>
+<%= blueprints_uri %>
+<%
 Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
   request = Net::HTTP::Get.new blueprints_uri
 
