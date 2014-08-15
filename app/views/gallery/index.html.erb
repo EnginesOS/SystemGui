@@ -11,8 +11,12 @@
 </tr>
 	<%end%>
 
-<% end %>
+
 <% blueprints_uri = URI(gallery.blueprints_url)
  http_response = Net::HTTP.get_response(blueprints_uri) %>
+<tr><td>
 <%=response.body %> //this must show the JSON contents
+</td>
+</tr>
+<% end %>
 </table>
