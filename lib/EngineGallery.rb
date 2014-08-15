@@ -17,6 +17,26 @@ class EngineGallery
     @maintainer =  maintainer
   end
 
+  def title
+    return @title
+  end 
+  
+  def short_name
+    return @short_name
+  end
+  
+  def blueprints_url
+    return @blueprints_url
+  end
+  
+  def licence_type
+    return @licence_type    
+  end
+  
+  def maintainer
+    return @maintainer
+  end
+  
 def self.from_yaml( yaml )
       engineGallery = YAML::load( yaml )
       enginegallery
