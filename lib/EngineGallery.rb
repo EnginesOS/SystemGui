@@ -1,18 +1,11 @@
+require 'GalleryMaintainer.rb'
+require "/opt/engos/lib/ruby/SysConfig.rb"
+
 class EngineGallery
   
   #Galleries are to do drawn in from several sources
   #local local of Yaml files  for custom galleries
   #an array of yaml files from a gallery list server for public galleries
-  
-  
-  class GalleryMaintainer
-    
-    def initialize(name,email,website)
-      @name = name
-      @email = email
-      @website = website      
-    end   
-  end
   
   def initialize(short_name,title,url,licence,description,maintainer)
     @title = title
