@@ -27,7 +27,7 @@ def self.from_yaml( yaml )
       enginegallery
 end
     
-def EngineGallery.loadLocalGalleries(gallery_file_name)
+def EngineGallery.load(gallery_file_name)
 
          if File.exists?(gallery_file_name) == false
            puts("No such configuration:" + gallery_file_name )
