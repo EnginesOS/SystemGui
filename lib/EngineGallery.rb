@@ -4,8 +4,10 @@ require "/opt/engos/lib/ruby/SysConfig.rb"
 class EngineGallery
   
   #Galleries are to do drawn in from several sources
-  #local local of Yaml files  for custom galleries
-  #an array of yaml files from a gallery list server for public galleries
+  #local  Yaml files  for custom galleries
+  #an array of yaml files from a gallery list server for public galleries which are drawn from yaml files on disk
+  
+  
   
   def initialize(short_name,title,url,licence,description,maintainer)
     @title = title
@@ -32,7 +34,7 @@ def EngineGallery.load(gallery_file_name)
       enginegallery
 end
      
-  def EngineGallery.list_local
+  def EngineGallery.list_local       
     galleries = Array.new()
     gallery_dirs = Dir.entries(SysConfig.galleriesDir)
 #Fixme should only match yaml files also catch exceptions on bad reads of yaml or file io
@@ -45,6 +47,8 @@ end
     return galleries
     
   end   
+  
+  
   
 def save
          serialized_object = YAML::dump(self)  
