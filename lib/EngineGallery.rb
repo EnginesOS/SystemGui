@@ -32,7 +32,19 @@ def EngineGallery.load(gallery_file_name)
       enginegallery
 end
      
-     
+  def EngineGallery.list_local
+    galleries = Array.new()
+    gallery_files = Dir.entries(SysConfig.galleriesDir)
+#Fixme should only match yaml files also catch exceptions on bad reads of yaml or file io
+    
+        gallery_files.each do |gallery_file |
+          gallery = EngineGallery.load(gallery_file)
+          galleries.push(gallery)
+        end
+    return galleries
+    
+  end   
+  
 def save
          serialized_object = YAML::dump(self)  
          save_serialized(serialized_object)
@@ -52,18 +64,7 @@ def   save_serialized(serialized_object)
 end
 
       
-  def list_local
-    galleries = Array.new()
-    gallery_files = Dir.entries(SysConfig.galleriesDir)
-#Fixme should only match yaml files also catch exceptions on bad reads of yaml or file io
-    
-        gallery_files.each do |gallery_file |
-          gallery = EngineGallery.load(gallery_file)
-          galleries.push(gallery)
-        end
-    return galleries
-    
-  end
+
   
   def listBluePrints
     #json = get blueprints_url
