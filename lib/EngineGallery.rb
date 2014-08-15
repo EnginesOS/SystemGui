@@ -41,8 +41,10 @@ end
     
     gallery_dirs.each do |gallery_dir |
           gallery_file_name = SysConfig.galleriesDir + "/" + gallery_dir + "/gallery.yaml"
-          gallery = EngineGallery.load(gallery_file_name)
-          galleries.push(gallery)
+            if File.exists?(gallery_file_name)            
+              gallery = EngineGallery.load(gallery_file_name)
+              galleries.push(gallery)
+            end
         end
     return galleries
     
