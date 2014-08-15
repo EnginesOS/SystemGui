@@ -12,6 +12,7 @@
 	<%end%>
 
 <% end %>
-<% http_response = Net::HTTP.get_response("220.233.20.158:3001","/json_published_softwares") %>
+<% blueprints_uri = URI(gallery.blueprints_url)
+ http_response = Net::HTTP.get_response(blueprints_uri) %>
 <%=response.body %> //this must show the JSON contents
 </table>
