@@ -63,8 +63,8 @@ end
           
             if File.exists?(gallery_file_name)            
               gallery = EngineGallery.load(gallery_file_name)
-              puts gallery_file_name
-              p gallery
+           #   puts gallery_file_name
+            #  p gallery
               @galleries.push(gallery)
             end
         end
