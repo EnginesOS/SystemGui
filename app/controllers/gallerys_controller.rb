@@ -18,11 +18,11 @@ class GallerysController < ApplicationController
     if  @galleries == nil
       @galleries = EngineGallery.list_local
     end
-    
-    @gallery=  EngineGallery.find(params[:short_name],@galleries)
-   if @gallery != nil   
-      @blueprints=@gallery[0].listBluePrints()    
-    end
+    @galleries.each do |gallery|
+        if gallery.short_name == params[:short_name]
+          @gallery = gallery
+          @blueprints= gallery.listBluePrints
+        end   
   end
   
  
