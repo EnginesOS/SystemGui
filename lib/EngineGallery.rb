@@ -93,7 +93,7 @@ def   save_serialized(serialized_object)
 end
 
 def EngineGallery.find(short_name,galleries)
-  if @galleries == nil
+  if galleries == nil
     return nil    
   end
   galleries.each do |gallery|
