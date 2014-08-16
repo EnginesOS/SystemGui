@@ -20,7 +20,7 @@ class GallerysController < ApplicationController
     end
     @galleries.each do |gallery|
       p params[:short_name]
-        if gallery.short_name == params[:short_name]
+        if gallery.short_name == params[:id]
           @gallery = gallery         
           @blueprints= gallery.listBluePrints
         end   
