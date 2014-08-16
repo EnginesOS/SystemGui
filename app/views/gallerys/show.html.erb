@@ -9,7 +9,8 @@
 <%	@blueprints.each do |blueprint|  %>
 <tr>
 	<%
-	 name= blueprint["full_name"]
+	  short_name = blueprint["short_name"]
+	 name = blueprint["full_name"]
 	 home_page =  blueprint["home_page"]
 	 image_url =  blueprint["image_url"]
 	 %>
@@ -18,6 +19,7 @@
 	 </td>
 	 <td><%=name%></td>
 	 <td><a href=<%=home_page%>><%=home_page%></a></td>
+	 <td>	<td><%= link_to 'Install', install_gallery_path(short_name) %></td></td>
 </tr>
 <%end%>
 </table>

@@ -3,7 +3,7 @@ require "/opt/engos/lib/ruby/SysConfig.rb"
 
 class EngineGallery
   
-  #Galleries are to do drawn in from several sources
+  #Galleries are to be drawn in from several sources
   #local  Yaml files  for custom galleries
   #an array of yaml files from a gallery list server for public galleries which are drawn from yaml files on disk
 

@@ -10,13 +10,14 @@ class GallerysController < ApplicationController
     
   end
   
-  def show
-    @galleries = EngineGallery.list_local
-    if @galleries
-      @gallery=@galleries[0]
-      @blueprints=@gallery.listBluePrints()
-    else  
-        @gallery=nil
+  def install_blueprints  #FIXME need gallery id and blueprintid
+    
+  end
+  
+  def show  
+    @gallery=  EngineGallery.find(params[:short_name])
+    if @gallery != nil   
+      @blueprints=@gallery.listBluePrints()    
     end
   end
   
