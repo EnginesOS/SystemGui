@@ -1,12 +1,12 @@
 require 'EngineGallery.rb'
-class GalleryController < ApplicationController
+class GallerysController < ApplicationController
   before_action :authenticate_user!
   
   def index
     @galleries = EngineGallery.list_local
   end
   
-  def filter_blueprints(blueprinttype)
+  def filter_blueprints(blueprint_type)
     
   end
   
