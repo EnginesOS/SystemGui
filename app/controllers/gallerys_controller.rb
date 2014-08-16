@@ -11,6 +11,7 @@ class GallerysController < ApplicationController
   end
   
   def show
+    @galleries = EngineGallery.list_local
     if @galleries
       @gallery=@galleries[0]
       @blueprints=@gallery.listBluePrints()
