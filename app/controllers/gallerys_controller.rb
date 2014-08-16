@@ -15,7 +15,7 @@ class GallerysController < ApplicationController
   end
   
   def show  
-    @gallery=  EngineGallery.find(params[:short_name])
+    @gallery=  EngineGallery.find(params[:short_name],@galleries)
     if @gallery != nil   
       @blueprints=@gallery.listBluePrints()    
     end
