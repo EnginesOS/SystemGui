@@ -8,34 +8,12 @@
 <tr>
 	<td><%= gallery.title %></td>
 	<td><%= gallery.blueprints_url %></td>
-</tr>
-	
-
-
-<% blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares') %>
-
-<%
-Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
-  blueprints_request = Net::HTTP::Get.new blueprints_uri
-%> 
-  blueprints_response = http.request blueprints_request # Net::HTTPResponse object
-  %>
-  <tr><td>
-  	<% if blueprints_response.code.to_i >= 200 && blueprints_response.code.to_i < 400 %>
-  			<%=	blueprints_response.body %>
-  		<elsif>
-  				<%=blueprints_response.msg %>
-  		<%end%>
-</td>
+	<td><%= link_to 'Show', gallery_path(gallery.short_name) %></td>
 </tr>
   
 <% end  %>
 
-<%	@blueprints.each do |blueprint|  %>
-<tr>
-	<td><%blueprint %></td>
-</tr>
-<%end%>
+
 <tr><td>
 
 	<%end%>

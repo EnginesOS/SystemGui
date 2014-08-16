@@ -1,0 +1,14 @@
+
+<table>
+<tr>
+	<td><%= @gallery.title %></td>
+	<td><%= @gallery.blueprints_url %></td>
+	<td><%= @blueprints.length %>Blueprints</td>
+</tr>
+
+<%	@blueprints.each do |blueprint|  %>
+<tr>
+	<td><%blueprint %></td>
+</tr>
+<%end%>
+</table>
