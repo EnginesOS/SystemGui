@@ -8,7 +8,16 @@
 
 <%	@blueprints.each do |blueprint|  %>
 <tr>
-	<td>bluey <%= blueprint.to_s %></td>
+	<%
+	 name= blueprint["full_name"]
+	 home_page =  blueprint["home_page"]
+	 image_url =  blueprint["image_url"]
+	 %>
+	 <td>
+	 <img src=<%=image_url%>>
+	 </td>
+	 <td><%=name%></td>
+	 <td><a href=<%=home_page%>><%=home_page%></a></td>
 </tr>
 <%end%>
 </table>
