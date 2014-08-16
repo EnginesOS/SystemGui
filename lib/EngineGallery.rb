@@ -86,7 +86,7 @@ def   save_serialized(serialized_object)
                Dir.mkdir(gallery_dir)
              end
        gallery_config_filename= galleryDir + "/gallery.yaml"
-             
+             p gallery_config_filename
        gallery_config_file = File.new(gallery_config_file,File::CREAT|File::TRUNC|File::RDWR, 0644)
        gallery_config_file.puts(serialized_object)
        gallery_config_file.close
@@ -97,7 +97,7 @@ end
 
   
   def listBluePrints
-    blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares') 
+    blueprints_uri =URI('http://220.233.20.158:3001/json_published_softwares') 
         
       Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
         blueprints_request = Net::HTTP::Get.new blueprints_uri
