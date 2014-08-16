@@ -13,23 +13,30 @@
 
 
 <% blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares') %>
-<%= blueprints_uri.to_s %> <%=blueprints_uri.port %>
+
 <%
 Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
-  request = Net::HTTP::Get.new blueprints_uri
-%> <%= request %> <%= http %> <%
-  response = http.request request # Net::HTTPResponse object
+  blueprints_request = Net::HTTP::Get.new blueprints_uri
+%> 
+  blueprints_response = http.request blueprints_request # Net::HTTPResponse object
   %>
   <tr><td>
-  	<% if response.code.to_i >= 200 && response.code.to_i < 400 %>
-  			<%=response.body %>
+  	<% if blueprints_response.code.to_i >= 200 && blueprints_response.code.to_i < 400 %>
+  			<%=	blueprints_response.body %>
   		<elsif>
-  				<%=response.msg %>
+  				<%=blueprints_response.msg %>
   		<%end%>
 </td>
 </tr>
   
 <% end  %>
+
+<%	@blueprints.each do |blueprint| do %>
+<tr>
+	<td><%blueprint %></td>
+</tr>
+<%end%>
+<tr><td>
 
 	<%end%>
 <% end %>

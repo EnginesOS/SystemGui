@@ -96,10 +96,25 @@ end
 
   
   def listBluePrints
-    #json = get blueprints_url
+    blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares') 
+        
+      Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
+        blueprints_request = Net::HTTP::Get.new blueprints_uri
     
+        blueprints_response = http.request blueprints_request # Net::HTTPResponse object
+            if blueprints_response.code.to_i >= 200 && blueprints_response.code.to_i < 400 
+              return blueprints_from_jsonstr(blueprints_response.body) 
+            else
+              return nil #FIXME should put error mesg somewhere
+            end    
+       end
   end
-  def getBluePrint id
+  
+  def blueprints_from_jsonstr blueprints_json_str
+     return JSON.parse(blueprints_json_str)
+   end
+  
+   def getBluePrint id
     
     #json = get blueprints_url + "/" + id
   end
