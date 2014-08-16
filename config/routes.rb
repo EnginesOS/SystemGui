@@ -24,7 +24,8 @@ Rails.application.routes.draw do
     get :register_site, :on => :member
      get :deregister_site, :on => :member     
   end
-  
+
+    
   resources :gallerys do
     get :list_local, :on => :collection
     get :install_blueprints, :on => :member
