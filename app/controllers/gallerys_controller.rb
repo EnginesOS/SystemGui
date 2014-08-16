@@ -10,7 +10,7 @@ class GallerysController < ApplicationController
     
   end
   
-  def install_blueprints  #FIXME need gallery id and blueprintid
+  def install_blueprint  #FIXME need gallery id and blueprintid
     
   end
   

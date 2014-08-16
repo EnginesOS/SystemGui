@@ -85,8 +85,7 @@ def   save_serialized(serialized_object)
              if File.directory?(gallery_dir) ==false
                Dir.mkdir(gallery_dir)
              end
-       gallery_config_filename= galleryDir + "/gallery.yaml"
-             p gallery_config_filename
+       gallery_config_filename= galleryDir + "/gallery.yaml"            
        gallery_config_file = File.new(gallery_config_file,File::CREAT|File::TRUNC|File::RDWR, 0644)
        gallery_config_file.puts(serialized_object)
        gallery_config_file.close
