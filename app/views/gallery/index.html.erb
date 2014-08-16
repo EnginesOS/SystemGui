@@ -15,21 +15,22 @@
 <% blueprints_uri =URI('http://192.168.108.243:3001/json_published_softwares') %>
 <%= blueprints_uri.to_s %> <%=blueprints_uri.port %>
 <%
-#Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
+Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
   request = Net::HTTP::Get.new blueprints_uri
 %> <%= request %> <%= http %> <%
   response = http.request request # Net::HTTPResponse object
   %>
-  <%=response.body %>
-  <%=response.msg %>
-  <%=response.code %>
-
-  
-
-<tr><td>
-<%=response.body %> //this must show the JSON contents
+  <tr><td>
+  	<% if response.code >= 200 && response.code < 400 %>
+  			<%=response.body %>
+  		<elsif>
+  				<%=response.msg %>
+  		<%end%>
 </td>
 </tr>
+  
+<% end  %>
+
 	<%end%>
 <% end %>
 </table>
