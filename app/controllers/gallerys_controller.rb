@@ -23,6 +23,7 @@ class GallerysController < ApplicationController
           @gallery = gallery
           @blueprints= gallery.listBluePrints
         end   
+     end
   end
   
  
