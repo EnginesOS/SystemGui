@@ -103,6 +103,7 @@ end
     
         blueprints_response = http.request blueprints_request # Net::HTTPResponse object
             if blueprints_response.code.to_i >= 200 && blueprints_response.code.to_i < 400 
+              p blueprints_response.body
               return blueprints_from_jsonstr(blueprints_response.body) 
             else
               return nil #FIXME should put error mesg somewhere
