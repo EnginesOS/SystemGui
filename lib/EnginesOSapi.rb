@@ -69,20 +69,25 @@ class EnginesOSapi
          end
        
   def loadManagedService(service_name)
-    yam_file_name = SysConfig.CidDir + "/services/" + service_name + "/config.yaml"
-         
-            if File.exists?(yam_file_name) == false
-              puts("No such configuration:" + yam_file_name )
-              return nil
-            end 
-            
-          yaml_file = File.open(yam_file_name) 
-           # managed_service = YAML::load( yaml_file)
-           managed_service = ManagedService.from_yaml(yaml_file,@docker_api)
+ 
+           managed_service = EnginesOSapi.loadManagedService(service_name,@docker_api)
            
          return managed_service
   end
-  
+  def EnginesOSapi.loadManagedService(service_name,docker_api)
+      yam_file_name = SysConfig.CidDir + "/services/" + service_name + "/config.yaml"
+           
+              if File.exists?(yam_file_name) == false
+                puts("No such configuration:" + yam_file_name )
+                return nil
+              end 
+              
+            yaml_file = File.open(yam_file_name) 
+             # managed_service = YAML::load( yaml_file)
+             managed_service = ManagedService.from_yaml(yaml_file,docker_api)
+             
+           return managed_service
+    end
   def loadManagedEngine(engine_name)
        yam_file_name = SysConfig.CidDir + "/containers/" + engine_name + "/config.yaml"
       
