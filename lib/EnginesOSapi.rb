@@ -15,7 +15,7 @@ class EnginesOSapi
     return ManagedEngine.getManagedEngines()
   end
   
-  def loadManagedEngine
+  def loadManagedEngine params
     return ManagedEngine.load(params)
   end
 end
