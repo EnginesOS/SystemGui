@@ -47,26 +47,26 @@ class ServicesController < ApplicationController
     
   def register_site
         @service = enginesOS_api.loadManagedService(params[:id])
-        @result = @enginesOS_api.registerServiceWebSite
+        @result = @enginesOS_api.registerServiceWebSite params[:id]
         redirect_to service_path(params[:id])
    end
    
    def deregister_site
      @service = enginesOS_api.loadManagedService(params[:id])
-     @result = @enginesOS_api.deregisterServiceWebSite
+     @result = @enginesOS_api.deregisterServiceWebSite params[:id]
      redirect_to service_path(params[:id])
    end
    
   def create_service
     @service = enginesOS_api.loadManagedService(params[:id])      
-    @result = @enginesOS_api.createService
+    @result = @enginesOS_api.createService params[:id]
     redirect_to service_path(params[:id])
   end
 
     
     def recreate 
       @service = enginesOS_api.loadManagedService(params[:id])
-      @result = @enginesOS_api.recreateService
-      redirect_to service_path(params[:id])
+      @result = @enginesOS_api.recreateService params[:id]
+      redirect_to service_path(params[:id]) 
     end
 end
