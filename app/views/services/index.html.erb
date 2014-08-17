@@ -5,7 +5,7 @@
 	
 <% @services.each do |service| %>
 <%
-state = service.read_state(@enginesOS_api.docker_api)
+state = service.read_state
  # faster than querying the docker api 5 times
 %>
 <tr>	
