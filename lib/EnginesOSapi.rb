@@ -36,16 +36,49 @@ class EnginesOSapi
 #At this stage just wrappers
 
   def getManagedEngines
-    return ManagedEngine.getManagedEngines()
+    return getManagedContainers("containers")
   end
   
-  def loadManagedEngine container_name
-    engine = ManagedEngine.load(container_name)
-    if engine == nil      
-      return false
+  def getManagedServices
+      return getManagedContainers("services")
     end
-    return engine
-  end
+  
+  def getManagedContainers(type)
+         ret_val=Array.new
+            Dir.entries(SysConfig.CidDir + "/" + type + "s/").each do |contdir|
+              yfn = SysConfig.CidDir + "/" + type + "s/" + contdir + "/config.yaml"     
+              if File.exists?(yfn) == true           
+                yf = File.open(yfn)   
+                managed_container = ManagedContainer.from_yaml(yf)          
+                if managed_container                 
+                  ret_val.push(managed_container)
+                end
+                yf.close
+              end
+            end
+            return ret_val
+       end
+       
+  def loadManagedEngine(container_name)
+       yam_file_name = SysConfig.CidDir + "/containers/" + container_name + "/config.yaml"
+      
+         if File.exists?(yam_file_name) == false
+           puts("No such configuration:" + yam_file_name )
+           return nil
+         end 
+         
+       yaml_file = File.open(yam_file_name) 
+       managed_container = YAML::load( yaml_file)
+      return managed_container
+     end
+     
+  #def loadManagedEngine container_name
+  #  engine = ManagedEngine.load(container_name)
+   # if engine == nil      
+    #  return false
+    #end
+    #return engine
+  #end
   
  
    
