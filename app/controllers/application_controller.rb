@@ -14,6 +14,9 @@ class ApplicationController < ActionController::Base
       return @enginesOS_api
     end
     
+    def enginesOS_api
+      return @enginesOS_api
+    end
 
   protected
   def configure_permitted_parameters
