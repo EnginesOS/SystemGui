@@ -54,7 +54,7 @@ class EnginesOSapi
  
   def getManagedServices()
            ret_val=Array.new
-              Dir.entries(SysConfig.CidDir + "/" + type + "s/").each do |contdir|
+              Dir.entries(SysConfig.CidDir + "/services/").each do |contdir|
                 yfn = SysConfig.CidDir + "/services/" + contdir + "/config.yaml"     
                 if File.exists?(yfn) == true           
                   yf = File.open(yfn)   
