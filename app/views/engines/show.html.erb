@@ -7,7 +7,7 @@
 <% if @engine == nil%>
 	<strong><font color="red" size="+2">Error:Engine not found</font></strong>
 <%else%>
-	<% state= @enginesOS_api.read_state(@engine) %>
+	<% state= @engine.read_state(@enginesOS_api.docker_api) %>
 	<table>
 	<tr><td>Name</td><td><%=@engine.containerName %></td></tr> 
 	<tr><td>Hostname</td><td><a href=http://<%=@engine.fqdn %>><%=@engine.fqdn %></a></td></tr> 
@@ -97,7 +97,7 @@
  	<h3>Statistics</h3>	
 
 	<%if state != "nocontainer" 
-		stats = @engine.stats
+		stats = @engine.stats(@enginesOS_api.docker_api)
 		 if stats != nil	%>			
 				 	State: <%= stats.state  %><br>
                   	Processes: <%=stats.proc_cnt %> < b >List in ps list in .stats</b><br>
@@ -114,7 +114,7 @@
  	<p>
  	<h3>Processes</h3>
  	<table width=80% >
- 	<% res = @engine.ps_container %>
+ 	<% res = @engine.ps_container(@enginesOS_api.docker_api) %>
  	<% @engine.last_result.each_line do |line | 
  		vals = line.split %>
  		<tr>
@@ -129,8 +129,8 @@
  	</p>
  	<p>
 	<h3>Logs</h3>
-	<% res = @engine.logs_container%>
-	<pre><%= @engine.last_result %></pre>
+	<% res = @engine.logs_container(@enginesOS_api.docker_api)%>
+	<pre><%= @engine.last_result(@enginesOS_api.docker_api) %></pre>
  		</p>
  <%end%>
  	<hr>
