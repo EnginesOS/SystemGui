@@ -65,7 +65,7 @@ class EnginesController < ApplicationController
   end
 
   def monitor
-    @result = @enginesOS_api.monitorEngine (params[:id])
+    @result = @enginesOS_api.monitorEngine(params[:id])
             redirect_to engine_path(params[:id])
   end
   
@@ -80,7 +80,7 @@ class EnginesController < ApplicationController
   end
   
   def deregister_site
-    @result = @enginesOS_api.unregisterEngineWebSite(params[:id])
+    @result = @enginesOS_api.deregisterEngineWebSite(params[:id])
     
                 redirect_to engine_path(params[:id])
   end
