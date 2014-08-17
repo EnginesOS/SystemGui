@@ -7,94 +7,81 @@ class EnginesController < ApplicationController
 
   
   def index
+    @result =false
     @engines = enginesOS_api.getManagedEngines()
-      if @engines == nil
-        @result =false
-      else
+      if @engines != nil
+        @result = true      
+      end
+      
+  end
+  
+  def show
+    @result =false
+    @engine = @enginesOS_api.loadManagedEngine(params[:id])
+      if @engine != nil
         @result = true
       end
   end
   
-  def show
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-      if @engine == nil
-        @result =false
-      else
-        @result =true
-      end
-  end
-  
-  def stop
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-    @result = @engine.stop_container
+  def stop   
+    @result = @enginesOS_api.stopEngine @engine.containerName
     redirect_to engine_path(@engine.containerName)
   end
   
-  def start
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-    @result =  @engine.start_container
+  def start   
+    @result = @enginesOS_api.startEngine @engine.containerName
     redirect_to engine_path(@engine.containerName)
   end
   
   def pause
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-    @result = @engine.pause_container
+    @result = @enginesOS_api.pauseEngine @engine.containerName
     redirect_to engine_path(@engine.containerName)
   end
   
   def unpause
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-     @result = @engine.unpause_container
+    @result = @enginesOS_api.unpauseEngine @engine.containerName
     redirect_to engine_path(@engine.containerName)
    end
    
   def destroy_engine
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-    @result =@engine.destroy_container
-    redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.destroyEngine @engine.containerName
+    redirect_to engines_path
   end 
   
   def deleteimage
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-      if (@engine)      
-        @result =@engine.delete_image        
-        redirect_to engine_path(@engine.containerName)
-      end #FIX ME Need to go some
+    @result = @enginesOS_api.deleteEngine @engine.containerName
+        redirect_to engines_path
+
   end 
   
   def restart
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-    @result = @engine.restart_container
+    @result = @enginesOS_api.restartEngine @engine.containerName
     redirect_to engine_path(@engine.containerName)
   end
   
   def create_engine
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-        @result = @engine.create_container
+    @result = @enginesOS_api.createEngine @engine.containerName
         redirect_to engine_path(@engine.containerName)
   end
 
   def monitor
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-            @result = @engine.monitor_site
+    @result = @enginesOS_api.monitorEngine @engine.containerName
             redirect_to engine_path(@engine.containerName)
   end
   
   def demonitor
-    @engine = @enginesOS_api.loadManagedEngine(params[:id])
-            @result = @engine.demonitor_site
+    @result = @enginesOS_api.unmonitorEngine @engine.containerName
             redirect_to engine_path(@engine.containerName)
   end
   
   def register_site
-       @engine = @enginesOS_api.loadManagedEngine(params[:id])
-                @result = @engine.register_site
+    @result = @enginesOS_api.registerEngineWebSite @engine.containerName
                 redirect_to engine_path(@engine.containerName)
   end
   
   def deregister_site
-       @engine = @enginesOS_api.loadManagedEngine(params[:id])
-                @result = @engine.deregister_site
+    @result = @enginesOS_api.unregisterEngineWebSite @engine.containerName
+    
                 redirect_to engine_path(@engine.containerName)
   end
   
