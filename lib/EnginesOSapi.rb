@@ -109,7 +109,7 @@ class EnginesOSapi
      if engine == nil
        return false   
      end  
-     return engine.stop_container(@docker_api)     
+     return engine.stop_container()     
    end
    
    def startEngine container_name
@@ -117,7 +117,7 @@ class EnginesOSapi
      if engine == nil
        return false    
      end
-     return engine.start_container(@docker_api)     
+     return engine.start_container()     
    end
    
    def pauseEngine container_name
@@ -133,7 +133,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end
-     return engine.unpause_container(@docker_api)     
+     return engine.unpause_container()     
    end
   
     def destroyEngine container_name
@@ -141,7 +141,7 @@ class EnginesOSapi
       if engine == nil
         return false
       end
-      return engine.destroy_container(@docker_api)     
+      return engine.destroy_container()     
     end
     
    def deleteEngineImage container_name 
@@ -149,7 +149,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end
-    return engine.delete_container(@docker_api)     
+    return engine.delete_container()     
    end
     
    def createEngine container_name
@@ -157,7 +157,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end
-    return engine.create_container(@docker_api)     
+    return engine.create_container()     
    end
    
    def restartEngine container_name
@@ -165,7 +165,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end
-     return engine.restart_container(@docker_api)     
+     return engine.restart_container()     
    end
   
    def registerEngineWebSite container_name
@@ -173,7 +173,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end
-     return  engine.register_site(@docker_api)     
+     return  engine.register_site()     
    end
    
    def deregisterEngineWebSite container_name
@@ -181,7 +181,7 @@ class EnginesOSapi
        if engine == nil
         return false
        end
-    return engine.unregister_site(@docker_api)     
+    return engine.unregister_site()     
    end
    
    def monitorEngine container_name
@@ -189,7 +189,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end
-     return engine.monitor_site(@docker_api)       
+     return engine.monitor_site()       
    end
    
    def demonitorEngine container_name
@@ -197,11 +197,11 @@ class EnginesOSapi
      if engine == nil
        return false
      end         
-     return engine.demonitor_site(@docker_api)     
+     return engine.demonitor_site()     
    end
    
    def read_state container
-     return container.read_state(@docker_api)
+     return container.read_state()
    end
 
     
@@ -210,7 +210,7 @@ class EnginesOSapi
       if service == nil
         return false
       end      
-      return service.stop_container(@docker_api)        
+      return service.stop_container()        
     end
     
     def startService service_name
@@ -218,7 +218,7 @@ class EnginesOSapi
             if service == nil
               return false
             end      
-            return service.start_container(@docker_api)    
+            return service.start_container()    
     end
     
     def  pauseService service_name
@@ -226,7 +226,7 @@ class EnginesOSapi
             if service == nil
               return false
             end      
-            return service.pause_container(@docker_api)     
+            return service.pause_container()     
     end
     
     def  unpauseService service_name
@@ -234,7 +234,7 @@ class EnginesOSapi
              if service == nil
                return false
              end      
-        return service.unpause_container(@docker_api)      
+        return service.unpause_container()      
     end
     
      def registerServiceWebSite service_name
@@ -242,7 +242,7 @@ class EnginesOSapi
                if service == nil
                  return false
                end      
-          return service.register_site(@docker_api)    
+          return service.register_site()    
      end
      
     def deregisterServiceWebSite service_name
@@ -250,7 +250,7 @@ class EnginesOSapi
            if service == nil
                return false
             end      
-        return service.deregister_site(@docker_api)     
+        return service.deregister_site()     
     end
     
     def createService service_name
@@ -258,7 +258,7 @@ class EnginesOSapi
            if service == nil
                return false
             end      
-        return service.create_service(@docker_api)
+        return service.create_service()
     end
     
     def recreateService service_name
@@ -266,6 +266,6 @@ class EnginesOSapi
            if service == nil
                return false
             end      
-        return service.recreate(@docker_api)      
+        return service.recreate()      
     end
 end
