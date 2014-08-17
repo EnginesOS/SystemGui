@@ -10,7 +10,7 @@
 	<th>Monitored</th>
 <%@engines.each do |engine|  >%
 
- state = engine.read_state(@enginesOS_api.docker_api) # faster than querying the docker api 5 times
+ #state = engine.read_state(@enginesOS_api.docker_api) # faster than querying the docker api 5 times
 %>
 <tr>	
 	<td><%=engine.containerName %></td> 
