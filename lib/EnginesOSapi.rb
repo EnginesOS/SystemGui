@@ -7,7 +7,10 @@ require "/opt/engos/lib/ruby/NginxService.rb"
 require "/opt/engos/lib/ruby/NagiosService.rb"
 
 class EnginesOSapi
-  
+  def initialize()
+      
+  end
+    
   def EnginesOS_api.getManagedEngines
     return ManagedEngine.getManagedEngines()
   end

@@ -5,6 +5,12 @@ class ApplicationController < ActionController::Base
   
   before_filter :configure_permitted_parameters, if: :devise_controller?
   
+  @enginesOS_api = EnginesOSapi.new
+  
+  def enginesOS_api
+    return @enginesOS_api
+  end
+  
   protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }
