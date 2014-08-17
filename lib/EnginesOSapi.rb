@@ -50,8 +50,7 @@ class EnginesOSapi
               if File.exists?(yfn) == true           
                 yf = File.open(yfn)   
                 managed_container = ManagedContainer.from_yaml(yf)          
-                if managed_container            
-                  p      managed_container
+                if managed_container                            
                   ret_val.push(managed_container)
                 end
                 yf.close
