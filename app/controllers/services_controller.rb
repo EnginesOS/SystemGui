@@ -29,7 +29,7 @@ class ServicesController < ApplicationController
     end
    def start
        @service = enginesOS_api.loadManagedService(params[:id])
-       @result = @enginesOS_api.stopService params[:id]
+       @result = @enginesOS_api.startService params[:id]
        redirect_to service_path(params[:id])
    end
      
