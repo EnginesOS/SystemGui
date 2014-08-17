@@ -125,7 +125,7 @@ class EnginesOSapi
    
    
   def getManagedServices
-      return ManagedService.getManagedEngines()
+      return ManagedService.getManagedServices()
     end
     
     def loadManagedService container_name
