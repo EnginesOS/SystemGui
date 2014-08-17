@@ -145,7 +145,7 @@ class EnginesOSapi
      return engine.demonitor_site(@docker_api)     
    end
    
-   def readstate container
+   def read_state container
      return container.read_state(@docker_api)
    end
    
