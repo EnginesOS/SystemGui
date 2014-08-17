@@ -10,6 +10,22 @@ class EnginesOSapi
   def initialize()
       
   end
+  #hmm something like this to get errors back
+  class  EnginesOSapiResult
+    def initialize(result,code,item_name, msg)
+          @was_sucess=result
+          @result_code = code
+          @item_name = item_name
+          @result_mesg = error_msg
+      end
+      
+     def initialize(item_name)
+       @was_sucess=true
+       @result_code = 0
+       @item_name = item_name
+       @result_mesg = "OK"
+     end
+  end
     
 #At this stage just wrappers
 
@@ -19,7 +35,7 @@ class EnginesOSapi
   
   def loadManagedEngine container_name
     engine = ManagedEngine.load(container_name)
-    if engine == nil
+    if engine == nil      
       return false
     end
     return engine
