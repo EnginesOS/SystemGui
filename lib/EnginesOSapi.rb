@@ -145,7 +145,7 @@ class EnginesOSapi
             if service == nil
               return false
             end      
-            return service.stop_container    
+            return service.start_container    
     end
     
     def  pauseService container_name
