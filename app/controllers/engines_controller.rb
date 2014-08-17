@@ -7,7 +7,7 @@ class EnginesController < ApplicationController
 
   
   def index
-    @engines = @enginesOS_api.getManagedEngines()
+    @engines = getEnginesOSAPI.getManagedEngines()
       if @engines == nil
         @result =false
       else

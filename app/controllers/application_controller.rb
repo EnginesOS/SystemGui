@@ -4,9 +4,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   before_filter :configure_permitted_parameters, if: :devise_controller? 
-  
-  include ApplicationHelper
-  
+  before_filter :create_api
+
+  require 'EnginesOSapi.rb'
+    def create_api  
+      if @enginesOS_api == nill
+         @enginesOS_api = EnginesOSapi.new
+       end
+      return @enginesOS_api
+    end
+    
+
   protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }
