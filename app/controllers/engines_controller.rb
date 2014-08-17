@@ -70,7 +70,7 @@ class EnginesController < ApplicationController
   end
   
   def demonitor
-    @result = @enginesOS_api.unmonitorEngine(params[:id])
+    @result = @enginesOS_api.demonitorEngine(params[:id])
             redirect_to engine_path(params[:id])
   end
   

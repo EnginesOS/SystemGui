@@ -21,71 +21,74 @@ class EnginesOSapi
     return ManagedEngine.load(params)
   end
   
-  def getManagedServices
-     return ManagedService.getManagedEngines()
-   end
-   
-   def loadManagedService params
-     return ManagedService.load(params)
-   end
+ 
    
    def stopEngine params
      engine = loadManagedEngine params
      engine.stop_container
    end
    
-   def startEngine
+   def startEngine params
      engine = loadManagedEngine params
      engine.start_container
    end
    
-   def pauseEngine
+   def pauseEngine params
      engine = loadManagedEngine params
      engine.pause_container
    end
    
-   def unpauseEngine
+   def unpauseEngine params
      engine = loadManagedEngine params
      engine.unpause_container
    end
   
-    def destroyEngine
+    def destroyEngine params
       engine = loadManagedEngine params
       engine.destroy_container
     end
     
-   def deleteEngineImage
+   def deleteEngineImage params 
      engine = loadManagedEngine params
      engine.delete_container
    end
     
-   def createEngine
+   def createEngine params
      engine = loadManagedEngine params
      engine.create_container
    end
    
-   def restartEngine
+   def restartEngine params
      engine = loadManagedEngine params
      engine.restart_container
    end
   
-   def registerEngineWebSite
+   def registerEngineWebSite params
      engine = loadManagedEngine params
      engine.register_site
    end
    
-   def unregisterEngineWebSite
+   def unregisterEngineWebSite params
      engine = loadManagedEngine params
      engine.unregister_site 
    end
    
-   def monitorEngine
+   def monitorEngine params
      engine = loadManagedEngine params
      engine.monitor_site   
    end
    
-   def demonitorEngine
+   def demonitorEngine params
      engine = loadManagedEngine params
      engine.unmonitor_site
    end
+   
+   
+  def getManagedServices
+      return ManagedService.getManagedEngines()
+    end
+    
+    def loadManagedService params
+      return ManagedService.load(params)
+    end
 end
