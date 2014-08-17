@@ -11,6 +11,8 @@ class EnginesOSapi
       
   end
     
+#At this stage just wrappers
+
   def getManagedEngines
     return ManagedEngine.getManagedEngines()
   end
@@ -18,4 +20,15 @@ class EnginesOSapi
   def loadManagedEngine params
     return ManagedEngine.load(params)
   end
+  
+  def getManagedServices
+     return ManagedService.getManagedEngines()
+   end
+   
+   def loadManagedService params
+     return ManagedService.load(params)
+   end
+   
+  
+  
 end
