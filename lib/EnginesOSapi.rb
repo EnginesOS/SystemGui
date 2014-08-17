@@ -32,26 +32,19 @@ class EnginesOSapi
        @result_mesg = "OK"
      end
   end
-    
-#At this stage just wrappers
 
-  def getManagedEngines
-    return getManagedContainers("container")
-  end
+
+ 
   
-  def getManagedServices
-      return getManagedContainers("service")
-    end
-  
-  def getManagedContainers(type)
+  def getManagedEngines()
          ret_val=Array.new
             Dir.entries(SysConfig.CidDir + "/" + type + "s/").each do |contdir|
-              yfn = SysConfig.CidDir + "/" + type + "s/" + contdir + "/config.yaml"     
+              yfn = SysConfig.CidDir + "/containers/" + contdir + "/config.yaml"     
               if File.exists?(yfn) == true           
                 yf = File.open(yfn)   
-                managed_container = ManagedContainer.from_yaml(yf)          
+                managed_engine = ManagedEngine.from_yaml(yf)          
                 if managed_container                            
-                  ret_val.push(managed_container)
+                  ret_val.push(managed_engine)
                 end
                 yf.close
               end
@@ -59,17 +52,37 @@ class EnginesOSapi
             return ret_val
        end
  
+  def getManagedServices()
+           ret_val=Array.new
+              Dir.entries(SysConfig.CidDir + "/" + type + "s/").each do |contdir|
+                yfn = SysConfig.CidDir + "/services/" + contdir + "/config.yaml"     
+                if File.exists?(yfn) == true           
+                  yf = File.open(yfn)   
+                  managed_service = ManagedService.from_yaml(yf)          
+                  if managed_service                            
+                    ret_val.push(managed_service)
+                  end
+                  yf.close
+                end
+              end
+              return ret_val
+         end
        
-  def loadManagedEngine(container_name)
-      return loadManagedContainer(container_name,"container")            
-  end
-  
   def loadManagedService(service_name)
-    return loadManagedContainer(service_name,"service")
+    yam_file_name = SysConfig.CidDir + "/services/" + service_name + "/config.yaml"
+         
+            if File.exists?(yam_file_name) == false
+              puts("No such configuration:" + yam_file_name )
+              return nil
+            end 
+            
+          yaml_file = File.open(yam_file_name) 
+            managed_service = YAML::load( yaml_file)
+         return managed_service
   end
   
-  def loadManagedContainer(container_name,type)
-       yam_file_name = SysConfig.CidDir + "/" + type + "s/" + container_name + "/config.yaml"
+  def loadManagedEngine(engine_name)
+       yam_file_name = SysConfig.CidDir + "/containers/" + engine_name + "/config.yaml"
       
          if File.exists?(yam_file_name) == false
            puts("No such configuration:" + yam_file_name )
@@ -77,18 +90,16 @@ class EnginesOSapi
          end 
          
        yaml_file = File.open(yam_file_name) 
-       managed_container = YAML::load( yaml_file)
-      return managed_container
+       managed_engine = YAML::load( yaml_file)
+      return managed_engine
      end
      
-  #def loadManagedEngine container_name
-  #  engine = ManagedEngine.load(container_name)
-   # if engine == nil      
-    #  return false
-    #end
-    #return engine
-  #end
+     
+ 
   
+    
+#At this stage just wrappers
+
  
    
    def stopEngine container_name 
@@ -190,11 +201,7 @@ class EnginesOSapi
    def read_state container
      return container.read_state(@docker_api)
    end
-   
- 
-    
-   
-    
+
     
     def stopService service_name
       service = loadManagedService(service_name)
