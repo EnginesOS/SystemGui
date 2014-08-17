@@ -50,7 +50,7 @@ class EnginesController < ApplicationController
   
   def deleteimage
     @result = @enginesOS_api.deleteEngine(params[:id])
-        redirect_to engines_path
+    redirect_to engines_path
 
   end 
   
@@ -61,28 +61,27 @@ class EnginesController < ApplicationController
   
   def create_engine
     @result = @enginesOS_api.createEngine(params[:id])
-        redirect_to engine_path(params[:id])
+   redirect_to engine_path(params[:id])
   end
 
   def monitor
     @result = @enginesOS_api.monitorEngine(params[:id])
-            redirect_to engine_path(params[:id])
+    redirect_to engine_path(params[:id])
   end
   
   def demonitor
     @result = @enginesOS_api.demonitorEngine(params[:id])
-            redirect_to engine_path(params[:id])
+    redirect_to engine_path(params[:id])
   end
   
   def register_site
     @result = @enginesOS_api.registerEngineWebSite(params[:id])
-                redirect_to engine_path(params[:id])
+    redirect_to engine_path(params[:id])
   end
   
   def deregister_site
-    @result = @enginesOS_api.deregisterEngineWebSite(params[:id])
-    
-                redirect_to engine_path(params[:id])
+    @result = @enginesOS_api.deregisterEngineWebSite(params[:id])    
+     redirect_to engine_path(params[:id])
   end
   
   def edit

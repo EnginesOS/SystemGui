@@ -25,49 +25,49 @@ class ServicesController < ApplicationController
     
     def stop
       @service = enginesOS_api.loadManagedService(params[:id])
-          @result = @service.stop_container
-          redirect_to service_path(@service.containerName)
+          @result = @enginesOS_api.stopService params[:id]
+          redirect_to service_path(params[:id])
     end
    def start
        @service = enginesOS_api.loadManagedService(params[:id])
-           @result = @service.start_container
-           redirect_to service_path(@service.containerName)
+       @result = @enginesOS_api.stopService params[:id]
+       redirect_to service_path(params[:id])
    end
      
     def pause
       @service = enginesOS_api.loadManagedService(params[:id])
-      @result = @service.pause_container
-      redirect_to service_path(@service.containerName)
+      @result = @enginesOS_api.pauseService params[:id]
+      redirect_to service_path(params[:id])
     end
     
     def unpause
       @service = enginesOS_api.loadManagedService(params[:id])
-      @result = @service.unpause_container
-      redirect_to service_path(@service.containerName)
+      @result = @enginesOS_api.unpauseService params[:id]
+       redirect_to service_path(params[:id])
     end
     
   def register_site
         @service = enginesOS_api.loadManagedService(params[:id])
-                 @result = @service.register_site
-                 redirect_to service_path(@service.containerName)
+        @result = @enginesOS_api.registerServiceWebSite
+        redirect_to service_path(params[:id])
    end
    
    def deregister_site
-        @service = enginesOS_api.loadManagedService(params[:id])
-                 @result = @service.deregister_site
-                 redirect_to service_path(@service.containerName)
+     @service = enginesOS_api.loadManagedService(params[:id])
+     @result = @enginesOS_api.deregisterServiceWebSite
+     redirect_to service_path(params[:id])
    end
    
   def create_service
     @service = enginesOS_api.loadManagedService(params[:id])      
-        @result = @service.create_service
-        redirect_to service_path(@service.containerName)
+    @result = @enginesOS_api.createService
+    redirect_to service_path(params[:id])
   end
 
     
     def recreate 
       @service = enginesOS_api.loadManagedService(params[:id])
-      @result =  @service.recreate
-      redirect_to service_path(@service.containerName)
+      @result = @enginesOS_api.recreateService
+      redirect_to service_path(params[:id])
     end
 end
