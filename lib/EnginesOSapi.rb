@@ -134,7 +134,7 @@ class EnginesOSapi
     
     def stopService container_name
       service = ManagedService.load(container_name)
-      if service == nill
+      if service == nil
         return false
       end      
       return service.stop_container      
@@ -142,7 +142,7 @@ class EnginesOSapi
     
     def startService container_name
       service = ManagedService.load(container_name)
-            if service == nill
+            if service == nil
               return false
             end      
             return service.stop_container    
@@ -150,7 +150,7 @@ class EnginesOSapi
     
     def  pauseService container_name
       service = ManagedService.load(container_name)
-            if service == nill
+            if service == nil
               return false
             end      
             return service.pause_container      
@@ -158,7 +158,7 @@ class EnginesOSapi
     
     def  unpauseService container_name
       service = ManagedService.load(container_name)
-             if service == nill
+             if service == nil
                return false
              end      
         return service.unpause_container      
@@ -166,7 +166,7 @@ class EnginesOSapi
     
      def registerServiceWebSite container_name
        service = ManagedService.load(container_name)
-               if service == nill
+               if service == nil
                  return false
                end      
           return service.register_site     
@@ -174,7 +174,7 @@ class EnginesOSapi
      
     def deregisterServiceWebSite container_name
       service = ManagedService.load(container_name)
-           if service == nill
+           if service == nil
                return false
             end      
         return service.deregister_site     
@@ -182,7 +182,7 @@ class EnginesOSapi
     
     def createService container_name
       service = ManagedService.load(container_name)
-           if service == nill
+           if service == nil
                return false
             end      
         return service.create_service
@@ -190,7 +190,7 @@ class EnginesOSapi
     
     def recreateService container_name
       service = ManagedService.load(container_name)
-           if service == nill
+           if service == nil
                return false
             end      
         return service.recreate      
