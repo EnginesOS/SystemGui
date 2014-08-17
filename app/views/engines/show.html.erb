@@ -130,7 +130,7 @@
  	<p>
 	<h3>Logs</h3>
 	<% res = @engine.logs_container(@enginesOS_api.docker_api)%>
-	<pre><%= @engine.last_result(@enginesOS_api.docker_api) %></pre>
+	<pre><%= @engine.last_result %></pre>
  		</p>
  <%end%>
  	<hr>
