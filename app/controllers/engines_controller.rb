@@ -4,7 +4,7 @@ require "EnginesOSapi.rb"
 class EnginesController < ApplicationController
   before_action :authenticate_user!
   
- 
+
   
   def index
     @engines = @enginesOS_api.getManagedEngines()

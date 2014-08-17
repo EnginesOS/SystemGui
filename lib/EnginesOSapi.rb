@@ -11,11 +11,11 @@ class EnginesOSapi
       
   end
     
-  def EnginesOSapi.getManagedEngines
+  def getManagedEngines
     return ManagedEngine.getManagedEngines()
   end
   
-  def EnginesOSapi.loadManagedEngine
+  def loadManagedEngine
     return ManagedEngine.load(params)
   end
 end
