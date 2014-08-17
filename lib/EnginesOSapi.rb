@@ -92,7 +92,7 @@ class EnginesOSapi
          end 
          
        yaml_file = File.open(yam_file_name) 
-       managed_engine = ManageEngine.from_yaml( yaml_file)
+       managed_engine = ManagedEngine.from_yaml( yaml_file)
       return managed_engine
      end
      
