@@ -8,7 +8,7 @@ class EnginesController < ApplicationController
   
   def index
     @result =false
-    @engines = enginesOS_api.getManagedEngines()
+    @engines = @enginesOS_api.getManagedEngines()
       if @engines != nil
         @result = true      
       end
