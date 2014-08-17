@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   require 'EnginesOSapi.rb'
     def create_api  
-      if @enginesOS_api == nill
+      if @enginesOS_api == nil
          @enginesOS_api = EnginesOSapi.new
        end
       return @enginesOS_api
