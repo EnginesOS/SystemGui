@@ -1,7 +1,6 @@
-require "/opt/engos/lib/ruby/ManagedContainer.rb"
-require "/opt/engos/lib/ruby/enginesOS_api.rb"
-require "/opt/engos/lib/ruby/NginxService.rb"
-require "/opt/engos/lib/ruby/NagiosService.rb"
+
+
+require "EnginesOSapi.rb"
 
 class ServicesController < ApplicationController
   before_action :authenticate_user!
