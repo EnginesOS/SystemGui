@@ -42,7 +42,7 @@ class EnginesOSapi
               yfn = SysConfig.CidDir + "/containers/" + contdir + "/config.yaml"     
               if File.exists?(yfn) == true           
                 yf = File.open(yfn)   
-                managed_engine = ManagedEngine.from_yaml(yf)          
+                managed_engine = ManagedEngine.from_yaml(yf,@docker_api)          
                 if managed_engine                            
                   ret_val.push(managed_engine)
                 end
@@ -58,7 +58,7 @@ class EnginesOSapi
                 yfn = SysConfig.CidDir + "/services/" + contdir + "/config.yaml"     
                 if File.exists?(yfn) == true           
                   yf = File.open(yfn)   
-                  managed_service = ManagedService.from_yaml(yf)          
+                  managed_service = ManagedService.from_yaml(yf,@docker_api)          
                   if managed_service                            
                     ret_val.push(managed_service)
                   end
@@ -78,7 +78,7 @@ class EnginesOSapi
             
           yaml_file = File.open(yam_file_name) 
            # managed_service = YAML::load( yaml_file)
-           managed_service = ManagedService.from_yaml(yaml_file)
+           managed_service = ManagedService.from_yaml(yaml_file,@docker_ap)
            
          return managed_service
   end
@@ -92,7 +92,7 @@ class EnginesOSapi
          end 
          
        yaml_file = File.open(yam_file_name) 
-       managed_engine = ManagedEngine.from_yaml( yaml_file)
+       managed_engine = ManagedEngine.from_yaml( yaml_file,@docker_api)
       return managed_engine
      end
      
@@ -125,7 +125,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end    
-     return engine.pause_container(@docker_api)       
+     return engine.pause_container      
    end
    
    def unpauseEngine container_name
