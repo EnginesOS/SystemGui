@@ -36,11 +36,11 @@ class EnginesOSapi
 #At this stage just wrappers
 
   def getManagedEngines
-    return getManagedContainers("containers")
+    return getManagedContainers("container")
   end
   
   def getManagedServices
-      return getManagedContainers("services")
+      return getManagedContainers("service")
     end
   
   def getManagedContainers(type)
@@ -58,9 +58,18 @@ class EnginesOSapi
             end
             return ret_val
        end
+ 
        
   def loadManagedEngine(container_name)
-       yam_file_name = SysConfig.CidDir + "/containers/" + container_name + "/config.yaml"
+      return loadManagedContainer(container_name,"container")            
+  end
+  
+  def loadManagedService(service_name)
+    return loadManagedContainer(service_name,"service")
+  end
+  
+  def loadManagedContainer(container_name,type)
+       yam_file_name = SysConfig.CidDir + "/" + type + "s/" + container_name + "/config.yaml"
       
          if File.exists?(yam_file_name) == false
            puts("No such configuration:" + yam_file_name )
@@ -182,73 +191,69 @@ class EnginesOSapi
      return container.read_state(@docker_api)
    end
    
-  def getManagedServices
-      return ManagedService.getManagedServices()
-    end
+ 
     
-    def loadManagedService container_name
-      return ManagedService.load(container_name)
-    end
+   
     
     
-    def stopService container_name
-      service = ManagedService.load(container_name)
+    def stopService service_name
+      service = loadManagedService(service_name)
       if service == nil
         return false
       end      
       return service.stop_container(@docker_api)        
     end
     
-    def startService container_name
-      service = ManagedService.load(container_name)
+    def startService service_name
+      service = loadManagedService(service_name)
             if service == nil
               return false
             end      
             return service.start_container(@docker_api)    
     end
     
-    def  pauseService container_name
-      service = ManagedService.load(container_name)
+    def  pauseService service_name
+      service = loadManagedService(service_name)
             if service == nil
               return false
             end      
             return service.pause_container(@docker_api)     
     end
     
-    def  unpauseService container_name
-      service = ManagedService.load(container_name)
+    def  unpauseService service_name
+      service = loadManagedService(service_name)
              if service == nil
                return false
              end      
         return service.unpause_container(@docker_api)      
     end
     
-     def registerServiceWebSite container_name
-       service = ManagedService.load(container_name)
+     def registerServiceWebSite service_name
+       service = loadManagedService(service_name)
                if service == nil
                  return false
                end      
           return service.register_site(@docker_api)    
      end
      
-    def deregisterServiceWebSite container_name
-      service = ManagedService.load(container_name)
+    def deregisterServiceWebSite service_name
+      service = loadManagedService(service_name)
            if service == nil
                return false
             end      
         return service.deregister_site(@docker_api)     
     end
     
-    def createService container_name
-      service = ManagedService.load(container_name)
+    def createService service_name
+      service = loadManagedService(service_name)
            if service == nil
                return false
             end      
         return service.create_service(@docker_api)
     end
     
-    def recreateService container_name
-      service = ManagedService.load(container_name)
+    def recreateService service_name
+      service = loadManagedService(service_name)
            if service == nil
                return false
             end      
