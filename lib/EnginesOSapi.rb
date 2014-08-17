@@ -10,7 +10,13 @@ class EnginesOSapi
   def initialize()
     @docker_api = Docker.new
   end
+  
+  def docker_api
+    return @docker_api
+  end
+  
   #hmm something like this to get errors back
+  
   class  EnginesOSapiResult
     def initialize(result,code,item_name, msg)
           @was_sucess=result
@@ -139,6 +145,9 @@ class EnginesOSapi
      return engine.demonitor_site(@docker_api)     
    end
    
+   def readstate container
+     return container.read_state(@docker_api)
+   end
    
   def getManagedServices
       return ManagedService.getManagedServices()
@@ -147,6 +156,7 @@ class EnginesOSapi
     def loadManagedService container_name
       return ManagedService.load(container_name)
     end
+    
     
     def stopService container_name
       service = ManagedService.load(container_name)
