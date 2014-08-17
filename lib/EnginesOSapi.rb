@@ -38,7 +38,7 @@ class EnginesOSapi
   
   def getManagedEngines()
          ret_val=Array.new
-            Dir.entries(SysConfig.CidDir + "/" + type + "s/").each do |contdir|
+            Dir.entries(SysConfig.CidDir + "/containers/").each do |contdir|
               yfn = SysConfig.CidDir + "/containers/" + contdir + "/config.yaml"     
               if File.exists?(yfn) == true           
                 yf = File.open(yfn)   
