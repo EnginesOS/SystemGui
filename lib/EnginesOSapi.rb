@@ -77,7 +77,9 @@ class EnginesOSapi
             end 
             
           yaml_file = File.open(yam_file_name) 
-            managed_service = YAML::load( yaml_file)
+           # managed_service = YAML::load( yaml_file)
+           managed_service = ManagedService.from_yaml(yaml_file)
+           
          return managed_service
   end
   
@@ -90,7 +92,7 @@ class EnginesOSapi
          end 
          
        yaml_file = File.open(yam_file_name) 
-       managed_engine = YAML::load( yaml_file)
+       managed_engine = ManageEngine.from_yaml( yaml_file)
       return managed_engine
      end
      
