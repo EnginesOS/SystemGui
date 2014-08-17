@@ -3,16 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
-  before_filter :configure_permitted_parameters, if: :devise_controller? , :getEnginesOSAPI
+  before_filter :configure_permitted_parameters, if: :devise_controller? 
   
-  require 'EnginesOSapi.rb'
-  def getEnginesOSAPI  
-    @enginesOS_api = EnginesOSapi.new
-  end
-  
-  def enginesOS_api
-    return @enginesOS_api
-  end
+  include ApplicationHelper
   
   protected
   def configure_permitted_parameters
