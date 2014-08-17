@@ -7,7 +7,7 @@
 <% if @engine == nil%>
 	<strong><font color="red" size="+2">Error:Engine not found</font></strong>
 <%else%>
-	<% state= @engine.read_state %>
+	<% state= @enginesOS_api.read_state(engine) %>
 	<table>
 	<tr><td>Name</td><td><%=@engine.containerName %></td></tr> 
 	<tr><td>Hostname</td><td><a href=http://<%=@engine.fqdn %>><%=@engine.fqdn %></a></td></tr> 
