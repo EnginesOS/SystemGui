@@ -78,7 +78,7 @@ class EnginesOSapi
             
           yaml_file = File.open(yam_file_name) 
            # managed_service = YAML::load( yaml_file)
-           managed_service = ManagedService.from_yaml(yaml_file,@docker_ap)
+           managed_service = ManagedService.from_yaml(yaml_file,@docker_api)
            
          return managed_service
   end
