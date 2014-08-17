@@ -5,7 +5,8 @@
 	
 <% @services.each do |service| %>
 <%
- state = service.read_state # faster than querying the docker api 5 times
+state = service.read_state(@enginesOS_api.docker_api)
+ # faster than querying the docker api 5 times
 %>
 <tr>	
 	<td><%=service.containerName %></td> 
