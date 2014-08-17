@@ -24,65 +24,65 @@ class EnginesController < ApplicationController
   end
   
   def stop   
-    @result = @enginesOS_api.stopEngine @engine.containerName
-    redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.stopEngine(params[:id])
+    redirect_to engine_path(params[:id])
   end
   
   def start   
-    @result = @enginesOS_api.startEngine @engine.containerName
-    redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.startEngine(params[:id])
+    redirect_to engine_path(params[:id])
   end
   
   def pause
-    @result = @enginesOS_api.pauseEngine @engine.containerName
-    redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.pauseEngine(params[:id])
+    redirect_to engine_path(params[:id])
   end
   
   def unpause
-    @result = @enginesOS_api.unpauseEngine @engine.containerName
-    redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.unpauseEngine(params[:id])
+    redirect_to engine_path(params[:id])
    end
    
   def destroy_engine
-    @result = @enginesOS_api.destroyEngine @engine.containerName
+    @result = @enginesOS_api.destroyEngine(params[:id])
     redirect_to engines_path
   end 
   
   def deleteimage
-    @result = @enginesOS_api.deleteEngine @engine.containerName
+    @result = @enginesOS_api.deleteEngine(params[:id])
         redirect_to engines_path
 
   end 
   
   def restart
-    @result = @enginesOS_api.restartEngine @engine.containerName
-    redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.restartEngine(params[:id])
+    redirect_to engine_path(params[:id])
   end
   
   def create_engine
-    @result = @enginesOS_api.createEngine @engine.containerName
-        redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.createEngine(params[:id])
+        redirect_to engine_path(params[:id])
   end
 
   def monitor
-    @result = @enginesOS_api.monitorEngine @engine.containerName
-            redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.monitorEngine (params[:id])
+            redirect_to engine_path(params[:id])
   end
   
   def demonitor
-    @result = @enginesOS_api.unmonitorEngine @engine.containerName
-            redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.unmonitorEngine(params[:id])
+            redirect_to engine_path(params[:id])
   end
   
   def register_site
-    @result = @enginesOS_api.registerEngineWebSite @engine.containerName
-                redirect_to engine_path(@engine.containerName)
+    @result = @enginesOS_api.registerEngineWebSite(params[:id])
+                redirect_to engine_path(params[:id])
   end
   
   def deregister_site
-    @result = @enginesOS_api.unregisterEngineWebSite @engine.containerName
+    @result = @enginesOS_api.unregisterEngineWebSite(params[:id])
     
-                redirect_to engine_path(@engine.containerName)
+                redirect_to engine_path(params[:id])
   end
   
   def edit
