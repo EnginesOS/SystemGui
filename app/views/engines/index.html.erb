@@ -8,9 +8,9 @@
 	<th>View</th>
 	<th>Actions</th>
 	<th>Monitored</th>
-<%@engines.each do |engine|  %>
+<%@engines.each do |engine|  
 
- state = engine.read_state() # faster than querying the docker api 5 times
+ state=engine.read_state # faster than querying the docker api 5 times
 %>
 <tr>	
 	<td><%=engine.containerName %></td> 

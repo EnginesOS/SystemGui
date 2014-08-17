@@ -7,7 +7,7 @@
 <% if @service == nil%>
 	<strong><font color="red" size="+2">Error:Engine not found</font></strong>
 <%else%>
-	<% state= @service.read_state(@enginesOS_api.docker_api) %>
+	<% state= @service.read_state %>
 	<table>
 	<tr><td>Name</td><td><%=@service.containerName %></td></tr> 
 	<tr><td>Hostname</td><td><a href=http://<%=@service.fqdn %>><%=@service.fqdn %></a></td></tr> 
@@ -98,7 +98,7 @@
  	<h3>Statistics</h3>	
 
 	<%if state != "nocontainer" 
-		stats = @service.stats(@enginesOS_api.docker_api)
+		stats = @service.stats
 		 if stats != nil	%>			
 				 	State: <%= stats.state  %><br>
                   	Processes: <%=stats.proc_cnt %> < b >List in ps list in .stats</b><br>
@@ -115,7 +115,7 @@
  	<p>
  	<h3>Processes</h3>
  	<table>
- 	<% res = @service.ps_container(@enginesOS_api.docker_api) %>
+ 	<% res = @service.ps_container %>
  	<% @service.last_result.each_line do |line | 
  		vals = line.split %>
  		<tr>
@@ -130,7 +130,7 @@
  	</p>
  	<p>
 	<h3>Logs</h3>
-	<% res = @service.logs_container(@enginesOS_api.docker_api)%>
+	<% res = @service.logs_container%>
 	<pre><%= @service.last_result %></pre>
  		</p>
  <%end%>
