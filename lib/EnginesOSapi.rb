@@ -109,96 +109,96 @@ class EnginesOSapi
 
  
    
-   def stopEngine container_name 
-     engine = loadManagedEngine container_name
+   def stopEngine engine_name 
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false   
      end  
      return engine.stop_container()     
    end
    
-   def startEngine container_name
-     engine = loadManagedEngine container_name
+   def startEngine engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false    
      end
      return engine.start_container()     
    end
    
-   def pauseEngine container_name
-     engine = loadManagedEngine container_name
+   def pauseEngine engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end    
      return engine.pause_container      
    end
    
-   def unpauseEngine container_name
-     engine = loadManagedEngine container_name
+   def unpauseEngine engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end
      return engine.unpause_container()     
    end
   
-    def destroyEngine container_name
-      engine = loadManagedEngine container_name
+    def destroyEngine engine_name
+      engine = loadManagedEngine engine_name
       if engine == nil
         return false
       end
       return engine.destroy_container()     
     end
     
-   def deleteEngineImage container_name 
-     engine = loadManagedEngine container_name
+   def deleteEngineImage engine_name 
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end
     return engine.delete_container()     
    end
     
-   def createEngine container_name
-     engine = loadManagedEngine container_name
+   def createEngine engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end
     return engine.create_container()     
    end
    
-   def restartEngine container_name
-     engine = loadManagedEngine container_name
+   def restartEngine engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end
      return engine.restart_container()     
    end
   
-   def registerEngineWebSite container_name
-     engine = loadManagedEngine container_name
+   def registerEngineWebSite engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end
      return  engine.register_site()     
    end
    
-   def deregisterEngineWebSite container_name
-     engine = loadManagedEngine container_name
+   def deregisterEngineWebSite engine_name
+     engine = loadManagedEngine engine_name
        if engine == nil
         return false
        end
     return engine.deregister_site()     
    end
    
-   def monitorEngine container_name
-     engine = loadManagedEngine container_name
+   def monitorEngine engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end
      return engine.monitor_site()       
    end
    
-   def demonitorEngine container_name
-     engine = loadManagedEngine container_name
+   def demonitorEngine engine_name
+     engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end         
