@@ -186,7 +186,7 @@ class EnginesOSapi
        if engine == nil
         return false
        end
-    return engine.unregister_site()     
+    return engine.deregister_site()     
    end
    
    def monitorEngine container_name
