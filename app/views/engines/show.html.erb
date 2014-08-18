@@ -1,7 +1,7 @@
 
 <%= link_to 'Back', engines_path %>
 <% if @result == false %>
-<strong><font color="red" size="+2">Error:@engine.slast_error</font></strong>
+<strong><font color="red" size="+2">Error:@engine.last_error</font></strong>
 <%end%>
 
 <% if @engine == nil%>
@@ -13,7 +13,7 @@
 	<tr><td>Hostname</td><td><a href=http://<%=@engine.fqdn %>><%=@engine.fqdn %></a></td></tr> 
 	<tr><td>Configured to</td><td><%=@engine.setState %></td></tr> 
 	<tr><td>State</td><td><%= state %></td></tr>
-	<tr><td>Last Error</td><td><%= @engine.slast_error %></td></tr>
+	<tr><td>Last Error</td><td><%= @engine.last_error %></td></tr>
 	<tr><td>Memory</td><td><%= @engine.memory %></td></tr>
 	<tr><td>Monitored</td><td><%=@engine.monitored %></td></tr>
 	<tr><td>Framework</td><td><%=@engine.framework %>/<%=@engine.runtime %></td></tr>

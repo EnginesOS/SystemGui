@@ -1,7 +1,7 @@
 
 <%= link_to 'Back', services_path %>
 <% if @result == false %>
-<strong><font color="red" size="+2">Error:@service.slast_error</font></strong>
+<strong><font color="red" size="+2">Error:@service.last_error</font></strong>
 <%end%>
 
 <% if @service == nil%>
@@ -13,7 +13,7 @@
 	<tr><td>Hostname</td><td><a href=http://<%=@service.fqdn %>><%=@service.fqdn %></a></td></tr> 
 	<tr><td>Configured to</td><td><%=@service.setState %></td></tr> 
 	<tr><td>State</td><td><%= state %></td></tr>
-	<tr><td>Last Error</td><td><%= @service.slast_error %></td></tr>
+	<tr><td>Last Error</td><td><%= @service.last_error %></td></tr>
 	<tr><td>Memory</td><td><%= @service.memory %></td></tr>
 	<tr><td>Monitored</td><td><%=@service.monitored %></td></tr>
 	<tr><td>Framework</td><td><%=@service.framework %>/<%=@service.runtime %></td></tr>
