@@ -1,6 +1,6 @@
 require 'GalleryMaintainer.rb'
 require "/opt/engos/lib/ruby/SysConfig.rb"
-require "/opt/engos/lib/ruby/EngineBuilder.rb"
+
 require "git"
 
 class EngineGallery
@@ -176,10 +176,23 @@ end
   end
   
   def clone_repo(repo, buildname)
-    EngineBuilder.backup_lastbuild buildname 
+      backup_lastbuild repo 
            g = Git.clone(repo, buildname, :path => SysConfig.DeploymentDir)
   end
 
+  def backup_lastbuild repo
+    
+     buildname = File.basename(repo)      
+        dir=SysConfig.DeploymentDir + "/" + buildname
+     
+            if Dir.exists?(dir)
+                backup=dir + ".backup"
+                  if Dir.exists?(backup)
+                    FileUtils.rm_rf backup
+                  end
+               FileUtils.mv(dir,backup)
+            end     
+      end
 
 
   
