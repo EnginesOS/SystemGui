@@ -140,8 +140,8 @@ end
   def get_blueprint(id)
     blueprint_entry = get_blueprint_entry(id)
     p blueprint_entry
-    repository = blueprint_entry["repository"]
-    short_name = blueprint_entry["short_name"]
+    repository = blueprint_entry[0]["repository"]
+    short_name = blueprint_entry[0]["short_name"]
     clone_repo(repository,short_name)
     blueprint_filename =  SysConfig.DeploymentDir + "/" + short_name + "/blueprint.json"
 
