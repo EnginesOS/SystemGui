@@ -1,5 +1,6 @@
 require 'GalleryMaintainer.rb'
 require "/opt/engos/lib/ruby/SysConfig.rb"
+require "git"
 
 class EngineGallery
   
@@ -139,7 +140,21 @@ end
   def filter_blueprints types
   end
   
+  def get_blueprint(blueprint_entry)
+    repository = blueprint_entry[0]["repository"]
+    short_name = blueprint_entry[0]["short_name"]
+    clone_repo(repository,short_name)
+    blueprint_filename =  SysConfig.DeploymentDir + "/" + short_name + "/blueprint.json"
+
+      blueprint_file = File.open(blueprint_file_name,"r")
+      blueprint_json_str = blueprint_file.read
+      blueprint_file.close 
+
+      bluePrint = JSON.parse(blueprint_json_str)
+      return bluePrint
+  end
   
+  protected 
   def get_blueprint_entry(blueprint_id)
     blueprint_uri =URI('http://220.233.20.158:3001/json_published_softwares/' + blueprint_id ) 
            p blueprint_uri
@@ -154,7 +169,11 @@ end
                end    
           end
   end
-protected
+  
+  def clone_repo(repo, buildname)
+           g = Git.clone(repo, buildname, :path => SysConfig.DeploymentDir)
+  end
+
 
 
   
