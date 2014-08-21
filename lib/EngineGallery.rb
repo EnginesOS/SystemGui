@@ -132,15 +132,13 @@ end
      return json
    end
   
-   def getBluePrint id
-    
-    #json = get blueprints_url + "/" + id
-  end
+ 
   
   def filter_blueprints types
   end
   
-  def get_blueprint(blueprint_entry)
+  def get_blueprint(id)
+    blueprint_entry = get_blueprint_entry(id)
     repository = blueprint_entry[0]["repository"]
     short_name = blueprint_entry[0]["short_name"]
     clone_repo(repository,short_name)
