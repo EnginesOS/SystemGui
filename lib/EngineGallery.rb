@@ -145,7 +145,7 @@ end
     clone_repo(repository,short_name)
     blueprint_filename =  SysConfig.DeploymentDir + "/" + short_name + "/blueprint.json"
 
-      blueprint_file = File.open(blueprint_file_name,"r")
+      blueprint_file = File.open(blueprint_filename,"r")
       blueprint_json_str = blueprint_file.read
       blueprint_file.close 
 
