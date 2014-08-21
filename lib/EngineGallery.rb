@@ -1,5 +1,6 @@
 require 'GalleryMaintainer.rb'
 require "/opt/engos/lib/ruby/SysConfig.rb"
+require "/opt/engos/lib/ruby/EngineBuilder.rb"
 require "git"
 
 class EngineGallery
