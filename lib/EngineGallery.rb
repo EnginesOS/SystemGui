@@ -140,7 +140,7 @@ end
   end
   
   
-  def get_blueprint(blueprint_id)
+  def get_blueprint_entry(blueprint_id)
     blueprint_uri =URI('http://220.233.20.158:3001/json_published_softwares/' + blueprint_id ) 
            p blueprint_uri
          Net::HTTP.start(blueprint_uri.host, blueprint_uri.port) do |http|
