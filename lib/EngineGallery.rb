@@ -128,7 +128,7 @@ end
   
   def blueprints_from_jsonstr blueprints_json_str
     json = JSON.parse(blueprints_json_str)
-    p json
+
      return json
    end
   
@@ -139,8 +139,9 @@ end
   
   def get_blueprint(id)
     blueprint_entry = get_blueprint_entry(id)
-    repository = blueprint_entry[0]["repository"]
-    short_name = blueprint_entry[0]["short_name"]
+    p blueprint_entry
+    repository = blueprint_entry["repository"]
+    short_name = blueprint_entry["short_name"]
     clone_repo(repository,short_name)
     blueprint_filename =  SysConfig.DeploymentDir + "/" + short_name + "/blueprint.json"
 
@@ -160,12 +161,14 @@ end
            blueprint_request = Net::HTTP::Get.new blueprint_uri
        
            blueprint_response = http.request blueprint_request # Net::HTTPResponse object
-               if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400 
+               if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400
+                  
                  return blueprints_from_jsonstr(blueprint_response.body) 
                else
                  return nil #FIXME should put error mesg somewhere
                end    
           end
+           
   end
   
   def clone_repo(repo, buildname)
