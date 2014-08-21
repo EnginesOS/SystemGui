@@ -12,7 +12,12 @@ class GallerysController < ApplicationController
   
   def install_blueprint  #FIXME need gallery id and blueprintid
     @gallery = EngineGallery.getGallery(params[:id],params[:blueprints_url])
-    @blueprint = @gallery.get_blue_print(params[:blueprint_id])
+      if @gallery !=nil
+          @blueprint = @gallery.get_blue_print(params[:blueprint_id])
+      else
+        @error_mesg="Failed to load Gallery params[:id] params[:blueprints_url] " +  params[:id] + " " + params[:blueprints_url]
+            
+      end
   end
   
   def show  
