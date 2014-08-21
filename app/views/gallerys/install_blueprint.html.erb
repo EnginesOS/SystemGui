@@ -5,11 +5,10 @@
 	<p>
 <%= @blueprint %>
 		</p>
-		<% 
-			license_name =@blueprint["license_name"]
-		    license_url = @blueprint["license_sourceurl"] 
-		     %>
-	Agree to Licence <a href=<%=license_url %>>license_name</a><br>
+		<%  license_name = @blueprint[0]["license_name"] %>
+		  <% license_url = @blueprint[0]["license_sourceurl"] %>
+		                          
+	Agree to Licence <a href=<%= license_url %>><%= license_name %></a><br>
 	Domain name<br>
 	Host name	
 	<p>
