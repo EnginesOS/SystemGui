@@ -18,8 +18,8 @@
 	 <img src=<%=image_url%>>
 	 </td>
 	 <td><%=name%></td>
-	 <td><a href=<%=home_page%>><%=home_page%></a></td>
-	 <td>	<td><%= link_to 'Install', install_blueprint_gallery_path(@gallery.short_name, "blueprint" => :short_name) %></td></td>
+	 <td><a href=<%=home_page%>><%=home_page%></a></td>:foo => "bar", :baz => "quux"
+	 <td>	<td><%= link_to 'Install', install_blueprint_gallery_path(:@gallery.short_name =>"gallery",  :short_name => "blueprint") %></td></td>
 </tr>
 <%end%>
 </table>
