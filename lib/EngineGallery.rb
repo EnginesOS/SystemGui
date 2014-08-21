@@ -182,7 +182,9 @@ end
 
   def backup_lastbuild repo
     
-     buildname = File.basename(repo)      
+     buildname = File.basename(repo)
+     segments = buildname.split('.')   
+        buildname = segments[0]
         dir=SysConfig.DeploymentDir + "/" + buildname
      p dir
             if Dir.exists?(dir)
