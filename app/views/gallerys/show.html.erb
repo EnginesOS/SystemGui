@@ -19,7 +19,7 @@
 	 </td>
 	 <td><%=name%></td>
 	 <td><a href=<%=home_page%>><%=home_page%></a></td>
-	 <td>	<td><%= link_to 'Install', install_blueprint_gallery_path({@gallery.short_name,short_name}) %></td></td>
+	 <td>	<td><%= link_to 'Install', install_blueprint_gallery_path(@gallery.short_name},:short_name => "blueprint") %></td></td>
 </tr>
 <%end%>
 </table>
