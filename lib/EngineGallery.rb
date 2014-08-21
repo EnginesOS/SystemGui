@@ -50,7 +50,7 @@ def EngineGallery.getGallery(gallery_name,gallery_url)
   p gallery_name
   
   if gallery_url == "local"
-    gallery_config_filename = SysConfig.galleriesDir + "/" + @short_name + "/config.yaml"
+    gallery_config_filename = SysConfig.galleriesDir + "/" + @short_name + "/gallery.yaml"
       p gallery_config_filename
       return  load(gallery_config_filename)
   end
