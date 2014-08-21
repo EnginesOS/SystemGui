@@ -184,7 +184,7 @@ end
     
      buildname = File.basename(repo)      
         dir=SysConfig.DeploymentDir + "/" + buildname
-     
+     p dir
             if Dir.exists?(dir)
                 backup=dir + ".backup"
                   if Dir.exists?(backup)
