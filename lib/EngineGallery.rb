@@ -7,6 +7,9 @@ class EngineGallery
   #local  Yaml files  for custom galleries
   #an array of yaml files from a gallery list server for public galleries which are drawn from yaml files on disk
 
+  def gallery_url
+    return @gallery_url
+  end
 
   def title
     return @title
@@ -34,6 +37,7 @@ class EngineGallery
       @blueprints_url = url
       @licence_type = licence #Free | Non Commercial use | Commercial |mixture
       @maintainer =  maintainer
+      @gallery_url = local
     end
   
 def self.from_yaml( yaml )
@@ -41,6 +45,13 @@ def self.from_yaml( yaml )
       enginegallery
 end
     
+def EngineGallery.getGallery(gallery_name,gallery_url)
+  if gallery_url == "local"
+    gallery_config_filename = SysConfig.galleriesDir + "/" + @short_name + "/config.yaml"
+      return  load(gallery_config_filename)
+  end
+end
+
 def EngineGallery.load(gallery_file_name)
 
          if File.exists?(gallery_file_name) == false
@@ -123,5 +134,24 @@ end
   
   def filter_blueprints types
   end
+  
+  
+  def get_blueprint(blueprint_id)
+    blueprint_uri =URI('http://220.233.20.158:3001/json_published_softwares/' + blueprint_id ) 
+           
+         Net::HTTP.start(blueprint_uri.host, blueprint_uri.port) do |http|
+           blueprint_request = Net::HTTP::Get.new blueprint_uri
+       
+           blueprint_response = http.request blueprint_request # Net::HTTPResponse object
+               if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400 
+                 return blueprint_from_jsonstr(blueprint_response.body) 
+               else
+                 return nil #FIXME should put error mesg somewhere
+               end    
+          end
+  end
+protected
+
+
   
 end
