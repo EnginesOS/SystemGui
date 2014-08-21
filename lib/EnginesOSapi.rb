@@ -172,21 +172,36 @@ class EnginesOSapi
      end
      return engine.restart_container()     
    end
+  def registerEngineWebSite engine_name
+    engine = loadManagedEngine engine_name
+    if engine == nil
+      return false
+    end
+    return  engine.register_site()     
+  end
   
-   def registerEngineWebSite engine_name
+  def deregisterEngineWebSite engine_name
+    engine = loadManagedEngine engine_name
+      if engine == nil
+       return false
+      end
+   return engine.deregister_site()     
+  end
+  
+   def registerEngineDNS engine_name
      engine = loadManagedEngine engine_name
      if engine == nil
        return false
      end
-     return  engine.register_site()     
+     return  engine.register_dns()     
    end
    
-   def deregisterEngineWebSite engine_name
+   def deregisterEngineDNS engine_name
      engine = loadManagedEngine engine_name
        if engine == nil
         return false
        end
-    return engine.deregister_site()     
+    return engine.deregister_dns()     
    end
    
    def monitorEngine engine_name
@@ -257,7 +272,21 @@ class EnginesOSapi
             end      
         return service.deregister_site()     
     end
-    
+  def registerServiceDNS service_name
+    service = loadManagedService(service_name)
+            if service == nil
+              return false
+            end      
+       return service.register_dns()    
+  end
+  
+ def deregisterServiceDNS service_name
+   service = loadManagedService(service_name)
+        if service == nil
+            return false
+         end      
+     return service.deregister_dns()     
+ end 
     def createService service_name
       service = loadManagedService(service_name)
            if service == nil

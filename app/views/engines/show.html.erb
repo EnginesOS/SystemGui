@@ -35,7 +35,8 @@
 	 		<%= link_to 'Monitor', monitor_engine_path(@engine.containerName) %>
 	 	<%#end%>
 	 </p>
-	 <%= link_to 'Register', register_site_engine_path(@engine.containerName) %> <%= link_to 'Deregister DNS', deregister_site_engine_path(@engine.containerName) %>
+	 <%= link_to 'Register Site', register_site_engine_path(@engine.containerName) %> <%= link_to 'Deregister Site', deregister_site_engine_path(@engine.containerName) %>
+	 <%= link_to 'Register DNS', register_dns_engine_path(@engine.containerName) %> <%= link_to 'Deregister DNS', deregister_dns_engine_path(@engine.containerName) %>
 	 <table>	
 	 	<tr>
 	<% 

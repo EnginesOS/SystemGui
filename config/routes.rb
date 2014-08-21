@@ -23,6 +23,8 @@ Rails.application.routes.draw do
         get :create_service, :on => :member
     get :register_site, :on => :member
      get :deregister_site, :on => :member     
+    get :register_dns, :on => :member
+    get :deregister_dns, :on => :member
   end
 
     
@@ -45,6 +47,8 @@ Rails.application.routes.draw do
     get :demonitor, :on => :member
     get :register_site, :on => :member
     get :deregister_site, :on => :member
+    get :register_dns, :on => :member
+    get :deregister_dns, :on => :member
     
   end
   

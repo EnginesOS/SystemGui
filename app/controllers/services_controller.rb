@@ -50,7 +50,15 @@ class ServicesController < ApplicationController
      @result = @enginesOS_api.deregisterServiceWebSite params[:id]
      redirect_to service_path(params[:id])
    end
+  def register_dns
+        @result = @enginesOS_api.registerServiceDNS params[:id]
+        redirect_to service_path(params[:id])
+   end
    
+   def deregister_dns
+     @result = @enginesOS_api.deregisterServiceDNS params[:id]
+     redirect_to service_path(params[:id])
+   end
   def create_service     
     @result = @enginesOS_api.createService params[:id]
     redirect_to service_path(params[:id])

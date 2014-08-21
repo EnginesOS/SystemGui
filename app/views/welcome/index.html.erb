@@ -5,10 +5,14 @@
 <%= link_to 'Services', services_path %>
 <%= link_to 'System', system_index_path %>
 <p>
-<strong>To Do</strong>
+<strong>In Progress</strong>
 
-
-<%= link_to 'Gallery', gallerys_path %>
 </p>
+<p>
+	Installation of new software
+</p>
+<li><%= link_to 'Gallery', gallerys_path %></li>
+<li><%= link_to 'Image Installation from 3rd party repository', gallerys_path %></li>
+	
 <hr>
 <%= link_to 'Sign Out', destroy_user_session_path, :method=>'delete'%>

@@ -84,6 +84,16 @@ class EnginesController < ApplicationController
      redirect_to engine_path(params[:id])
   end
   
+  def register_dns
+    @result = @enginesOS_api.registerEngineDNS(params[:id])
+    redirect_to engine_path(params[:id])
+  end
+  
+  def deregister_dns
+    @result = @enginesOS_api.deregisterEngineDNS(params[:id])    
+     redirect_to engine_path(params[:id])
+  end
+   
   def edit
        @engine = @enginesOS_api.loadManagedEngine(params[:id])
          #FIXME still to do
