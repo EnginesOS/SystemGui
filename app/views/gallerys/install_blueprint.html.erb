@@ -21,10 +21,12 @@
 		   		p service
 		   		if service["servicetype_name"] == "mysql"
 		   			dbname = service["servicetype_name"]["name"]
-		   			p "dbname " + dbname
+		   			p "dbname " 
+		   			p dbname
 		   		elsif service["servicetype_name"] == "filesystem"
 		   			volumename =  service["servicetype_name"]["name"]
-		   			p " vol " + volumename
+		   			p " vol " 
+		   			p volumename
 		   		end
 		   	end
 		 %> 
