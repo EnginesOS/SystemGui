@@ -11,6 +11,11 @@
 		   services =  @blueprint["software"]["softwareservices"]
 		   dbname=""
 		   volumename=""
+		   dbuser=""
+		   createdb_user=true
+		   dbpasswd=""
+		   createdb=true
+		   
 		   	services.each do |service|
 		   		if service["servicetype_name"] == "mysql"
 		   			dbname = service["servicetype_name"]["name"]
@@ -179,7 +184,12 @@
 			</tr>
 			<tr>
 				<td>
-					<strong>Web Protect</strong> Perhaps the following section goes else where/post configure
+				The following section is not supported yet.
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Web Protect</strong> 
 				</td>
 				
 			</tr>
