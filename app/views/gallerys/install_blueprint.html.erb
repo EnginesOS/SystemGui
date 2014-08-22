@@ -126,7 +126,7 @@
 					 <%= label_tag(:dbuser, "Database User" )%>
 				</td>
 				<td>
-					 <%= text_field_tag(:dbuser,dbuser) %>
+					 <%= text_field_tag(:dbuser,dbuser) %>*
 				</td>
 				<td>
 					<%= label_tag(:createdb_user, "Create DB User" )%>
@@ -143,6 +143,11 @@
 			</tr>	
 			<tr>
 				<td>
+					*leave blank for system created 
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<strong>Volume Settings</strong>
 				</td>
 			</tr>
@@ -151,7 +156,7 @@
 			<tr>
 				<td>
 					<%= label_tag(:vol_src, "Source" )%>
-					<%= text_field_tag(:vol_src) %>
+					<%= text_field_tag(:vol_src) %>*
 				</td>
 				<td>
 					<%=volume_name %>
@@ -159,7 +164,11 @@
 				
 			</tr>
 			<% end %>  
-		
+					<tr>
+				<td>
+					*leave blank for system default 
+				</td>
+			</tr>
 			<tr>
 				<td>
 					<strong>Additional Volumes</strong>

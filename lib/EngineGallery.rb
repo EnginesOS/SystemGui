@@ -177,6 +177,9 @@ end
   end
   
   def clone_repo(repo, buildname)
+    buildname = File.basename(repo)
+    segments = buildname.split('.')
+    buldname = segments[0]
       backup_lastbuild repo 
            g = Git.clone(repo, buildname, :path => SysConfig.DeploymentDir)
   end
