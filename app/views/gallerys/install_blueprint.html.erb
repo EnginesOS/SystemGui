@@ -7,30 +7,178 @@
 		</p>
 		<%  license_name = @blueprint["software"]["license_name"] %>
 		  <% license_url = @blueprint["software"]["license_sourceurl"] %>
-		                          
-	Agree to Licence <a href=<%= license_url %>><%= license_name %></a><br>
-	Domain name<br>
-	Host name	
-	<p>
-		<strong>Optional</strong>
-		</p>
-		Variables set at Runtime
-		<p>
-		<strong>Advanced</strong>
-		</p>
-		<p>
-	Memory suggested/option to set<br>
-	Dbname dbuser dbpasswd<br> 
-	db external host optionally<br>
-	DBDriver<br>
-	Volume mapping to existing volumes<br>
-	enable Montitor<br>
-	Self Starts (default false for blueprint and true for image)<br>
-	Register DNS (default false for blueprint and true for image)<br>
-	restart on crash<br>
-	Global access (or local lan only)<br/>
-	Host access limitations (ip and subnet access lists)<br>
-	webprotect<br>
-	webprotect auth source and details<br>
+		  <table>
+		<%= form_tag do %>
+
+           <tr>        
+				<td>
+					Agree to Licence <a href=<%= license_url %>><%= license_name %></a>
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<strong>Host name Settings</strong
+				</td>
+			</tr>
+				
+			<tr>
+				<td>
+					Hostname Name
+				</td>
+				<td>
+					
+				</td>				
+			</tr>
+			<tr>
+				<td>
+					Domain Name
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Environmet Variables</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Advanced Options</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Memory
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Self Starts
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Database Settings</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Database Host
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Database Name
+				</td>
+				<td>
+					
+				</td>
+			</tr>			
+			<tr>
+				<td>
+					Database User
+				</td>
+				<td>
+					
+				</td>
+			</tr>	
+			<tr>
+				<td>
+					Database User Password
+				</td>
+				<td>
+					
+				</td>
+			</tr>	
+			<tr>
+				<td>
+					<strong>Volume Settings</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>DNS </strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Enable Monitor
+				</td>
+				<td>
+					
+				</td>				
+			</tr>
+			<tr>
+				<td>
+					Register DNS
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Web Protect</strong>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>
+					User
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					Add New User
+				</td>
+			</tr>
+				<tr>
+				<td>
+					Group
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					Add New Group
+				</td>
+			</tr>		
+			<tr>
+				<td>
+					<strong>Firewall</strong>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>Configured Subnets/hosts</td>
+				<td></td>
+			</tr>
+					<tr>
+				<td>New Subnet or host</td>
+				<td></td>
+				<td>Add</td>
+			</tr>	
 	
-	
+	<% end %>  
