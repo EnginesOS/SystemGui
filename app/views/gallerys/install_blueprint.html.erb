@@ -8,7 +8,7 @@
 		<%  license_name = @blueprint["software"]["license_name"]
 		  license_url = @blueprint["software"]["license_sourceurl"]
 		   memory = @blueprint["software"]["requiredmemory"]		   
-		   services =  @blueprint["software"]["softwareservices"]
+		 
 		   dbname=""
 		   volumename=""
 		   dbuser=""
@@ -16,7 +16,9 @@
 		   dbpasswd=""
 		   createdb=true
 		   
+		     services =  @blueprint["software"]["softwareservices"]
 		   	services.each do |service|
+		   		p service
 		   		if service["servicetype_name"] == "mysql"
 		   			dbname = service["servicetype_name"]["name"]
 		   		elsif service["servicetype_name"] == "filesystem"
