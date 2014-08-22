@@ -85,7 +85,7 @@
 					 <%= label_tag(:self_starts, "Self Starts" )%>
 				</td>
 				<td>
-					<%= check_box_tag(:self_starts,{checked: false}) %>
+					<%= check_box_tag(:self_starts,"1", false) %>
 				</td>
 			</tr>
 			<tr>
@@ -110,7 +110,7 @@
 				</td>
 				<td>
 					<%= label_tag(:createdb, "Create DB" )%>
-					<%= check_box_tag(:createdb,{checked: true}) %>
+					<%= check_box_tag(:createddb,"1", true) %>
 				</td>
 			</tr>			
 			<tr>
@@ -122,7 +122,7 @@
 				</td>
 				<td>
 					<%= label_tag(:createdb_user, "Create DB User" )%>
-					<%= check_box_tag(:createdb_user,{checked: true}) %>
+					<%= check_box_tag(:createdb_user,"1", true) %>
 				</td>
 			</tr>	
 			<tr>
@@ -225,7 +225,8 @@
 			<tr>
 				<td>
 					<strong>Firewall</strong>
-				</td>				
+				</td>
+				
 			</tr>
 			<tr>
 				<td>Configured Subnets/hosts</td>
