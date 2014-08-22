@@ -9,6 +9,8 @@
 		  license_url = @blueprint["software"]["license_sourceurl"]
 		   memory = @blueprint["software"]["requiredmemory"]		   
 		   services =  @blueprint["software"]["softwareservices"]
+		   dbname=""
+		   volumename=""
 		   	services.each do |service|
 		   		if service["servicetype_name"] == "mysql"
 		   			dbname = service["servicetype_name"]["name"]
