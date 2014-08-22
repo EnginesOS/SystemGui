@@ -5,8 +5,13 @@
 	<p>
 <%= @blueprint["software"] %>
 		</p>
-		<%  license_name = @blueprint["software"]["license_name"] %>
-		  <% license_url = @blueprint["software"]["license_sourceurl"] %>
+		<%  license_name = @blueprint["software"]["license_name"]
+		  license_url = @blueprint["software"]["license_sourceurl"]
+		   memory = @blueprint["software"]["requiredmemory"]
+		   
+		   services =  @blueprint["software"]["softwareservices"]
+		   
+		 %> 
 		  <table>
 		<%= form_tag do %>
 
@@ -60,7 +65,7 @@
 					 <%= label_tag(:memory, "Memory" )%>
 				</td>
 				<td>
-					 <%= text_field_tag(:memory) %>
+					 <%= text_field_tag(:memory, memory) %>
 				</td>
 			</tr>
 			<tr>
@@ -81,7 +86,7 @@
 					 <%= label_tag(:dbhost, "Database Host" )%>
 				</td>
 				<td>
-					 <%= text_field_tag(:dbhost) %>
+					 <%= text_field_tag(:dbhost,SysConfig.DBHost) %>
 				</td>
 			</tr>
 			<tr>
@@ -89,11 +94,11 @@
 					 <%= label_tag(:dbname, "Database Name" )%>
 				</td>
 				<td>
-					 <%= text_field_tag(:dbname) %>
+					 <%= text_field_tag(:dbname,dbname) %>
 				</td>
 				<td>
 					<%= label_tag(:createdb, "Create DB" )%>
-					<%= check_box_tag(:createdbr) %>
+					<%= check_box_tag(:createdb) %>
 				</td>
 			</tr>			
 			<tr>
@@ -101,7 +106,7 @@
 					 <%= label_tag(:dbuser, "Database User" )%>
 				</td>
 				<td>
-					 <%= text_field_tag(:dbuser) %>
+					 <%= text_field_tag(:dbuser,dbuser) %>
 				</td>
 				<td>
 					<%= label_tag(:createdb_user, "Create DB User" )%>
