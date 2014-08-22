@@ -12,10 +12,10 @@
 
            <tr>        
 				<td>
-					Agree to Licence <a href=<%= license_url %>><%= license_name %></a>
+					 <%= label_tag(:license, "Agree to License" )%> <a href=<%= license_url %>><%= license_name %></a>
 				</td>
 				<td>
-					
+					<%= check_box_tag(:license) %>
 				</td>
 			</tr>
 			<tr>
@@ -26,23 +26,28 @@
 				
 			<tr>
 				<td>
-					Hostname Name
+					 <%= label_tag(:host_name, "Hostname Name" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:host_name) %>
 				</td>				
 			</tr>
 			<tr>
 				<td>
-					Domain Name
+					 <%= label_tag(:domain_name, "Domain Name" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:domain_name) %>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<strong>Environmet Variables</strong>
+					<strong>Environment Variables</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					 <%= submit_tag("Install Software") %>
 				</td>
 			</tr>
 			<tr>
@@ -52,18 +57,18 @@
 			</tr>
 			<tr>
 				<td>
-					Memory
+					 <%= label_tag(:memory, "Memory" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:memory) %>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					Self Starts
+					 <%= label_tag(:self_starts, "Self Starts" )%>
 				</td>
 				<td>
-					
+					<%= check_box_tag(:self_starts) %>
 				</td>
 			</tr>
 			<tr>
@@ -73,34 +78,34 @@
 			</tr>
 			<tr>
 				<td>
-					Database Host
+					 <%= label_tag(:dbhost, "Database Host" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:dbhost) %>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					Database Name
+					 <%= label_tag(:dbname, "Database Name" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:dbname) %>
 				</td>
 			</tr>			
 			<tr>
 				<td>
-					Database User
+					 <%= label_tag(:dbuser, "Database User" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:dbuser) %>
 				</td>
 			</tr>	
 			<tr>
 				<td>
-					Database User Password
+					 <%= label_tag(:dbpasswd, "Database User Password" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:dbpasswd) %>
 				</td>
 			</tr>	
 			<tr>
@@ -110,13 +115,13 @@
 			</tr>
 			<tr>
 				<td>
-					
+					 Volume Name
 				</td>
 				<td>
-					
+					 <%= label_tag(:vol_dest, "Volume Destination" )%>
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:vol_dest) %>
 				</td>
 			</tr>
 			<tr>
@@ -126,15 +131,18 @@
 			</tr>
 			<tr>
 				<td>
-					Enable Monitor
+					 <%= label_tag(:monitor, "Enable Monitor" )%>
 				</td>
 				<td>
-					
+					 <%= check_box_tag(:monitor) %>
 				</td>				
 			</tr>
 			<tr>
 				<td>
-					Register DNS
+					 <%= label_tag(:register_dns, "Register DNS" )%>
+				</td>
+				<td>
+					<%= check_box_tag(:register_dns) %>
 				</td>
 			</tr>
 			<tr>
@@ -148,10 +156,10 @@
 					User
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:add_web_user) %>
 				</td>
 				<td>
-					Add New User
+					 <%= label_tag(:add_web_user, "Add New User" )%>
 				</td>
 			</tr>
 				<tr>
@@ -159,10 +167,10 @@
 					Group
 				</td>
 				<td>
-					
+					 <%= text_field_tag(:add_web_group) %>
 				</td>
 				<td>
-					Add New Group
+					 <%= label_tag(:add_web_group, "Add New Group" )%>
 				</td>
 			</tr>		
 			<tr>
@@ -177,8 +185,8 @@
 			</tr>
 					<tr>
 				<td>New Subnet or host</td>
-				<td></td>
-				<td>Add</td>
+				<td> <%= text_field_tag(:subnet) %></td>
+				<td> <%= label_tag(:subnet, "Add" )%></td>
 			</tr>	
 	
 	<% end %>  
