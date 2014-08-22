@@ -15,7 +15,8 @@
 		   createdb_user=true
 		   dbpasswd=""
 		   createdb=true
-		   
+		   volume_names = Array.new
+	
 		     services =  @blueprint["software"]["softwareservices"]
 		   	services.each do |service|
 		   		p service
@@ -24,9 +25,10 @@
 		   			p "dbname " 
 		   			p dbname
 		   		elsif service["servicetype_name"] == "filesystem"
-		   			volumename =  service["name"]
+		   			volume_name =  service["name"]
+		   			volume_names.push(volume_name)
 		   			p " vol " 
-		   			p volumename
+		   			p volume_name
 		   		end
 		   	end
 		 %> 
@@ -144,28 +146,41 @@
 					<strong>Volume Settings</strong>
 				</td>
 			</tr>
+			<% volume_names.each do |volume_name| %>
+				
 			<tr>
 				<td>
-					 Volume Name
+					<%= label_tag(:vol_src, "Source" )%>
+					<%= text_field_tag(:vol_src) %>
 				</td>
 				<td>
-					Volume Destination
+					<%=volume_name %>
 				</td>
+				
+			</tr>
+			<% done %>
+			<tr>
 				<td>
-					Permissions
+					<strong>Additional Volumes</strong>
 				</td>
 			</tr>
 			<tr>
-				<td>
-					Volume name from blueprint
-				</td
-				<td>
-					 <%= label_tag(:vol_dest, "Destination" )%>
+				<td>					
+					 <%= label_tag(:new_vol_src, "Source" )%>
+					 <%= text_field_tag(:new_vol_src)%>
+					 
 				</td>
 				<td>
-					 <%= text_field_tag(:vol_rw_permission) %>
+					 <%= label_tag(:new_vol_dest, "Destination" )%>
+					 <%= text_field_tag(:vol_dest)%>
+					 
 				</td>
-				<td>RW <%= check_box_tag(:vol_rw_permission) %></td>
+
+				<td>
+					 <%= label_tag(:new_vol_rw_permission."Write Access") %>
+			
+					<%= check_box_tag(:new_vol_rw_permission) %>
+				</td>
 			</tr>
 			<tr>
 				<td>
