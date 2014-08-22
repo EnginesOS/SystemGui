@@ -91,6 +91,10 @@
 				<td>
 					 <%= text_field_tag(:dbname) %>
 				</td>
+				<td>
+					<%= label_tag(:createdb, "Create DB" )%>
+					<%= check_box_tag(:createdbr) %>
+				</td>
 			</tr>			
 			<tr>
 				<td>
@@ -98,6 +102,10 @@
 				</td>
 				<td>
 					 <%= text_field_tag(:dbuser) %>
+				</td>
+				<td>
+					<%= label_tag(:createdb_user, "Create DB User" )%>
+					<%= check_box_tag(:createdb_user) %>
 				</td>
 			</tr>	
 			<tr>
@@ -118,11 +126,23 @@
 					 Volume Name
 				</td>
 				<td>
-					 <%= label_tag(:vol_dest, "Volume Destination" )%>
+					Volume Destination
 				</td>
 				<td>
-					 <%= text_field_tag(:vol_dest) %>
+					Permissions
 				</td>
+			</tr>
+			<tr>
+				<td>
+					Volume name from blueprint
+				</td
+				<td>
+					 <%= label_tag(:vol_dest, "Destination" )%>
+				</td>
+				<td>
+					 <%= text_field_tag(:vol_rw_permission) %>
+				</td>
+				<td>RW <%= check_box_tag(:vol_rw_permission) %></td>
 			</tr>
 			<tr>
 				<td>
@@ -131,10 +151,10 @@
 			</tr>
 			<tr>
 				<td>
-					 <%= label_tag(:monitor, "Enable Monitor" )%>
+					 <%= label_tag(:monitor_site, "Enable Monitor" )%>
 				</td>
 				<td>
-					 <%= check_box_tag(:monitor) %>
+					 <%= check_box_tag(:monitor_site) %>
 				</td>				
 			</tr>
 			<tr>
@@ -147,20 +167,27 @@
 			</tr>
 			<tr>
 				<td>
-					<strong>Web Protect</strong>
+					<strong>Web Protect</strong> Perhaps the following section goes else where/post configure
 				</td>
 				
 			</tr>
 			<tr>
 				<td>
-					User
+					Current Users
+				</td>
+					<td>
+					Availiable Users
+				</td>
+			</tr>
+			<tr>
+				<td>
+				 <%= label_tag(:add_web_user, "New User" )%>
+				</td>
 				</td>
 				<td>
 					 <%= text_field_tag(:add_web_user) %>
 				</td>
-				<td>
-					 <%= label_tag(:add_web_user, "Add New User" )%>
-				</td>
+
 			</tr>
 				<tr>
 				<td>
