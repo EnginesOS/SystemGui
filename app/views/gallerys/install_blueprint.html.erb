@@ -35,8 +35,8 @@
 		 %> 
 		  <table>
 		<%= form_tag({controller: "gallerys", action: "install_from_blueprint"}, method: "get") do 
-			hidden_field_tag ("blueprints_url",@gallery.blueprints_url)
-			hidden_field_tag ("blueprint_id",@blueprint_id) %>
+			hidden_field_tag (:blueprints_url,@gallery.blueprints_url)
+			hidden_field_tag (:blueprint_id,@blueprint_id) %>
            <tr>        
 				<td>
 					 <%= label_tag(:license, "Agree to License" )%> <a href=<%= license_url %>><%= license_name %></a>
