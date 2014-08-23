@@ -16,7 +16,7 @@ class GallerysController < ApplicationController
 
           @blueprint = @gallery.get_blueprint(params[:blueprint_id])
             if @blueprint != nil
-              @repository = @blueprint.get_repository( params[:blueprint_id])
+              @repository = @gallery.get_repository( params[:blueprint_id])
             else   
               @error_mesg="Failed to load blueprint " + params[:blueprint_id] + " from " + params[:gallery_url] + " via " + @gallery.blueprints_url
             end
