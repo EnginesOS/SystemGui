@@ -13,12 +13,14 @@ class GallerysController < ApplicationController
   def install_blueprint  
     @gallery = EngineGallery.getGallery(params[:id],params[:gallery_url])
       if @gallery !=nil
+
           @blueprint = @gallery.get_blueprint(params[:blueprint_id])
-            if @blueprint != nil            
-              @blueprint_id=params[:blueprint_id]
-            else
+            if @blueprint != nil
+              @repository = @blueprint.get_repository( params[:blueprint_id])
+            else   
               @error_mesg="Failed to load blueprint " + params[:blueprint_id] + " from " + params[:gallery_url] + " via " + @gallery.blueprints_url
             end
+            
       else
         @error_mesg="Failed to load Gallery params[:id] params[:gallery_url] params[:blueprint_id] " +  params[:id] + " " + params[:blueprint_id] + " " +  params[:gallery_url]           
       end

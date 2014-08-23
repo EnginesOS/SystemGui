@@ -138,6 +138,11 @@ end
   def filter_blueprints types
   end
   
+  def get_repository(id)
+    blueprint_entry = get_blueprint_entry(id)
+    repository = blueprint_entry["repository"]
+      return repository
+  end
   def get_blueprint(id)
     blueprint_entry = get_blueprint_entry(id)
     p blueprint_entry
