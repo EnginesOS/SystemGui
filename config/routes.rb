@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   resources :gallerys do
     get :list_local, :on => :collection
     get :install_blueprint, :on => :member
-    get :install_from_blueprint, :on => :member
+    post :install_from_blueprint, :on => :member
   end
   
   resources :engines do
