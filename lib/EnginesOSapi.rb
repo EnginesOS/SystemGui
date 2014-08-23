@@ -162,7 +162,7 @@ class EnginesOSapi
      if engine == nil
        return false
      end
-    return engine.delete_container()     
+    return engine.delete_image()     
    end
     
    def createEngine engine_name
