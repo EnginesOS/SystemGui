@@ -152,10 +152,11 @@ end
     buildname = File.basename(repository)
     segments = buildname.split('.')
     buildname = segments[0]
-    
+    p repository
+    p buildname
     clone_repo(repository,buildname)
     blueprint_filename =  SysConfig.DeploymentDir + "/" + short_name + "/blueprint.json"
-
+    p blueprint_filename
       blueprint_file = File.open(blueprint_filename,"r")
       blueprint_json_str = blueprint_file.read
       blueprint_file.close 
