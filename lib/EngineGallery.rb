@@ -152,6 +152,7 @@ end
     buildname = File.basename(repository)
     segments = buildname.split('.')
     buildname = segments[0]
+    p short_name
     p repository
     p buildname
     clone_repo(repository,buildname)
