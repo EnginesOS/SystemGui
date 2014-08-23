@@ -148,7 +148,12 @@ end
     p blueprint_entry
     repository = blueprint_entry["repository"]
     short_name = blueprint_entry["short_name"]
-    clone_repo(repository,short_name)
+      
+    buildname = File.basename(repository)
+    segments = buildname.split('.')
+    buildname = segments[0]
+    
+    clone_repo(repository,buildname)
     blueprint_filename =  SysConfig.DeploymentDir + "/" + short_name + "/blueprint.json"
 
       blueprint_file = File.open(blueprint_filename,"r")
@@ -182,9 +187,7 @@ end
   end
   
   def clone_repo(repo, buildname)
-    buildname = File.basename(repo)
-    segments = buildname.split('.')
-    buildname = segments[0]
+   
     p buildname
       backup_lastbuild repo 
            g = Git.clone(repo, buildname, :path => SysConfig.DeploymentDir)
