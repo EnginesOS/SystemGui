@@ -35,8 +35,8 @@ class EnginesOSapi
   end
 
   def buildEngine(repository,host,domain_name,environment)
-    EngineBuilder.new(repository,host,domain_name,environment)
-    engine = b.build_from_blue_print
+    engine_builder = EngineBuilder.new(repository,host,domain_name,environment)
+    engine = engine_builder.build_from_blue_print
     engine.set_docker_api  docker_api
     return engine    
     
