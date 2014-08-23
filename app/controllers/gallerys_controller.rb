@@ -26,7 +26,8 @@ class GallerysController < ApplicationController
       end
   end
   def install_from_blueprint
-    
+   engine = @enginesOS_api.buildEngine(params[:repository],params[:host],params[:domain_name],"")
+    redirect_to engine_path(engine.containerName)
   end
   def show  
     if  @galleries == nil

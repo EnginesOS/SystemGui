@@ -5,6 +5,7 @@ require "/opt/engos/lib/ruby/ManagedEngine.rb"
 require "/opt/engos/lib/ruby/ManagedService.rb"
 require "/opt/engos/lib/ruby/NginxService.rb"
 require "/opt/engos/lib/ruby/NagiosService.rb"
+require "/opt/engos/lib/ruby/EngineBuilder.rb"
 
 class EnginesOSapi
   def initialize()
@@ -33,7 +34,13 @@ class EnginesOSapi
      end
   end
 
-
+  def buildEngine(repository,host,domain_name,environment)
+    EngineBuilder.new(repository,host,domain,environment)
+    engine = b.build_from_blue_print
+    engine.set_docker_api  docker_api
+    return engine    
+    
+  end
  
   
   def getManagedEngines()
