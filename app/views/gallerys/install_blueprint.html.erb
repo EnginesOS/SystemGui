@@ -34,7 +34,7 @@
 		   	end
 		 %> 
 		  <table>
-		<%= form_tag({controller: "gallerys", action: "install_from_blueprint"}, method: "get") do  %>
+		<%= form_tag({:controller "gallerys", :action "install_from_blueprint"}, :method "get") do  %>
 			<%=  hidden_field_tag :blueprints_url,@gallery.blueprints_url %>
 			<%=  hidden_field_tag :blueprint_id,@blueprint_id %>
            <tr>        
@@ -47,7 +47,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<strong>Host name Settings</strong
+					<strong>Host name Settings</strong>
 				</td>
 			</tr>
 				
@@ -73,6 +73,7 @@
 				The following section is not supported yet.
 				</td>
 			</tr>
+			<tr>
 				<td>
 					<strong>Environment Variables</strong>
 				</td>
@@ -242,7 +243,7 @@
 				<td>
 				 <%= label_tag(:add_web_user, "New User" )%>
 				</td>
-				</td>
+
 				<td>
 					 <%= text_field_tag(:add_web_user) %>
 				</td>
