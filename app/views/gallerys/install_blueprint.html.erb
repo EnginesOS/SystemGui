@@ -33,9 +33,10 @@
 		   		end
 		   	end
 		 %> 
-		  <table>
+
 		<%= form_tag({controller: "gallerys", action: "install_from_blueprint"}, method: "post") do  %>
 			<%=  hidden_field_tag :blueprints_repository,@repository %>
+	<table>
            <tr>        
 				<td>
 					 <%= label_tag(:license, "Agree to License" )%> <a href=<%= license_url %>><%= license_name %></a>
@@ -193,7 +194,7 @@
 				
 			</tr>
 			<% end %>  
-					<tr>
+			<tr>
 				<td>
 					*leave blank for system default 
 				</td>
@@ -234,7 +235,7 @@
 				<td>
 					Current Users
 				</td>
-					<td>
+				<td>
 					Availiable Users
 				</td>
 			</tr>
@@ -242,13 +243,11 @@
 				<td>
 				 <%= label_tag(:add_web_user, "New User" )%>
 				</td>
-
 				<td>
 					 <%= text_field_tag(:add_web_user) %>
 				</td>
-
 			</tr>
-				<tr>
+			<tr>
 				<td>
 					Group
 				</td>
@@ -269,10 +268,11 @@
 				<td>Configured Subnets/hosts</td>
 				<td></td>
 			</tr>
-					<tr>
+			<tr>
 				<td>New Subnet or host</td>
 				<td> <%= text_field_tag(:subnet) %></td>
 				<td> <%= label_tag(:subnet, "Add" )%></td>
 			</tr>	
 	
 	<% end %>  
+</table>
