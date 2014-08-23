@@ -49,7 +49,7 @@ class EnginesController < ApplicationController
   end 
   
   def deleteimage
-    @result = @enginesOS_api.deleteEngine(params[:id])
+    @result = @enginesOS_api.deleteEngineImage(params[:id])
     redirect_to engines_path
 
   end 
