@@ -27,7 +27,7 @@ class GallerysController < ApplicationController
   end
   def install_from_blueprint
     p "install"
-   engine = @enginesOS_api.buildEngine(params[:repository],params[:host],params[:domain_name],"")
+   engine = @enginesOS_api.buildEngine(params[:blueprints_repository],params[:host_name],params[:domain_name],"")
     redirect_to engine_path(engine.containerName)
   end
   def show  
