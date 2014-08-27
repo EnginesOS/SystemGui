@@ -24,7 +24,9 @@
 	 	<% if @service.eports && @service.eports.length >0 %>
 	 		<tr><td colspan=2>Open Ports, Public ports are represented as internal:external port</td></tr>
 	 			<% @service.eports.each do |port| %>
+	 				<% if Port != nil %>
 	 				<tr><td><%= port.name%></td><td><%= port.port.to_s %>:<%= port.external.to_s %> <%= port.publicFacing%></td></tr>
+	 				<%end%>
 	 			<%end%>
 	 	<%end%>
 	 </table>
