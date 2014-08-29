@@ -276,3 +276,842 @@ Started GET "/assets/welcome.js?body=1" for 192.168.108.245 at 2014-08-13 18:20:
 
 
 Started GET "/assets/application.js?body=1" for 192.168.108.245 at 2014-08-13 18:20:04 +1000
+
+
+Started GET "/" for 127.0.0.1 at 2014-08-29 11:58:03 +1000
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+Completed 401 Unauthorized in 63ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-08-29 11:58:03 +1000
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.7ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (59.6ms)
+Completed 200 OK in 665ms (Views: 611.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 11:58:04 +1000
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.3ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_engos_ctl_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_engos_ctl_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_engos_ctl_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_engos_ctl_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'admin@engineos.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at", "username") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2014-08-29 01:58:24.333961"], ["email", "admin@engineos.com"], ["encrypted_password", "$2a$10$/VPsdgpghj8zVTVWbXTyxeW.7NuGf.jxgO.Fr5Si3bsVnNg653NLq"], ["updated_at", "2014-08-29 01:58:24.333961"], ["username", "admin"]]
+  [1m[35m (93.8ms)[0m  commit transaction
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-08-29 11:59:01 +1000
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"tRthX2n3EVXZbPp9yL07YixkRgShvFRLs2urvhCfJLw=", "user"=>{"username"=>"admin", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."username" = 'admin'  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[35mSQL (0.3ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["current_sign_in_at", "2014-08-29 01:59:01.971907"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-08-29 01:59:01.971907"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-08-29 01:59:01.973050"]]
+  [1m[36m (95.7ms)[0m  [1mcommit transaction[0m
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 219ms (ActiveRecord: 97.2ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-08-29 11:59:02 +1000
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"tRthX2n3EVXZbPp9yL07YixkRgShvFRLs2urvhCfJLw=", "user"=>{"username"=>"admin", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."username" = 'admin'  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["current_sign_in_at", "2014-08-29 01:59:02.169479"], ["sign_in_count", 2], ["updated_at", "2014-08-29 01:59:02.170059"]]
+  [1m[36m (110.8ms)[0m  [1mcommit transaction[0m
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 185ms (ActiveRecord: 111.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-08-29 11:59:02 +1000
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 12ms (Views: 9.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 11:59:02 +1000
+
+
+Started GET "/engines" for 127.0.0.1 at 2014-08-29 11:59:06 +1000
+Processing by EnginesController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered engines/index.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 15ms (Views: 12.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 11:59:08 +1000
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 13ms (Views: 11.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 11:59:10 +1000
+Processing by ServicesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered services/index.html.erb within layouts/application (68.9ms)
+Completed 200 OK in 85ms (Views: 77.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/services/mgmt" for 127.0.0.1 at 2014-08-29 12:00:01 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"mgmt"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (50.4ms)
+Completed 200 OK in 63ms (Views: 58.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 12:00:04 +1000
+Processing by ServicesController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered services/index.html.erb within layouts/application (77.4ms)
+Completed 200 OK in 98ms (Views: 88.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/services/nginx" for 127.0.0.1 at 2014-08-29 12:00:06 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"nginx"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (49.7ms)
+Completed 200 OK in 62ms (Views: 58.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/services/nginx/create_service" for 127.0.0.1 at 2014-08-29 12:00:10 +1000
+Processing by ServicesController#create_service as HTML
+  Parameters: {"id"=>"nginx"}
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+Redirected to http://127.0.0.1:3000/services/nginx
+Completed 302 Found in 363ms (ActiveRecord: 0.6ms)
+
+
+Started GET "/services/nginx" for 127.0.0.1 at 2014-08-29 12:00:10 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"nginx"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (135.8ms)
+Completed 200 OK in 147ms (Views: 143.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 12:00:14 +1000
+Processing by ServicesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered services/index.html.erb within layouts/application (72.9ms)
+Completed 200 OK in 94ms (Views: 82.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/services/mysql_server" for 127.0.0.1 at 2014-08-29 12:00:59 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"mysql_server"}
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (45.7ms)
+Completed 200 OK in 60ms (Views: 54.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/services/mysql_server/create_service" for 127.0.0.1 at 2014-08-29 12:01:02 +1000
+Processing by ServicesController#create_service as HTML
+  Parameters: {"id"=>"mysql_server"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+Redirected to http://127.0.0.1:3000/services/mysql_server
+Completed 302 Found in 282ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/services/mysql_server" for 127.0.0.1 at 2014-08-29 12:01:02 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"mysql_server"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (174.3ms)
+Completed 200 OK in 187ms (Views: 184.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 12:01:05 +1000
+Processing by ServicesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered services/index.html.erb within layouts/application (74.5ms)
+Completed 200 OK in 96ms (Views: 85.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/services/monit" for 127.0.0.1 at 2014-08-29 12:01:07 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"monit"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (53.8ms)
+Completed 200 OK in 68ms (Views: 64.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/services/monit/create_service" for 127.0.0.1 at 2014-08-29 12:01:09 +1000
+Processing by ServicesController#create_service as HTML
+  Parameters: {"id"=>"monit"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+Redirected to http://127.0.0.1:3000/services/monit
+Completed 302 Found in 399ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/services/monit" for 127.0.0.1 at 2014-08-29 12:01:09 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"monit"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (175.6ms)
+Completed 200 OK in 186ms (Views: 183.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 12:01:12 +1000
+Processing by ServicesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered services/index.html.erb within layouts/application (80.4ms)
+Completed 200 OK in 98ms (Views: 90.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/services/cAdvisor" for 127.0.0.1 at 2014-08-29 12:01:15 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"cAdvisor"}
+  [1m[35mUser Load (0.9ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (47.5ms)
+Completed 200 OK in 66ms (Views: 57.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/services/cAdvisor/create_service" for 127.0.0.1 at 2014-08-29 12:01:19 +1000
+Processing by ServicesController#create_service as HTML
+  Parameters: {"id"=>"cAdvisor"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+Redirected to http://127.0.0.1:3000/services/cAdvisor
+Completed 302 Found in 27071ms (ActiveRecord: 0.3ms)
+
+
+Started GET "/services/cAdvisor" for 127.0.0.1 at 2014-08-29 12:01:46 +1000
+Processing by ServicesController#show as HTML
+  Parameters: {"id"=>"cAdvisor"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/show.html.erb within layouts/application (151.9ms)
+Completed 200 OK in 168ms (Views: 165.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 12:01:59 +1000
+Processing by ServicesController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered services/index.html.erb within layouts/application (78.6ms)
+Completed 200 OK in 93ms (Views: 86.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:02:01 +1000
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 14ms (Views: 10.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/system/index" for 127.0.0.1 at 2014-08-29 12:02:03 +1000
+Processing by SystemController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered system/index.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 1049ms (Views: 14.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:02:05 +1000
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 14ms (Views: 10.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/engines" for 127.0.0.1 at 2014-08-29 12:02:07 +1000
+Processing by EnginesController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered engines/index.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 13ms (Views: 10.4ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:02:15 +1000
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 13ms (Views: 10.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/gallerys" for 127.0.0.1 at 2014-08-29 12:02:18 +1000
+Processing by GallerysController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered gallerys/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 15ms (Views: 8.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/gallerys/enginesos_gallery" for 127.0.0.1 at 2014-08-29 12:02:23 +1000
+Processing by GallerysController#show as HTML
+  Parameters: {"id"=>"enginesos_gallery"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+Completed 500 Internal Server Error in 127255ms
+
+Errno::ETIMEDOUT (Connection timed out - connect(2) for "220.233.20.158" port 3001):
+  lib/EngineGallery.rb:118:in `listBluePrints'
+  app/controllers/gallerys_controller.rb:41:in `block in show'
+  app/controllers/gallerys_controller.rb:37:in `each'
+  app/controllers/gallerys_controller.rb:37:in `show'
+
+
+  Rendered /home/lachlan/.rvm/gems/ruby-2.1.2/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.6ms)
+  Rendered /home/lachlan/.rvm/gems/ruby-2.1.2/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendered /home/lachlan/.rvm/gems/ruby-2.1.2/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /home/lachlan/.rvm/gems/ruby-2.1.2/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (25.8ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:06:05 +1000
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 111ms (Views: 47.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:06 +1000
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:06:37 +1000
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered welcome/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 120ms (Views: 117.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 12:06:38 +1000
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 12:06:42 +1000
+Processing by ServicesController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/index.html.erb within layouts/application (82.4ms)
+Completed 200 OK in 97ms (Views: 90.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:06:56 +1000
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered welcome/index.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 24ms (Views: 21.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/gallerys" for 127.0.0.1 at 2014-08-29 12:06:59 +1000
+Processing by GallerysController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered gallerys/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 12ms (Views: 8.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:07:01 +1000
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered welcome/index.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 12ms (Views: 8.9ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/engines" for 127.0.0.1 at 2014-08-29 12:08:00 +1000
+Processing by EnginesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered engines/index.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 14ms (Views: 11.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:08:02 +1000
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered welcome/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 13ms (Views: 10.4ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 124ms (Views: 62.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:47 +1000
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered welcome/index.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 14ms (Views: 11.9ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:49 +1000
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 10ms (Views: 8.1ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 12:21:51 +1000
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered welcome/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 20ms (Views: 17.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:29 +1000
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 12ms (Views: 8.8ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/engines.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/services.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/system.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/gallery.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/engines.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/gallery.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/services.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/system.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-29 12:22:55 +1000
+
+
+Started GET "/engines" for 127.0.0.1 at 2014-08-29 12:27:13 +1000
+Processing by EnginesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered engines/index.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 11ms (Views: 9.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/services" for 127.0.0.1 at 2014-08-29 12:27:17 +1000
+Processing by ServicesController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered services/index.html.erb within layouts/application (127.7ms)
+Completed 200 OK in 157ms (Views: 149.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/system/index" for 127.0.0.1 at 2014-08-29 12:27:21 +1000
+Processing by SystemController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered system/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 1029ms (Views: 19.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/gallerys" for 127.0.0.1 at 2014-08-29 12:28:18 +1000
+Processing by GallerysController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered gallerys/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 15ms (Views: 10.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/welcome/index" for 127.0.0.1 at 2014-08-29 12:28:48 +1000
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered welcome/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 15ms (Views: 12.5ms | ActiveRecord: 0.3ms)
