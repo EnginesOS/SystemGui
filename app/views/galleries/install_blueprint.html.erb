@@ -3,6 +3,9 @@
 <p>
 	<%= @error_mesg %>
 	<p>
+
+<% if @blueprint %> 
+
 <%= @blueprint["software"] %>
 		</p>
 		<%  license_name = @blueprint["software"]["license_name"]
@@ -34,7 +37,7 @@
 		   	end
 		 %> 
 
-		<%= form_tag({controller: "gallerys", action: "install_from_blueprint"}, method: "post") do  %>
+		<%= form_tag({controller: "galleries", action: "install_from_blueprint"}, method: "post") do  %>
 			<%=  hidden_field_tag :blueprints_repository,@repository %>
 	<table>
            <tr>        
@@ -276,3 +279,5 @@
 	
 	<% end %>  
 </table>
+
+<% end %>

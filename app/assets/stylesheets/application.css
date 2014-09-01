@@ -15,3 +15,31 @@
  *= require_tree .
  *= require_self
  */
+
+
+.alert {
+  margin-bottom: 10px;
+}
+
+.top-gap {
+  margin-top: 15px;
+}
+
+.navbar-buffer {
+  height: 60px;
+}
+
+
+.modal-dialog {
+  width: 90%;
+  margin: auto;
+  margin-top: 40px;
+}
+
+label {
+  color: #777;
+}
+
+hr {
+  margin: 2px;
+}

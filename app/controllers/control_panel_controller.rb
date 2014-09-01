@@ -1,6 +1,6 @@
 require "EnginesOSapi.rb"
 
-class WelcomeController < ApplicationController
+class ControlPanelController < ApplicationController
   before_action :authenticate_user!
 
   def index
@@ -13,7 +13,6 @@ class WelcomeController < ApplicationController
 
     @engines = @enginesOS_api.getManagedEngines()
     @engines ||= []
-
 
     @snapshop = Vmstat.snapshot
     sleep(1) #FIXME this is a kludge need to use time stamps and do a wait for or something better then just sleep?

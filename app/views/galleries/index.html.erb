@@ -3,7 +3,7 @@
 
   <% if @galleries %>
       <% @galleries.each do |gallery| %>
-          <%= render partial: "show", gallery: gallery %>
+          <%= render partial: "summary", locals: { gallery: gallery } %>
       <% end %>
   <% else %>
       <p>No galleries available</p>

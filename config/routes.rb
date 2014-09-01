@@ -1,54 +1,49 @@
 Rails.application.routes.draw do
   devise_for :users #, :skip => :registrations
 
-  root "welcome#control_panel"
-  get "control_panel", to: "welcome#control_panel", as: :control_panel
+  root "control_panel#control_panel"
+  get "control_panel", to: "control_panel#control_panel", as: :control_panel
+  get "galleries/:short_name", to: "galleries#show", as: :show_gallery
   get "galleries", to: "galleries#index", as: :galleries
-
-  get 'welcome/index'
-  get 'system/index'
-  get 'services/index'
-  get 'engines/index'
   
   resources :services do
-    get :pause, :on => :member
-        get :unpause, :on => :member
-        get :start, :on => :member
-        get :stop, :on => :member
-        get :restart, :on => :member
-        get :show, :on => :member
-        get :recreate, :on => :member
-        get :create_service, :on => :member
-    get :register_site, :on => :member
-     get :deregister_site, :on => :member     
-    get :register_dns, :on => :member
-    get :deregister_dns, :on => :member
+    get :pause, on: :member
+    get :unpause, on: :member
+    get :start, on: :member
+    get :stop, on: :member
+    get :restart, on: :member
+    get :show, on: :member
+    get :recreate, on: :member
+    get :create_service, on: :member
+    get :register_site, on: :member
+    get :deregister_site, on: :member     
+    get :register_dns, on: :member
+    get :deregister_dns, on: :member
   end
 
     
-  resources :gallerys do
-    get :list_local, :on => :collection
-    get :install_blueprint, :on => :member
-    post :install_from_blueprint, :on => :member
+  resources :galleries do
+    get :list_local, on: :collection
+    get :install_blueprint, on: :member
+    post :install_from_blueprint, on: :member
   end
   
   resources :engines do
-    get :pause, :on => :member
-    get :unpause, :on => :member
-    get :start, :on => :member
-    get :stop, :on => :member
-    get :deleteimage, :on => :member
-    get :restart, :on => :member
-    get :destroy_engine, :on => :member
-    get :create_engine, :on => :member
-    get :show, :on => :member
-    get :monitor, :on => :member
-    get :demonitor, :on => :member
-    get :register_site, :on => :member
-    get :deregister_site, :on => :member
-    get :register_dns, :on => :member
-    get :deregister_dns, :on => :member
-    
+    get :pause, on: :member
+    get :unpause, on: :member
+    get :start, on: :member
+    get :stop, on: :member
+    get :deleteimage, on: :member
+    get :restart, on: :member
+    get :destroy_engine, on: :member
+    get :create_engine, on: :member
+    get :show, on: :member
+    get :monitor, on: :member
+    get :demonitor, on: :member
+    get :register_site, on: :member
+    get :deregister_site, on: :member
+    get :register_dns, on: :member
+    get :deregister_dns, on: :member  
   end
   
 

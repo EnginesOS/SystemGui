@@ -9,19 +9,17 @@
 
 <%	@blueprints.each do |blueprint|  %>
 <tr>
-	<% gallery_name=@gallery.short_name
-	blueprint_id = blueprint["id"]
+	<% gallery_name = @gallery.short_name
+	  blueprint_id = blueprint["id"]
 	  short_name = blueprint["short_name"]
-	 name = blueprint["full_name"]
-	 home_page =  blueprint["home_page"]
-	 image_url =  blueprint["image_url"]
-	 %>
-	 <td>
-	 <img src=<%=image_url%>>
-	 </td>
-	 <td><%=name%></td>
-	 <td><a href=<%=home_page%>><%=home_page%></a></td>
-	 <td>	<td><%= link_to 'Install', install_blueprint_gallery_path(gallery_name,  :blueprint_id => blueprint_id,:gallery_url => @gallery.gallery_url) %></td></td>
+	  name = blueprint["full_name"]
+	  home_page =  blueprint["home_page"]
+	  image_url =  blueprint["image_url"]
+	%>
+	<td><img src=<%=image_url%>></td>
+	<td><%=name%></td>
+	<td><a href=<%=home_page%>><%=home_page%></a></td>
+	<td><%= link_to 'Install', install_blueprint_gallery_path(gallery_name, :id => @gallery.short_name, :gallery_url => @gallery.gallery_url, :blueprint_id => blueprint_id) %></td>
 </tr>
 <%end%>
 </table>

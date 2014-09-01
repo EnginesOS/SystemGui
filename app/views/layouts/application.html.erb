@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -24,7 +24,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if params[:controller] == 'welcome' %>">
+        <li class="<%= 'active' if params[:controller] == 'control_panel' %>">
           <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path %>
         </li>
         <li class="<%= 'active' if params[:controller] == 'galleries' %>">
@@ -48,6 +48,7 @@
 <div id="content">
   <div class="container">
     <div class="row">
+      <div class="navbar-buffer"></div>      
       <div class="col-sm-12">
         <% flash.each do |name, msg| %>
           <% if msg.is_a?(String) %>
@@ -57,7 +58,7 @@
             </div>
           <% end %>
         <% end %>
-      </div>      
+      </div>
       <%= yield %>
     </div>      
   </div>

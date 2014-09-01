@@ -13,10 +13,10 @@
 
 <div class="col-sm-12">
   <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-tablet") %> Application servers</h3>
-  <% if @applications %>
-      <% @applications.each do |application| %>
-          <% @engine = application %>
-          <%= render partial: "engines" %>
+  <% if @engines %>
+      <% @engines.each do |engine| %>
+          <% @engine = engine %>
+          <%= render partial: "engine" %>
       <% end %>
   <% else %>
       <p>No application servers installed</p>
