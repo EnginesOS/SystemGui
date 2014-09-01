@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+
+p "start of ApplicationController" 
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -8,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   require 'EnginesOSapi.rb'
     def create_api  
+      
       if @enginesOS_api == nil
          @enginesOS_api = EnginesOSapi.new
        end

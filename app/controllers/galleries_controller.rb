@@ -1,5 +1,5 @@
 require 'EngineGallery.rb'
-class GallerysController < ApplicationController
+class GalleriesController < ApplicationController
   before_action :authenticate_user!
   
   def index
@@ -26,16 +26,12 @@ class GallerysController < ApplicationController
       end
   end
   def install_from_blueprint
-    p "install"
-   engine = @enginesOS_api.buildEngine(params[:blueprints_repository],params[:host_name],params[:domain_name],"")
+    engine = @enginesOS_api.buildEngine(params[:blueprints_repository],params[:host_name],params[:domain_name],"")
     redirect_to engine_path(engine.containerName)
   end
-  def show  
-    if  @galleries == nil
-      @galleries = EngineGallery.list_local
-    end
+  def show
+    @galleries = EngineGallery.list_local
     @galleries.each do |gallery|
-     #p params[:id]
         if gallery.short_name == params[:id]
           @gallery = gallery         
           @blueprints= gallery.listBluePrints
@@ -43,5 +39,4 @@ class GallerysController < ApplicationController
      end
   end
   
- 
 end

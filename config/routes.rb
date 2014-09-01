@@ -1,16 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users #, :skip => :registrations
+
+  root "welcome#control_panel"
+  get "control_panel", to: "welcome#control_panel", as: :control_panel
+  get "galleries", to: "galleries#index", as: :galleries
+
   get 'welcome/index'
-
   get 'system/index'
-
   get 'services/index'
-
   get 'engines/index'
-  
-  get 'gallery/index'
-  
-  root 'welcome#index'
   
   resources :services do
     get :pause, :on => :member
