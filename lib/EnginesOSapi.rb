@@ -340,7 +340,7 @@ class EnginesOSapi
     if service == nil
       return failed(service_name,"No Such Service","Start Service")
     end
-    retval service.start_container()
+    retval = service.start_container()
     if retval == false
       return failed(service_name,service.last_error,"Start Service")
     end
