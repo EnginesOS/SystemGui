@@ -1,3 +1,59 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.indicator {
+  font-size: 75%;
+}
+
+.indicator_running {
+  color: #4b4;
+}
+
+.indicator_paused {
+  color: #ff7f00;
+}
+
+.indicator_stopped {
+  color: #f00;
+}
+
+.indicator_nocontainer {
+  color: #bbb;
+}
+
+.engine-gadget {
+  height: 200px;
+  width: 200px;
+  margin: 5px;
+}
+
+
+.dropdown-title {
+    font-size: 120%;
+    text-align: center;
+    width: 196px;
+} 
+
+
+.engine-gadget-dropdown-menu {
+  top: 4px;
+  left: 1px;
+}
+
+.control-panel-title {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  color: #777;
+}
+
+.control-panel-heading {
+  margin-top: 20px;
+  color: #777;
+}
+
+.btn-group {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}

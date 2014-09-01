@@ -1,0 +1,7 @@
+  <div class="panel panel-default top-gap" id="advanced">
+    <div class="panel-heading">
+      <h4><%= content_tag(:i, "", class: "fa fa-caret-down", id: "show_services_details_button", style: "") %><%= content_tag(:i, "", class: "fa fa-caret-up", id: "show_services_details_button", style: "display: none;") %> Details</h4>
+    </div>
+    <div class="panel-body">
+
+
