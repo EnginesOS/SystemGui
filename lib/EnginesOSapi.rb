@@ -31,7 +31,7 @@ class EnginesOSapi
       @was_sucess=result
       @result_code = code
       @item_name = item_name
-      @result_mesg = error_msg
+      @result_mesg = msg
       @action = cmd
     end
 
