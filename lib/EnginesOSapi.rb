@@ -272,7 +272,7 @@ class EnginesOSapi
     if engine == nil
       return failed(engine_name,"no Engine","Register Engine DNS")
     end
-    retval  engine.register_dns()
+    retval = engine.register_dns()
     if retval == false
       return failed(engine_name,engine.last_error,"Register Engine DNS")
     end
@@ -318,7 +318,7 @@ class EnginesOSapi
   def read_state container
     retval =   container.read_state()
     if retval == false
-      return failed(container.name,"Failed to ReadState","read state")
+      return failed(contain,"Register Service DNS","Failed to ReadState","read state")
     end
     return sucess(container.name,"read state")
   end
