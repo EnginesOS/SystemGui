@@ -329,7 +329,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Stop Service")
     end
-    return sucess(engine_name,"Stop Service")
+    return sucess(service_name,"Stop Service")
   end
 
   def startService service_name
@@ -341,7 +341,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Start Service")
     end
-    return sucess(engine_name,"Start Service")
+    return sucess(service_name,"Start Service")
   end
 
   def  pauseService service_name
@@ -353,7 +353,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Pause Service")
     end
-    return sucess(engine_name,"Pause Service")
+    return sucess(service_name,"Pause Service")
   end
 
   def  unpauseService service_name
@@ -365,7 +365,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Unpause Service")
     end
-    return sucess(engine_name)
+    return sucess(service_name,"Unpause Service")
   end
 
   def registerServiceWebSite service_name
@@ -377,7 +377,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Register Service Web")
     end
-    return sucess(engine_name,"Register Service Web")
+    return sucess(service_name,"Register Service Web")
   end
 
   def deregisterServiceWebSite service_name
@@ -389,7 +389,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Deregister Service Web")
     end
-    return sucess(engine_name,"Deregister Service Web")
+    return sucess(service_name,"Deregister Service Web")
   end
 
   def registerServiceDNS service_name
@@ -401,7 +401,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Register Service DNS")
     end
-    return sucess(engine_name)
+    return sucess(service_name,"Register Service DNS")
   end
 
   def deregisterServiceDNS service_name
@@ -413,7 +413,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Deregister Service DNS")
     end
-    return sucess(engine_name,"Deregister Service DNS")
+    return sucess(service_name,"Deregister Service DNS")
   end
 
   def createService service_name
@@ -425,7 +425,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Create Service")
     end
-    return sucess(engine_name,"Create Service")
+    return sucess(service_name,"Create Service")
   end
 
   def recreateService service_name
@@ -437,7 +437,7 @@ class EnginesOSapi
     if retval == false
       return failed(service_name,service.last_error,"Recreate Service")
     end
-    return sucess(engine_name,"Recreate Service")
+    return sucess(service_name,"Recreate Service")
   end
 
   protected
