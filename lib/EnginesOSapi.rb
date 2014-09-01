@@ -396,7 +396,7 @@ class EnginesOSapi
   end
 
   def registerServiceDNS service_name
-    service =EnginesOSapi.getManagedService(service_name,"Register Service DNS")
+    service =EnginesOSapi.getManagedService(service_name)
     if service == nil
       return  failed(service_name,service.last_error,"Register Service DNS")
     end
