@@ -336,7 +336,7 @@ class EnginesOSapi
   end
 
   def stopService service_name
-    service = EnginesOSapi.getManagedService(service_name)
+    service = getManagedService(service_name)
     if service == nil
       return failed(service_name,"No Such Service","Stop Service")
     end
@@ -348,7 +348,7 @@ class EnginesOSapi
   end
 
   def startService service_name
-    service = EnginesOSapi.getManagedService(service_name)
+    service = getManagedService(service_name)
     if service == nil
       return failed(service_name,"No Such Service","Start Service")
     end
@@ -360,7 +360,7 @@ class EnginesOSapi
   end
 
   def  pauseService service_name
-    service = EnginesOSapi.getManagedService(service_name)
+    service = getManagedService(service_name)
     if service == nil
       return failed(service_name,"No Such Service","Pause Service")
     end
@@ -373,7 +373,7 @@ class EnginesOSapi
 
 
   def  unpauseService service_name
-    service = EnginesOSapi.getManagedService(service_name) 
+    service = getManagedService(service_name) 
     if service == nil
       return failed(service_name,"No Such Service","Unpause Service")
     end
@@ -385,7 +385,7 @@ class EnginesOSapi
   end
 
   def registerServiceWebSite service_name
-    service = EnginesOSapi.getManagedService(service_name)
+    service = getManagedService(service_name)
     if service == nil
       return failed(service_name,"No Such Service","Register Service Web")
     end
@@ -397,7 +397,7 @@ class EnginesOSapi
   end
 
   def deregisterServiceWebSite service_name
-    service =EnginesOSapi.getManagedService(service_name)
+    service =getManagedService(service_name)
     if service == nil
       return  failed(service_name,"No Such Service","Deregister Service Web")
     end
@@ -409,7 +409,7 @@ class EnginesOSapi
   end
 
   def registerServiceDNS service_name
-    service =EnginesOSapi.getManagedService(service_name)
+    service =getManagedService(service_name)
     if service == nil
       return  failed(service_name,service.last_error,"Register Service DNS")
     end
@@ -421,7 +421,7 @@ class EnginesOSapi
   end
 
   def deregisterServiceDNS service_name
-    service =EnginesOSapi.getManagedService(service_name)
+    service =getManagedService(service_name)
     if service == nil
       return  failed(service_name,service.last_error,"Deregister Service DNS")
     end
@@ -433,7 +433,7 @@ class EnginesOSapi
   end
 
   def createService service_name
-    service =EnginesOSapi.getManagedService(service_name)
+    service =getManagedService(service_name)
     if service == nil
       return  failed(service_name,service.last_error,"Create Service")
     end
@@ -445,7 +445,7 @@ class EnginesOSapi
   end
 
   def recreateService service_name
-    service =EnginesOSapi.getManagedService(service_name)
+    service =getManagedService(service_name)
     if service == nil
       return failed(service_name,"No Such Service","Recreate Service")
     end
