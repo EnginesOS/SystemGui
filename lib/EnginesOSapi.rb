@@ -29,7 +29,7 @@ class EnginesOSapi
     def initialize(item_name,cmd)
       @was_sucess=true
       @result_code = 0
-      @item_name = item_name
+      @item_name = item_name      
       @result_mesg = "OK"
       @action = cmd
     end
@@ -111,7 +111,7 @@ class EnginesOSapi
     yaml_file = File.open(yam_file_name)
     # managed_service = YAML::load( yaml_file)
     managed_service = ManagedService.from_yaml(yaml_file,docker_api)
-    if managed_service = nil
+    if managed_service == nil
       return failed(yam_file_name,"Fail to Load configuration:","Load Service")
     end
     return managed_service
