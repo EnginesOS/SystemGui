@@ -57,7 +57,7 @@ class EnginesOSapi
   def buildEngine(repository,host,domain_name,environment)
     engine_builder = EngineBuilder.new(repository,host,domain_name,environment)
     engine = engine_builder.build_from_blue_print
-    engine.set_docker_api  docker_api
+    engine.set_docker_api  @docker_api
     engine.save_state
     return engine
 
@@ -111,7 +111,7 @@ class EnginesOSapi
      return managed_service
    end
 
-  def EnginesOSapi.getManagedService(service_name)
+  def getManagedService(service_name)
 
     managed_service = EnginesOSapi.loadManagedService(service_name,@docker_api)
     if managed_service == nil
@@ -136,6 +136,18 @@ class EnginesOSapi
     return managed_engine
   end
 
+  def recreateEngine engine_name
+    engine = loadManagedEngine engine_name
+        if engine == nil
+          return failed(engine_name,"no Engine","Stop")
+        end
+        retval = engine.recreate()
+        if retval == false
+          return failed(engine.name,"No Engine","Stop")
+        else
+          return sucess(engine.name)
+        end
+  end
   #At this stage just wrappers
 
   def stopEngine engine_name
@@ -358,6 +370,7 @@ class EnginesOSapi
     end
     return sucess(service_name,"Pause Service")
   end
+
 
   def  unpauseService service_name
     service = EnginesOSapi.getManagedService(service_name) 
