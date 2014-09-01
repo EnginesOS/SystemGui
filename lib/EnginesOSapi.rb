@@ -18,6 +18,15 @@ class EnginesOSapi
   #hmm something like this to get errors back
 
   class  EnginesOSapiResult
+    
+    def initialize(item_name,cmd)
+        @was_sucess=true
+        @result_code = 0
+        @item_name = item_name      
+        @result_mesg = "OK"
+        @action = cmd
+      end
+      
     def initialize(result,code,item_name, msg,cmd)
       @was_sucess=result
       @result_code = code
@@ -26,13 +35,7 @@ class EnginesOSapi
       @action = cmd
     end
 
-    def initialize(item_name,cmd)
-      @was_sucess=true
-      @result_code = 0
-      @item_name = item_name      
-      @result_mesg = "OK"
-      @action = cmd
-    end
+  
     
     def was_sucess
       return @was_sucess
