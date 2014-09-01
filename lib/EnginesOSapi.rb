@@ -33,8 +33,24 @@ class EnginesOSapi
       @result_mesg = "OK"
       @action = cmd
     end
+    
+    def was_sucess
+      return @was_sucess
+    end
+    def result_code
+      return @result_code
+    end
+    def item_name
+      return @item_name
+    end
+    def result_mesg
+      return @result_mesg
+    end
+    def action
+      return @action
+    end
   end
-
+#FIXME Error
   def buildEngine(repository,host,domain_name,environment)
     engine_builder = EngineBuilder.new(repository,host,domain_name,environment)
     engine = engine_builder.build_from_blue_print
@@ -79,7 +95,9 @@ class EnginesOSapi
   def loadManagedService(service_name)
 
     managed_service = EnginesOSapi.loadManagedService(service_name,@docker_api)
-
+    if managed_service == nil
+      return failed(service_name,"Fail to Load configuration:","Load Service")
+    end
     return managed_service
   end
 
