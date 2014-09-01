@@ -113,8 +113,8 @@ end
 
   
   def listBluePrints
-    blueprints_uri =URI('http://220.233.20.158:3001/json_published_softwares') 
-    #blueprints_uri =URI(@blueprints_url)
+    #blueprints_uri =URI('http://220.233.20.158:3001/json_published_softwares') 
+    blueprints_uri =URI(@blueprints_url)
       Net::HTTP.start(blueprints_uri.host, blueprints_uri.port) do |http|
         blueprints_request = Net::HTTP::Get.new blueprints_uri
     
