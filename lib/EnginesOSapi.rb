@@ -95,7 +95,7 @@ class EnginesOSapi
     return ret_val
   end
   
-  def EnginesOSapi.loadManagedService(service_name,docker_api)
+  def EnginesOSapi.getManagedService(service_name,docker_api)
      yam_file_name = SysConfig.CidDir + "/services/" + service_name + "/config.yaml"
  
      if File.exists?(yam_file_name) == false
@@ -113,7 +113,7 @@ class EnginesOSapi
 
   def loadManagedService(service_name)
 
-    managed_service = EnginesOSapi.loadManagedService(service_name,@docker_api)
+    managed_service = EnginesOSapi.getManagedService(service_name,@docker_api)
     if managed_service == nil
       return failed(service_name,"Fail to Load configuration:","Load Service")
     end
@@ -125,7 +125,6 @@ class EnginesOSapi
     yam_file_name = SysConfig.CidDir + "/containers/" + engine_name + "/config.yaml"
 
     if File.exists?(yam_file_name) == false
-
       return failed(yam_file_name,"No such configuration:","Load Engine")
     end
 
