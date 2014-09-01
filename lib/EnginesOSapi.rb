@@ -360,7 +360,7 @@ class EnginesOSapi
   end
 
   def  unpauseService service_name
-    service = getManagedService(service_name)
+    service = getManagedService(service_name) 
     if service == nil
       return failed(service_name,"No Such Service","Unpause Service")
     end
