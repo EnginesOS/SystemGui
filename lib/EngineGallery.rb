@@ -168,9 +168,9 @@ end
   
   protected 
   def get_blueprint_entry(blueprint_id)
-    blueprint_uri =URI('http://220.233.20.158:3001/json_published_softwares' + "/" +  blueprint_id) 
+    #blueprint_uri =URI('http://220.233.20.158:3001/json_published_softwares' + "/" +  blueprint_id) 
     
-   # blueprint_uri =URI(@blueprints_url + "/" +  blueprint_id)
+   blueprint_uri =URI(@blueprints_url + "/" +  blueprint_id)
            p blueprint_uri 
            p blueprint_uri.host 
            p blueprint_uri.port
