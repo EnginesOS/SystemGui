@@ -51,7 +51,7 @@ class EnginesController < ApplicationController
     redirect_to control_panel_path, notice: @notice
   end
 
-  def create_engine
+  def recreate
     @result = @enginesOS_api.recreateEngine(params[:id])
     @notice = @result.result_mesg
     redirect_to control_panel_path, notice: @notice
