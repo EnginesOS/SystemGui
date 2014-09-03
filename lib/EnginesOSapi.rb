@@ -143,9 +143,9 @@ class EnginesOSapi
         end
         retval = engine.recreate()
         if retval == false
-          return failed(engine.name,"No Engine","Stop")
+          return failed(engine_name,"No Engine","Stop")
         else
-          return sucess(engine.name)
+          return sucess(engine_name)
         end
   end
   #At this stage just wrappers
@@ -157,9 +157,9 @@ class EnginesOSapi
     end
     retval = engine.stop_container()
     if retval == false
-      return failed(engine.name,"No Engine","Stop")
+      return failed(engine_name,"No Engine","Stop")
     else
-      return sucess(engine.name)
+      return sucess(engine_name)
     end
   end
 
