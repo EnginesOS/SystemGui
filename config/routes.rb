@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users #, :skip => :registrations
 
-  root "control_panel#control_panel"
-  get "control_panel", to: "control_panel#control_panel", as: :control_panel
-  get "galleries/:short_name", to: "galleries#show", as: :show_gallery
-  get "galleries", to: "galleries#index", as: :galleries
+  root "pages#launcher"
+  get "control_panel", to: "pages#control_panel", as: :control_panel
+  get "galleries/:short_name", to: "galleries#show", as: :gallery
+  get "galleries", to: "galleries#index", as: :repositories
+#  get "gallery", to: "pages#gallery", as: :gallery
   
   resources :services do
     get :pause, on: :member
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
     get :destroy_engine, on: :member
     get :create_engine, on: :member
     get :show, on: :member
+    get :recreate, on: :member
     get :monitor, on: :member
     get :demonitor, on: :member
     get :register_site, on: :member
