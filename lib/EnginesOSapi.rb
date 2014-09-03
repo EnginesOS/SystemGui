@@ -15,7 +15,7 @@ class EnginesOSapi
     return @docker_api
   end
 
-  #hmm something like this to get errors back
+
 
   class  EnginesOSapiResult
     
@@ -141,7 +141,7 @@ class EnginesOSapi
         if engine == nil
           return failed(engine_name,"no Engine","Stop")
         end
-        retval = engine.recreate()
+        retval = engine.recreate_container()
         if retval == false
           return failed(engine_name,"No Engine","Stop")
         else
@@ -159,7 +159,7 @@ class EnginesOSapi
     if retval == false
       return failed(engine_name,"No Engine","Stop")
     else
-      return sucess(engine_name)
+      return sucess(engine_name,"Stop")
     end
   end
 
