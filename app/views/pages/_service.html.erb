@@ -1,0 +1,209 @@
+<% state= @service.read_state
+ indicator_class = "indicator_" + state
+%>
+
+<div class="btn-group btn-group-lg">
+  <button type="button" class="btn btn-default dropdown-toggle engine-gadget" data-toggle="dropdown">
+    <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%=@service.containerName %>
+  </button>
+  <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
+  	<li><div class="dropdown-title" %><%=@service.containerName %></div></li>
+		<% if state == "running"&& @service.containerName != 'mgmt'  #FIXME use flag instead %>
+			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
+			<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_service_path(@service.containerName) %></li>
+			<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_service_path(@service.containerName) %></li>
+		<% elsif state == "paused" %>
+			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
+		  <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_service_path(@service.containerName) %></li>
+		<% elsif state == "stopped" %>
+			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
+		  <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_service_path(@service.containerName) %></li>
+		  <li class="divider"></li>
+		  <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Rebuild", recreate_service_path(@service.containerName) %> </li>
+		<% else %>	 
+			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", create_service_service_path(@service.containerName) %></li> 
+		<%  end %>
+		<li class="divider"></li>
+  	<li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced details", "#", data: {toggle: "modal", target: "#modal_" + @service.containerName }, role: "button" %>
+		</li>
+		<li class="divider"></li>
+   	<li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + @service.fqdn, "http://" + @service.fqdn, target: "_blank"%></li>
+  </ul>
+</div>
+
+<div class="modal fade" id="modal_<%= @service.containerName %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced</h4>
+      </div>
+      <div class="modal-body">
+
+      	<div class="row">
+			  	<div class="col-sm-6">
+						<table>
+							<tr><td><label>Name</label></td><td><%=@service.containerName %></td></tr> 
+							<tr><td><label>Hostname</label></td><td><a href=http://<%=@service.fqdn %>><%=@service.fqdn %></a></td></tr> 
+              <tr><td><label>Current state</label></td><td><%= state %></td></tr>
+              <tr><td><label>Default state</label></td><td><%=@service.setState %></td></tr> 
+							<tr><td><label>Memory</label></td><td><%= @service.memory %> MB</td></tr>
+							<tr><td><label>Monitored</label></td><td><%=@service.monitored %></td></tr>
+							<tr><td><label>Framework</label></td><td><%=@service.framework %>/<%=@service.runtime %></td></tr>
+							<tr><td><label>Image</label></td><td><%= @service.image %> </td></tr>
+							<tr><td><label>Blue print source</label></td><td><%= @service.repo %> </td></tr>
+				  	</table>
+				  </div>
+
+			  	<div class="col-sm-6">
+				  	<div class="top-gap">
+							<label>Router registration</label>
+				      <div class="btn-toolbar">
+				      	<div class="btn-group"> 
+									<%= link_to 'Register', register_site_service_path(@service.containerName), class: "btn btn-default" %>
+									<%= link_to 'Deregister', deregister_site_service_path(@service.containerName), class: "btn btn-default" %>
+								</div>
+							</div>
+						</div>
+				  	<div class="top-gap">
+							<label>DNS registration</label>
+				      <div class="btn-toolbar">
+				      	<div class="btn-group"> 
+									<%= link_to 'Register', register_dns_service_path(@service.containerName), class: "btn btn-default" %> 
+									<%= link_to 'Deregister', deregister_dns_service_path(@service.containerName), class: "btn btn-default" %>
+	  						</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12 top-gap">
+
+            <label>Ports</label>
+            <pre><table>
+              <tr><td>Web port: <%= @service.port || "n/a" %></td></tr>
+							<tr><td colspan=2>This port is internal to docker environ webport is always 443 and 80 externally</td></tr>
+						 	<% if @service.eports && @service.eports.length >0 %>
+						 		<tr><td colspan=2>Open Ports, Public ports are represented as internal:external port</td></tr>
+					 			<% @service.eports.each do |port| %>
+					 				<% if port != nil %>
+						 				<tr><td><%= port.name%></td><td><%= port.port.to_s %>:<%= port.external.to_s %> <%= port.publicFacing%></td></tr>
+					 				<%end%>
+					 			<%end%>
+						 	<%end%>
+						</table></pre>
+
+						<label>Last error</label>
+						<pre><table><tr><td><%= @service.last_error %></td></tr></table></pre>
+					
+						<label>Environment</label>
+						<% if @service.environments&& @service.environments.length > 0 %>
+							<pre><table>
+								<th>Name</th>
+								<th>Value</th>
+								<% @service.environments.each do |v|%>
+								  <% if v != nil %>
+										<tr>
+											<td><%=v.name %></td>
+											<td><%=v.value%></td>
+											<td><%=v.setatrun=%></td>
+										</tr>
+									<%end%>
+								<%end%>
+							</table></pre>
+						<% else %>
+							<pre>None</pre>
+					  <% end %>
+
+						<label>Volumes</label>
+						<% if @service.volumes && @service.volumes.length > 0 %>
+							<pre><table>
+								<% @service.volumes.each do |v|%>
+						 			<tr>
+										<td><%=v.localpath%>/<%=v.name%>:<%=v.remotepath%>/<%=v.name%></td>
+									</tr>
+								<%end%>
+						  </table></pre>
+						<% else %>
+							<pre>None</pre>
+					  <% end %>	
+
+			      <label>Consumers</label>
+						<% if @service.consumers.present? %>				        
+							<pre><table>
+								<% @service.consumers.each do |cons|%>
+						 			<tr><td><%= cons %></td></tr>
+		  		      <% end %>
+						  </table></pre>
+						<% else %>
+							<pre>None</pre>
+					  <% end %>	
+
+						<label>Database</label>
+						<% if @service.databases && @service.databases.length > 0 %>
+							<pre><table>
+								<% @service.databases.each do |db|%>
+						 			<tr><td><%= db %></td></tr>
+		  		      <% end %>
+						  </table></pre>
+						<% else %>
+							<pre>None</pre>
+				    <% end %>	
+
+					 	<label>Statistics</label>	
+						<% if state != "nocontainer" 
+							stats = @service.stats
+							if stats != nil	%>
+							  <pre><table>
+							  	<tr><td>State: <%= stats.state  %></tr></td>
+							  	<tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
+							  	<% if state == "stopped" %>
+							  	  <tr><td>Stopped: <%=stats.stopped_ts %><% else %>Started: <%=stats.started_ts %></tr></td>
+							  	<%end%>
+							  	<tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></tr></td>
+							  	<tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
+							  </table></pre>
+						  <%end%>
+					  <% else %>
+							<pre>None</pre>
+					 	<% end %>
+					
+					 	<label>Processes</label>
+				 	  <% res = @service.ps_container %>
+				 	  <% if @service.last_result.present? %>
+						 	<pre><table>
+						 	  <% @service.last_result.each_line do |line | 
+						 		  vals = line.split %>
+						 		  <tr>
+						 			  <% vals.each do |v| %>	
+						 		  		<td><%= v %></td>
+						 		    <% end %>
+						 	  	</tr>		
+						 		<% end %>
+						 	</table></pre>
+					 	<% else %>
+							<pre>None</pre>
+				 		<% end %>
+
+						<label>Logs</label>
+						<% res = @service.logs_container%>
+						<% if @service.last_result.present? %>
+							<pre><%= @service.last_result %></pre>
+						<% else %>
+							<pre>None</pre>
+				 		<% end %>
+
+	        </div>
+        </div>
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+     
+
