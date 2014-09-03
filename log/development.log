@@ -69216,3 +69216,655 @@ AbstractController::ActionNotFound (The action 'gallery' could not be found for 
 
 
   Rendered /home/lachlan/.rvm/gems/ruby-2.1.2/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.5ms)
+
+
+Started GET "/galleries" for 127.0.0.1 at 2014-09-03 16:54:03 +1000
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GalleriesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered galleries/_summary.html.erb (0.6ms)
+  Rendered galleries/_summary.html.erb (0.1ms)
+  Rendered galleries/index.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 75ms (Views: 52.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:54:04 +1000
+
+
+Started GET "/control_panel" for 127.0.0.1 at 2014-09-03 16:57:56 +1000
+Processing by PagesController#control_panel as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered pages/_engine.html.erb (122.5ms)
+  Rendered pages/_service.html.erb (124.2ms)
+  Rendered pages/_service.html.erb (187.1ms)
+  Rendered pages/_service.html.erb (119.9ms)
+  Rendered pages/_service.html.erb (130.5ms)
+  Rendered pages/_service.html.erb (124.5ms)
+  Rendered pages/control_panel.html.erb within layouts/application (822.6ms)
+Completed 200 OK in 1858ms (Views: 838.1ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:58 +1000
+
+
+Started GET "/galleries" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+Processing by GalleriesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered galleries/_summary.html.erb (0.8ms)
+  Rendered galleries/_summary.html.erb (0.1ms)
+  Rendered galleries/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 13ms (Views: 9.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:57:59 +1000
+
+
+Started GET "/galleries/enginesos" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+Processing by GalleriesController#show as HTML
+  Parameters: {"short_name"=>"enginesos"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered galleries/show.html.erb within layouts/application (4.7ms)
+Completed 200 OK in 138ms (Views: 13.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:00 +1000
+
+
+Started GET "/control_panel" for 127.0.0.1 at 2014-09-03 16:58:02 +1000
+Processing by PagesController#control_panel as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered pages/_engine.html.erb (121.1ms)
+  Rendered pages/_service.html.erb (133.0ms)
+  Rendered pages/_service.html.erb (177.0ms)
+  Rendered pages/_service.html.erb (117.5ms)
+  Rendered pages/_service.html.erb (129.4ms)
+  Rendered pages/_service.html.erb (130.3ms)
+  Rendered pages/control_panel.html.erb within layouts/application (817.5ms)
+Completed 200 OK in 1873ms (Views: 861.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/galleries" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+Processing by GalleriesController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered galleries/_summary.html.erb (0.3ms)
+  Rendered galleries/_summary.html.erb (0.2ms)
+  Rendered galleries/index.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 12ms (Views: 8.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:04 +1000
+
+
+Started GET "/galleries/enginesos" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+Processing by GalleriesController#show as HTML
+  Parameters: {"short_name"=>"enginesos"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered galleries/show.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 141ms (Views: 16.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:05 +1000
+
+
+Started GET "/galleries" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+Processing by GalleriesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered galleries/_summary.html.erb (0.4ms)
+  Rendered galleries/_summary.html.erb (0.2ms)
+  Rendered galleries/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 13ms (Views: 10.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:06 +1000
+
+
+Started GET "/galleries/development" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+Processing by GalleriesController#show as HTML
+  Parameters: {"short_name"=>"development"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered galleries/show.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 142ms (Views: 15.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:07 +1000
+
+
+Started GET "/galleries" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+Processing by GalleriesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered galleries/_summary.html.erb (0.2ms)
+  Rendered galleries/_summary.html.erb (0.1ms)
+  Rendered galleries/index.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 11ms (Views: 8.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:08 +1000
+
+
+Started GET "/galleries/enginesos" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+Processing by GalleriesController#show as HTML
+  Parameters: {"short_name"=>"enginesos"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered galleries/show.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 142ms (Views: 16.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:09 +1000
+
+
+Started GET "/galleries/enginesos/install_blueprint.enginesos?blueprint_id=1&gallery_url=local" for 127.0.0.1 at 2014-09-03 16:58:26 +1000
+Processing by GalleriesController#install_blueprint as 
+  Parameters: {"blueprint_id"=>"1", "gallery_url"=>"local", "id"=>"enginesos"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered galleries/install_blueprint.html.erb within layouts/application (7.0ms)
+Completed 200 OK in 3529ms (Views: 17.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/font-awesome.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/common.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/control_panel.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/devise.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/galleries.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/control_panel.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/devise.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/galleries.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/lib.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-09-03 16:58:29 +1000
