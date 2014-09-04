@@ -55,11 +55,13 @@ class EnginesOSapi
   end
 #FIXME Error
   def buildEngine(repository,host,domain_name,environment)
-    engine_builder = EngineBuilder.new(repository,host,domain_name,environment)
+    engine_builder = EngineBuilder.new(repository,host,domain_name,environment, @docker_api)
     engine = engine_builder.build_from_blue_print
-    engine.set_docker_api  @docker_api
-    engine.save_state
-    return engine
+      if engine != nil
+        engine.save_state
+        return engine
+      end
+      return false #FIXME needs to return error object
 
   end
 
