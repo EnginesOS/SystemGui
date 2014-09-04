@@ -53,7 +53,7 @@ class EnginesOSapi
       return @action
     end
   end
-#FIXME Error
+
   def buildEngine(repository,host,domain_name,environment)
     engine_builder = EngineBuilder.new(repository,host,domain_name,environment, @docker_api)
     engine = engine_builder.build_from_blue_print
