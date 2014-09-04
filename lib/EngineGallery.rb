@@ -16,7 +16,7 @@ class EngineGallery
   def title
     return @title
   end 
-  
+   
   def short_name
     return @short_name
   end
@@ -201,7 +201,7 @@ end
      segments = buildname.split('.')   
         buildname = segments[0]
         dir=SysConfig.DeploymentDir + "/" + buildname
-     p dir
+     #p dir
             if Dir.exists?(dir)
                 backup=dir + ".backup"
                   if Dir.exists?(backup)
