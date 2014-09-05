@@ -1,0 +1,16 @@
+<div class="home-view">
+
+  <div class="col-sm-12" style="text-align: center;">
+    <div style="display: inline-block;">
+      <% if @engines.present? %>
+          <% @engines.each do |engine| %>
+              <% @engine = engine %>
+              <%= render partial: "engine_home" %>
+          <% end %>
+      <% else %>
+          <p>Welcome to Engines. No apps are running.<br>
+            Click on Install to fire-up a new app.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

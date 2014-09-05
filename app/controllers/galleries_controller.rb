@@ -11,14 +11,14 @@ class GalleriesController < ApplicationController
   end
   
   def install_blueprint  
-    @gallery = EngineGallery.getGallery(params[:id],params[:gallery_url])
-      if @gallery !=nil
+    gallery = EngineGallery.getGallery(params[:id],params[:gallery_url])
+      if gallery !=nil
 
-          @blueprint = @gallery.get_blueprint(params[:blueprint_id])
+          @blueprint = gallery.get_blueprint(params[:blueprint_id])
             if @blueprint != nil
-              @repository = @gallery.get_repository( params[:blueprint_id])
+              @gallery = gallery.get_repository(params[:blueprint_id])
             else   
-              @error_mesg="Failed to load blueprint " + params[:blueprint_id] + " from " + params[:gallery_url] + " via " + @gallery.blueprints_url
+              @error_mesg="Failed to load blueprint " + params[:blueprint_id] + " from " + params[:gallery_url] + " via " + gallery.blueprints_url
             end
            
       else
@@ -28,7 +28,7 @@ class GalleriesController < ApplicationController
   end
 
   def install_from_blueprint
-    engine = @enginesOS_api.buildEngine(params[:blueprints_repository],params[:host_name],params[:domain_name],"")
+    engine = @enginesOS_api.buildEngine(params[:blueprints_gallery],params[:host_name],params[:domain_name],"")
     redirect_to engine_path(engine.containerName)
   end
 
@@ -37,9 +37,7 @@ class GalleriesController < ApplicationController
     @galleries.each do |gallery|
       if gallery.short_name == params[:short_name]
         @gallery = gallery
-p @gallery
         @blueprints = gallery.listBluePrints
-p "blueprints:" + @blueprints.to_s
       end
     end
     # render :debug

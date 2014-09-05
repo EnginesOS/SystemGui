@@ -3,7 +3,7 @@
 <head>
   <title>EngosControl</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -24,11 +24,17 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if params[:controller] == 'control_panel' %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path %>
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'home' %>">
+          <%= link_to content_tag(:i, "", class: "fa fa-home") + " Home", root_path %>
         </li>
-        <li class="<%= 'active' if params[:controller] == 'galleries' %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-th") + " Gallery", galleries_path %>
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'control_panel' %>">
+          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control", control_panel_path %>
+        </li>
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'install' %>">
+          <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Install", install_path %>
+        </li>
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'help' %>">
+          <%= link_to content_tag(:i, "", class: "fa fa-question") + " Help", help_path %>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

@@ -1,12 +1,12 @@
 <div class="col-sm-12">
-  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th") %> Galleries</h2>
+  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th-list") %> Galleries</h2>
 
   <% if @galleries %>
       <% @galleries.each do |gallery| %>
           <%= render partial: "summary", locals: { gallery: gallery } %>
       <% end %>
   <% else %>
-      <p>No galleries available</p>
+      <p>No respositories available</p>
   <% end %>
 
 </div>

@@ -8,6 +8,10 @@ gem 'thin'
 gem 'bootstrap3-rails'
 gem "font-awesome-rails"
 
+gem 'simple_form'
+gem 'country_select'
+#gem "nested_form"
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'

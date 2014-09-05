@@ -1,0 +1,79 @@
+.btn-launcher {
+  width: 200px;
+  min-height: 200px;
+  border: none;
+  background-color: transparent;
+}
+
+.btn-launcher:hover {
+  background-color: rgba(0,0,0,0.5);
+}
+
+.launcher-icon {
+  height: 128px;
+  width: 128px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+}
+
+.launcher-label {
+  margin-top: 5px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1;
+  font-size: 16px;
+  color: #fff;
+}
+
+.background-splash { 
+  background: url(background.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.home-view p {
+  color: #fff;
+}
+
+.navbar-home {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.navbar-home .navbar-nav li a {
+  color: #ccc;
+}
+
+.navbar-home .nav .active a {
+  background-color: rgba(0,0,0,0.5); 
+  color: #ccc;
+}
+
+.navbar-home .navbar-brand {
+  color: #ccc;
+}
+
+.navbar-home .navbar-brand:hover {
+  color: #fff;
+}
+
+.navbar-home .dropdown-menu li a {
+  color: #ccc;
+}
+
+.navbar-home .dropdown-menu {
+  background-color: rgba(0,0,0,0.5); 
+}
+
+.navbar-home .navbar-nav li a:hover {
+  background-color: rgba(0,0,0,0.5); 
+  color: #fff;
+}
+
+@media only screen and (max-width: 766px) {
+  .navbar-collapse {background-color: rgba(0,0,0,0.75);}
+}

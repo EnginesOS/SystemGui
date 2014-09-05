@@ -19,7 +19,7 @@
 	<td><img src=<%=image_url%>></td>
 	<td><%=name%></td>
 	<td><a href=<%=home_page%>><%=home_page%></a></td>
-	<td><%= link_to 'Install', install_blueprint_gallery_path(gallery_name, :id => @gallery.short_name, :gallery_url => @gallery.gallery_url, :blueprint_id => blueprint_id) %></td>
+	<td><%= link_to 'Install', install_blueprint_gallery_path(id: gallery_name, gallery_name: @gallery.short_name, gallery_url: @gallery.gallery_url, blueprint_id: blueprint_id) %></td>
 </tr>
 <%end%>
 </table>

@@ -10,8 +10,10 @@
   	<li><div class="dropdown-title" %><%=@service.containerName %></div></li>
 		<% if state == "running"&& @service.containerName != 'mgmt'  #FIXME use flag instead %>
 			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
-			<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_service_path(@service.containerName) %></li>
-			<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_service_path(@service.containerName) %></li>
+			<% if @service.containerName != 'mgmt'  #FIXME use flag instead %>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_service_path(@service.containerName) %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_service_path(@service.containerName) %></li>
+      <% end %>
 		<% elsif state == "paused" %>
 			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
 		  <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_service_path(@service.containerName) %></li>
@@ -20,10 +22,12 @@
 		  <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_service_path(@service.containerName) %></li>
 		  <li class="divider"></li>
 		  <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Rebuild", recreate_service_path(@service.containerName) %> </li>
-		<% else %>	 
-			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+		<% elsif  state == "nocontainer" %>   
+      <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
 			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", create_service_service_path(@service.containerName) %></li> 
-		<%  end %>
+    <% else %>
+       <li>no state</li>
+    <%  end %>
 		<li class="divider"></li>
   	<li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced details", "#", data: {toggle: "modal", target: "#modal_" + @service.containerName }, role: "button" %>
 		</li>
