@@ -176,7 +176,9 @@ class EnginesOSapi
     if retval == false
       return failed(engine_name,engine.last_error,"Start")
     end
-
+    if engine.conf_register_site == true
+      engine.register_site
+    end
     return sucess(engine_name,"Start")
 
   end
