@@ -1,22 +1,21 @@
 <div class="col-sm-6">
-  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-cogs") %> Control panel</h2>
+  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-cogs") %> Control</h2>
 </div>
 
 <div class="col-sm-6">
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group btn-group-lg pull-right">
-      <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Install", galleries_path, class: "btn btn-default" %>
-      <%= link_to content_tag(:i, "", class: "fa fa-dashboard"), "", class: "btn btn-default", data: {toggle: "modal", target: "#modal_system_details"} %>
+      <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System", "", class: "btn btn-default", data: {toggle: "modal", target: "#modal_system_details"} %>
     </div>
   </div>
 </div>
 
 <div class="col-sm-12">
-  <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-tablet") %> Application servers</h3>
+  <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-tablet") %> Apps</h3>
   <% if @engines %>
       <% @engines.each do |engine| %>
           <% @engine = engine %>
-          <%= render partial: "engine" %>
+          <%= render partial: "engine_control_panel" %>
       <% end %>
   <% else %>
       <p>No application servers installed</p>
@@ -25,7 +24,7 @@
   <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
   <% @services.each do |service| %>
       <% @service = service %>
-      <%= render partial: "service" %>
+      <%= render partial: "service_control_panel" %>
   <% end %>
 </div>
 

@@ -1,0 +1,45 @@
+<div class="col-sm-6">
+  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus") %> Install</h2>
+</div>
+
+<div class="col-sm-6">
+  <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group btn-group-lg pull-right">
+      <%= link_to content_tag(:i, "", class: "fa fa-th") + " Galleries", galleries_path, class: "btn btn-default" %>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <% @galleries.each do |gallery| %>
+    <h3 class="control-panel-heading">
+      <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.title %>
+    </h3>
+    <div class="row top-gap">
+      <% @blueprints = gallery.listBluePrints
+        @blueprints.each do |blueprint|  %>
+        <% gallery_name = gallery.short_name
+          blueprint_id = blueprint["id"]
+          short_name = blueprint["short_name"]
+          name = blueprint["full_name"]
+          home_page =  blueprint["home_page"]
+          image_url =  blueprint["image_url"]
+          image_url = "assets/_placeholder_for_missing_engine.jpg" if image_url.blank?
+        %>
+        <div class="col-sm-6 col-md-4">
+          <div class="btn-group btn-group-lg">
+            <% install_url = install_blueprint_gallery_path(id: gallery_name, gallery_name: gallery.short_name, gallery_url: gallery.gallery_url, blueprint_id: blueprint_id) %>
+            <a href=<%= install_url %> data-toggle="tooltip" title="Click to install <%= name %>">
+              <img src=<%= image_url%> class="engine-install-icon">
+            </a>
+          </div>
+          <div class="engine-install-text">
+            <%= name %><br>
+            <a href=<%=home_page%>><%=home_page%></a>
+          </div>
+        </div>
+      <%end%>
+    </div>
+  <%end%>
+</div>
+

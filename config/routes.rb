@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users #, :skip => :registrations
 
-  root "pages#launcher"
+  root "pages#home"
   get "control_panel", to: "pages#control_panel", as: :control_panel
+  get "install", to: "pages#install", as: :install
+  get "help", to: "pages#help", as: :help
   get "galleries/:short_name", to: "galleries#show", as: :gallery
-  get "galleries", to: "galleries#index", as: :repositories
-#  get "gallery", to: "pages#gallery", as: :gallery
+  get "galleries", to: "galleries#index", as: :galleries
   
   resources :services do
     get :pause, on: :member
@@ -21,7 +22,6 @@ Rails.application.routes.draw do
     get :register_dns, on: :member
     get :deregister_dns, on: :member
   end
-
     
   resources :galleries do
     get :list_local, on: :collection

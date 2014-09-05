@@ -16,6 +16,10 @@
   margin-top: 40px;
 }
 
+body {
+  background-color: transparent;
+}
+
 label {
   color: #777;
   margin-right: 5px;
@@ -24,4 +28,16 @@ label {
 
 hr {
   margin: 2px;
+}
+
+fieldset {
+  margin-top: 20px;
+}
+
+#content {
+  background-color: transparent;
+}
+
+.container {
+  background-color: transparent;
 }
