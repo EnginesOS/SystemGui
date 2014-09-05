@@ -1,4 +1,5 @@
 require "EnginesOSapi.rb"
+require 'EngineGallery.rb'
 
 class PagesController < ApplicationController
   before_action :authenticate_user!
