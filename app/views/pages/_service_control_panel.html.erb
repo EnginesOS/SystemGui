@@ -29,7 +29,7 @@
        <li>no state</li>
     <%  end %>
 		<li class="divider"></li>
-  	<li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced details", "#", data: {toggle: "modal", target: "#modal_" + @service.containerName }, role: "button" %>
+  	<li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + @service.containerName }, role: "button" %>
 		</li>
 		<li class="divider"></li>
    	<li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + @service.fqdn, "http://" + @service.fqdn, target: "_blank"%></li>

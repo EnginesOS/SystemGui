@@ -60,86 +60,83 @@
 		      </div>
 		      <div class="modal-body">
 
-					  <div class="col-sm-12">
-						  <fieldset>
-								<legend>Environment Variables</legend>
-								This section is not supported yet.
+					  <fieldset>
+							<legend>Environment Variables</legend>
+							This section is not supported yet.
+						</fieldset>
+
+					  <fieldset>
+							<legend>Advanced Options</legend>
+							<%= label_tag(:memory, "Memory" )%>
+							<%= text_field_tag(:memory, memory) %><br>
+							<%= label_tag(:self_starts, "Self Starts" )%>
+							<%= check_box_tag(:self_starts,"1", false) %>
+						</fieldset>
+
+					  <fieldset>
+							<legend>DNS</legend>
+							<%= label_tag(:monitor_site, "Enable Monitor" )%>
+							<%= check_box_tag(:monitor_site) %>
+							<%= label_tag(:register_dns, "Register DNS" )%>
+							<%= check_box_tag(:register_dns) %>
+						</fieldset>
+
+					  <fieldset>
+							<legend>Database Settings</legend>
+							<%= label_tag(:dbhost, "Database Host" )%>
+							<%= text_field_tag(:dbhost,SysConfig.DBHost) %><br>
+							<%= label_tag(:dbname, "Database Name" )%>
+							<%= text_field_tag(:dbname,dbname) %><br>
+							<%= label_tag(:createdb, "Create DB" )%>
+							<%= check_box_tag(:createddb,"1", true) %><br>
+							<%= label_tag(:dbuser, "Database User" )%>
+							<%= text_field_tag(:dbuser,dbuser) %>*<br>
+							<%= label_tag(:createdb_user, "Create DB User" )%>
+							<%= check_box_tag(:createdb_user,"1", true) %><br>
+							<%= label_tag(:dbpasswd, "Database User Password" )%>
+							<%= text_field_tag(:dbpasswd) %><br>
+							*leave blank for system created 
+						</fieldset>
+
+						<% if  volume_names.length > 0%>
+							<fieldset>
+					 			<legend>Volume Settings</legend>
+								<% volume_names.each do |volume_name| %>
+									<%= label_tag(:vol_src, "Source" )%>
+									<%= text_field_tag(:vol_src) %>*
+									<%=volume_name %>
+								<% end %>  
+								*leave blank for system default 
 							</fieldset>
+				  	<%end%>
 
-						  <fieldset>
-								<legend>Advanced Options</legend>
-								<%= label_tag(:memory, "Memory" )%>
-								<%= text_field_tag(:memory, memory) %><br>
-								<%= label_tag(:self_starts, "Self Starts" )%>
-								<%= check_box_tag(:self_starts,"1", false) %>
-							</fieldset>
+				  	<fieldset>
+							<legend>Additional Volumes</legend>
+							<%= label_tag(:new_vol_src, "Source" )%>
+							<%= text_field_tag(:new_vol_src)%><br>
+							<%= label_tag(:new_vol_dest, "Destination" )%>
+							<%= text_field_tag(:vol_dest)%><br>
+							<%= label_tag(:new_vol_rw_permission,"Write Access") %>
+							<%= check_box_tag(:new_vol_rw_permission) %>
+					
+				  	<fieldset>
+							<legend>Web Protect</legend> 
+							Current Users
+							Availiable Users
+							<%= label_tag(:add_web_user, "New User" )%>
+							<%= text_field_tag(:add_web_user) %><br>
+							Group<br>
+							<%= text_field_tag(:add_web_group) %>
+							<%= label_tag(:add_web_group, "Add New Group" )%><br>
+						</fieldset>
 
-						  <fieldset>
-								<legend>DNS</legend>
-								<%= label_tag(:monitor_site, "Enable Monitor" )%>
-								<%= check_box_tag(:monitor_site) %>
-								<%= label_tag(:register_dns, "Register DNS" )%>
-								<%= check_box_tag(:register_dns) %>
-							</fieldset>
-
-						  <fieldset>
-								<legend>Database Settings</legend>
-								<%= label_tag(:dbhost, "Database Host" )%>
-								<%= text_field_tag(:dbhost,SysConfig.DBHost) %><br>
-								<%= label_tag(:dbname, "Database Name" )%>
-								<%= text_field_tag(:dbname,dbname) %><br>
-								<%= label_tag(:createdb, "Create DB" )%>
-								<%= check_box_tag(:createddb,"1", true) %><br>
-								<%= label_tag(:dbuser, "Database User" )%>
-								<%= text_field_tag(:dbuser,dbuser) %>*<br>
-								<%= label_tag(:createdb_user, "Create DB User" )%>
-								<%= check_box_tag(:createdb_user,"1", true) %><br>
-								<%= label_tag(:dbpasswd, "Database User Password" )%>
-								<%= text_field_tag(:dbpasswd) %><br>
-								*leave blank for system created 
-							</fieldset>
-
-							<% if  volume_names.length > 0%>
-								<fieldset>
-						 			<legend>Volume Settings</legend>
-									<% volume_names.each do |volume_name| %>
-										<%= label_tag(:vol_src, "Source" )%>
-										<%= text_field_tag(:vol_src) %>*
-										<%=volume_name %>
-									<% end %>  
-									*leave blank for system default 
-								</fieldset>
-					  	<%end%>
-
-					  	<fieldset>
-								<legend>Additional Volumes</legend>
-								<%= label_tag(:new_vol_src, "Source" )%>
-								<%= text_field_tag(:new_vol_src)%><br>
-								<%= label_tag(:new_vol_dest, "Destination" )%>
-								<%= text_field_tag(:vol_dest)%><br>
-								<%= label_tag(:new_vol_rw_permission,"Write Access") %>
-								<%= check_box_tag(:new_vol_rw_permission) %>
-						
-					  	<fieldset>
-								<legend>Web Protect</legend> 
-								Current Users
-								Availiable Users
-								<%= label_tag(:add_web_user, "New User" )%>
-								<%= text_field_tag(:add_web_user) %><br>
-								Group<br>
-								<%= text_field_tag(:add_web_group) %>
-								<%= label_tag(:add_web_group, "Add New Group" )%><br>
-							</fieldset>
-
-					  	<fieldset>
-								<legend>Firewall</legend>
-								Configured Subnets/hosts
-								New Subnet or host
-								<%= text_field_tag(:subnet) %>
-								<%= label_tag(:subnet, "Add" )%>
-							</fieldset>
-
-			      </div>
+				  	<fieldset>
+							<legend>Firewall</legend>
+							Configured Subnets/hosts
+							New Subnet or host
+							<%= text_field_tag(:subnet) %>
+							<%= label_tag(:subnet, "Add" )%>
+						</fieldset>
 
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

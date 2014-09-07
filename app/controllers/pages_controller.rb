@@ -11,7 +11,12 @@ class PagesController < ApplicationController
   end
 
   def install
-    @galleries = EngineGallery.list_local
+    @galleries = Gallery.all
+    @gallery_servers = []
+    @galleries.each do |gallery|
+      @gallery_servers << gallery.gallery_server
+    end
+    @gallery_servers.flatten!
   end
 
   def control_panel

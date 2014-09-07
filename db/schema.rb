@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808041927) do
+ActiveRecord::Schema.define(version: 20140905053531) do
 
   create_table "engos_ctl_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -30,6 +30,10 @@ ActiveRecord::Schema.define(version: 20140808041927) do
 
   add_index "engos_ctl_users", ["email"], name: "index_engos_ctl_users_on_email", unique: true
   add_index "engos_ctl_users", ["reset_password_token"], name: "index_engos_ctl_users_on_reset_password_token", unique: true
+
+  create_table "galleries", force: true do |t|
+    t.string "url"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

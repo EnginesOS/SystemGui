@@ -1,12 +1,40 @@
 <div class="col-sm-12">
-  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th-list") %> Galleries</h2>
+  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th") %> Galleries</h2>
 
   <% if @galleries %>
       <% @galleries.each do |gallery| %>
           <%= render partial: "summary", locals: { gallery: gallery } %>
       <% end %>
   <% else %>
-      <p>No respositories available</p>
+      <p>No galleries.</p>
   <% end %>
 
+<%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", "#", data: {toggle: "modal", target: "#modal_add_gallery"}, role: "button", class: "btn btn-default" %>
+
+
 </div>
+
+
+<div class="modal fade" id="modal_add_gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-plus") %> Add gallery</h4>
+      </div>
+      <div class="modal-body">
+        <% if @unadded_gallery_servers.present? %>
+          <% @unadded_gallery_servers.each do |gallery_server| %>
+            <%= link_to gallery_server.title, create_gallery_path(gallery_server_short_name: gallery_server.short_name, gallery_server_domain: gallery_server.gallery_url), method: :post %>
+          <% end %>
+        <% else %>
+            No more galleries to add.
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

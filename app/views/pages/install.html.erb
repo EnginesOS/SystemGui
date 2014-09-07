@@ -1,5 +1,5 @@
 <div class="col-sm-6">
-  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus") %> Install</h2>
+  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus-square") %> Install</h2>
 </div>
 
 <div class="col-sm-6">
@@ -11,14 +11,14 @@
 </div>
 
 <div class="col-sm-12">
-  <% @galleries.each do |gallery| %>
+  <% @gallery_servers.each do |gallery_server| %>
     <h3 class="control-panel-heading">
-      <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.title %>
+      <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery_server.title %>
     </h3>
     <div class="row top-gap">
-      <% @blueprints = gallery.listBluePrints
-        @blueprints.each do |blueprint|  %>
-        <% gallery_name = gallery.short_name
+      <% @blueprints = gallery_server.listBluePrints %>
+      <%  @blueprints.each do |blueprint|  %>
+        <% gallery_server_name = gallery_server.short_name
           blueprint_id = blueprint["id"]
           short_name = blueprint["short_name"]
           name = blueprint["full_name"]
@@ -28,7 +28,7 @@
         %>
         <div class="col-sm-6 col-md-4">
           <div class="btn-group btn-group-lg">
-            <% install_url = install_blueprint_gallery_path(id: gallery_name, gallery_name: gallery.short_name, gallery_url: gallery.gallery_url, blueprint_id: blueprint_id) %>
+            <% install_url = install_blueprint_gallery_path(id: gallery_server_name, gallery_server_name: gallery_server.short_name, gallery_server_url: gallery_server.gallery_url, blueprint_id: blueprint_id) %>
             <a href=<%= install_url %> data-toggle="tooltip" title="Click to install <%= name %>">
               <img src=<%= image_url%> class="engine-install-icon">
             </a>

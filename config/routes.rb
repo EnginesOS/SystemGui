@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   get "control_panel", to: "pages#control_panel", as: :control_panel
   get "install", to: "pages#install", as: :install
   get "help", to: "pages#help", as: :help
+  get "galleries/add", to: "galleries#add", as: :add_gallery
+  post "galleries/create", to: "galleries#create", as: :create_gallery
+  delete "galleries/:id", to: "galleries#remove", as: :remove_gallery
   get "galleries/:short_name", to: "galleries#show", as: :gallery
   get "galleries", to: "galleries#index", as: :galleries
   
