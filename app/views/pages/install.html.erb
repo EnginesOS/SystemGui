@@ -28,7 +28,7 @@
         %>
         <div class="col-sm-6 col-md-4">
           <div class="btn-group btn-group-lg">
-            <% install_url = install_blueprint_gallery_path(id: gallery_server_name, gallery_server_name: gallery_server.short_name, gallery_server_url: gallery_server.gallery_url, blueprint_id: blueprint_id) %>
+            <% install_url = install_blueprint_gallery_path(gallery_server_name: gallery_server.short_name, gallery_server_url: gallery_server.gallery_url, blueprint_id: blueprint_id) %>
             <a href=<%= install_url %> data-toggle="tooltip" title="Click to install <%= name %>">
               <img src=<%= image_url%> class="engine-install-icon">
             </a>
