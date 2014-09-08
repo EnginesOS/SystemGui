@@ -49,8 +49,9 @@ class GalleriesController < ApplicationController
   # def filter_blueprints(blueprint_type)
   # end
   
-  def install_blueprint  
-    gallery = EngineGallery.getGallery(params[:id],params[:gallery_url])
+  def install_blueprint 
+
+    gallery = EngineGallery.getGallery(params[:gallery_server_name],params[:gallery_server_url])
       if gallery !=nil
 
           @blueprint = gallery.get_blueprint(params[:blueprint_id])
@@ -61,7 +62,7 @@ class GalleriesController < ApplicationController
             end
            
       else
-        @error_mesg="Failed to load Gallery params[:id] params[:gallery_url] params[:blueprint_id] " +  params[:id] + " " + params[:gallery_url] + " " +  params[:blueprint_id]           
+        @error_mesg="Failed to load Gallery params[:id] params[:gallery_url] " +  params[:id] + " " + params[:gallery_url] + " " +  params[:blueprint_id]           
         redirect_to gallery_path(params[:gallery_url]), notice: @error_mesg
       end
   end
