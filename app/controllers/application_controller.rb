@@ -10,17 +10,22 @@ p "start of ApplicationController"
   before_filter :create_api
 
   require 'EnginesOSapi.rb'
-    def create_api  
-      
-      if @enginesOS_api == nil
-         @enginesOS_api = EnginesOSapi.new
-       end
-      return @enginesOS_api
+
+  def create_api  
+    if @enginesOS_api == nil
+      @enginesOS_api = EnginesOSapi.new
     end
-    
-    def enginesOS_api
-      return @enginesOS_api
-    end
+    return @enginesOS_api
+  end
+  
+  def enginesOS_api
+    return @enginesOS_api
+  end
+
+  # Overwriting the sign_out redirect path method
+  def after_sign_out_path_for(resource_or_scope)
+    user_session_path
+  end
 
   protected
   def configure_permitted_parameters

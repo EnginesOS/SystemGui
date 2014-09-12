@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "help", to: "pages#help", as: :help
   get "system", to: "pages#system", as: :system
   get "settings", to: "pages#settings", as: :settings
+  get "backup", to: "pages#backup", as: :backup
 
   # get "galleries/add", to: "galleries#add", as: :add_gallery
   post "galleries/create", to: "galleries#create", as: :create_gallery

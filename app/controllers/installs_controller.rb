@@ -11,11 +11,6 @@ class InstallsController < ApplicationController
   end
 
   def new
-
-p "$$$$$$$$$$$$$"
-p params
-
-
     set_gallery
     set_blueprint
 
@@ -29,44 +24,25 @@ p params
     @application_description = @blueprint["software"]["description"]
     @license_name = @blueprint["software"]["license_name"]
     @license_url = @blueprint["software"]["license_sourceurl"]
-    # @memory = @blueprint["software"]["requiredmemory"]
-
   end
 
   def edit
   end
 
   def create
-
-p "###########################"
-p params
-
     if params["install"]["terms_and_conditions_accepted"] == "0"
-p params["gallery_server_name"]
+     flash[:notice] = 'You must accept the license terms and conditions to install this software.'
      return redirect_to new_install_path( \
        gallery_server_name: params["gallery_server_name"], \
        gallery_server_url: params["gallery_server_url"], \
        blueprint_id: params["blueprint_id"], \
-       install: params["install"], \
-       notice: 'You must accept the license terms and conditions to install this software.')
+       install: params["install"])
     end
 
     set_gallery
     set_blueprint
     set_repository
-
-p "@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-p @repository
-p params
-p params[:install][:host_name]
-p params[:install][:host_domain]
-
-
     @enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], "")
-    #   redirect_to installer_path(notice: 'Installation was not successful.')
-    # end
-
-    params["blueprint"] = @blueprint.to_s
 
     @install = Install.new(install_params)
 

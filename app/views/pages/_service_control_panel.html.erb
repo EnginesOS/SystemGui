@@ -4,7 +4,7 @@
 
 <div class="btn-group btn-group-lg">
   <button type="button" class="btn btn-default dropdown-toggle engine-gadget" data-toggle="dropdown">
-    <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%=@service.containerName %>
+    <%=@service.containerName %><br><%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %>
   </button>
   <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
   	<li><div class="dropdown-title" %><%=@service.containerName %></div></li>
