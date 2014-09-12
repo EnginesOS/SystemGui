@@ -8,9 +8,10 @@ class PagesController < ApplicationController
     @engines = @enginesOS_api.getManagedEngines()
     @engines ||= []
     @engines = @engines.select{|e| e.read_state == "running"}
+    render :home, layout: false
   end
 
-  def install
+  def installer
     @galleries = Gallery.all
     @gallery_servers = []
     @galleries.each do |gallery|
@@ -19,13 +20,15 @@ class PagesController < ApplicationController
     @gallery_servers.flatten!
   end
 
-  def control_panel
+  def app_manager
     @services = @enginesOS_api.getManagedServices()
     @services ||= []
 
     @engines = @enginesOS_api.getManagedEngines()
     @engines ||= []
+  end
 
+  def system
     @snapshop = Vmstat.snapshot
     sleep(1) #FIXME this is a kludge need to use time stamps and do a wait for or something better then just sleep?
     @vm2 = Vmstat.memory

@@ -1,5 +1,5 @@
 <div class="col-sm-6">
-  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus-square") %> Install</h2>
+  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus-square") %> Installer</h2>
 </div>
 
 <div class="col-sm-6">
@@ -25,10 +25,10 @@
           home_page =  blueprint["home_page"]
           image_url =  blueprint["image_url"]
           image_url = "assets/_placeholder_for_missing_engine.jpg" if image_url.blank?
-        %>
+        %>       
         <div class="col-sm-6 col-md-4">
           <div class="btn-group btn-group-lg">
-            <% install_url = install_blueprint_gallery_path(gallery_server_name: gallery_server.short_name, gallery_server_url: gallery_server.gallery_url, blueprint_id: blueprint_id) %>
+            <% install_url = new_install_path(install: {gallery_server_name: gallery_server.short_name, gallery_server_url: gallery_server.gallery_url, blueprint_id: blueprint_id}) %>
             <a href=<%= install_url %> data-toggle="tooltip" title="Click to install <%= name %>">
               <img src=<%= image_url%> class="engine-install-icon">
             </a>
@@ -42,4 +42,3 @@
     </div>
   <%end%>
 </div>
-

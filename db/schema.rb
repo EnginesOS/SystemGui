@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905053531) do
+ActiveRecord::Schema.define(version: 20140908232117) do
 
   create_table "engos_ctl_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20140905053531) do
 
   create_table "galleries", force: true do |t|
     t.string "url"
+  end
+
+  create_table "installs", force: true do |t|
+    t.string  "display_name"
+    t.text    "display_description"
+    t.boolean "terms_and_conditions_accepted"
+    t.string  "gallery_server_name"
+    t.string  "gallery_server_url"
+    t.string  "blueprint_id"
   end
 
   create_table "users", force: true do |t|

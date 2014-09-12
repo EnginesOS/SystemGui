@@ -2,14 +2,24 @@ Rails.application.routes.draw do
   devise_for :users #, :skip => :registrations
 
   root "pages#home"
-  get "control_panel", to: "pages#control_panel", as: :control_panel
-  get "install", to: "pages#install", as: :install
+  get "app_manager", to: "pages#app_manager", as: :app_manager
+  get "installer", to: "pages#installer", as: :installer
   get "help", to: "pages#help", as: :help
-  get "galleries/add", to: "galleries#add", as: :add_gallery
+  get "system", to: "pages#system", as: :system
+  get "settings", to: "pages#settings", as: :settings
+
+  # get "galleries/add", to: "galleries#add", as: :add_gallery
   post "galleries/create", to: "galleries#create", as: :create_gallery
-  delete "galleries/:id", to: "galleries#remove", as: :remove_gallery
-  get "galleries/:short_name", to: "galleries#show", as: :gallery
-  get "galleries", to: "galleries#index", as: :galleries
+  # delete "galleries/:id", to: "galleries#remove", as: :remove_gallery
+  # get "galleries/:short_name", to: "galleries#show", as: :gallery
+  # get "galleries", to: "galleries#index", as: :galleries
+
+  resources :installs
+
+  get "users", to: "pages#users", as: :users
+  resources :users
+
+  resources :galleries, only: [:index, :new, :create, :destroy]
   
   resources :services do
     get :pause, on: :member
@@ -26,12 +36,6 @@ Rails.application.routes.draw do
     get :deregister_dns, on: :member
   end
     
-  resources :galleries do
-    get :list_local, on: :collection
-    get :install_blueprint, on: :member
-    post :install_from_blueprint, on: :member
-  end
-  
   resources :engines do
     get :pause, on: :member
     get :unpause, on: :member

@@ -1,6 +1,6 @@
 .btn-launcher {
-  width: 200px;
-  min-height: 200px;
+  width: 150px;
+  min-height: 150px;
   border: none;
   background-color: transparent;
 }
@@ -12,7 +12,7 @@
 .launcher-icon {
   height: 96px;
   width: 96px;
-  margin-top: 25px;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 5px;
@@ -23,9 +23,14 @@
   margin-bottom: 0px;
   margin-left: auto;
   margin-right: auto;
+  max-width: 150px;
   line-height: 1;
   font-size: 16px;
   color: #fff;
+  text-shadow: 0px 0px 3px #000;
+  font-weight: 700;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .background-splash { 
@@ -38,6 +43,10 @@
 
 .home-view p {
   color: #fff;
+}
+
+.home-view {
+  text-align: center;
 }
 
 .navbar-home {
@@ -77,3 +86,60 @@
 @media only screen and (max-width: 766px) {
   .navbar-home .navbar-collapse {background-color: rgba(0,0,0,0.75);}
 }
+
+.fa-launcher {
+  height: 96px;
+  width: 96px; 
+  margin-top: 10px; 
+  padding: 10px; 
+  font-size: 72px; 
+  color: #eee; 
+  border-radius: 5px; 
+  background-color: rgba(0,0,0,0.5);
+ }
+
+.fa-launcher-overlay .fa-launcher{
+  position: absolute;
+  height: 1px;
+  margin-top: -87px; 
+  margin-left: -47px; 
+  font-size: 28px; 
+  background-color: transparent;
+ }
+
+#sign-out_button {
+  margin-top: 5px;
+}
+
+#sign-out_button .btn {
+  width: 96px; 
+  background-color: rgba(0,0,0,0.5);
+  color: #eee;
+  border: none;
+}
+
+#sign-out_button .btn:hover {
+  background-color: rgba(0,0,0,0.75);
+  color: #eee;
+  border: none;
+}
+
+#home-page-alerts {
+  border: none;
+  background-color: rgba(255,255,255,0.3);
+}
+
+#home-page-alerts .alert-success {
+  background-color: inherit;
+  border: none;
+}
+
+
+#home-page-main-container {
+  width: 100%;
+}
+
+.home-view .btn-group {
+  vertical-align: top;
+}
+

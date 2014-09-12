@@ -1,18 +1,15 @@
-<div class="col-sm-12">
-  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th") %> Galleries</h2>
+<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', installer_path, class: "btn btn-default top-gap" %>
+<h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th") %> Galleries</h2>
 
-  <% if @galleries %>
-      <% @galleries.each do |gallery| %>
-          <%= render partial: "summary", locals: { gallery: gallery } %>
-      <% end %>
-  <% else %>
-      <p>No galleries.</p>
-  <% end %>
+<% if @galleries %>
+    <% @galleries.each do |gallery| %>
+        <%= render partial: "show", locals: { gallery: gallery } %>
+    <% end %>
+<% else %>
+    <p>No galleries.</p>
+<% end %>
 
 <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", "#", data: {toggle: "modal", target: "#modal_add_gallery"}, role: "button", class: "btn btn-default" %>
-
-
-</div>
 
 
 <div class="modal fade" id="modal_add_gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

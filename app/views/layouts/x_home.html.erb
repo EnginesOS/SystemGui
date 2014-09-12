@@ -22,17 +22,9 @@
   </div>
 
   <div class="contaner-fluid home-view">
+
     <div class="row">  
       <div class="col-sm-2">
-
-        <div class="btn-group btn-group-lg">
-          <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher">
-            <i class="fa fa-sign-out fa-launcher"></i>
-            <div class="launcher-label">
-              <%= current_user.username %>
-            </div>
-          </a>
-        </div>
 
         <div class="btn-group btn-group-lg">
           <a href=<%= app_manager_path %> class="btn btn-default btn-launcher">
@@ -43,27 +35,19 @@
           </a>
         </div>
 
+        <div class="btn-group btn-group-lg">
+          <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher">
+            <i class="fa fa-sign-out fa-launcher"></i>
+            <div class="launcher-label">
+              Sign out
+            </div>
+          </a>
+        </div>
+
         </div>
         <div class="col-sm-8">
-
-          <div class="home-view">
-            <div class="row">
-
-              <% if @engines.present? %>
-                  <% @engines.each do |engine| %>
-                      <% @engine = engine %>
-                      <%= render partial: "engine_home_page_icon" %>
-                  <% end %>
-              <% else %>
-                  <p>Welcome to Engines. No apps are running.<br>
-                    Click on Install to fire-up a new app.</p>
-              <% end %>
-
-            </div>
-          </div>
-
+          <%= yield %>
         </div>
-
         <div class="col-sm-2">
         </div>
 
@@ -78,9 +62,3 @@
 
 </body>
 </html>
-
-
-
-
-
-

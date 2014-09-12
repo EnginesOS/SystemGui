@@ -1,0 +1,29 @@
+<h1>Listing installs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Display name</th>
+      <th>Display description</th>
+      <th>Blueprint</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @installs.each do |install| %>
+      <tr>
+        <td><%= install.display_name %></td>
+        <td><%= install.display_description %></td>
+        <td><%= install.blueprint %></td>
+        <td><%= link_to 'Show', install %></td>
+        <td><%= link_to 'Edit', edit_install_path(install) %></td>
+        <td><%= link_to 'Destroy', install, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Install', new_install_path %>

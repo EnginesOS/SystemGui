@@ -23,15 +23,12 @@ class GalleriesController < ApplicationController
     end
   end
 
-  def add
+  def new
     @gallery = Gallery.new
     @gallery_servers = EngineGallery.list_local
   end
 
   def create
-
-    p params
-    p params
     gallery_server_short_name = params["gallery_server_short_name"]
     gallery_server_domain = params["gallery_server_domain"]
     gallery_server_url = gallery_server_short_name + "." + gallery_server_domain
@@ -40,38 +37,10 @@ class GalleriesController < ApplicationController
     redirect_to galleries_path
   end
 
-  def remove
+  def destroy
     @gallery = Gallery.find(params[:id])
     @gallery.destroy
     redirect_to galleries_path
   end
-  
-  # def filter_blueprints(blueprint_type)
-  # end
-  
-  def install_blueprint 
-
-    gallery = EngineGallery.getGallery(params[:gallery_server_name],params[:gallery_server_url])
-      if gallery !=nil
-
-          @blueprint = gallery.get_blueprint(params[:blueprint_id])
-            if @blueprint != nil
-              @gallery = gallery.get_repository(params[:blueprint_id])
-            else   
-              @error_mesg="Failed to load blueprint " + params[:blueprint_id] + " from " + params[:gallery_url] + " via " + gallery.blueprints_url
-            end
-           
-      else
-        @error_mesg="Failed to load Gallery params[:id] params[:gallery_url] " +  params[:id] + " " + params[:gallery_url] + " " +  params[:blueprint_id]           
-        redirect_to gallery_path(params[:gallery_url]), notice: @error_mesg
-      end
-  end
-
-  def install_from_blueprint
-    engine = @enginesOS_api.buildEngine(params[:blueprints_gallery],params[:host_name],params[:domain_name],"")
-    redirect_to engine_path(engine.containerName)
-  end
-
-
 
 end
