@@ -24,25 +24,25 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'home' %>">
+        <li>
           <%= link_to content_tag(:i, "", class: "fa fa-times") + " Close", root_path %>
         </li>
         <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'app_manager' %>">
           <%= link_to content_tag(:i, "", class: "fa fa-play") + " App Manager", app_manager_path %>
         </li>
-        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'install' %>">
+        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'installer') || params[:controller] == 'galleries' || params[:controller] == 'installs') %>">
           <%= link_to content_tag(:i, "", class: "fa fa-plus-square") + " Installer", installer_path %>
         </li>
-        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'install' %>">
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'settings' %>">
           <%= link_to content_tag(:i, "", class: "fa fa-gear") + " Settings", settings_path %>
         </li>
-        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'install' %>">
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'system' %>">
           <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System", system_path %>
         </li>
-        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'install' %>">
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'users' %>">
           <%= link_to content_tag(:i, "", class: "fa fa-users") + " Users", users_path %>
         </li>
-        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'install' %>">
+        <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'backup' %>">
           <%= link_to content_tag(:i, "", class: "fa fa-upload") + " Backup", backup_path %>
         </li>
       </ul>
