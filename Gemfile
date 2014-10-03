@@ -4,7 +4,7 @@ gem 'vmstat'
 gem 'therubyracer'
 gem 'git'
 gem 'thin'
-
+gem "oink"
 gem 'bootstrap3-rails'
 gem "font-awesome-rails"
 
