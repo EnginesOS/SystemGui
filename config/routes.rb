@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   resources :galleries, only: [:index, :new, :create, :destroy]
   
+  get "services/:id/advanced_detail", to: "services#advanced_detail"
   resources :services do
     get :pause, on: :member
     get :unpause, on: :member
@@ -36,7 +37,8 @@ Rails.application.routes.draw do
     get :register_dns, on: :member
     get :deregister_dns, on: :member
   end
-    
+
+  get "engines/:id/advanced_detail", to: "engines#advanced_detail"
   resources :engines do
     get :pause, on: :member
     get :unpause, on: :member

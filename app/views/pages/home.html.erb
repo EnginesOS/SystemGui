@@ -29,6 +29,7 @@
           <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
             <i class="fa fa-sign-out fa-launcher"></i>
             <div class="launcher-label">
+              Sign out<br>
               <%= current_user.username %>
             </div>
           </a>
@@ -52,7 +53,7 @@
               <% if @engines.present? %>
                   <% @engines.each do |engine| %>
                       <% @engine = engine %>
-                      <%= render partial: "engine_home_page_icon" %>
+                      <%= render partial: "engines/engine_home_page_icon" %>
                   <% end %>
               <% else %>
                   <p class="top-gap">Welcome to Engines. No apps are running.<br>

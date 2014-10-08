@@ -7,7 +7,7 @@
   <% if @engines %>
       <% @engines.each do |engine| %>
           <% @engine = engine %>
-          <%= render partial: "engine_control_panel" %>
+          <%= render partial: "engines/engine_control_panel" %>
       <% end %>
   <% else %>
       <p>No application servers installed</p>
@@ -16,6 +16,6 @@
   <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
   <% @services.each do |service| %>
       <% @service = service %>
-      <%= render partial: "service_control_panel" %>
+      <%= render partial: "services/service_control_panel" %>
   <% end %>
 </div>
