@@ -14,7 +14,7 @@ gem 'country_select'
 #gem "nested_form"
 
 #gem 'carrierwave'
-gem "paperclip", "~> 4.2"
+# gem "paperclip", "~> 4.2"
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
