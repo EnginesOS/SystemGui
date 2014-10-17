@@ -43,7 +43,7 @@ class InstallsController < ApplicationController
     set_blueprint
     set_repository
     @enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], "")
-
+    #james will add a result to buildEngines call
     @install = Install.new(install_params)
 
     if @install.save

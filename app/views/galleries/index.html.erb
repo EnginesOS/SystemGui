@@ -22,7 +22,7 @@
       <div class="modal-body">
         <% if @unadded_gallery_servers.present? %>
           <% @unadded_gallery_servers.each do |gallery_server| %>
-            <%= link_to gallery_server.title, create_gallery_path(gallery_server_short_name: gallery_server.short_name, gallery_server_domain: gallery_server.gallery_url), method: :post %>
+            <%= link_to gallery_server.title, create_gallery_path(gallery_server_short_name: gallery_server.short_name, gallery_server_domain: gallery_server.gallery_url), method: :post %><br>
           <% end %>
         <% else %>
             No more galleries to add.

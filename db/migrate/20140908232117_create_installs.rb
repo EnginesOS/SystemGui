@@ -7,8 +7,8 @@ class CreateInstalls < ActiveRecord::Migration
       t.string :gallery_server_name
       t.string :gallery_server_url
       t.string :blueprint_id
-      # t.string :host_name
-      # t.string :host_domain
+
+      t.timestamps
     end
   end
 end
