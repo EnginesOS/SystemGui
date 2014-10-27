@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li>
-          <%= link_to content_tag(:i, "", class: "fa fa-times") + " Close", root_path %>
+          <%= link_to content_tag(:i, "", class: "fa fa-home") + " Home", root_path %>
         </li>
         <li class="<%= 'active' if params[:controller] == 'pages' && params[:action] == 'app_manager' %>">
           <%= link_to content_tag(:i, "", class: "fa fa-play") + " App Manager", app_manager_path %>

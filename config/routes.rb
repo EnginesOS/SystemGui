@@ -10,7 +10,10 @@ Rails.application.routes.draw do
 
   post "galleries/create", to: "galleries#create", as: :create_gallery
   resources :galleries, only: [:index, :create, :destroy]
+  # post "installs/create", to: "installs#create", as: :installs_controller_install_forms
   resources :installs
+
+
 
   get "backup", to: "backup_tasks#index", as: :backup
   #post "backup_tasks/create_backup_task_for_db/:id", to: "backup_tasks#create_backup_task_for_db", as: :create_backup_task_for_db

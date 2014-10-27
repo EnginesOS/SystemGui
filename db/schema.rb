@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009095644) do
+ActiveRecord::Schema.define(version: 20141023052345) do
 
   create_table "backup_destinations", force: true do |t|
     t.string   "protocol"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 20141009095644) do
     t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "env_variables", force: true do |t|
+    t.integer "install_id"
+    t.string  "name"
+    t.string  "value"
+    t.boolean "set_at_runtime"
   end
 
   create_table "galleries", force: true do |t|

@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 gem 'devise'
 gem 'vmstat'
-gem 'therubyracer'
+# gem 'therubyracer'
 gem 'git'
 gem 'thin'
 gem "oink"
@@ -11,7 +11,7 @@ gem "font-awesome-rails"
 
 gem 'simple_form'
 gem 'country_select'
-#gem "nested_form"
+gem "nested_form"
 
 #gem 'carrierwave'
 gem "paperclip", "~> 4.2"

@@ -68,10 +68,10 @@ class BackupTasksController < ApplicationController
     @backup_task.engine_name = params[:engine_name]
     @backup_task.backup_name = ([*('A'..'Z'),*('0'..'9')]-%w(0 1 I O)).sample(8).join  
     @backup_task.protocol = "ftp"
-    @backup_task.address = "203.14.203.141"
+    @backup_task.address = ""
     @backup_task.folder = @backup_task.engine_name
-    @backup_task.username = "engback"
-    @backup_task.password = "back_eng"
+    @backup_task.username = ""
+    @backup_task.password = ""
   end  
 
   def destroy
