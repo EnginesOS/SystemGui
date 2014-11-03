@@ -8,7 +8,7 @@ gem "oink"
 gem 'bootstrap3-rails'
 gem "font-awesome-rails"
 
-
+gem 'newrelic_rpm'
 gem 'simple_form'
 gem 'country_select'
 gem "nested_form"
