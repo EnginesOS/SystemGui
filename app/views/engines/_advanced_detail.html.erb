@@ -1,0 +1,148 @@
+<% state= @engine.read_state %>
+
+<div class="row">
+  <div class="col-sm-6">
+    <table>
+      <tr><td><label>Name</label></td><td><%=@engine.containerName %></td></tr> 
+      <tr><td><label>Hostname</label></td><td><a href=http://<%=@engine.fqdn %>><%=@engine.fqdn %></a></td></tr> 
+      <tr><td><label>Current state</label></td><td><%= state %></td></tr>
+      <tr><td><label>Default state</label></td><td><%=@engine.setState %></td></tr> 
+      <tr><td><label>Memory</label></td><td><%= @engine.memory %> MB</td></tr>
+      <tr><td><label>Monitored</label></td><td><%=@engine.monitored %></td></tr>
+      <tr><td><label>Framework</label></td><td><%=@engine.framework %>/<%=@engine.runtime %></td></tr>
+      <tr><td><label>Image</label></td><td><%= @engine.image %> </td></tr>
+      <tr><td><label>Blue print source</label></td><td><%= @engine.repo %> </td></tr>
+    </table>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="top-gap">
+      <label>Router registration</label>
+      <div class="btn-toolbar">
+        <div class="btn-group"> 
+          <%= link_to 'Register', register_site_engine_path(id: @engine.containerName), class: "btn btn-default" %>
+          <%= link_to 'Deregister', deregister_site_engine_path(id: @engine.containerName), class: "btn btn-default" %>
+        </div>
+      </div>
+    </div>
+    <div class="top-gap">
+      <label>DNS registration</label>
+      <div class="btn-toolbar">
+        <div class="btn-group"> 
+          <%= link_to 'Register', register_dns_engine_path(id: @engine.containerName), class: "btn btn-default" %> 
+          <%= link_to 'Deregister', deregister_dns_engine_path(id: @engine.containerName), class: "btn btn-default" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12 top-gap">
+
+    <label>Ports</label>
+    <pre><table>
+      <tr><td>Web port: <%= @engine.port || "n/a" %></td></tr>
+      <tr><td colspan=2>This port is internal to docker environ webport is always 443 and 80 externally</td></tr>
+       <% if @engine.eports && @engine.eports.length >0 %>
+         <tr><td colspan=2>Open Ports, Public ports are represented as internal:external port</td></tr>
+         <% @engine.eports.each do |port| %>
+           <% if port != nil %>
+             <tr><td><%= port.name%></td><td><%= port.port.to_s %>:<%= port.external.to_s %> <%= port.publicFacing%></td></tr>
+           <%end%>
+         <%end%>
+       <%end%>
+    </table></pre>
+
+    <label>Last error</label>
+    <pre><table><tr><td><%= @engine.last_error %></td></tr></table></pre>
+  
+    <label>Environment</label>
+    <% if @engine.environments&& @engine.environments.length > 0 %>
+      <pre><table>
+        <th>Name</th>
+        <th>Value</th>
+        <% @engine.environments.each do |v|%>
+          <% if v != nil %>
+            <tr>
+              <td><%=v.name %></td>
+              <td><%=v.value%></td>
+              <td><%=v.setatrun=%></td>
+            </tr>
+          <%end%>
+        <%end%>
+      </table></pre>
+    <% else %>
+      <pre>None</pre>
+    <% end %>
+
+    <label>Volumes</label>
+    <% if @engine.volumes && @engine.volumes.length > 0 %>
+      <pre><table>
+        <% @engine.volumes.each do |v|%>
+           <tr>
+            <td><%=v.localpath%>/<%=v.name%>:<%=v.remotepath%>/<%=v.name%></td>
+          </tr>
+        <%end%>
+      </table></pre>
+    <% else %>
+      <pre>None</pre>
+    <% end %>  
+
+    <label>Database</label>
+    <% if @engine.databases && @engine.databases.length > 0 %>
+      <pre><table>
+        <% @engine.databases.each do |db|%>
+           <tr><td><%= db %></td></tr>
+        <% end %>
+      </table></pre>
+    <% else %>
+      <pre>None</pre>
+    <% end %>  
+
+     <label>Statistics</label>  
+    <% if state != "nocontainer" 
+      stats = @engine.stats
+      if stats != nil  %>
+        <pre><table>
+          <tr><td>State: <%= stats.state  %></tr></td>
+          <tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
+          <% if state == "stopped" %>
+            <tr><td>Stopped: <%=stats.stopped_ts %><% else %>Started: <%=stats.started_ts %></tr></td>
+          <%end%>
+          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></tr></td>
+          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
+        </table></pre>
+      <%end%>
+    <% else %>
+      <pre>None</pre>
+     <% end %>
+  
+     <label>Processes</label>
+     <% res = @engine.ps_container %>
+     <% if @engine.last_result.present? %>
+       <pre><table>
+         <% @engine.last_result.each_line do |line | 
+           vals = line.split %>
+           <tr>
+             <% vals.each do |v| %>  
+               <td><%= v %></td>
+             <% end %>
+           </tr>    
+         <% end %>
+       </table></pre>
+     <% else %>
+      <pre>None</pre>
+     <% end %>
+
+    <label>Logs</label>
+    <% res = @engine.logs_container%>
+    <% if @engine.last_result.present? %>
+      <pre><%= @engine.last_result %></pre>
+    <% else %>
+      <pre>None</pre>
+     <% end %>
+
+  </div>
+</div>

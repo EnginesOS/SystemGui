@@ -1,10 +1,13 @@
 require 'EngineGallery.rb'
+require "EnginesOSapi.rb"
+
 class InstallsController < ApplicationController
   before_action :set_install, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   def index
     @installs = Install.all
+    render text: @enginesOS_api.getManagedEngines
   end
 
   def show
@@ -14,14 +17,24 @@ class InstallsController < ApplicationController
     set_gallery
     set_blueprint
 
-    @install = Install.new(install_params)
-
     @gallery_server_name = params[:install]["gallery_server_name"]
     @gallery_server_url = params[:install]["gallery_server_url"]
     @blueprint_id = params[:install]["blueprint_id"]
 
     @application_name = @blueprint["software"]["name"]
     @application_description = @blueprint["software"]["description"]
+
+    @blueprint_environment_variables = @blueprint["software"]["environment_variables"]
+    # @blueprint_environment_variables.each do |ev|
+    #   @install.env_variables.build
+    # end
+    # @install.user_environment_variables = @blueprint["software"]["environment_variables"]
+
+    create_install_form_class @blueprint_environment_variables
+    @install_form = InstallForm.new(install_params)
+
+
+
     @license_name = @blueprint["software"]["license_name"]
     @license_url = @blueprint["software"]["license_sourceurl"]
   end
@@ -30,6 +43,10 @@ class InstallsController < ApplicationController
   end
 
   def create
+    params[:install] = params[:installs_controller_install_form]
+    params.delete(:installs_controller_install_form)
+    # render text: params.inspect
+
     if params["install"]["terms_and_conditions_accepted"] == "0"
      flash[:notice] = 'You must accept the license terms and conditions to install this software.'
      return redirect_to new_install_path( \
@@ -42,8 +59,11 @@ class InstallsController < ApplicationController
     set_gallery
     set_blueprint
     set_repository
-    @enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], "")
-
+p :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    p params
+p :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    @enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], params)
+    #james will add a result to buildEngines call
     @install = Install.new(install_params)
 
     if @install.save
@@ -113,6 +133,15 @@ class InstallsController < ApplicationController
       #   redirect_to installer_path, notice: "Failed to load repository."
       # end
     end
-    
+
+    def create_install_form_class environment_variables
+      accessors = "attr_accessor :host_name, :host_domain, :terms_and_conditions_accepted, " + \
+        ":display_name, :display_description, :terms_and_conditions_accepted, " + \
+        ":gallery_server_name, :gallery_server_url, :blueprint_id"
+      environment_variables.each do |ev|
+        accessors = accessors + ", :environment_variable_" + ev["name"].underscore.gsub(/( )/, '_')
+      end
+      eval("class InstallForm; include ActiveModel::Model; " + accessors + "; end")
+    end    
 
 end

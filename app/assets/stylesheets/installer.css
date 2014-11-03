@@ -9,6 +9,8 @@
 .engine-install-text {
   display: inline-block;
   word-wrap: break-word;
+  vertical-align: middle;
+  height: 96px;
   width: 200px;
 }
 

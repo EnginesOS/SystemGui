@@ -2,7 +2,14 @@ require "EnginesOSapi.rb"
 
 class EnginesController < ApplicationController
   before_action :authenticate_user!
-  
+  before_action :set_engine, only: [:advanced_detail]
+
+
+  def advanced_detail
+    render partial: "advanced_detail"
+  end
+
+
   def stop   
     @result = @enginesOS_api.stopEngine(params[:id])
     @notice = @result.result_mesg
@@ -99,5 +106,12 @@ class EnginesController < ApplicationController
       #only on nocontainer but with image 
       #will trigger a create
   end
+
+
+  private
+
+    def set_engine
+     @engine = @enginesOS_api.loadManagedEngine(params[:id])
+    end
   
 end

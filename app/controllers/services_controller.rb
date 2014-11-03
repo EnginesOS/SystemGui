@@ -2,6 +2,12 @@ require "EnginesOSapi.rb"
 
 class ServicesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_service, only: [:advanced_detail]
+
+  def advanced_detail
+    render partial: "advanced_detail"
+  end
+
   
   def stop
     @result = @enginesOS_api.stopService params[:id]
@@ -63,4 +69,10 @@ class ServicesController < ApplicationController
     redirect_to app_manager_path, notice: @notice
   end
 
-end
+  private
+
+    def set_service
+     @service = @enginesOS_api.getManagedService(params[:id])
+    end
+
+  end

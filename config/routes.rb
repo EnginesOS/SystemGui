@@ -7,21 +7,23 @@ Rails.application.routes.draw do
   get "help", to: "pages#help", as: :help
   get "system", to: "pages#system", as: :system
   get "settings", to: "pages#settings", as: :settings
-  get "backup", to: "pages#backup", as: :backup
 
-  # get "galleries/add", to: "galleries#add", as: :add_gallery
   post "galleries/create", to: "galleries#create", as: :create_gallery
-  # delete "galleries/:id", to: "galleries#remove", as: :remove_gallery
-  # get "galleries/:short_name", to: "galleries#show", as: :gallery
-  # get "galleries", to: "galleries#index", as: :galleries
-
+  resources :galleries, only: [:index, :create, :destroy]
+  # post "installs/create", to: "installs#create", as: :installs_controller_install_forms
   resources :installs
+
+
+
+  get "backup", to: "backup_tasks#index", as: :backup
+  #post "backup_tasks/create_backup_task_for_db/:id", to: "backup_tasks#create_backup_task_for_db", as: :create_backup_task_for_db
+  #post "backup_tasks/create_backup_task_for_fs/:id", to: "backup_tasks#create_backup_task_for_fs", as: :create_backup_task_for_fs
+  resources :backup_tasks
 
   get "users", to: "pages#users", as: :users
   resources :users
-
-  resources :galleries, only: [:index, :new, :create, :destroy]
   
+  get "services/:id/advanced_detail", to: "services#advanced_detail"
   resources :services do
     get :pause, on: :member
     get :unpause, on: :member
@@ -36,7 +38,8 @@ Rails.application.routes.draw do
     get :register_dns, on: :member
     get :deregister_dns, on: :member
   end
-    
+
+  get "engines/:id/advanced_detail", to: "engines#advanced_detail"
   resources :engines do
     get :pause, on: :member
     get :unpause, on: :member

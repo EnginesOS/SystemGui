@@ -5,7 +5,7 @@
 #require "/opt/engos/lib/ruby/NginxService.rb"
 #require "/opt/engos/lib/ruby/NagiosService.rb"
 #require "/opt/engos/lib/ruby/EngineBuilder.rb"
-require "/opt/engos/lib/ruby/EnginesOSapi.rb"
+require "/opt/engines/lib/ruby/EnginesOSapi.rb"
 
 #class EnginesOSapi
 #  def initialize()

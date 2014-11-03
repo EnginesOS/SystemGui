@@ -9,7 +9,7 @@ class Gallery < ActiveRecord::Base
         server = gallery_server
       end
     end
-    server
+    return server
   end
 
   def title

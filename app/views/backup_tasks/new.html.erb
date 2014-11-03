@@ -1,0 +1,29 @@
+<h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task for <%= @backup_task.engine_name %></h3>
+
+<p><%= "Source: " + @backup_task.source_name + "(" + @backup_task.backup_type + ")" %></p>
+
+<%= simple_form_for @backup_task do |f| %>
+
+  <%= f.input :source_name, as: :hidden, class: "form-control", input_html: {value: @backup_task.source_name } %>
+  <%= f.input :backup_type, as: :hidden, input_html: {value: @backup_task.backup_type }  %>
+  <%= f.input :engine_name, as: :hidden, input_html: {value: @backup_task.engine_name }  %>
+  <%= f.input :backup_name, input_html: {value: @backup_task.backup_name } %>
+  <fieldset>
+    <legend>Destination</legend>
+    <%= f.input :folder %>
+    <%= f.input :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"], as: :select %>
+    <div id="backup-task-external-destination-details">
+      <%= f.input :address %>
+      <%= f.input :username %>
+      <%= f.input :password %>
+    </div>
+    <%= link_to "Cancel", :back, class: "btn btn-warning" %>
+    <%= f.button :submit, class: "btn-primary pull-right" %>
+  </fieldset>
+<% end %>
+
+
+
+
+
+    

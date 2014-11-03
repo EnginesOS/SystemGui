@@ -1,17 +1,23 @@
-  <div class="panel panel-default top-gap" id="advanced">
-    <div class="panel-heading">
-      <h4><%= content_tag(:i, "", class: "fa fa-caret-down", id: "show_services_details_button", style: "") %><%= content_tag(:i, "", class: "fa fa-caret-up", id: "show_services_details_button", style: "display: none;") %> Details</h4>
-    </div>
-    <div class="panel-body">
+<% @engines.each do |engine| %>
+  <h3 class="control-panel-heading"><%= engine.hostName %></h3>
+  <p class="control-panel-heading"><i class="fa fa-hdd-o"></i> Volumes</p>
+  <% engine.volumes.each do |volume| %>
+    <% next if volume.name.blank? %>
+
+    <%= link_to "create backup for " + volume.name, create_backup_task_for_fs_path(id: volume.name, engine: engine.hostName), method: :post %><br>
+
+    
+  <% end %>
+
+<i class="fa fa-clock-o"></i>   <br>
+<% @backup_tasks.keys.each do |backup_task| %>
+  <%= @backup_tasks %>
+<% end %>
+
+  <p class="control-panel-heading"><i class="fa fa-database"></i> Databases</p>
+  <%= engine.databases %>
+
+<% end %>
 
 
-
-
-  <div class="field">
-    <%= f.label :display_name %><br>
-    <%= f.text_field :display_name %>
-  </div>
-  <div class="field">
-    <%= f.label :display_description %><br>
-    <%= f.text_area :display_description %>
-  </div>
+192.168.1.1, 172.17.42.1
