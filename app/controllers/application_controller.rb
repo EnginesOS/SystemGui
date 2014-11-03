@@ -12,14 +12,14 @@ p "start of ApplicationController"
   require 'EnginesOSapi.rb'
 
   def create_api  
-    if @enginesOS_api == nil
-      @enginesOS_api = EnginesOSapi.new
+    if $enginesOS_api == nil
+      $enginesOS_api = EnginesOSapi.new
     end
-    return @enginesOS_api
+    return $enginesOS_api
   end
   
   def enginesOS_api
-    return @enginesOS_api
+    return $enginesOS_api
   end
 
   # Overwriting the sign_out redirect path method
