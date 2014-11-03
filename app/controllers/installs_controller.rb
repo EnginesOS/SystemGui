@@ -7,7 +7,7 @@ class InstallsController < ApplicationController
 
   def index
     @installs = Install.all
-    render text: @enginesOS_api.getManagedEngines
+    render text: $enginesOS_api.getManagedEngines
   end
 
   def show
@@ -62,7 +62,7 @@ class InstallsController < ApplicationController
 p :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
     p params
 p :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-    @enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], params)
+    $enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], params)
     #james will add a result to buildEngines call
     @install = Install.new(install_params)
 

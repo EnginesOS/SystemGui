@@ -3,8 +3,8 @@ class BackupTasksController < ApplicationController
 
 
   def index
-    @backup_tasks = @enginesOS_api.get_backups
-    @engines = @enginesOS_api.getManagedEngines()
+    @backup_tasks = $enginesOS_api.get_backups
+    @engines = $enginesOS_api.getManagedEngines()
     @engines ||= []
 
     @engine_backup_tasks = {}
@@ -75,7 +75,7 @@ class BackupTasksController < ApplicationController
   end  
 
   def destroy
-    @enginesOS_api.stop_backup params[:id]
+    $enginesOS_api.stop_backup params[:id]
     redirect_to backup_path
   end
 
@@ -102,10 +102,10 @@ p params
 
     if type == "fs"
       volume_name = source_name
-      @enginesOS_api.backup_volume(backup_name,engine_name,volume_name,dest_hash)
+      $enginesOS_api.backup_volume(backup_name,engine_name,volume_name,dest_hash)
     else
       database_name = source_name
-      @enginesOS_api.backup_database(backup_name,engine_name,database_name,dest_hash)
+      $enginesOS_api.backup_database(backup_name,engine_name,database_name,dest_hash)
     end
 
     redirect_to backup_path

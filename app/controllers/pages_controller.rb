@@ -5,17 +5,17 @@ class PagesController < ApplicationController
   before_action :authenticate_user!
 
   def home
-    @engines = @enginesOS_api.getManagedEngines()
+    @engines = $enginesOS_api.getManagedEngines()
     @engines ||= []
     @engines = @engines.select{|e| e.read_state == "running"}
     render :home, layout: false
   end
 
   def app_manager
-    @services = @enginesOS_api.getManagedServices()
+    @services = $enginesOS_api.getManagedServices()
     @services ||= []
 
-    @engines = @enginesOS_api.getManagedEngines()
+    @engines = $enginesOS_api.getManagedEngines()
     @engines ||= []
   end
 
