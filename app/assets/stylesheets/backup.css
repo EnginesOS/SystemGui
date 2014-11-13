@@ -1,3 +1,10 @@
 .backup-task-action-button {
   margin-bottom: 5px;
 }
+
+.backup-panel {
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+  padding-left: 20px;
+  padding-right: 20px;
+}

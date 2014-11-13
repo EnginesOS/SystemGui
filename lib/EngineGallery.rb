@@ -73,6 +73,7 @@ end
   def EngineGallery.list_local       
     @galleries = Array.new()
     gallery_dirs = Dir.entries(SysConfig.galleriesDir)
+# p "gallery dirs: " + gallery_dirs.to_s
 #Fixme should only match yaml files also catch exceptions on bad reads of yaml or file io
     
     gallery_dirs.each do |gallery_dir |
@@ -80,8 +81,8 @@ end
           
             if File.exists?(gallery_file_name)            
               gallery = EngineGallery.load(gallery_file_name)
-           #   puts gallery_file_name
-            #  p gallery
+             # puts gallery_file_name
+             # p gallery
               @galleries.push(gallery)
             end
         end

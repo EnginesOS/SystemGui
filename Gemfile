@@ -14,6 +14,7 @@ gem 'country_select'
 gem "nested_form"
 
 #gem 'carrierwave'
+# gem 'fog'
 gem "paperclip", "~> 4.2"
 
 

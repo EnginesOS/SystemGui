@@ -18,22 +18,38 @@
   <fieldset>
     <legend>URL</legend>
     <div class="form-group form-group-lg">
-      <div class="col-sm-2">
+      <div class="col-sm-4">
         <%= f.label :host_name, class: "control-label" %>
+        <%= f.text_field :host_name, class: "form-control", value: @default_host_name %>
+      </div>
+      <div class="col-sm-8">
+        <%= f.label :host_domain, class: "control-label" %>
+        <%= f.text_area :host_domain, class: "form-control", value: @default_host_domain %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Name</legend>
+    <div class="form-group form-group-lg">
+      <div class="col-sm-2">
+        <%= f.label :display_name, class: "control-label" %>
       </div>
       <div class="col-sm-10">
-        <%= f.text_field :host_name, class: "form-control" %>
+        <%= f.text_field :display_name, class: "form-control", value: @application_name %>
       </div>
     </div>
     <div class="form-group form-group-lg">
       <div class="col-sm-2">
-        <%= f.label :host_domain, class: "control-label" %>
+        <%= f.label :display_description, class: "control-label" %>
       </div>
       <div class="col-sm-10">
-        <%= f.text_field :host_domain, class: "form-control" %>
+        <%= f.text_field :display_description, class: "form-control", value: @application_description %>
       </div>
     </div>
   </fieldset>
+
+
   <% if @blueprint_environment_variables.present? %>
     <fieldset>
       <legend>Environment Variables</legend>

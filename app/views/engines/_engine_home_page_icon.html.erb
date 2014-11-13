@@ -2,7 +2,9 @@
   <a class="btn btn-default btn-launcher" href="http://<%= @engine.fqdn %>" target="_blank">
     <%= image_tag("_placeholder_for_missing_engine.jpg", class: "launcher-icon") %><br>
     <div class="launcher-label">
-      <%= @engine.containerName %>
+      <%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if @engine.read_state != "running" %> <%= @engine.containerName %>
     </div>
   </a>
 </div>
+
+

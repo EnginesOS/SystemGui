@@ -7,7 +7,7 @@ class InstallsController < ApplicationController
 
   def index
     @installs = Install.all
-    render text: $enginesOS_api.getManagedEngines
+    render text: @enginesOS_api.getManagedEngines
   end
 
   def show
@@ -23,14 +23,17 @@ class InstallsController < ApplicationController
 
     @application_name = @blueprint["software"]["name"]
     @application_description = @blueprint["software"]["description"]
-    @default_host_name = @application_name.gsub(/[^0-9A-Za-z]/, '').downcase
-    @settings = SettingsConfig.first()
-    @default_host_domain = @settings.default_domain
 
     @blueprint_environment_variables = @blueprint["software"]["environment_variables"]
+    # @blueprint_environment_variables.each do |ev|
+    #   @install.env_variables.build
+    # end
+    # @install.user_environment_variables = @blueprint["software"]["environment_variables"]
 
     create_install_form_class @blueprint_environment_variables
     @install_form = InstallForm.new(install_params)
+
+
 
     @license_name = @blueprint["software"]["license_name"]
     @license_url = @blueprint["software"]["license_sourceurl"]
@@ -42,6 +45,7 @@ class InstallsController < ApplicationController
   def create
     params[:install] = params[:installs_controller_install_form]
     params.delete(:installs_controller_install_form)
+    # render text: params.inspect
 
     if params["install"]["terms_and_conditions_accepted"] == "0"
      flash[:notice] = 'You must accept the license terms and conditions to install this software.'
@@ -55,7 +59,10 @@ class InstallsController < ApplicationController
     set_gallery
     set_blueprint
     set_repository
-    $enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], params)
+# p :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+#     p params
+# p :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    @enginesOS_api.buildEngine(@repository, params[:install][:host_name], params[:install][:host_domain], params[:install])
     #james will add a result to buildEngines call
     @install = Install.new(install_params)
 

@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get "installer", to: "pages#installer", as: :installer
   get "help", to: "pages#help", as: :help
   get "system", to: "pages#system", as: :system
+
+  post "settings/update", to: "settings_configs#update"
+  patch "settings/update", to: "settings_configs#update", as: :update_settings
   get "settings", to: "pages#settings", as: :settings
 
   post "galleries/create", to: "galleries#create", as: :create_gallery

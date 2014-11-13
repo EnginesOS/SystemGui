@@ -7,7 +7,14 @@ class PagesController < ApplicationController
   def home
     @engines = $enginesOS_api.getManagedEngines()
     @engines ||= []
-    @engines = @engines.select{|e| e.read_state == "running"}
+    @engines = @engines.select{|e| e.setState == "running"}
+    if SettingsConfig.first.present?
+      wallpaper = SettingsConfig.first.wallpaper
+    end
+    if wallpaper.present?
+      @wallpaper_url = wallpaper.url
+    end
+p "wallpaper_url: " + @wallpaper_url
     render :home, layout: false
   end
 
@@ -19,13 +26,18 @@ class PagesController < ApplicationController
     @engines ||= []
   end
 
+  def settings
+    @settings = SettingsConfig.first() || SettingsConfig.new
+  end
+
   def installer
-    @galleries = Gallery.all
-    @gallery_servers = []
-    @galleries.each do |gallery|
-      @gallery_servers << gallery.gallery_server
-    end
-    @gallery_servers.flatten!
+    @gallery_servers = Gallery.all.map(&:gallery_server)
+p @gallery_servers
+    # @gallery_servers = []
+    # @galleries.each do |gallery|
+    #   @gallery_servers << gallery.gallery_server
+    # end
+    # @gallery_servers.flatten!
   end
 
   def system

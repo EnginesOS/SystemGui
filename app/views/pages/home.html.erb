@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html>
+<% if @wallpaper_url.nil? %>
+  <html class="background-splash">
+<% else %>
+  <html style="<%= "background: url(" + @wallpaper_url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" %>">
+<% end %>
+
 <head>
   <title>Engines</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -8,7 +13,7 @@
 </head>
 <body>
 
-<div id="content">
+<div id="content" >
 
   <div id="home-page-alerts">
     <% flash.each do |name, msg| %>

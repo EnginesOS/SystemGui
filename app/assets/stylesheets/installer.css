@@ -1,16 +1,40 @@
+.engine-install-row {
+  min-height: 120px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.engine-install-icon-container {
+  height: 100px;
+  width: 100px;
+  padding: 2px;
+}
+
 .engine-install-icon {
-  border: 1px solid;
-  border-color: #ccc;
-  height: 96px;
-  width: 96px;
-  border-radius:5px;
+  max-height: 96px;
+  max-width: 96px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 .engine-install-text {
-  display: inline-block;
+/*  display: inline-block;*/
   word-wrap: break-word;
-  vertical-align: middle;
+/*  vertical-align: middle;
   height: 96px;
-  width: 200px;
+  width: 200px;*/
 }
 
+.engine-install-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.engine-install-name {
+  font-size: 1.2em;
+  color: #666;
+}

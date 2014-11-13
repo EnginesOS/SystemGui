@@ -1,17 +1,19 @@
-.btn-launcher {
-  width: 150px;
-  min-height: 150px;
+.btn.btn-launcher {
+  width: 198px;
+  min-height: 198px;
   border: none;
   background-color: transparent;
+  border-radius: 5px;
 }
 
 .btn-launcher:hover {
   background-color: rgba(0,0,0,0.5);
+  border-radius: 5px;
 }
 
 .launcher-icon {
-  height: 96px;
-  width: 96px;
+  height: 144px;
+  width: 144px;
   margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -25,20 +27,16 @@
   margin-right: auto;
   max-width: 150px;
   line-height: 1;
-  font-size: 16px;
+  font-size: 18px;
   color: #fff;
   text-shadow: 0px 0px 3px #000;
-  font-weight: 700;
+  font-weight: 500;
   white-space: normal;
   word-wrap: break-word;
 }
 
 .background-splash { 
-  background: url(background.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-color: #44d;
 }
 
 .home-view p {
@@ -88,11 +86,11 @@
 }
 
 .fa-launcher {
-  height: 96px;
-  width: 96px; 
+  height: 144px;
+  width: 144px; 
   margin-top: 10px; 
-  padding: 10px; 
-  font-size: 72px; 
+  padding: 24px; 
+  font-size: 96px; 
   color: #eee; 
   border-radius: 5px; 
   background-color: rgba(0,0,0,0.5);
@@ -143,3 +141,7 @@
   vertical-align: top;
 }
 
+/*.stopped-engine {
+  border: 2px solid rgba(255,55,55,0.3);
+  border-radius: 7px; 
+}*/

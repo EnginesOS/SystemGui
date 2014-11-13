@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023052345) do
-
-  create_table "backup_destinations", force: true do |t|
-    t.string   "protocol"
-    t.string   "address"
-    t.string   "folder"
-    t.string   "username"
-    t.string   "password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20141112165901) do
 
   create_table "env_variables", force: true do |t|
     t.integer "install_id"
@@ -32,6 +22,7 @@ ActiveRecord::Schema.define(version: 20141023052345) do
 
   create_table "galleries", force: true do |t|
     t.string   "url"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,6 +36,17 @@ ActiveRecord::Schema.define(version: 20141023052345) do
     t.string   "blueprint_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "container_name"
+  end
+
+  create_table "settings_configs", force: true do |t|
+    t.string   "default_domain"
+    t.string   "default_site"
+    t.string   "smtp_smarthost"
+    t.string   "wallpaper_file_name"
+    t.string   "wallpaper_content_type"
+    t.integer  "wallpaper_file_size"
+    t.datetime "wallpaper_updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -61,6 +63,7 @@ ActiveRecord::Schema.define(version: 20141023052345) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
+    t.string   "user_type"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

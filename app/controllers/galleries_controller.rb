@@ -4,12 +4,12 @@ class GalleriesController < ApplicationController
 
   def index
     @galleries = Gallery.all
-
     @added_gallery_servers = []
     @galleries.each do |gallery|
       @added_gallery_servers << gallery.gallery_server
     end
     @added_gallery_server_short_names = @added_gallery_servers.map(&:short_name)
+
     @all_gallery_servers = EngineGallery.list_local
     @all_gallery_server_short_names = @all_gallery_servers.map(&:short_name)
     @unadded_gallery_server_short_names = @all_gallery_server_short_names - @added_gallery_server_short_names
@@ -30,10 +30,9 @@ class GalleriesController < ApplicationController
   # end
 
   def create
-    gallery_server_short_name = params["gallery_server_short_name"]
-    gallery_server_domain = params["gallery_server_domain"]
-    gallery_server_url = gallery_server_short_name + "." + gallery_server_domain
-    @gallery = Gallery.new(url: gallery_server_url)
+    gallery_server_name = params["gallery_server_name"]
+    gallery_server_url = params["gallery_server_url"]
+    @gallery = Gallery.new(url: gallery_server_url, name: gallery_server_name)
     @gallery.save
     redirect_to galleries_path
   end
