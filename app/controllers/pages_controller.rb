@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     if wallpaper.present?
       @wallpaper_url = wallpaper.url
     end
-p "wallpaper_url: " + @wallpaper_url
+# p "wallpaper_url: " + @wallpaper_url.to_s
     render :home, layout: false
   end
 
