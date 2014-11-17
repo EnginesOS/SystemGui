@@ -39,8 +39,11 @@ class AppInstallsController < ApplicationController
   end
 
   def edit
-      @install = AppInstall.find_by_container_name(params[:id])
-
+      @app_install = AppInstall.find_by_container_name(params[:id])
+      if @app_install.nil?
+        @app_install = AppInstall.new
+        @app_install.save
+      end
   end
 
   def create
