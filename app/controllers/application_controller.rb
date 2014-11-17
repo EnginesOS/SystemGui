@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  require 'EnginesAPI.rb'
+  require 'EnginesApiHandler.rb'
   include EnginesApiHandler
   require 'EngineGallery.rb'
 
