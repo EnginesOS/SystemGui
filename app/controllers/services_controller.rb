@@ -1,4 +1,4 @@
-require "EnginesOSapi.rb"
+# require "EnginesOSapi.rb"
 
 class ServicesController < ApplicationController
   before_action :authenticate_user!
@@ -7,72 +7,44 @@ class ServicesController < ApplicationController
   def advanced_detail
     render partial: "advanced_detail"
   end
-
   
   def stop
-    @result = $enginesOS_api.stopService params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+    redirect_to app_manager_path, notice: stop_service(params[:id])
   end
 
   def start
-    @result = $enginesOS_api.startService params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+    redirect_to app_manager_path, notice: start_service(params[:id])
   end
-     
+
   def pause
-    @result = $enginesOS_api.pauseService params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+    redirect_to app_manager_path, notice: pause_service(params[:id])
   end
-    
+
   def unpause
-    @result = $enginesOS_api.unpauseService params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+    redirect_to app_manager_path, notice: unpause_service(params[:id])
   end
-    
-  def register_site
-    @result = $enginesOS_api.registerServiceWebSite params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+
+  def register_website
+    redirect_to app_manager_path, notice: register_website_service(params[:id])
   end
-   
-  def deregister_site
-    @result = $enginesOS_api.deregisterServiceWebSite params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+
+  def deregister_website
+    redirect_to app_manager_path, notice: deregister_website_service(params[:id])
   end
 
   def register_dns
-    @result = $enginesOS_api.registerServiceDNS params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+    redirect_to app_manager_path, notice: register_dns_service(params[:id])
   end
-   
+
   def deregister_dns
-    @result = $enginesOS_api.deregisterServiceDNS params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+    redirect_to app_manager_path, notice: deregister_dns_service(params[:id])
   end
 
-  def create_service     
-    @result = $enginesOS_api.createService params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
-  end
-    
-  def recreate 
-    @result = $enginesOS_api.recreateService params[:id]
-    @notice = @result.result_mesg
-    redirect_to app_manager_path, notice: @notice
+private
+
+  def set_service
+   @service = $enginesOS_api.getManagedService(params[:id])
   end
 
-  private
+end
 
-    def set_service
-     @service = $enginesOS_api.getManagedService(params[:id])
-    end
-
-  end

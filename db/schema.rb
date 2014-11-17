@@ -11,35 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112165901) do
+ActiveRecord::Schema.define(version: 20141112010926) do
 
-  create_table "env_variables", force: true do |t|
-    t.integer "install_id"
+  create_table "app_install_env_variables", force: true do |t|
+    t.integer "app_install_id"
     t.string  "name"
     t.string  "value"
-    t.boolean "set_at_runtime"
+    t.string  "comment"
+    t.boolean "ask_at_runtime"
   end
 
-  create_table "galleries", force: true do |t|
+  create_table "app_installs", force: true do |t|
+    t.string   "host_name"
+    t.string   "domain_name"
+    t.string   "container_name"
+    t.string   "display_name"
+    t.text     "display_description"
+    t.string   "gallery_server_name"
+    t.string   "gallery_server_url"
+    t.string   "blueprint_id"
+    t.string   "license_name"
+    t.string   "license_sourceurl"
+    t.boolean  "terms_and_conditions_accepted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "gallery_installs", force: true do |t|
     t.string   "url"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "installs", force: true do |t|
-    t.string   "display_name"
-    t.text     "display_description"
-    t.boolean  "terms_and_conditions_accepted"
-    t.string   "gallery_server_name"
-    t.string   "gallery_server_url"
-    t.string   "blueprint_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "container_name"
-  end
-
-  create_table "settings_configs", force: true do |t|
+  create_table "system_configs", force: true do |t|
     t.string   "default_domain"
     t.string   "default_site"
     t.string   "smtp_smarthost"

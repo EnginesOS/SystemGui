@@ -3,31 +3,32 @@ Rails.application.routes.draw do
 
   root "pages#home"
   get "app_manager", to: "pages#app_manager", as: :app_manager
-  get "installer", to: "pages#installer", as: :installer
   get "help", to: "pages#help", as: :help
   get "system", to: "pages#system", as: :system
+  get "installer", to: "app_installs#installer", as: :installer
 
-  post "settings/update", to: "settings_configs#update"
-  patch "settings/update", to: "settings_configs#update", as: :update_settings
-  get "settings", to: "pages#settings", as: :settings
+  resources :system_configs
+  # post "settings/update", to: "settings_configs#update"
+  # patch "settings/update", to: "settings_configs#update", as: :update_settings
+  # get "settings", to: "settings_configs#settings", as: :settings
 
-  post "galleries/create", to: "galleries#create", as: :create_gallery
-  resources :galleries, only: [:index, :create, :destroy]
-  # post "installs/create", to: "installs#create", as: :installs_controller_install_forms
-  resources :installs
+  resources :gallery_installs
+  resources :app_installs
+  # post "galleries/create", to: "galleries#create", as: :create_gallery
+  # resources :galleries, only: [:index, :create, :destroy]
+  # # post "installs/create", to: "installs#create", as: :installs_controller_install_forms
+  # resources :installs
 
-
-
-  get "backup", to: "backup_tasks#index", as: :backup
+  # get "backup", to: "backup_tasks#index", as: :backup
   #post "backup_tasks/create_backup_task_for_db/:id", to: "backup_tasks#create_backup_task_for_db", as: :create_backup_task_for_db
   #post "backup_tasks/create_backup_task_for_fs/:id", to: "backup_tasks#create_backup_task_for_fs", as: :create_backup_task_for_fs
   resources :backup_tasks
 
-  get "users", to: "pages#users", as: :users
+  # get "users", to: "users#index", as: :users
   resources :users
   
-  get "services/:id/advanced_detail", to: "services#advanced_detail"
   resources :services do
+    get :advanced_detail, on: :member
     get :pause, on: :member
     get :unpause, on: :member
     get :start, on: :member
@@ -35,29 +36,30 @@ Rails.application.routes.draw do
     get :restart, on: :member
     get :show, on: :member
     get :recreate, on: :member
-    get :create_service, on: :member
-    get :register_site, on: :member
-    get :deregister_site, on: :member     
+    get :create_container, on: :member
+    get :register_website, on: :member
+    get :deregister_website, on: :member     
     get :register_dns, on: :member
     get :deregister_dns, on: :member
   end
 
-  get "engines/:id/advanced_detail", to: "engines#advanced_detail"
-  resources :engines do
+  resources :apps do
+    get :advanced_detail, on: :member
     get :pause, on: :member
     get :unpause, on: :member
     get :start, on: :member
     get :stop, on: :member
-    get :deleteimage, on: :member
+    get :delete_image, on: :member
     get :restart, on: :member
-    get :destroy_engine, on: :member
-    get :create_engine, on: :member
+    get :destroy_container, on: :member
+    get :create_container, on: :member
+    get :build, on: :member
     get :show, on: :member
     get :recreate, on: :member
     get :monitor, on: :member
     get :demonitor, on: :member
-    get :register_site, on: :member
-    get :deregister_site, on: :member
+    get :register_website, on: :member
+    get :deregister_website, on: :member
     get :register_dns, on: :member
     get :deregister_dns, on: :member  
   end

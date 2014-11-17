@@ -4,10 +4,10 @@
 
 <div class="col-sm-12">
   <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-tablet") %> Apps</h3>
-  <% if @engines %>
-      <% @engines.each do |engine| %>
-          <% @engine = engine %>
-          <%= render partial: "engines/engine_control_panel" %>
+  <% if @applications %>
+      <% @applications.each do |application| %>
+          <% @application = application %>
+          <%= render partial: "apps/app_manager_panel" %>
       <% end %>
   <% else %>
       <p>No application servers installed</p>
@@ -16,6 +16,6 @@
   <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
   <% @services.each do |service| %>
       <% @service = service %>
-      <%= render partial: "services/service_control_panel" %>
+      <%= render partial: "services/app_manager_panel" %>
   <% end %>
 </div>

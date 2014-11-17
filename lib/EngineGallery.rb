@@ -3,6 +3,18 @@ require "/opt/engines/lib/ruby/SysConfig.rb"
 
 require "git"
 
+# class EngineGalleryHandler
+
+#   def self.get_gallery gallery_name, gallery_url
+#     EngineGallery.getGallery(gallery_name,gallery_url)
+#   end
+
+#   attr_reader :gallery_url, :title, :short_name, :blueprints_url
+
+# end
+
+
+
 class EngineGallery
   
   #Galleries are to be drawn in from several sources
@@ -47,7 +59,7 @@ def self.from_yaml( yaml )
       enginegallery
 end
     
-def EngineGallery.getGallery(gallery_name,gallery_url)
+def self.getGallery(gallery_name,gallery_url)
   p gallery_url
   p gallery_name
   
@@ -55,10 +67,12 @@ def EngineGallery.getGallery(gallery_name,gallery_url)
     gallery_config_filename = SysConfig.galleriesDir + "/" + gallery_name + "/gallery.yaml"
       p gallery_config_filename
       return  load(gallery_config_filename)
+  elsif false
+    # handle web-based galleries here...
   end
 end
 
-def EngineGallery.load(gallery_file_name)
+def self.load(gallery_file_name)
 
          if File.exists?(gallery_file_name) == false
            puts("No such configuration:" + gallery_file_name )
@@ -70,7 +84,7 @@ def EngineGallery.load(gallery_file_name)
       enginegallery
 end
      
-  def EngineGallery.list_local       
+  def self.list_local       
     @galleries = Array.new()
     gallery_dirs = Dir.entries(SysConfig.galleriesDir)
 # p "gallery dirs: " + gallery_dirs.to_s
