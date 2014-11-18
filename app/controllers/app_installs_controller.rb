@@ -2,8 +2,8 @@
 # require "EnginesOSapi.rb"
 
 class AppInstallsController < ApplicationController
-  before_action :set_install, only: [:show, :update, :destroy] # , :edit
   before_action :authenticate_user!
+  before_action :set_install, only: [:show, :update, :destroy] # , :edit
 
   def installer
     @gallery_servers = GalleryInstall.all.map(&:gallery_server)
@@ -41,7 +41,17 @@ class AppInstallsController < ApplicationController
   def edit
       @app_install = AppInstall.find_by_container_name(params[:id])
       if @app_install.nil?
-        @app_install = AppInstall.new
+
+
+        
+#         {container_name: params[:id]
+
+# :host_name
+# :domain_name
+# :display_name
+# :display_description
+
+        @app_install = AppInstall.new()
         @app_install.save
       end
   end
@@ -78,7 +88,7 @@ class AppInstallsController < ApplicationController
   end
 
   def update
-    if @install.update(install_params)
+    if @install.update(app_install_params)
       redirect_to app_manager_path, notice: 'Application details were successfully updated.'
     else
       render :edit, alert: 'Application details were not updated.'

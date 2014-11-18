@@ -21,6 +21,10 @@ class PagesController < ApplicationController
     @vm2 = Vmstat.memory
   end
 
+  def settings
+    @system_config = SystemConfig.settings
+  end
+
 private
 
     def services

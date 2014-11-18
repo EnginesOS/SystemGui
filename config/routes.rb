@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   get "system", to: "pages#system", as: :system
   get "installer", to: "app_installs#installer", as: :installer
 
+  get "settings", to: "pages#settings", as: :settings
+  get "edit_default_domain", to: "system_configs#edit_default_domain", as: :edit_default_domain
+  get "edit_default_website", to: "system_configs#edit_default_website", as: :edit_default_website
+  get "edit_mail", to: "system_configs#edit_mail", as: :edit_mail
+  get "edit_wallpaper", to: "system_configs#edit_wallpaper", as: :edit_wallpaper
   resources :system_configs
   # post "settings/update", to: "settings_configs#update"
   # patch "settings/update", to: "settings_configs#update", as: :update_settings

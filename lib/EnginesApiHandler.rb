@@ -10,7 +10,7 @@ module EnginesApiHandler
   end
 
   def get_all_applications
-    return engines_api.getManagedEngines() || []
+    return (engines_api.getManagedEngines() || [])
   end
 
   def user_visible_applications
@@ -18,7 +18,7 @@ module EnginesApiHandler
   end
 
   def get_all_backups
-    return engines_api.get_backups || []
+    engines_api.get_backups
   end
 
   def remove_backup_task id
@@ -34,7 +34,7 @@ module EnginesApiHandler
     applications = get_all_applications
 
     backup_tasks.keys.each do |backup_task_name|
-      backup_task_application_name = backup_tasks[backup_task_name][:app_name]
+      backup_task_application_name = backup_tasks[backup_task_name][:engine_name]
       backup_task_source_name = backup_tasks[backup_task_name][:source_name]
       backup_task_type = backup_tasks[backup_task_name][:backup_type]
 
@@ -215,7 +215,7 @@ module EnginesApiHandler
     @notice = @result.result_mesg
   end
 
-  def create_engine_service id
+  def create_container_service id
     @result = engines_api.createService id
     @notice = @result.result_mesg
   end

@@ -8,6 +8,10 @@ class ServicesController < ApplicationController
     render partial: "advanced_detail"
   end
   
+  def create_container
+    redirect_to app_manager_path, notice: create_container_service(params[:id])
+  end
+
   def stop
     redirect_to app_manager_path, notice: stop_service(params[:id])
   end

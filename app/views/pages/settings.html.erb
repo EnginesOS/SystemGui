@@ -1,0 +1,33 @@
+<div class="col-sm-12 settings">
+  <h2 class="control-panel-title"><i class="fa fa-gear"></i> Settings</h2>
+
+    <p>
+      <%= link_to (content_tag(:i, '', class: 'fa fa-users') + ' Users').html_safe, users_path, class: 'btn btn-default btn-lg' %>
+      <%= link_to (content_tag(:i, '', class: 'fa fa-plus') + ' Installer').html_safe, installer_path, class: 'btn btn-default btn-lg' %>
+      <%= link_to (content_tag(:i, '', class: 'fa fa-upload') + ' Backup').html_safe, backup_tasks_path, class: 'btn btn-default btn-lg' %>
+    </p>
+
+    <p>
+      <%= label_tag "", "Default domain", class: "top-gap" %>
+      <%= link_to (@system_config.default_domain + ' ' + content_tag(:i, '', class: 'fa fa-edit')).html_safe, edit_default_domain_path %>
+    </p>
+
+    <p>
+      <%= label_tag "", "Default website", class: "top-gap" %>
+      <%= link_to (@system_config.default_site + ' ' + content_tag(:i, '', class: 'fa fa-edit')).html_safe, edit_default_website_path %>
+    </p>
+
+    <p>
+      <%= label_tag "", "Mail", class: "top-gap" %><br>
+      <%= label_tag "", "SMTP Smarthost" %>
+      <%= link_to (@system_config.smtp_smarthost + ' ' + content_tag(:i, '', class: 'fa fa-edit')).html_safe, edit_mail_path %>
+    </p>
+
+    <p>
+      <%= label_tag "", 'Wallpaper', class: "top-gap" %>
+      <% if @system_config.wallpaper.present? %>
+        <%= link_to ((image_tag @system_config.wallpaper.url, height: "64") + ' ' + content_tag(:i, '', class: 'fa fa-edit')).html_safe, edit_wallpaper_path %>
+      <% end %>
+    </p>
+
+</div>
