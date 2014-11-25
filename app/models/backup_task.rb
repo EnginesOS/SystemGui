@@ -1,5 +1,7 @@
 class BackupTask
 
+  require "/opt/engines/lib/ruby/EnginesOSapi.rb"
+
   include ActiveModel::Model
   attr_accessor :source_name
   attr_accessor :backup_type
@@ -22,5 +24,95 @@ class BackupTask
     self.username = ""
     self.password = ""
   end
+
+  def self.engines_api
+    if $enginesOS_api == nil
+      $enginesOS_api = EnginesOSapi.new
+    end
+    return $enginesOS_api
+  end
+
+
+  def self.find id
+    self.engines_api.load_backup(id)
+  end
+
+  def self.all
+    self.engines_api.get_backups
+  end
+
+  def self.count
+    self.all #.keys.count
+  end
+
+  def self.remove_backup_task id
+    engines_api.stop_backup id
+  end
+
+
+  def self.all_grouped_by_app
+
+    application_backup_details = {}
+    application_backup_tasks = {}
+
+    backup_tasks = EnginesApiHandler.get_all_backups
+    applications = EnginesApiHandler.get_all_applications
+
+    backup_tasks.keys.each do |backup_task_name|
+      backup_task_application_name = backup_tasks[backup_task_name][:engine_name]
+      backup_task_source_name = backup_tasks[backup_task_name][:source_name]
+      backup_task_type = backup_tasks[backup_task_name][:backup_type]
+
+      if application_backup_tasks[backup_task_application_name].nil?
+        application_backup_tasks[backup_task_application_name] = {}
+      end
+      if application_backup_tasks[backup_task_application_name][backup_task_type].nil?
+        application_backup_tasks[backup_task_application_name][backup_task_type] = {}
+      end
+      if application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name].nil?
+        application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name] = []
+      end
+      temp = application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name]
+      temp << backup_task_name     
+      application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name] = temp
+    end
+
+    applications.each do |application|
+      application_name = application.hostName
+      application_volume_names = application.volumes.map(&:name).reject(&:blank?)
+      application_database_names = application.databases.map(&:name).reject(&:blank?)
+
+      application_volumes = []
+      application_volume_names.each do |application_volume_name|       
+        if application_backup_tasks[application_name].present? && application_backup_tasks[application_name]["fs"].present? && application_backup_tasks[application_name]["fs"][application_volume_name].present?
+          backup_tasks = application_backup_tasks[application_name]["fs"][application_volume_name]
+        else
+          backup_tasks = []
+        end
+        application_volumes << {name: application_volume_name, backup_tasks: backup_tasks}
+      end
+
+      application_databases = []
+      application_database_names.each do |application_database_name|
+        if application_backup_tasks[application_name].present? && application_backup_tasks[application_name]["db"].present? && application_backup_tasks[application_name]["db"][application_database_name].present?
+          backup_tasks = application_backup_tasks[application_name]["db"][application_database_name]
+        else
+          backup_tasks = []
+        end
+        application_databases << {name: application_database_name, backup_tasks: backup_tasks}
+      end
+
+      application_backup_details[application_name] = {
+        volumes: application_volumes,
+        databases: application_databases
+      }
+    end
+
+    return application_backup_details
+  
+  end
+
+
+
 
 end

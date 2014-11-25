@@ -1,21 +1,31 @@
-<div class="col-sm-12">
-  <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-play") %> App Manager</h2>
-</div>
+<span class='app-manager'>
+  <div class="col-sm-12">
+    <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-play") %> App Manager</h2>
 
-<div class="col-sm-12">
-  <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-tablet") %> Apps</h3>
-  <% if @applications %>
-      <% @applications.each do |application| %>
-          <% @application = application %>
-          <%= render partial: "apps/app_manager_panel" %>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-tablet") %> Apps</h3>
+      </div>
+
+      <% if @apps %>
+          <% @apps.each do |app| %>
+              <%= render partial: "apps/app_manager_gadget", locals: {app: app} %>
+          <% end %>
+      <% else %>
+          <p>No applications installed.</p>
       <% end %>
-  <% else %>
-      <p>No application servers installed</p>
-  <% end %>
 
-  <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
-  <% @services.each do |service| %>
-      <% @service = service %>
-      <%= render partial: "services/app_manager_panel" %>
-  <% end %>
-</div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="control-panel-heading"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
+      </div>
+
+      <% @services.each do |service| %>
+        <%= render partial: "services/app_manager_gadget", locals: {service: service} %>
+      <% end %>
+
+    </div>
+  </div>
+</span>

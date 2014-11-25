@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20141112010926) do
   create_table "app_installs", force: true do |t|
     t.string   "host_name"
     t.string   "domain_name"
-    t.string   "container_name"
+    t.string   "engine_name"
     t.string   "display_name"
     t.text     "display_description"
     t.string   "gallery_server_name"
@@ -33,6 +33,11 @@ ActiveRecord::Schema.define(version: 20141112010926) do
     t.string   "license_name"
     t.string   "license_sourceurl"
     t.boolean  "terms_and_conditions_accepted"
+    t.string   "image_url"
+    t.string   "icon_file_name"
+    t.string   "icon_content_type"
+    t.integer  "icon_file_size"
+    t.datetime "icon_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

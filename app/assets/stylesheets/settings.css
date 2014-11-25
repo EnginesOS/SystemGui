@@ -1,3 +1,24 @@
-.settings a {
-  font-size: 20px;
+.settings label {
+  font-size: 0.9em;
+}
+
+.settings .btn-group {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.settings .btn {
+  text-align: left;
+}
+
+.settings .btn-group-vertical {
+  min-width: 100%;
+}
+
+.settings .btn img {
+  margin-left: 4px;
+}
+
+.settings_btn_detail {
+  font-size: 0.8em;
 }

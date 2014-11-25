@@ -5,14 +5,15 @@ class PagesController < ApplicationController
   before_action :authenticate_user!
 
   def home
-    @applications = user_visible_applications
+    @apps = AppHandler.user_visible_applications.sort_by{|app| app.engine_name}
     @wallpaper_url = wallpaper_url
     render :home, layout: false
   end
 
   def app_manager
-    @applications = get_all_applications
-    @services = services
+    EnginesApiHandler.db_maintenance
+    @apps = AppHandler.all.sort_by{|e| e.engine_name}
+    @services = ServiceHandler.all.sort_by{|e| e.engine_name}
   end
 
   def system
@@ -23,6 +24,14 @@ class PagesController < ApplicationController
 
   def settings
     @system_config = SystemConfig.settings
+    @users = User.all
+    @backup_tasks = BackupTask.all
+    @gallery_installs = GalleryInstall.all
+  end
+
+  def installer
+    @gallery_servers = GalleryInstall.all.map(&:gallery_server)
+    
   end
 
 private

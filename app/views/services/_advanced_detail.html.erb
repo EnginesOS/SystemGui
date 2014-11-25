@@ -1,12 +1,12 @@
-<% state= @service.read_state %>
+<% state = @service.state %>
 
         <div class="row">
           <div class="col-sm-6">
             <table>
-              <tr><td><label>Name</label></td><td><%=@service.containerName %></td></tr> 
-              <tr><td><label>Hostname</label></td><td><a href=http://<%=@service.fqdn %>><%=@service.fqdn %></a></td></tr> 
+              <tr><td><label>Engine name</label></td><td><%=@service.engine_name %></td></tr> 
+              <tr><td><label>Host name</label></td><td><a href=http://<%=@service.fqdn %>><%=@service.fqdn %></a></td></tr> 
               <tr><td><label>Current state</label></td><td><%= state %></td></tr>
-              <tr><td><label>Default state</label></td><td><%=@service.setState %></td></tr> 
+              <tr><td><label>Default state</label></td><td><%=@service.state_as_set_by_user %></td></tr> 
               <tr><td><label>Memory</label></td><td><%= @service.memory %> MB</td></tr>
               <tr><td><label>Monitored</label></td><td><%=@service.monitored %></td></tr>
               <tr><td><label>Framework</label></td><td><%=@service.framework %>/<%=@service.runtime %></td></tr>
@@ -20,8 +20,8 @@
               <label>Router registration</label>
               <div class="btn-toolbar">
                 <div class="btn-group"> 
-                  <%= link_to 'Register', register_website_service_path(@service.containerName), class: "btn btn-default" %>
-                  <%= link_to 'Deregister', deregister_website_service_path(@service.containerName), class: "btn btn-default" %>
+                  <%= link_to 'Register', register_website_service_path(@service.engine_name), class: "btn btn-default" %>
+                  <%= link_to 'Deregister', deregister_website_service_path(@service.engine_name), class: "btn btn-default" %>
                 </div>
               </div>
             </div>
@@ -29,8 +29,8 @@
               <label>DNS registration</label>
               <div class="btn-toolbar">
                 <div class="btn-group"> 
-                  <%= link_to 'Register', register_dns_service_path(@service.containerName), class: "btn btn-default" %> 
-                  <%= link_to 'Deregister', deregister_dns_service_path(@service.containerName), class: "btn btn-default" %>
+                  <%= link_to 'Register', register_dns_service_path(@service.engine_name), class: "btn btn-default" %> 
+                  <%= link_to 'Deregister', deregister_dns_service_path(@service.engine_name), class: "btn btn-default" %>
                 </div>
               </div>
             </div>

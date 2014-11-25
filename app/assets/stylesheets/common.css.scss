@@ -5,6 +5,12 @@
   margin-left: 0px;  
   border: none;
   border-radius: 0px;
+  font-size: 1.2em;
+}
+
+.alert button {
+  font-size: 2em;
+  margin-top: -5px;
 }
 
 .top-gap {
@@ -69,4 +75,9 @@ fieldset {
 
 .navbar-brand {
   font-size: 16px;
+}
+
+.nav_bar_launcher_icon {
+  height: 20px;
+  margin-top: -3px;
 }

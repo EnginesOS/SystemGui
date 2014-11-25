@@ -2,52 +2,52 @@
 
 class ServicesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_service, only: [:advanced_detail]
+  before_action :set_service
 
   def advanced_detail
     render partial: "advanced_detail"
   end
   
   def create_container
-    redirect_to app_manager_path, notice: create_container_service(params[:id])
+    redirect_to app_manager_path, notice: @service.create_container.result_mesg
   end
 
   def stop
-    redirect_to app_manager_path, notice: stop_service(params[:id])
+    redirect_to app_manager_path, notice: @service.stop.result_mesg
   end
 
   def start
-    redirect_to app_manager_path, notice: start_service(params[:id])
+    redirect_to app_manager_path, notice: @service.start.result_mesg
   end
 
   def pause
-    redirect_to app_manager_path, notice: pause_service(params[:id])
+    redirect_to app_manager_path, notice: @service.pause.result_mesg
   end
 
   def unpause
-    redirect_to app_manager_path, notice: unpause_service(params[:id])
+    redirect_to app_manager_path, notice: @service.unpause.result_mesg
   end
 
   def register_website
-    redirect_to app_manager_path, notice: register_website_service(params[:id])
+    redirect_to app_manager_path, notice: @service.register_website.result_mesg
   end
 
   def deregister_website
-    redirect_to app_manager_path, notice: deregister_website_service(params[:id])
+    redirect_to app_manager_path, notice: @service.deregister_website.result_mesg
   end
 
   def register_dns
-    redirect_to app_manager_path, notice: register_dns_service(params[:id])
+    redirect_to app_manager_path, notice: @service.register_dns.result_mesg
   end
 
   def deregister_dns
-    redirect_to app_manager_path, notice: deregister_dns_service(params[:id])
+    redirect_to app_manager_path, notice: @service.deregister_dns.result_mesg
   end
 
 private
 
   def set_service
-   @service = $enginesOS_api.getManagedService(params[:id])
+   @service = ServiceHandler.new params[:id]
   end
 
 end

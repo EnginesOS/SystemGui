@@ -1,9 +1,41 @@
+.home-view .dropdown {
+  text-align: center;
+  width: 100%;
+}
+
+/*.home-view .dropdown button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+}*/
+
+.home-view .dropdown-holder {
+  width: 240px;
+  padding: 5px;
+  margin-left: -5px;
+  margin-right: auto;
+  background-color: rgba(200,200,200,0.9);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.home-view ul.dropdown-menu {
+  width: 100%;
+  background-color: transparent;
+  border-radius: 0px;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+}
+
 .btn.btn-launcher {
-  width: 198px;
-  min-height: 198px;
+  width: 230px;
+  height: 230px;
   border: none;
   background-color: transparent;
   border-radius: 5px;
+  display: table;
 }
 
 .btn-launcher:hover {
@@ -11,18 +43,20 @@
   border-radius: 5px;
 }
 
+
+.launcher_icon_and_label_holder {
+  display: table-cell;
+  vertical-align: middle;
+}
+
 .launcher-icon {
-  height: 144px;
-  width: 144px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  max-height: 128px;
+  max-width: 128px;
   border-radius: 5px;
 }
 
 .launcher-label {
   margin-top: 5px;
-  margin-bottom: 0px;
   margin-left: auto;
   margin-right: auto;
   max-width: 150px;
@@ -36,7 +70,7 @@
 }
 
 .background-splash { 
-  background-color: #44d;
+  background-color: #57c;
 }
 
 .home-view p {
@@ -45,6 +79,7 @@
 
 .home-view {
   text-align: center;
+  padding: 10px;
 }
 
 .navbar-home {
@@ -88,7 +123,6 @@
 .fa-launcher {
   height: 144px;
   width: 144px; 
-  margin-top: 10px; 
   padding: 24px; 
   font-size: 96px; 
   color: #eee; 
@@ -145,3 +179,7 @@
   border: 2px solid rgba(255,55,55,0.3);
   border-radius: 7px; 
 }*/
+
+.home_menu li {
+  list-style-type: none;
+}

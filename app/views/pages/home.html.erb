@@ -27,59 +27,67 @@
   </div>
 
   <div class="contaner-fluid home-view">
-    <div class="row">  
-      <div class="col-sm-2">
+    <div class="home-view">
+      <div class="row">
 
-        <div class="btn-group btn-group-lg">
-          <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
-            <i class="fa fa-sign-out fa-launcher"></i>
-            <div class="launcher-label">
-              Sign out<br>
-              <%= current_user.username %>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="dropdown">
+            <div class="" type="button" data-toggle="dropdown" aria-expanded="true"type="button" id="home_menu">
+              <a class="btn btn-default btn-launcher dropdown-toggle" data-toggle="tooltip" title="Menu">
+                <div class= "launcher_icon_and_label_holder">
+                  <%= image_tag("engines_icon_white.png", class: "fa-launcher launcher-icon") %>
+                </div>
+              </a>
             </div>
-          </a>
-        </div>
-
-        <div class="btn-group btn-group-lg">
-          <a href=<%= app_manager_path %> class="btn btn-default btn-launcher">
-            <i class="fa fa-gears fa-launcher"></i>
-            <div class="launcher-label">
-              Control Panel
-            </div>
-          </a>
-        </div>
-
-        </div>
-        <div class="col-sm-8">
-
-          <div class="home-view">
-            <div class="row">
-
-              <% if @applications.present? %>
-                  <% @applications.each do |application| %>
-                      <% @application = application %>
-                      <%= render partial: "apps/home_page_panel" %>
-                  <% end %>
-              <% else %>
-                  <p class="top-gap">Welcome to Engines. No apps are installed.<br>
-                    Fire-up a new app using the Installer in the Control Panel.</p>
-              <% end %>
-
-            </div>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="home_menu">
+            <div class="dropdown-holder">
+              <li>
+                <div class="btn-group">
+                  <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
+                    <div class= "launcher_icon_and_label_holder">
+                      <i class="fa fa-sign-out fa-launcher"></i>
+                      <div class="launcher-label">
+                        Sign out<br>
+                        <%= current_user.username %>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div class="btn-group">
+                  <a href=<%= app_manager_path %> class="btn btn-default btn-launcher">
+                    <div class= "launcher_icon_and_label_holder">
+                      <i class="fa fa-gears fa-launcher"></i>
+                      <div class="launcher-label">
+                        Control Panel
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </li>
+            </ul>
           </div>
-
         </div>
 
-        <div class="col-sm-2">
-        </div>
+        <% if @apps.present? %>
+            <% @apps.each do |app| %>
+                <%= render partial: "apps/home_page_gadget", locals: {app: app} %>
+            <% end %>
+        <% else %>
+            <p class="top-gap">Welcome to Engines. No apps are installed.<br>
+              Fire-up a new app using the Installer in the Control Panel.</p>
+        <% end %>
 
       </div>
-
-      <div id="footer">
-      </div>
-
     </div>
+
   </div>
+
+
+  <div id="footer">
+  </div>
+
 </div>
 
 </body>
