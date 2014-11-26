@@ -1,0 +1,17 @@
+<div class="col-sm-12">
+  <h2 class="control-panel-title"><i class="fa fa-globe"></i> Domain</h2>
+
+  <%= form_for @system_config, html: {multipart: true } do |f| %>
+
+    <%= f.label :default_domain, class: "top-gap" %>
+    <%= f.text_field :default_domain, class: "form-control form-text-lg" %>
+
+    <div class="actions top-gap">
+      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary") do %>
+        <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>

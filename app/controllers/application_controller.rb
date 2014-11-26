@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
-  require 'EnginesApiHandler.rb'
-  include EnginesApiHandler
+  # require 'EnginesApiHandlerX.rb'
+  # include EnginesApiHandlerX
   require 'EngineGallery.rb'
 
   protect_from_forgery with: :exception

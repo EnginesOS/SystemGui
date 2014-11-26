@@ -1,33 +1,25 @@
-<div class="col-sm-6">
+<div class="col-sm-12">
   <h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus-square") %> Installer</h2>
 </div>
 
-<div class="col-sm-6">
-  <div class="btn-toolbar" role="toolbar">
-    <div class="btn-group btn-group-lg pull-right">
-      <%= link_to content_tag(:i, "", class: "fa fa-th") + " Galleries", galleries_path, class: "btn btn-default" %>
-    </div>
-  </div>
-</div>
-
 <div class="col-sm-12">
-  <% @gallery_servers.each do |gallery_server| %>
+  <% @gallery_installs.each do |gallery_install| %>
     <h3 class="control-panel-heading">
-      <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery_server.title %>
+      <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery_install.name %>
     </h3>
     <div class="row top-gap">
-        <% @blueprints = gallery_server.listBluePrints %>
+        <% @blueprints = gallery_install.list_blueprints %>
         <%  @blueprints.sort_by{|b| b["full_name"] }.each do |blueprint|  %>
-          <% gallery_server_name = gallery_server.short_name
-            blueprint_id = blueprint["id"]
-            short_name = blueprint["short_name"]
+          <% blueprint_id = blueprint["id"]
             name = blueprint["full_name"]
             home_page =  blueprint["home_page"]
             image_url =  blueprint["image_url"]
-            image_url = "assets/_placeholder_for_missing_engine.jpg" if image_url.blank?
+            if image_url.blank?
+              image_url = "assets/_placeholder_for_missing_engine.jpg" 
+            end
             description = blueprint["description"]
           %>       
-          <% install_url = new_install_path(install: {gallery_server_name: gallery_server.short_name, gallery_server_url: gallery_server.gallery_url, blueprint_id: blueprint_id}) %>
+          <% install_url = new_app_install_path(app_install: {gallery_url: gallery_install.url, blueprint_id: blueprint_id}) %>
           <div class="col-md-12 engine-install-row">
             <div class="col-md-3">
               <div class="engine-install-icon-container">

@@ -2,7 +2,7 @@ class BackupTasksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @application_backup_details = get_application_backup_details
+    @application_backup_details = BackupTask.all_grouped_by_app
   end
 
   def new
@@ -55,5 +55,9 @@ class BackupTasksController < ApplicationController
         :folder )
     end
 
+
+    def set_backup_task
+      @backup_task = BackupTask.find(params[:id])
+    end
 
 end

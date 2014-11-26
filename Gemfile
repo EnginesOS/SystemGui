@@ -3,7 +3,8 @@ gem 'devise'
 gem 'vmstat'
 # gem 'therubyracer'
 gem 'git'
-gem 'thin'
+# gem 'thin'
+gem "puma"
 gem "oink"
 gem 'bootstrap3-rails'
 gem "font-awesome-rails"
@@ -17,6 +18,7 @@ gem "nested_form"
 # gem 'fog'
 gem "paperclip", "~> 4.2"
 
+gem 'rails_admin'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'

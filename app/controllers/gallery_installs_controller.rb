@@ -4,13 +4,15 @@ class GalleryInstallsController < ApplicationController
 
   def index
     @galleries = GalleryInstall.all
-    @unadded_gallery_servers = GalleryInstall.get_unadded_gallery_servers
+    # @unadded_gallery_servers = GalleryInstall.get_unadded_gallery_servers
+  end
+
+  def new
+    @gallery = GalleryInstall.new
   end
 
   def create
-    @gallery = GalleryInstall.new(
-      url: params["gallery_server_url"],
-      name: params["gallery_server_name"])
+    @gallery = GalleryInstall.new(gallery_install_params)
     @gallery.save
     redirect_to gallery_installs_path
   end
@@ -19,6 +21,12 @@ class GalleryInstallsController < ApplicationController
     @gallery = GalleryInstall.find(params[:id])
     @gallery.destroy
     redirect_to gallery_installs_path
+  end
+
+private
+
+  def gallery_install_params
+    params.require(:gallery_install).permit!
   end
 
 end

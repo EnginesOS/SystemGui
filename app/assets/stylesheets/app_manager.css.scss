@@ -23,25 +23,87 @@
   color: #bbb;
 }
 
-.engine-gadget {
-  height: 66px;
-  width: 192px;
-  margin: 5px;
-  white-space: normal;
-  word-wrap: break-word;
+.engine_running {
+  background-color: #fff;
 }
 
+.engine_paused {
+  background-color: #fffff9;
+}
+
+.engine_stopped {
+  background-color: #fff0f0;
+}
+
+.engine_nocontainer {
+  background-color: #eee;
+}
+
+
+
+.engine-gadget {
+    width: 100%;
+}
+
+.engine-gadget .btn {
+  height: 100px;
+  width: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
+  white-space: normal;
+  word-wrap: break-word;
+  border-radius: 0px;
+  display: table;
+}
+
+.engine-gadget.service .btn {
+  height: 60px;
+}
+
+.engine-gadget .icon_holder {
+  height: 64px;
+  width: 64px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.engine-gadget .text_holder {
+  height: 64px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+  padding-left: 10px;
+  white-space: nowrap;
+}
+
+
+.app-manager .btn-group {
+  margin-bottom:10px;
+  margin-top: 10px;
+}
+
+
+.app-manager .engine_icon {
+  max-height: 64px;
+  max-width: 64px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+
+.engine-gadget .dropdown-menu {
+  min-width: 100%;
+}
 
 .dropdown-title {
     font-size: 120%;
     text-align: center;
-    width: 196px;
+    width: 100%;
 } 
 
 
 .engine-gadget-dropdown-menu {
-  top: 4px;
-  left: 1px;
+  border-radius: 0px;
 }
 
 .control-panel-title {
@@ -55,10 +117,6 @@
   color: #777;
 }
 
-.btn-group {
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
 
 .advanced_detail pre {
   max-height: 500px;
