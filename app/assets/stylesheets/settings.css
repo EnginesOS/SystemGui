@@ -22,3 +22,8 @@
 .settings_btn_detail {
   font-size: 0.8em;
 }
+
+.choose_file_form_control {
+  font-size: 18px;
+  padding: 3px;
+}

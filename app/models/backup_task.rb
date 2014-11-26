@@ -1,6 +1,6 @@
 class BackupTask
 
-  require "/opt/engines/lib/ruby/EnginesOSapi.rb"
+  # require "/opt/engines/lib/ruby/EnginesOSapi.rb"
 
   include ActiveModel::Model
   attr_accessor :source_name
@@ -26,12 +26,8 @@ class BackupTask
   end
 
   def self.engines_api
-    if $enginesOS_api == nil
-      $enginesOS_api = EnginesOSapi.new
-    end
-    return $enginesOS_api
+    EnginesApiHandler.engines_api
   end
-
 
   def self.find id
     self.engines_api.load_backup(id)

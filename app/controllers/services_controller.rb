@@ -1,5 +1,3 @@
-# require "EnginesOSapi.rb"
-
 class ServicesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_service

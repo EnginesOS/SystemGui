@@ -11,16 +11,16 @@
     <% link_body = (content_tag(:i, '', class: 'fa fa-upload') + ' Backups'.html_safe) + "<br>".html_safe + detail.html_safe  %>
     <%= link_to link_body, backup_tasks_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = '<span class="settings_btn_detail">'.html_safe + @gallery_installs.map(&:title).join('<br>').to_s.html_safe + '</span>'.html_safe %>
+    <% detail = '<span class="settings_btn_detail">'.html_safe + @gallery_installs.map(&:name).join('<br>').to_s.html_safe + '</span>'.html_safe %>
     <% link_body = (content_tag(:i, '', class: 'fa fa-th') + ' Galleries'.html_safe) + "<br>".html_safe + detail.html_safe  %>
     <%= link_to link_body, gallery_installs_path, class: 'btn btn-default btn-lg' %>
 
     <% detail = '<span class="settings_btn_detail">'.html_safe + @system_config.default_domain.to_s + '</span>'.html_safe %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-cloud') + ' Domain'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+    <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domain'.html_safe) + "<br>".html_safe + detail.html_safe  %>
     <%= link_to link_body, edit_default_domain_path, class: 'btn btn-default btn-lg' %>
 
     <% detail = '<span class="settings_btn_detail">'.html_safe + @system_config.default_site.to_s + '</span>'.html_safe %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Root route'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+    <% link_body = (content_tag(:i, '', class: 'fa fa-home') + ' Root route'.html_safe) + "<br>".html_safe + detail.html_safe  %>
     <%= link_to link_body, edit_default_website_path, class: 'btn btn-default btn-lg' %>
 
     <% detail = (('<span class="settings_btn_detail">'.html_safe + label_tag("", "SMTP smarthost") + @system_config.smtp_smarthost.to_s + '</span>'.html_safe) if @system_config.smtp_smarthost.present?) || '' %>

@@ -1,22 +1,8 @@
 class AppHandler
 
-  # attr_accessor :id
-
   def initialize id
     @id = id
   end
-
-
-#       @gallery = 
-
-# @gallery_server_name = engine.
-# : opts[:gallery_server_name],
-#       gallery_server_url: opts[:gallery_server_url],
-#       blueprint_id: opts[:blueprint_id],
-
-
-
-  # end
 
   def engines_api
     EnginesApiHandler.engines_api
@@ -222,18 +208,8 @@ class AppHandler
         running_apps << app
       end
     end
-p :ooooooooooooooooooooooooooooooooooooooo
-p running_apps
     return running_apps
   end
-
-
-    # all.select{|app| app.state_as_set_by_user == "running"}
-  # end
-
-  # def self.build repository, opts
-  #   EnginesApiHandler.engines_api.build_engine(repository, opts)
-  # end
 
 end
 

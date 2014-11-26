@@ -6,8 +6,7 @@ class CreateAppInstalls < ActiveRecord::Migration
       t.string     :engine_name
       t.string     :display_name
       t.text       :display_description
-      t.string     :gallery_server_name
-      t.string     :gallery_server_url
+      t.string     :gallery_url
       t.string     :blueprint_id
       t.string     :license_name
       t.string     :license_sourceurl

@@ -16,8 +16,8 @@ class AppInstall < ActiveRecord::Base
   end
 
   def self.new_with_defaults opts
-
-    software = BlueprintHandler.new(opts).software
+    blueprint = GalleryBlueprintHandler.new(opts)
+    software = blueprint.software
     app_name = software['name']
     engine_name = app_name.gsub(/[^0-9A-Za-z]/, '').downcase
 
@@ -27,13 +27,12 @@ class AppInstall < ActiveRecord::Base
       engine_name: engine_name,
       display_name: app_name,
       display_description: software['description'],
-      gallery_server_name: opts[:gallery_server_name],
-      gallery_server_url: opts[:gallery_server_url],
+      gallery_url: opts[:gallery_url],
       blueprint_id: opts[:blueprint_id],
       license_name: software['license_name'],
       license_sourceurl: software['license_sourceurl'],
       terms_and_conditions_accepted: false,
-      # icon: open(@image_url)
+# icon: open(@image_url)
       created_from_existing_engine: false
     )
 
@@ -45,7 +44,6 @@ class AppInstall < ActiveRecord::Base
   end
 
   def self.new_from_engine engine_name
-
     engine = AppHandler.new(engine_name)
     blueprint = engine.blueprint
     software = blueprint['software']
@@ -82,20 +80,43 @@ class AppInstall < ActiveRecord::Base
   def refresh_host_name_and_domain_name
     self.host_name = app.host_name
     self.domain_name = app.domain_name
-    # self.save
   end
 
   def build_app
-p :llllllllllllllllllllllllll
-p repository
-p :mmmmmmmmmmmmmmmmmmmmmmm
-p app_build_opts
-    engines_api.build_engine(repository.html_safe, app_build_opts)
+    engines_api.build_engine(repository_from_gallery, app_build_opts)
   end
 
-  def repository
-    gallery = EngineGallery.getGallery(gallery_server_name, gallery_server_url)
-    gallery.get_repository(blueprint_id)
+  def install_log
+    response.headers['Content-Type'] = 'text/event-stream'
+    begin
+      follow_install_log do |line| 
+        response.stream.write line
+      end
+    rescue IOError
+    ensure
+      logger.info("Killing stream")
+      response.stream.close
+    end
+  end
+
+private
+
+  def follow_install_log
+    begin
+      stdin, stdout, stderr, wait_thread = Open3.popen3("tail -F -n 0 /tmp/build.out")
+      stdout.each_line do |line|
+        yield line
+      end
+    rescue IOError
+    ensure
+      stdin.close; stdout.close; stderr.close
+      Process.kill('HUP', wait_thread[:pid])
+      logger.info("Killing Tail pid: #{wait_thread[:pid]}")
+    end
+  end
+
+  def repository_from_gallery
+    GalleryBlueprintHandler.new(gallery_url: gallery_url, blueprint_id: blueprint_id).repository.html_safe
   end
 
   def app_build_opts
@@ -103,14 +124,9 @@ p app_build_opts
       host_name: host_name,
       domain_name: domain_name,
       engine_name: engine_name,
-      gallery_server_name: gallery_server_name,
-      gallery_server_url: gallery_server_url,
+      gallery_url: gallery_url,
       blueprint_id: blueprint_id
     }
   end
 
-
 end
-
-
-

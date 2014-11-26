@@ -10,7 +10,6 @@ class SystemConfigsController < ApplicationController
     end
   end
 
-
 private
 
   def set_system_config
@@ -18,7 +17,14 @@ private
   end
 
   def system_config_params
+    allow_form_to_have_no_system_config_id
     params.require(:system_config).permit!
+  end
+
+  def allow_form_to_have_no_system_config_id
+    if params[:system_config].nil?
+      params[:system_config] = {id: SystemConfig.first.id}
+    end
   end
 
 end

@@ -1,8 +1,9 @@
 namespace :db do
   desc "Add default library"
   task populate: :environment do
-    library = GalleryInstall.create!( 
-      url: "local",
-      name: "development")
+    GalleryInstall.create!( 
+      url: "http://enginegallery.engines.onl/json_published_softwares",
+      name: "Engines Library"
+    )
   end
 end

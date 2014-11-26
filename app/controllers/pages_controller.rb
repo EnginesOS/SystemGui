@@ -1,6 +1,3 @@
-# require "EnginesOSapi.rb"
-# require 'EngineGallery.rb'
-
 class PagesController < ApplicationController
   before_action :authenticate_user!
 
@@ -30,8 +27,7 @@ class PagesController < ApplicationController
   end
 
   def installer
-    @gallery_servers = GalleryInstall.all.map(&:gallery_server)
-    
+    @gallery_installs = GalleryInstall.all
   end
 
 private

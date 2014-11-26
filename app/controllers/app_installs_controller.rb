@@ -1,7 +1,7 @@
 class AppInstallsController < ApplicationController
   before_action :authenticate_user!
   include ActionController::Live
-  require 'open3'
+  # require 'open3'
 
   def new
     @app_install = AppInstall.new_with_defaults app_install_params
@@ -13,12 +13,25 @@ class AppInstallsController < ApplicationController
       @app_install = AppInstall.new_from_engine(params[:id])
     else
       @app_install.refresh_host_name_and_domain_name
-p @app_install.inspect
     end
   end
 
   def create
-    check_license_terms_and_conditions_accepted || commit_create
+    check_license_terms_and_conditions_accepted
+     # || commit_create
+    @app_install = AppInstall.new(app_install_params)
+    if @app_install.build_app.instance_of?(ManagedEngine)
+      if @app_install.save
+        redirect_to app_manager_path, notice: 'Application installation was successful.'
+      else
+        redirect_to installer_path, alert: 'Application installed but not configured. Edit the app in the App Manager to complete app configuration.'
+      end
+    else
+      redirect_to installer_path, alert: 'Application installation was not successful.'
+    end
+
+    # @app_install_log = AppInstall.install_log
+    render stream: true
   end
 
   def check_license_terms_and_conditions_accepted
@@ -28,16 +41,6 @@ p @app_install.inspect
   end
 
   def commit_create
-    app_install = AppInstall.new(app_install_params)
-    if app_install.build_app.instance_of?(ManagedEngine)
-      if app_install.save
-        redirect_to app_manager_path, notice: 'Application installation was successful.'
-      else
-        redirect_to installer_path, alert: 'Application installed but not configured. Edit the app in the App Manager to complete app configuration.'
-      end
-    else
-      redirect_to installer_path, alert: 'Application installation was not successful.'
-    end
   end
 
   def update
@@ -71,47 +74,10 @@ p @app_install.inspect
     end
   end
 
-  def installing
-    response.headers['Content-Type'] = 'text/event-stream'
-
-    begin
-      follow_log do |line| 
-        response.stream.write line
-      end
-
-    rescue IOError
-
-    ensure
-      logger.info("Killing stream")
-      response.stream.close
-    end
-
-  end
-
 private
 
   def app_install_params
     params.require(:app_install).permit!
   end
-
-  def follow_log
-    begin
-      stdin, stdout, stderr, wait_thread = Open3.popen3("tail -F -n 0 /tmp/build.out")
-
-      stdout.each_line do |line|
-        yield line
-      end
-
-    rescue IOError
-
-    ensure
-      stdin.close
-      stdout.close
-      stderr.close
-      Process.kill('HUP', wait_thread[:pid])
-      logger.info("Killing Tail pid: #{wait_thread[:pid]}")
-    end
-  end
-
 
 end

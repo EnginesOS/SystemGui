@@ -1,11 +1,14 @@
 <div class="col-sm-12">
-  <h2 class="control-panel-title"><i class="fa fa-gear"></i> Settings</h2>
+  <h2 class="control-panel-title"><i class="fa fa-picture-o"></i> Wallpaper</h2>
 
-  <%= form_for @system_config, html: {multipart: true } do |f| %>
+  <%= form_for @system_config, html: {class: 'top-gap'} do |f| %>
 
-    <%= f.label :wallpaper, class: "top-gap" %><br>
-    <%= f.check_box :delete_wallpaper %> <%= f.label :delete %><br>
-    <%= f.file_field :wallpaper %>
+    <% if f.object.wallpaper.present? %>
+      <%= f.check_box :delete_wallpaper %> <%= f.label 'Remove wallpaper' %><br>
+    <% end %>
+
+    <%= f.label 'Change wallpaper', class: 'top-gap' %>
+    <%= f.file_field :wallpaper, class: 'form-control choose_file_form_control' %>
 
     <div class="actions top-gap">
       <%= button_tag(type: "submit", class: "btn btn-lg btn-primary") do %>

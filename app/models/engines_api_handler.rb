@@ -29,14 +29,10 @@ module EnginesApiHandler
 
   def self.remove_dupes
     app_installs = AppInstall.all
-p :qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-p app_installs.inspect    
     grouped_app_installs = app_installs.group_by(&:engine_name)
-# p grouped_app_installs
     grouped_app_installs.each do |group|
-group = group[1]
+      group = group[1]
       group.shift
-p group
       group.each{|app| app.destroy}
     end
   end
