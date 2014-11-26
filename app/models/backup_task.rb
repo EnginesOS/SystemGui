@@ -45,14 +45,47 @@ class BackupTask
     engines_api.stop_backup id
   end
 
+  def self.create_volume_backup_task(params)
+    source_name = params[:source_name]
+    engine_name = params[:engine_name]
+    backup_name = params[:backup_name]
+    dest_hash = {
+      dest_proto: params[:protocol],
+      dest_address: params[:address],
+      dest_user: params[:username],
+      dest_pass: params[:password],
+      dest_folder: params[:folder]
+    }
+
+    result = engines_api.backup_volume(backup_name,engine_name,source_name,dest_hash)
+
+p :result_from_backup
+p result
+
+    return result
+  end
+
+  def self.create_database_backup_task(params)
+    source_name = params[:source_name]
+    engine_name = params[:engine_name]
+    backup_name = params[:backup_name]
+    dest_hash = {
+      dest_proto: params[:protocol],
+      dest_address: params[:address],
+      dest_user: params[:username],
+      dest_pass: params[:password],
+      dest_folder: params[:folder]
+    }
+    engines_api.backup_database(backup_name,engine_name,source_name,dest_hash)
+  end
 
   def self.all_grouped_by_app
 
     application_backup_details = {}
     application_backup_tasks = {}
 
-    backup_tasks = EnginesApiHandler.get_all_backups
-    applications = EnginesApiHandler.get_all_applications
+    backup_tasks = self.all
+    applications = AppHandler.all
 
     backup_tasks.keys.each do |backup_task_name|
       backup_task_application_name = backup_tasks[backup_task_name][:engine_name]
@@ -74,7 +107,7 @@ class BackupTask
     end
 
     applications.each do |application|
-      application_name = application.hostName
+      application_name = application.host_name
       application_volume_names = application.volumes.map(&:name).reject(&:blank?)
       application_database_names = application.databases.map(&:name).reject(&:blank?)
 

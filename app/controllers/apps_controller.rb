@@ -7,63 +7,153 @@ class AppsController < ApplicationController
   end
 
   def stop
-    redirect_to app_manager_path, notice: @app.stop
+    result = @app.stop
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def start   
-    redirect_to app_manager_path, notice: @app.start
+    result = @app.start
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def pause
-    redirect_to app_manager_path, notice: @app.pause
+    result = @app.pause
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def unpause
-    redirect_to app_manager_path, notice: @app.unpause
+    result = @app.unpause
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
    end
    
   def destroy_container
-    redirect_to app_manager_path, notice: @app.destroy_container
+    result = @app.destroy_container
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end 
   
   def delete_image
-    redirect_to app_manager_path, notice: @app.delete_image
+    result = @app.delete_image
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end 
   
   def restart
-    redirect_to app_manager_path, notice: @app.restart
+    result = @app.restart
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def create_container
-    redirect_to app_manager_path, notice: @app.create_container
+    result = @app.create_container
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
 
   def recreate
-    redirect_to app_manager_path, notice: @app.recreate
+    result = @app.recreate
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
 
   def monitor
-    redirect_to app_manager_path, notice: @app.monitor
+    result = @app.monitor
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def demonitor
-    redirect_to app_manager_path, notice: @app.demonitor
+    result = @app.demonitor
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def register_website
-    redirect_to app_manager_path, notice: @app.register_website
+    result = @app.register_website
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def deregister_website
-    redirect_to app_manager_path, notice: @app.deregister_website
+    result = @app.deregister_website
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def register_dns
-    redirect_to app_manager_path, notice: @app.register_dns
+    result = @app.register_dns
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
   
   def deregister_dns
-    redirect_to app_manager_path, notice: @app.deregister_dns
+    result = @app.deregister_dns
+      if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+      end    
+    redirect_to app_manager_path 
   end
 
 private

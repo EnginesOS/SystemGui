@@ -77,13 +77,13 @@ class AppInstall < ActiveRecord::Base
     app.update_engine
   end
 
+  def build_app
+    engines_api.build_engine(repository_from_gallery, app_build_opts)
+  end
+
   def refresh_host_name_and_domain_name
     self.host_name = app.host_name
     self.domain_name = app.domain_name
-  end
-
-  def build_app
-    engines_api.build_engine(repository_from_gallery, app_build_opts)
   end
 
   def install_log

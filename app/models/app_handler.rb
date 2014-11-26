@@ -6,11 +6,7 @@ class AppHandler
 
   def engines_api
     EnginesApiHandler.engines_api
-  end
-
-  def engine
-    engines_api.loadManagedEngine @id
-  end
+  end 
 
   def app_install
     app_install = AppInstall.find_by engine_name: @id
@@ -18,6 +14,14 @@ class AppHandler
       app_install = AppInstall.new_from_engine @id
     end
     return app_install
+  end
+
+  def engine
+    engines_api.loadManagedEngine @id
+  end
+
+  def blueprint
+    engines_api.get_engine_blueprint @id
   end
 
   def update_engine
@@ -28,8 +32,64 @@ class AppHandler
     )
   end
 
-  def blueprint
-    engines_api.get_engine_blueprint @id
+  def stop
+    engines_api.stopEngine @id
+  end
+  
+  def start   
+    engines_api.startEngine @id
+  end
+  
+  def pause
+    engines_api.pauseEngine @id
+  end
+  
+  def unpause
+    engines_api.unpauseEngine @id
+   end
+   
+  def destroy_container
+    engines_api.destroyEngine @id
+  end 
+  
+  def delete_image
+    engines_api.deleteEngineImage @id
+  end 
+  
+  def restart
+    engines_api.restartEngine @id
+  end
+  
+  def create_container
+    engines_api.createEngine @id
+  end
+
+  def recreate
+    engines_api.recreateEngine @id
+  end
+
+  def monitor
+    engines_api.monitorEngine @id
+  end
+  
+  def demonitor
+    engines_api.demonitorEngine @id
+  end
+  
+  def register_website
+    engines_api.registerEngineWebSite @id
+  end
+  
+  def deregister_website
+    engines_api.deregisterEngineWebSite @id    
+  end
+  
+  def register_dns
+    engines_api.registerEngineDNS @id
+  end
+  
+  def deregister_dns
+    engines_api.deregisterEngineDNS @id    
   end
 
   def software_definition
@@ -132,65 +192,9 @@ class AppHandler
     engine.logs_container
   end
 
-  def stop
-    engines_api.stopEngine @id
-  end
-  
-  def start   
-    engines_api.startEngine @id
-  end
-  
-  def pause
-    engines_api.pauseEngine @id
-  end
-  
-  def unpause
-    engines_api.unpauseEngine @id
-   end
-   
-  def destroy_container
-    engines_api.destroyEngine @id
-  end 
-  
-  def delete_image
-    engines_api.deleteEngineImage @id
-  end 
-  
-  def restart
-    engines_api.restartEngine @id
-  end
-  
-  def create_container
-    engines_api.createEngine @id
-  end
 
-  def recreate
-    engines_api.recreateEngine @id
-  end
 
-  def monitor
-    engines_api.monitorEngine @id
-  end
-  
-  def demonitor
-    engines_api.demonitorEngine @id
-  end
-  
-  def register_website
-    engines_api.registerEngineWebSite @id
-  end
-  
-  def deregister_website
-    engines_api.deregisterEngineWebSite @id    
-  end
-  
-  def register_dns
-    engines_api.registerEngineDNS @id
-  end
-  
-  def deregister_dns
-    engines_api.deregisterEngineDNS @id    
-  end
+
 
   ### Class methods
 

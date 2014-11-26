@@ -7,39 +7,93 @@ class ServicesController < ApplicationController
   end
   
   def create_container
-    redirect_to app_manager_path, notice: @service.create_container.result_mesg
+    result = @service.create_container.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def stop
-    redirect_to app_manager_path, notice: @service.stop.result_mesg
+    result = @service.stop.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def start
-    redirect_to app_manager_path, notice: @service.start.result_mesg
+    result = @service.start.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def pause
-    redirect_to app_manager_path, notice: @service.pause.result_mesg
+    result = @service.pause.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def unpause
-    redirect_to app_manager_path, notice: @service.unpause.result_mesg
+    result = @service.unpause.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def register_website
-    redirect_to app_manager_path, notice: @service.register_website.result_mesg
+    result = @service.register_website.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def deregister_website
-    redirect_to app_manager_path, notice: @service.deregister_website.result_mesg
+    result = @service.deregister_website.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def register_dns
-    redirect_to app_manager_path, notice: @service.register_dns.result_mesg
+    result = @service.register_dns.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
   def deregister_dns
-    redirect_to app_manager_path, notice: @service.deregister_dns.result_mesg
+    result = @service.deregister_dns.result_mesg
+    if result.was_success == true
+        flash[:notice] = result.result_mesg
+      else
+        flash[:error] = result.result_mesg
+    end    
+    redirect_to app_manager_path
   end
 
 private

@@ -16,45 +16,35 @@ class BackupTasksController < ApplicationController
   end
 
   def create
-    params = backup_task_params
-    source_name = params[:source_name]
-    type = params[:backup_type]
-    engine_name = params[:engine_name]
-    backup_name = params[:backup_name]
-    dest_hash = {
-      dest_proto: params[:protocol],
-      dest_address: params[:address],
-      dest_user: params[:username],
-      dest_pass: params[:password],
-      dest_folder: params[:folder]
-    }
-
-    if type == "fs"
-      volume_name = source_name
-      engines_api.backup_volume(backup_name,engine_name,volume_name,dest_hash)
+    if backup_task_params[:backup_type] == "fs"
+      result = BackupTask.create_volume_backup_task(backup_task_params)
     else
-      database_name = source_name
-      engines_api.backup_database(backup_name,engine_name,database_name,dest_hash)
+      result = BackupTask.create_database_backup_task(backup_task_params)
     end
 
-    redirect_to backup_tasks_path
+    if result.was_success == true
+      flash[:notice] = result.result_mesg
+    else0
+      flash[:error] = result.result_mesg
+    end
+    redirect_to backup_tasks_path 
   end
 
   private
     def backup_task_params
-      params.require(:backup_task).permit( \
-        :source_name, \
-        :backup_type, \
-        :engine_name, \
-        :backup_name, \
-        :protocol, \
-        :address, \
-        :username, \
-        :address, \
-        :password, \
-        :folder )
+      params.require(:backup_task).permit!
+      # ( \
+      #   :source_name, \
+      #   :backup_type, \
+      #   :engine_name, \
+      #   :backup_name, \
+      #   :protocol, \
+      #   :address, \
+      #   :username, \
+      #   :address, \
+      #   :password, \
+      #   :folder )
     end
-
 
     def set_backup_task
       @backup_task = BackupTask.find(params[:id])
