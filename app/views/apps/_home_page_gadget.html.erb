@@ -2,14 +2,15 @@
   <a class="btn btn-default btn-launcher" href="http://<%= app.fqdn %>" target="_blank">
     <div class="launcher_icon_and_label_holder">
       <% app_install = app.app_install %>
+      <% #= app_install.inspect %>
       <% if app_install.present? && app_install.icon.present? %>
         <%= image_tag(app_install.icon.url, class: "launcher-icon") %>
       <% else %>
         <%= image_tag("_placeholder_for_missing_engine.jpg", class: "launcher-icon") %><br>
       <% end %>
       <div class="launcher-label">
-        <% app_label = app_install.display_name %>     
-        <%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if app.state != "running" %> <%= app_label %>
+        <%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if app.state != "running" %>
+        <%= app_install.display_name %>
       </div>
     </div>
   </a>

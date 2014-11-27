@@ -1,30 +1,41 @@
 class GalleryBlueprintHandler
 
-  attr_accessor :blueprint_id
-  attr_accessor :gallery_url
-  attr_accessor :app_install_created_from_existing_engine
+  attr_reader :blueprint_id
+  attr_reader :gallery_url
+  attr_reader :software_definition_from_gallery
+  attr_reader :blueprint_from_repository
+  # attr_accessor :app_install_created_from_existing_engine
 
   def initialize opts
     @blueprint_id = opts[:blueprint_id]
     @gallery_url = opts[:gallery_url]
+    # @app_install_created_from_existing_engine = opts[:app_install_created_from_existing_engine]
+  end
+
+  def software_definition_from_gallery
+    @software_definition_from_gallery ||= load_software_definition_from_gallery
+  end
+
+  def blueprint_from_repository
+    @blueprint_from_repository ||= load_blueprint_from_repository
   end
 
   def software
-    blueprint['software']
+    blueprint_from_repository['software']
   end
 
   def repository
-    blueprint_entry["repository"]
+    software_definition_from_gallery["repository"]
   end
 
-private
+# private
 
   def gallery
-    GalleryHandler.new url: gallery_url
+    GalleryHandler.new url: @gallery_url
     # GalleryHandler.get_gallery @gallery_server_name, @gallery_url
   end
 
-  def blueprint
+  def load_blueprint_from_repository
     buildname = File.basename(repository)
     segments = buildname.split('.')
     buildname = segments[0]
@@ -37,8 +48,8 @@ private
     return bluePrint
   end
 
-  def blueprint_entry
-    blueprint_uri = URI(gallery_url + "/" +  blueprint_id)
+  def load_software_definition_from_gallery
+    blueprint_uri = URI(@gallery_url + "/" +  @blueprint_id)
     Net::HTTP.start(blueprint_uri.host, blueprint_uri.port) do |http|
       blueprint_request = Net::HTTP::Get.new blueprint_uri
       blueprint_response = http.request blueprint_request # Net::HTTPResponse object
@@ -59,7 +70,7 @@ private
     buildname = File.basename(repo)
     segments = buildname.split('.')   
     buildname = segments[0]
-    dir=SysConfig.DeploymentDir + "/" + buildname
+    dir = SysConfig.DeploymentDir + "/" + buildname
     if Dir.exists?(dir)
       backup=dir + ".backup"
       if Dir.exists?(backup)

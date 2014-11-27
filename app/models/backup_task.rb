@@ -1,8 +1,8 @@
 class BackupTask
 
-  # require "/opt/engines/lib/ruby/EnginesOSapi.rb"
-
   include ActiveModel::Model
+  # include Engines::Api
+
   attr_accessor :source_name
   attr_accessor :backup_type
   attr_accessor :engine_name
@@ -13,70 +13,73 @@ class BackupTask
   attr_accessor :username
   attr_accessor :password
 
-  def set_defaults params
-    self.source_name = params[:source_name]
-    self.backup_type = params[:backup_type]
-    self.engine_name = params[:engine_name]
-    self.backup_name = ([*('A'..'Z'),*('0'..'9')]-%w(0 1 I O)).sample(8).join  
-    self.protocol = "ftp"
-    self.address = ""
-    self.folder = engine_name
-    self.username = ""
-    self.password = ""
+  def initialize params
+    @source_name = params[:source_name]
+    @backup_type = params[:backup_type]
+    @engine_name = params[:engine_name]
+    @backup_name = params[:backup_name] || ([*('A'..'Z'),*('0'..'9')]-%w(0 1 I O)).sample(8).join  
+    @protocol = params[:protocal] || "ftp"
+    @address = params[:address]
+    @folder = params[:engine_name] || @engine_name
+    @username = params[:engine_name]
+    @password = params[:engine_name]
   end
 
   def self.engines_api
     EnginesApiHandler.engines_api
   end
 
+  def engines_api
+    self.engines_api
+  end
+
   def self.find id
-    self.engines_api.load_backup(id)
+    engines_api.load_backup(id)
+  end
+
+  def self.load id
+    self.new self.find(id)
+  end
+
+  def remove_backup_task
+    engines_api.stop_backup @id
+  end
+
+  def save
+    # @backup_type == "fs" ? create_volume_backup_task || create_database_backup_task
+    if @backup_type == "fs"
+      create_volume_backup_task
+    else
+      create_database_backup_task
+    end
+  end
+
+  def create_volume_backup_task
+
+
+p "@backup_name, @engine_name, @source_name, destination_params"
+p @backup_name
+p @engine_name
+p @source_name
+p destination_params
+
+    engines_api.backup_volume(@backup_name, @engine_name, @source_name, destination_params)
+  end
+
+  def create_database_backup_task
+    engines_api.backup_database(@backup_name, @engine_name, @source_name, destination_params)
   end
 
   def self.all
-    self.engines_api.get_backups
+    engines_api.get_backups
+  end
+
+  def self.load_all
+    self.all.map{|b| self.new b}
   end
 
   def self.count
     self.all #.keys.count
-  end
-
-  def self.remove_backup_task id
-    engines_api.stop_backup id
-  end
-
-  def self.create_volume_backup_task(params)
-    source_name = params[:source_name]
-    engine_name = params[:engine_name]
-    backup_name = params[:backup_name]
-    dest_hash = {
-      dest_proto: params[:protocol],
-      dest_address: params[:address],
-      dest_user: params[:username],
-      dest_pass: params[:password],
-      dest_folder: params[:folder]
-    }
-
-    result = engines_api.backup_volume(backup_name,engine_name,source_name,dest_hash)
-
-p :result_from_backup
-p result
-
-    return result
-  end
-
-  def self.create_database_backup_task(params)
-    source_name = params[:source_name]
-    engine_name = params[:engine_name]
-    backup_name = params[:backup_name]
-    dest_hash = {
-      dest_proto: params[:protocol],
-      dest_address: params[:address],
-      dest_user: params[:username],
-      dest_pass: params[:password],
-      dest_folder: params[:folder]
-    }
-    engines_api.backup_database(backup_name,engine_name,source_name,dest_hash)
   end
 
   def self.all_grouped_by_app
@@ -141,6 +144,17 @@ p result
   
   end
 
+private
+
+  def destination_params
+    {
+      dest_proto: @protocol,
+      dest_address: @address,
+      dest_user: @username,
+      dest_pass: @password,
+      dest_folder: @folder
+    }
+  end
 
 
 

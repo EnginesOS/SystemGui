@@ -4,7 +4,7 @@ class AppInstallsController < ApplicationController
   # require 'open3'
 
   def new
-    @app_install = AppInstall.new_with_defaults app_install_params
+    @app_install = AppInstall.new_from_gallery app_install_params
   end
 
   def edit

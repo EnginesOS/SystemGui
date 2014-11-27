@@ -1,6 +1,3 @@
-require 'GalleryMaintainer.rb'
-require '/opt/engines/lib/ruby/SysConfig.rb'
-require 'git'
 
 class GalleryHandler
   

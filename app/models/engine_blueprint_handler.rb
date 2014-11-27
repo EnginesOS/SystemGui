@@ -1,9 +1,11 @@
 class EngineBlueprintHandler
 
   attr_accessor :engine_name  
+  attr_accessor :blueprint
 
   def initialize opts
     @engine_name = opts[:engine_name]
+    @blueprint = load_blueprint
   end
 
   def software
@@ -16,7 +18,7 @@ class EngineBlueprintHandler
 
 private
 
-  def blueprint
+  def load_blueprint
     AppHandler.new(engine_name).blueprint
   end
 

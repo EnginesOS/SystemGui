@@ -4,65 +4,64 @@ class AppInstall < ActiveRecord::Base
 
   has_attached_file :icon
   validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
-  attr_accessor :delete_icon
-  attr_accessor :created_from_existing_engine
-  before_validation { icon.clear if delete_icon == '1' }
-
   has_many :app_install_env_variables
   accepts_nested_attributes_for :app_install_env_variables
 
+  attr_accessor :delete_icon
+  attr_accessor :created_from_existing_engine
+
+  before_validation { icon.clear if delete_icon == '1' }
+
+
   def engines_api
     EnginesApiHandler.engines_api
-  end
+  end 
 
-  def self.new_with_defaults opts
-    blueprint = GalleryBlueprintHandler.new(opts)
-    software = blueprint.software
-    app_name = software['name']
-    engine_name = app_name.gsub(/[^0-9A-Za-z]/, '').downcase
-
+  def self.new_from_gallery opts
+    # software_definition_from_gallery = GalleryBlueprintHandler.new(opts)
     app_install = self.new(
-      host_name: engine_name,
-      domain_name: SystemConfig.default_domain,
-      engine_name: engine_name,
-      display_name: app_name,
-      display_description: software['description'],
       gallery_url: opts[:gallery_url],
-      blueprint_id: opts[:blueprint_id],
-      license_name: software['license_name'],
-      license_sourceurl: software['license_sourceurl'],
-      terms_and_conditions_accepted: false,
-# icon: open(@image_url)
-      created_from_existing_engine: false
+      blueprint_id: opts[:blueprint_id]
     )
+    blueprint_software = app_install.software_definition_from_blueprint_in_repository
+    gallery_software = app_install.software_definition_from_gallery
 
-    software['environment_variables'].each do |ev|
+    app_install.engine_name = gallery_software['short_name'].gsub(/[^0-9A-Za-z]/, '').downcase
+    app_install.host_name = app_install.engine_name
+    app_install.domain_name = SystemConfig.default_domain
+    app_install.display_name = gallery_software['short_name']
+    app_install.display_description = gallery_software['description']
+    app_install.license_name = blueprint_software['license_name']
+    app_install.license_sourceurl = blueprint_software['license_sourceurl']
+    app_install.terms_and_conditions_accepted = false
+    app_install.icon = self.get_icon_from_url(gallery_software['image_url']) 
+    app_install.created_from_existing_engine = false
+
+    blueprint_software['environment_variables'].each do |ev|
       app_install.app_install_env_variables.build(ev)
     end
-
     return app_install
   end
 
   def self.new_from_engine engine_name
     engine = AppHandler.new(engine_name)
-    blueprint = engine.blueprint
-    software = blueprint['software']
-    icon_url = software['icon_url']
-
     app_install = self.new(
-      host_name: engine.host_name,
-      domain_name: engine.domain_name,
-      engine_name: engine_name,
-      display_name: software['name'],
-      display_description: software['description'],
-      license_name: software['license_name'],
-      license_sourceurl: software['license_sourceurl'],
-      # terms_and_conditions_accepted: true,
-      # icon: (open(icon_url) if icon_url),
-      created_from_existing_engine: true
+      engine_name: engine_name
     )
 
-    software['environment_variables'].each do |ev|
+p "engine___________________________________________________________"
+p engine.inspect
+
+    app_install.host_name = engine.host_name
+    app_install.domain_name = engine.domain_name
+    app_install.display_name = engine.software['name']
+    app_install.display_description = engine.software['description']
+    app_install.license_name = engine.software['license_name']
+    app_install.license_sourceurl = engine.software['license_sourceurl']
+    app_install.icon = self.get_icon_from_url(engine.software['icon_url'])
+    app_install.created_from_existing_engine = true
+
+    engine.software['environment_variables'].each do |ev|
       app_install.app_install_env_variables.build(ev)
     end
 
@@ -78,7 +77,14 @@ class AppInstall < ActiveRecord::Base
   end
 
   def build_app
-    engines_api.build_engine(repository_from_gallery, app_build_opts)
+
+
+p :aaaaaaaaaaaaaaaaaaaaaaa________________________________
+p repository_url_from_gallery
+p app_build_opts    
+
+
+    engines_api.build_engine(repository_url_from_gallery, app_build_opts)
   end
 
   def refresh_host_name_and_domain_name
@@ -99,6 +105,25 @@ class AppInstall < ActiveRecord::Base
     end
   end
 
+
+  def blueprint_handler
+    @blueprint_handler ||= GalleryBlueprintHandler.new(gallery_url: gallery_url, blueprint_id: blueprint_id)
+  end
+
+  def software_definition_from_gallery
+    blueprint_handler.software_definition_from_gallery
+  end
+
+  def software_definition_from_blueprint_in_repository
+    blueprint_handler.blueprint_from_repository["software"]
+  end
+
+  def repository_url_from_gallery
+    blueprint_handler.repository.html_safe
+  end
+
+
+
 private
 
   def follow_install_log
@@ -115,10 +140,6 @@ private
     end
   end
 
-  def repository_from_gallery
-    GalleryBlueprintHandler.new(gallery_url: gallery_url, blueprint_id: blueprint_id).repository.html_safe
-  end
-
   def app_build_opts
     {
       host_name: host_name,
@@ -128,5 +149,14 @@ private
       blueprint_id: blueprint_id
     }
   end
+
+  def self.get_icon_from_url url
+    begin
+      return open(url.to_s.html_safe)
+    rescue
+      return nil
+    end
+  end
+
 
 end

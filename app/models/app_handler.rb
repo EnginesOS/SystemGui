@@ -9,19 +9,23 @@ class AppHandler
   end 
 
   def app_install
-    app_install = AppInstall.find_by engine_name: @id
-    if app_install.nil?
-      app_install = AppInstall.new_from_engine @id
-    end
-    return app_install
+    @app_install = @app_install || AppInstall.find_by(engine_name: @id) || AppInstall.new_from_engine(@id)
+    # if app_install.nil?
+    #   app_install = 
+    # end
+    # return app_install
   end
 
   def engine
-    engines_api.loadManagedEngine @id
+    @engine ||= engines_api.loadManagedEngine(@id)
   end
 
   def blueprint
-    engines_api.get_engine_blueprint @id
+    @blueprint ||= engines_api.get_engine_blueprint @id
+  end
+
+  def software
+    @software ||= blueprint['software']
   end
 
   def update_engine
@@ -31,6 +35,7 @@ class AppHandler
       domain_name: domain_name
     )
   end
+
 
   def stop
     engines_api.stopEngine @id
@@ -90,10 +95,6 @@ class AppHandler
   
   def deregister_dns
     engines_api.deregisterEngineDNS @id    
-  end
-
-  def software_definition
-    blueprint['software']
   end
 
   def state
@@ -191,10 +192,6 @@ class AppHandler
   def logs_container
     engine.logs_container
   end
-
-
-
-
 
   ### Class methods
 

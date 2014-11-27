@@ -8,7 +8,7 @@ class PagesController < ApplicationController
   end
 
   def app_manager
-    EnginesApiHandler.db_maintenance
+    Maintenance.db_maintenance
     @apps = AppHandler.all.sort_by{|e| e.engine_name}
     @services = ServiceHandler.all.sort_by{|e| e.engine_name}
   end

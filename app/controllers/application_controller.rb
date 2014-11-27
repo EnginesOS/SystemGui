@@ -1,15 +1,13 @@
 class ApplicationController < ActionController::Base
 
-  # require 'EnginesApiHandlerX.rb'
-  # include EnginesApiHandlerX
-  require 'EngineGallery.rb'
-
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller? 
   
-  # def enginesOS_api
-  #   return $enginesOS_api
-  # end
+  require "/opt/engines/lib/ruby/EnginesOSapi.rb"
+  require '/opt/engines/lib/ruby/SysConfig.rb'
+  require 'git'
+  # require 'EngineGallery.rb'
+  # require 'GalleryMaintainer.rb'
 
   # Overwriting the sign_out redirect path method
   def after_sign_out_path_for(resource_or_scope)

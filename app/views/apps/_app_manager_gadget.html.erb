@@ -15,8 +15,8 @@
     <div class="text_holder">
       <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= label_tag('', app.engine_name) %><br>
       <%= content_tag(:i, "", class: "fa fa-globe") + ' ' + app.fqdn %><br>
-      <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + app.software_definition['name'] %><br>
-      <% if app_install.present? && app_install.display_name.present? && app_install.display_name != app.software_definition['name'] %>
+      <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + app.software['name'] %><br>
+      <% if app_install.present? && app_install.display_name.present? && app_install.display_name != app.software['name'] %>
         <%= content_tag(:i, '', class: 'fa fa-edit') + ' ' + app_install.display_name %><br>
       <% end %>
 

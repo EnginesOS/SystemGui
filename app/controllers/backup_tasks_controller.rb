@@ -6,8 +6,7 @@ class BackupTasksController < ApplicationController
   end
 
   def new
-    @backup_task = BackupTask.new
-    @backup_task.set_defaults params
+    @backup_task = BackupTask.new backup_task_params
   end  
 
   def destroy
@@ -16,16 +15,11 @@ class BackupTasksController < ApplicationController
   end
 
   def create
-    if backup_task_params[:backup_type] == "fs"
-      result = BackupTask.create_volume_backup_task(backup_task_params)
-    else
-      result = BackupTask.create_database_backup_task(backup_task_params)
-    end
-
-    if result.was_success == true
-      flash[:notice] = result.result_mesg
-    else0
+    result = BackupTask.new(backup_task_params).save
+    if result.was_success != true
       flash[:error] = result.result_mesg
+    else
+      flash[:notice] = result.result_mesg
     end
     redirect_to backup_tasks_path 
   end
