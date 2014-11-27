@@ -62,8 +62,15 @@ class GalleryBlueprintHandler
   end
            
   def clone_repo(repo, buildname)
+
+p :reporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporepo
+p repo
+p buildname
+p SysConfig.DeploymentDir
+
+
     backup_lastbuild repo
-    g = Git.clone(repo, buildname, :path => SysConfig.DeploymentDir)
+    g = Git.clone(repo, buildname, path: SysConfig.DeploymentDir)
   end
 
   def backup_lastbuild repo

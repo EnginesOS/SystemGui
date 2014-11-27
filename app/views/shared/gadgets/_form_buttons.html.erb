@@ -1,0 +1,22 @@
+<div class="form-group col-md-12">
+    <div id="form-buttons">
+        <div class="form-group", style="margin-top:15px;">
+            <div class="btn-group pull-left"> 
+              <a id="form-button-cancel" href="<%= record.object.new_record? ? eval(record.object.class.model_name.plural + '_path') : eval(record.object.class.model_name.to_s.underscore + '_path(@' + record.object.class.model_name.to_s.underscore + ')') %>" class="btn btn-warning fa fa-minus-circle" role="button"> Cancel</a>    
+            </div>
+            <div class="btn-group pull-right">
+                <button id="form-button-submit" type="submit" class="btn btn-primary">
+                  <span class="fa fa-check-square-o"> <%= (record.object.new_record? ? 'Create' : 'Update') + ' ' + record.object.class.model_name.human %></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="margin-top: 20px;">
+        <div id="submit-message" style="display: none;">
+            <i class="fa fa-spinner fa-spin"></i> Submitting...
+        </div>
+        <div id="cancel-message" style="display: none;">
+            <i class="fa fa-ban fa-spin"></i> Cancelling...
+        </div>
+    </div>
+</div>

@@ -16,13 +16,13 @@
         <li>
           <%= link_to (image_tag("engines_icon_grey.png", class: "nav_bar_launcher_icon") + " Launcher"), root_path %>
         </li>
-        <li class="<%= 'active' if (params[:controller] == 'pages' && params[:action] == 'app_manager') %>">
+        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'app_manager') || (params[:controller] == 'app_installs' && params[:action] == 'edit')) %>">
           <%= link_to content_tag(:i, "", class: "fa fa-play") + " App Manager", app_manager_path %>
         </li>
-        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'installer') || params[:controller] == 'app_installs' ) %>">
+        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'installer') || (params[:controller] == 'app_installs' && params[:action] == 'new')) %>">
           <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Installer", installer_path %>
         </li>
-        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'settings')) %>">
+        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'settings') || params[:controller] == 'users' || params[:controller] == 'backup_tasks' || params[:controller] == 'gallery_installs') %>">
           <%= link_to content_tag(:i, "", class: "fa fa-gear") + " Settings", settings_path %>
         </li>
       </ul>

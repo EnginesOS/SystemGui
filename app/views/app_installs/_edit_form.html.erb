@@ -58,14 +58,16 @@
   </fieldset>
 
   <div class="actions top-gap">
-    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary") do %>
+    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), app_manager_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
       <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
     <% end %>
   </div>
 
-    <%= f.object.app.software.inspect %>
+    <% #= f.object.app.software.inspect %>
 
 
 <% end %>
 
     
+<%= render partial: 'shared/gadgets/waiting_for_response' %>

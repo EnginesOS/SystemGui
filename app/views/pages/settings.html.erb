@@ -1,36 +1,35 @@
-<div class="col-sm-12 settings">
-  <h2 class="control-panel-title"><i class="fa fa-gear"></i> Settings</h2>
+<span class='settings'>
+  <div class="col-sm-12">
+    <div class='btn-group-vertical top-gap'>
 
-  <div class='btn-group-vertical top-gap'>
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @users.map{|u| u.email + ' ('.html_safe + distance_of_time_in_words_to_now(u.last_sign_in_at) + ' )'.html_safe }.join('<br>'.html_safe) + ' </span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-users') + ' Users'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, users_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = '<span class="settings_btn_detail">'.html_safe + @users.map{|u| u.email + ' ('.html_safe + distance_of_time_in_words_to_now(u.last_sign_in_at) + ' )'.html_safe }.join('<br>'.html_safe) + ' </span>'.html_safe %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-users') + ' Users'.html_safe) + "<br>".html_safe + detail.html_safe  %>
-    <%= link_to link_body, users_path, class: 'btn btn-default btn-lg' %>
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @backup_tasks.keys.count.to_s + ' scheduled</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-upload') + ' Backups'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, backup_tasks_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = '<span class="settings_btn_detail">'.html_safe + @backup_tasks.keys.count.to_s + ' scheduled</span>'.html_safe %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-upload') + ' Backups'.html_safe) + "<br>".html_safe + detail.html_safe  %>
-    <%= link_to link_body, backup_tasks_path, class: 'btn btn-default btn-lg' %>
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @gallery_installs.map(&:name).join('<br>').to_s.html_safe + '</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-th') + ' Galleries'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, gallery_installs_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = '<span class="settings_btn_detail">'.html_safe + @gallery_installs.map(&:name).join('<br>').to_s.html_safe + '</span>'.html_safe %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-th') + ' Galleries'.html_safe) + "<br>".html_safe + detail.html_safe  %>
-    <%= link_to link_body, gallery_installs_path, class: 'btn btn-default btn-lg' %>
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @system_config.default_domain.to_s + '</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domain'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, edit_default_domain_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = '<span class="settings_btn_detail">'.html_safe + @system_config.default_domain.to_s + '</span>'.html_safe %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domain'.html_safe) + "<br>".html_safe + detail.html_safe  %>
-    <%= link_to link_body, edit_default_domain_path, class: 'btn btn-default btn-lg' %>
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @system_config.default_site.to_s + '</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-home') + ' Root route'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, edit_default_website_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = '<span class="settings_btn_detail">'.html_safe + @system_config.default_site.to_s + '</span>'.html_safe %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-home') + ' Root route'.html_safe) + "<br>".html_safe + detail.html_safe  %>
-    <%= link_to link_body, edit_default_website_path, class: 'btn btn-default btn-lg' %>
+      <% detail = (('<span class="settings_btn_detail">'.html_safe + label_tag("", "SMTP smarthost") + @system_config.smtp_smarthost.to_s + '</span>'.html_safe) if @system_config.smtp_smarthost.present?) || '' %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-envelope-o') + ' Mail'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, edit_mail_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = (('<span class="settings_btn_detail">'.html_safe + label_tag("", "SMTP smarthost") + @system_config.smtp_smarthost.to_s + '</span>'.html_safe) if @system_config.smtp_smarthost.present?) || '' %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-envelope-o') + ' Mail'.html_safe) + "<br>".html_safe + detail.html_safe  %>
-    <%= link_to link_body, edit_mail_path, class: 'btn btn-default btn-lg' %>
+      <% detail = (image_tag(@system_config.wallpaper.url, height: "64") if @system_config.wallpaper.present?) || '' %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-picture-o') + ' Wallpaper'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, edit_wallpaper_path, class: 'btn btn-default btn-lg' %>
 
-    <% detail = (image_tag(@system_config.wallpaper.url, height: "64") if @system_config.wallpaper.present?) || '' %>
-    <% link_body = (content_tag(:i, '', class: 'fa fa-picture-o') + ' Wallpaper'.html_safe) + "<br>".html_safe + detail.html_safe  %>
-    <%= link_to link_body, edit_wallpaper_path, class: 'btn btn-default btn-lg' %>
-
+    </div>
   </div>
-
-</div>
+</span>

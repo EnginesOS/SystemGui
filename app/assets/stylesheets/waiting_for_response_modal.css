@@ -1,0 +1,11 @@
+#waiting-for-response-modal .big-spinner {
+  font-size: 64px;
+  text-align: center;
+  color: #999;
+}
+
+#waiting-for-response-modal .modal-content {
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 200px;
+}
