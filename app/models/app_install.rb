@@ -68,6 +68,15 @@ p engine.inspect
     return app_install
   end
 
+  def attach_icon_from_gallery
+    url = software_definition_from_gallery['image_url']
+    begin
+      @icon = URI.parse(url)
+    rescue
+      return nil
+    end
+  end
+
   def app
     AppHandler.new(engine_name)
   end
@@ -152,13 +161,7 @@ private
     }
   end
 
-  def self.get_icon_from_url url
-    begin
-      return URI.parse(url)
-    rescue
-      return nil
-    end
-  end
+
 
 
 end

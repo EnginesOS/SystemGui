@@ -23,6 +23,8 @@ class AppInstallsController < ApplicationController
     end
      # || commit_create
     @app_install = AppInstall.new(app_install_params)
+    @app_install.attach_icon_from_gallery if @app_install.icon.nil?
+
     if @app_install.build_app.instance_of?(ManagedEngine)
       if @app_install.save
         redirect_to app_manager_path, notice: 'Application installation was successful.'
@@ -34,7 +36,7 @@ class AppInstallsController < ApplicationController
     end
 
     # @app_install_log = AppInstall.install_log
-    render stream: true
+    # render stream: true
   end
 
   def commit_create
@@ -63,7 +65,7 @@ class AppInstallsController < ApplicationController
     # redirect_to app_manager_path
   end
 
-  
+
   # def update
   #   app_install = AppInstall.find(params[:id])
   #   if app_install_params['created_from_existing_engine'] == 'true'
