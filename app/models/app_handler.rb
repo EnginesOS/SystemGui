@@ -32,15 +32,6 @@ class AppHandler
     @software ||= blueprint['software']
   end
 
-  def update_engine
-    engines_api.set_engine_hostname_details(
-      engine_name: engine_name,
-      host_name: host_name,
-      domain_name: domain_name
-    )
-  end
-
-
   def stop
     engines_api.stopEngine @id
   end

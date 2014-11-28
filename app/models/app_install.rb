@@ -1,4 +1,4 @@
-require "open-uri"
+# require "open-uri"
 
 class AppInstall < ActiveRecord::Base
 
@@ -34,7 +34,7 @@ class AppInstall < ActiveRecord::Base
     app_install.license_name = blueprint_software['license_name']
     app_install.license_sourceurl = blueprint_software['license_sourceurl']
     app_install.terms_and_conditions_accepted = false
-    app_install.icon = self.get_icon_from_url(gallery_software['image_url']) 
+    # app_install.icon = self.get_icon_from_url(gallery_software['image_url']) 
     app_install.created_from_existing_engine = false
 
     blueprint_software['environment_variables'].each do |ev|
@@ -58,7 +58,7 @@ p engine.inspect
     app_install.display_description = engine.software['description']
     app_install.license_name = engine.software['license_name']
     app_install.license_sourceurl = engine.software['license_sourceurl']
-    app_install.icon = self.get_icon_from_url(engine.software['icon_url'])
+    # app_install.icon = self.get_icon_from_url(engine.software['icon_url'])
     app_install.created_from_existing_engine = true
 
     engine.software['environment_variables'].each do |ev|
@@ -73,7 +73,9 @@ p engine.inspect
   end
 
   def update_app_engine
-    app.update_engine
+p :selieeeeeeeeeeeeeeeeeeeeeeeeee
+p self.inspect
+    engines_api.set_engine_hostname_details engine_name: engine_name, host_name: host_name, domain_name: domain_name
   end
 
   def build_app
@@ -142,17 +144,17 @@ private
 
   def app_build_opts
     {
-      host_name: host_name,
-      domain_name: domain_name,
-      engine_name: engine_name,
-      gallery_url: gallery_url,
-      blueprint_id: blueprint_id
+      host_name: @host_name,
+      domain_name: @domain_name,
+      engine_name: @engine_name,
+      gallery_url: @gallery_url,
+      blueprint_id: @blueprint_id
     }
   end
 
   def self.get_icon_from_url url
     begin
-      return open(url.to_s.html_safe)
+      return URI.parse(url)
     rescue
       return nil
     end

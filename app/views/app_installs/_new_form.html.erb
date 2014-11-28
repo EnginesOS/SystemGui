@@ -1,4 +1,4 @@
-<%= simple_nested_form_for(@app_install, url: @app_installs_path, method: :post, html: {class: "form-horizontal"}) do |f| %>
+<%= simple_nested_form_for(@app_install, url: app_installs_path, html: {class: "form-horizontal"}) do |f| %>
   <% true || if @app_install.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@app_install.errors.count, "error") %> prohibited this install from being saved:</h2>
@@ -59,6 +59,22 @@
     </div>
   </fieldset>
 
+  <fieldset>
+    <legend>Icon</legend>
+    <div class="form-group form-group-lg">
+      <div class="col-sm-2">
+        <div class='form-image-control'>
+          <div class='form-image-centering'>
+            <%= image_tag(f.object.software_definition_from_gallery['image_url'], class: 'form-engine-icon') %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-10">
+        <%= f.file_field :icon, class: 'form-control input-lg choose_file_form_control' %>
+      </div>
+    </div>
+  </fieldset>
+
 
   <% if @app_install.app_install_env_variables.present? %>
     <fieldset>
@@ -88,9 +104,10 @@
       </div>
     </div>
   </fieldset>
-  <div class="actions">
-    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary") do %>
-      <%= content_tag(:i, "", class: "fa fa-plus") + " Install" %>
+  <div class="actions top-gap">
+    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), installer_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
+      <%= content_tag(:i, "", class: "fa fa-check") + " Install" %>
     <% end %>
   </div>
 

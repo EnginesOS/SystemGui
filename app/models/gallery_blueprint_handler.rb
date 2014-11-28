@@ -36,6 +36,7 @@ class GalleryBlueprintHandler
   end
 
   def load_blueprint_from_repository
+p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ load_blueprint'    
     buildname = File.basename(repository)
     segments = buildname.split('.')
     buildname = segments[0]

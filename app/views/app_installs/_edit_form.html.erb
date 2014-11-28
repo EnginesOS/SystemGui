@@ -51,10 +51,13 @@
   <fieldset>
     <legend>Icon</legend>
     <% if f.object.icon.present? %>
-      <%= image_tag(f.object.icon.url, height: "64") %>
-      <%= f.check_box(:delete_icon) %> <%= label_tag :delete %>
+      <div class='form-image-control'>
+        <div class='form-image-centering'>
+          <%= image_tag(f.object.icon.url, class: 'form-engine-icon') %> <%= f.check_box(:delete_icon) %> <%= label_tag :delete %>
+        </div>
+      </div>
     <% end %>
-    <%= f.file_field :icon, class: 'form-control input-lg' %>
+    <%= f.file_field :icon, class: 'form-control input-lg choose_file_form_control' %>
   </fieldset>
 
   <div class="actions top-gap">
@@ -65,7 +68,7 @@
   </div>
 
 <% #= f.object.app.software.inspect %>
-<%= f.object.icon.url %>
+<% #= f.object.icon.url %>
 
 <% end %>
 

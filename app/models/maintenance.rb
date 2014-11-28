@@ -1,4 +1,4 @@
-class Maintenance
+module Maintenance
 
   def self.db_maintenance
     remove_dupes

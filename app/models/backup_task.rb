@@ -56,7 +56,6 @@ class BackupTask
 
   def create_volume_backup_task
 
-
 p "@backup_name, @engine_name, @source_name, destination_params"
 p @backup_name
 p @engine_name

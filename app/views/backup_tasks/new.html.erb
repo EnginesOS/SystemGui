@@ -1,38 +1,36 @@
-<h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task</h3>
-<h4><%= @backup_task.engine_name %></h4>
+<div class="col-sm-12 top-gap backup-tasks">
 
-<p><%= "Source: " + @backup_task.source_name + "(" + @backup_task.backup_type + ")" %></p>
+  <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task</h3>
+  <h3 class="control-panel-title"><%= @backup_task.engine_name %></h3>
 
-<%= simple_form_for @backup_task, html: {class: "form-horizontal"} do |f| %>
+  <h4><%= "Source: " + @backup_task.source_name + "(" + @backup_task.backup_type + ")" %></h4>
 
-  <%= f.input :source_name, as: :hidden %>
-  <%= f.input :backup_type, as: :hidden %>
-  <%= f.input :engine_name, as: :hidden %>
+  <%= simple_form_for @backup_task, html: {class: "form-horizontal"} do |f| %>
 
-  <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :backup_name}, f: f} %>
+    <%= f.input :source_name, as: :hidden %>
+    <%= f.input :backup_type, as: :hidden %>
+    <%= f.input :engine_name, as: :hidden %>
 
-  <fieldset>
-    <legend>Destination</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :folder}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"]}, f: f} %>
-    <div id="backup-task-external-destination-details">
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :address}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :username}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :password}, f: f} %>
+    <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :backup_name}, f: f} %>
+
+    <fieldset>
+      <legend>Destination</legend>
+        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :folder}, f: f} %>
+        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"]}, f: f} %>
+      <div id="backup-task-external-destination-details">
+        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :address}, f: f} %>
+        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :username}, f: f} %>
+        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :password}, f: f} %>
+      </div>
+    </fieldset>
+
+    <div class="actions top-gap">
+      <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), backup_tasks_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
+        <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
+      <% end %>
     </div>
-  </fieldset>
 
-  <div class="actions top-gap">
-    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), backup_tasks_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
-    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
-      <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
-    <% end %>
-  </div>
+  <% end %>
 
-<% end %>
-
-
-
-
-
-    
+</div>

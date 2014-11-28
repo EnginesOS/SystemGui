@@ -3,7 +3,7 @@
     <div class="launcher_icon_and_label_holder">
       <% app_install = app.app_install %>
       <% #= app_install.inspect %>
-      <% if app_install.present? && app_install.icon.present? %>
+      <% if app_install.present? && app_install.icon.exists? %>
         <%= image_tag(app_install.icon.url, class: "launcher-icon") %>
       <% else %>
         <%= image_tag("_placeholder_for_missing_engine.jpg", class: "launcher-icon") %><br>

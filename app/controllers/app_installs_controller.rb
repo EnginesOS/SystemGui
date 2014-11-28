@@ -4,6 +4,7 @@ class AppInstallsController < ApplicationController
   # require 'open3'
 
   def new
+    Maintenance.db_maintenance
     @app_install = AppInstall.new_from_gallery app_install_params
   end
 
@@ -17,7 +18,9 @@ class AppInstallsController < ApplicationController
   end
 
   def create
-    check_license_terms_and_conditions_accepted
+    if app_install_params["terms_and_conditions_accepted"] == "0"
+     return redirect_to new_app_install_path(app_install: app_install_params), alert: 'You must accept the license terms and conditions to install this software.'
+    end
      # || commit_create
     @app_install = AppInstall.new(app_install_params)
     if @app_install.build_app.instance_of?(ManagedEngine)
@@ -32,12 +35,6 @@ class AppInstallsController < ApplicationController
 
     # @app_install_log = AppInstall.install_log
     render stream: true
-  end
-
-  def check_license_terms_and_conditions_accepted
-    if app_install_params["terms_and_conditions_accepted"] == "0"
-     return redirect_to new_app_install_path(app_install: app_install_params), notice: 'You must accept the license terms and conditions to install this software.'
-    end
   end
 
   def commit_create
@@ -65,6 +62,29 @@ class AppInstallsController < ApplicationController
     end
     # redirect_to app_manager_path
   end
+
+  
+  # def update
+  #   app_install = AppInstall.find(params[:id])
+  #   if app_install_params['created_from_existing_engine'] == 'true'
+  #     if app_install.save
+  #       redirect_to app_manager_path, notice: 'Application details were successfully updated.'
+  #     else
+  #       render :edit, alert: 'Application details were not updated.'
+  #     end
+  #   else
+  #     if app_install.update(app_install_params)
+  #       if app_install.update_app_engine == true
+  #         redirect_to app_manager_path, notice: 'Application details were successfully updated.'
+  #       else
+  #         redirect_to app_manager_path, alert: 'Display properties updated, but application host name and domain name not updated.'
+  #       end
+  #     else
+  #       render :edit, alert: 'Application details were not updated.'
+  #     end
+  #   end
+  #   # redirect_to app_manager_path
+  # end
 
   def destroy
     @install.destroy
