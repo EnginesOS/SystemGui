@@ -1,7 +1,7 @@
 <span class='installer'>
-  <div class="col-sm-12">
+  <div class="col-sm-12 top-gap">
     <% @gallery_installs.each do |gallery_install| %>
-      <h3 class="control-panel-heading">
+      <h3 class="control-panel-title">
         <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery_install.name %>
       </h3>
       <div class="row top-gap">
@@ -34,7 +34,7 @@
                   <% if home_page.present? %>
                     <a href=<%=home_page%>><i class="fa fa-globe"></i> website</a><br>
                   <% end %>
-                  <a href=<%= install_url %> class="btn btn-default engine-install-button" data-toggle="tooltip" title="Click to install <%= name %>">Install</a>
+                  <a href=<%= install_url %> class="btn btn-default engine-install-button trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>">Install</a>
                 </div>
               </div>
             </div>

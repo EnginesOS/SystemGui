@@ -17,6 +17,7 @@ gem "nested_form"
 #gem 'carrierwave'
 # gem 'fog'
 gem "paperclip", "~> 4.2"
+gem "jquery-fileupload-rails"
 
 gem 'rails_admin'
 

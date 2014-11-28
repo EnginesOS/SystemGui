@@ -1,6 +1,3 @@
-.settings label {
-  font-size: 0.9em;
-}
 
 .settings .btn-group {
   margin-top: 0px;
@@ -23,7 +20,7 @@
   font-size: 0.8em;
 }
 
-.choose_file_form_control {
-  font-size: 18px;
-  padding: 3px;
+.form-control.input-lg.choose_file_form_control {
+  padding: 8px;
 }
+

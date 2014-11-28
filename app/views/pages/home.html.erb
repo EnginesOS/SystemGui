@@ -43,12 +43,11 @@
             <div class="dropdown-holder">
               <li>
                 <div class="btn-group">
-                  <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
+                  <a href=<%= app_manager_path %> class="btn btn-default btn-launcher trigger-response-modal">
                     <div class= "launcher_icon_and_label_holder">
-                      <i class="fa fa-sign-out fa-launcher"></i>
+                      <i class="fa fa-gears fa-launcher"></i>
                       <div class="launcher-label">
-                        Sign out<br>
-                        <%= current_user.username %>
+                        Control Panel
                       </div>
                     </div>
                   </a>
@@ -56,11 +55,12 @@
               </li>
               <li>
                 <div class="btn-group">
-                  <a href=<%= app_manager_path %> class="btn btn-default btn-launcher">
+                  <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher trigger-response-modal" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
                     <div class= "launcher_icon_and_label_holder">
-                      <i class="fa fa-gears fa-launcher"></i>
+                      <i class="fa fa-sign-out fa-launcher"></i>
                       <div class="launcher-label">
-                        Control Panel
+                        Sign out<br>
+                        <%= current_user.username %>
                       </div>
                     </div>
                   </a>
@@ -89,6 +89,8 @@
   </div>
 
 </div>
+
+<%= render partial: 'shared/gadgets/waiting_for_response' %>
 
 </body>
 </html>

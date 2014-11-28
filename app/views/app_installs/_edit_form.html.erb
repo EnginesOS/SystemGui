@@ -54,7 +54,7 @@
       <%= image_tag(f.object.icon.url, height: "64") %>
       <%= f.check_box(:delete_icon) %> <%= label_tag :delete %>
     <% end %>
-    <%= f.file_field :icon %>
+    <%= f.file_field :icon, class: 'form-control input-lg' %>
   </fieldset>
 
   <div class="actions top-gap">
@@ -64,10 +64,10 @@
     <% end %>
   </div>
 
-    <% #= f.object.app.software.inspect %>
-
+<% #= f.object.app.software.inspect %>
+<%= f.object.icon.url %>
 
 <% end %>
 
     
-<%= render partial: 'shared/gadgets/waiting_for_response' %>
+

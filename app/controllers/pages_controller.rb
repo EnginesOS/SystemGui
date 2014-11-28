@@ -33,7 +33,7 @@ class PagesController < ApplicationController
 private
 
     def services
-      services = $enginesOS_api.getManagedServices()
+      services = EnginesApiHandler.enginesOS_api.getManagedServices()
       services ||= []
     end
 

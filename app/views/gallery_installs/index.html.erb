@@ -1,16 +1,19 @@
-<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-default top-gap" %>
-<h2 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th") %> Galleries</h2>
+<span class="galleries settings">
+  <div class="col-sm-12 top-gap">
+    <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-th") %> Galleries</h3>
+    <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
-<% if @galleries %>
-    <% @galleries.each do |gallery| %>
-        <%= render partial: "show", locals: { gallery: gallery } %>
+    <% if @galleries %>
+        <% @galleries.each do |gallery| %>
+            <%= render partial: "show", locals: { gallery: gallery } %>
+        <% end %>
+    <% else %>
+        <p>No galleries.</p>
     <% end %>
-<% else %>
-    <p>No galleries.</p>
-<% end %>
 
-<div class="btn-group">
-  <% #= link_to content_tag(:i, "", class: "fa fa-list") + " Add from list", "#", data: {toggle: "modal", target: "#modal_add_gallery"}, role: "button", class: "btn btn-default" %>
-  <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_gallery_install_path, class: "btn btn-default" %>
-</div>
-
+    <div class="btn-group">
+      <% #= link_to content_tag(:i, "", class: "fa fa-list") + " Add from list", "#", data: {toggle: "modal", target: "#modal_add_gallery"}, role: "button", class: "btn btn-default" %>
+      <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_gallery_install_path, class: "btn btn-primary btn-lg top-gap trigger-response-modal" %>
+    </div>
+  </div>
+</span>

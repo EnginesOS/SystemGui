@@ -1,7 +1,14 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+.loading-spinner {
+  text-align: center;
+  font-size: 48px;
+  color: #999;
+}
+
+.wtf {
+  color: #e33;
+}
 
 .indicator {
   font-size: 75%;
@@ -38,8 +45,6 @@
 .engine_nocontainer {
   background-color: #eee;
 }
-
-
 
 .engine-gadget {
     width: 100%;
@@ -111,12 +116,6 @@
   margin-top: 5px;
   color: #777;
 }
-
-.control-panel-heading {
-  margin-top: 20px;
-  color: #777;
-}
-
 
 .advanced_detail pre {
   max-height: 500px;

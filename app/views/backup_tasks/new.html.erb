@@ -1,25 +1,34 @@
-<h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task for <%= @backup_task.engine_name %></h3>
+<h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task</h3>
+<h4><%= @backup_task.engine_name %></h4>
 
 <p><%= "Source: " + @backup_task.source_name + "(" + @backup_task.backup_type + ")" %></p>
 
-<%= simple_form_for @backup_task do |f| %>
+<%= simple_form_for @backup_task, html: {class: "form-horizontal"} do |f| %>
 
-  <%= f.input :source_name, as: :hidden, class: "form-control", input_html: {value: @backup_task.source_name } %>
-  <%= f.input :backup_type, as: :hidden, input_html: {value: @backup_task.backup_type }  %>
-  <%= f.input :engine_name, as: :hidden, input_html: {value: @backup_task.engine_name }  %>
-  <%= f.input :backup_name, input_html: {value: @backup_task.backup_name } %>
+  <%= f.input :source_name, as: :hidden %>
+  <%= f.input :backup_type, as: :hidden %>
+  <%= f.input :engine_name, as: :hidden %>
+
+  <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :backup_name}, f: f} %>
+
   <fieldset>
     <legend>Destination</legend>
-    <%= f.input :folder %>
-    <%= f.input :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"], as: :select %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :folder}, f: f} %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"]}, f: f} %>
     <div id="backup-task-external-destination-details">
-      <%= f.input :address %>
-      <%= f.input :username %>
-      <%= f.input :password %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :address}, f: f} %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :username}, f: f} %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :password}, f: f} %>
     </div>
-    <%= link_to "Cancel", :back, class: "btn btn-warning" %>
-    <%= f.button :submit, class: "btn-primary pull-right" %>
   </fieldset>
+
+  <div class="actions top-gap">
+    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), backup_tasks_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
+      <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
+    <% end %>
+  </div>
+
 <% end %>
 
 

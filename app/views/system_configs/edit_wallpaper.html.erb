@@ -1,17 +1,23 @@
-<div class="col-sm-12">
-  <h2 class="control-panel-title"><i class="fa fa-picture-o"></i> Wallpaper</h2>
+<div class="col-sm-12 top-gap">
+  <h3 class="control-panel-title"><i class="fa fa-picture-o"></i> Wallpaper</h3>
 
-  <%= form_for @system_config, html: {class: 'top-gap'} do |f| %>
+  <%= form_for @system_config, html: {class: "form-horizontal"} do |f| %>
 
-    <% if f.object.wallpaper.present? %>
-      <%= f.check_box :delete_wallpaper %> <%= f.label 'Remove wallpaper' %><br>
-    <% end %>
-
-    <%= f.label 'Change wallpaper', class: 'top-gap' %>
-    <%= f.file_field :wallpaper, class: 'form-control choose_file_form_control' %>
+    <div class="form-group form-group-lg">
+      <div class="col-sm-12">
+        <% if f.object.wallpaper.present? %>
+          <%= f.check_box :delete_wallpaper %> <%= f.label 'Remove wallpaper' %><br>
+        <% end %>
+      </div>
+      <div class="col-sm-12">
+        <%= f.label 'Change wallpaper', class: 'top-gap' %>
+        <%= f.file_field :wallpaper, class: 'form-control input-lg choose_file_form_control' %>
+      </div>
+    </div>
 
     <div class="actions top-gap">
-      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary") do %>
+      <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), settings_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
         <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
       <% end %>
     </div>

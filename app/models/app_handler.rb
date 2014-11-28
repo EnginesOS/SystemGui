@@ -6,7 +6,11 @@ class AppHandler
 
   def engines_api
     EnginesApiHandler.engines_api
-  end 
+  end
+
+  def self.engines_api
+    EnginesApiHandler.engines_api
+  end
 
   def app_install
     @app_install = @app_install || AppInstall.find_by(engine_name: @id) || AppInstall.new_from_engine(@id)
@@ -196,7 +200,7 @@ class AppHandler
   ### Class methods
 
   def self.all
-    EnginesApiHandler.engines_api.list_apps.map do |engine_name|
+    self.engines_api.list_apps.map do |engine_name|
       AppHandler.new(engine_name)
     end
   end

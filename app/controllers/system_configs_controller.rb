@@ -3,7 +3,7 @@ class SystemConfigsController < ApplicationController
   before_action :set_system_config, only: [:update, :edit_default_domain, :edit_default_website, :edit_mail, :edit_wallpaper]
 
   def update
-    if (@system_config.update(system_config_params) && $enginesOS_api.save_system_preferences(system_config_params))
+    if (@system_config.update(system_config_params) && EnginesApiHandler.engines_api.save_system_preferences(system_config_params))
       redirect_to settings_path, notice: 'Settings were successfully saved.'
     else
       redirect_to settings_path, alert: 'Settings were not saved.'

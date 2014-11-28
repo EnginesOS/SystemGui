@@ -1,14 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="waiting-for-response-modal" tabindex="-1">
+<div class="modal" id="waiting-for-response-modal" tabindex="-1" data-backdrop="static">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Waiting for response...</h4>
-      </div>
-      <div class="modal-body">
-        <div class='big-spinner'>
-          <%= content_tag(:i, "", class: "fa fa-cog fa-spin") %> 
-        </div>
+    <div class="modal-body">
+      <div class='big-spinner'>
+        <%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> 
       </div>
     </div>
   </div>

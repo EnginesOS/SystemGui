@@ -11,6 +11,16 @@ class GalleryInstallsController < ApplicationController
     @gallery = GalleryInstall.new
   end
 
+  def edit
+    @gallery = GalleryInstall.find(params[:id])
+  end
+
+  def update
+    @gallery = GalleryInstall.find(params[:id])
+    @gallery.update(gallery_install_params)
+    redirect_to gallery_installs_path
+  end
+
   def create
     @gallery = GalleryInstall.new(gallery_install_params)
     @gallery.save
