@@ -153,11 +153,11 @@ private
 
   def app_build_opts
     {
-      host_name: @host_name,
-      domain_name: @domain_name,
-      engine_name: @engine_name,
-      gallery_url: @gallery_url,
-      blueprint_id: @blueprint_id
+      host_name: host_name,
+      domain_name: domain_name,
+      engine_name: engine_name,
+      gallery_url: gallery_url,
+      blueprint_id: blueprint_id
     }
   end
 
