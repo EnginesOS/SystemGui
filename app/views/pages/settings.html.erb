@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <div class='btn-group-vertical top-gap'>
 
-      <% detail = '<span class="settings_btn_detail">'.html_safe + @users.map{|u| u.email + ' ('.html_safe + distance_of_time_in_words_to_now(u.last_sign_in_at) + ' )'.html_safe }.join('<br>'.html_safe) + ' </span>'.html_safe %>
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @users.map{|u| u.email + ' ('.html_safe + distance_of_time_in_words_to_now(u.last_sign_in_at) + ')'.html_safe }.join('<br>'.html_safe) + ' </span>'.html_safe %>
       <% link_body = (content_tag(:i, '', class: 'fa fa-users') + ' Users'.html_safe) + "<br>".html_safe + detail.html_safe  %>
       <%= link_to link_body, users_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 

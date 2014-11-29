@@ -14,6 +14,7 @@ class PagesController < ApplicationController
   end
 
   def system
+    @system_info = SystemHandler.system_info
     @snapshop = Vmstat.snapshot
     sleep(1)
     @vm2 = Vmstat.memory

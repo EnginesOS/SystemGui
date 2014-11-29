@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   require "/opt/engines/lib/ruby/EnginesOSapi.rb"
   require '/opt/engines/lib/ruby/SysConfig.rb'
   require 'git'
+  require "awesome_print"
   # require 'EngineGallery.rb'
   # require 'GalleryMaintainer.rb'
 

@@ -20,6 +20,7 @@ gem "paperclip", "~> 4.2"
 gem "jquery-fileupload-rails"
 
 gem 'rails_admin'
+gem 'awesome_print', '~> 1.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'

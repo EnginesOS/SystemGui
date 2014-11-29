@@ -59,11 +59,11 @@ private
   end
 
   def set_flash_messages_and_redirect
-    # if @result.was_success == true
-    #     flash[:notice] = @result.result_mesg
-    #   else
-    #     flash[:error] = @result.result_mesg
-    # end
+    if @result.was_success == true
+        flash[:notice] = @result.result_mesg
+      else
+        flash[:error] = @result.result_mesg
+    end
     redirect_to app_manager_path
   end
 

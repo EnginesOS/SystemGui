@@ -13,72 +13,72 @@ class AppsController < ApplicationController
   end
   
   def start   
-    result = @app.start
+    @result = @app.start
     set_flash_messages_and_redirect
   end
   
   def pause
-    result = @app.pause
+    @result = @app.pause
     set_flash_messages_and_redirect
   end
   
   def unpause
-    result = @app.unpause
+    @result = @app.unpause
     set_flash_messages_and_redirect
   end
    
   def destroy_container
-    result = @app.destroy_container
+    @result = @app.destroy_container
     set_flash_messages_and_redirect
   end 
   
   def delete_image
-    result = @app.delete_image
+    @result = @app.delete_image
     set_flash_messages_and_redirect
   end 
   
   def restart
-    result = @app.restart
+    @result = @app.restart
     set_flash_messages_and_redirect
   end
   
   def create_container
-    result = @app.create_container
+    @result = @app.create_container
     set_flash_messages_and_redirect
   end
 
   def recreate
-    result = @app.recreate
+    @result = @app.recreate
     set_flash_messages_and_redirect
   end
 
   def monitor
-    result = @app.monitor
+    @result = @app.monitor
     set_flash_messages_and_redirect
   end
   
   def demonitor
-    result = @app.demonitor
+    @result = @app.demonitor
     set_flash_messages_and_redirect
   end
   
   def register_website
-    result = @app.register_website
+    @result = @app.register_website
     set_flash_messages_and_redirect
   end
   
   def deregister_website
-    result = @app.deregister_website
+    @result = @app.deregister_website
     set_flash_messages_and_redirect
   end
   
   def register_dns
-    result = @app.register_dns
+    @result = @app.register_dns
     set_flash_messages_and_redirect
   end
   
   def deregister_dns
-    result = @app.deregister_dns
+    @result = @app.deregister_dns
     set_flash_messages_and_redirect
   end
 
@@ -89,11 +89,11 @@ private
   end
 
   def set_flash_messages_and_redirect
-    # if @result.was_success == true
-    #   flash[:notice] = @result.result_mesg
-    # else
-    #   flash[:error] = @result.result_mesg
-    # end
+    if @result.was_success == true
+      flash[:notice] = @result.result_mesg
+    else
+      flash[:error] = @result.result_mesg
+    end
     redirect_to app_manager_path
   end
   

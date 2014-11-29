@@ -7,11 +7,11 @@
       <tr><td><label>Hostname</label></td><td><a href=http://<%=@app.fqdn %>><%=@app.fqdn %></a></td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%=@app.state_as_set_by_user %></td></tr> 
-      <tr><td><label>Memory</label></td><td><%= @app.memory %> MB</td></tr>
+      <tr><td><label>Memory required</label></td><td><%= @app.memory %> MB</td></tr>
       <tr><td><label>Monitored</label></td><td><%=@app.monitored %></td></tr>
       <tr><td><label>Framework</label></td><td><%=@app.framework %>/<%=@app.runtime %></td></tr>
-      <tr><td><label>Image</label></td><td><%= @app.image %> </td></tr>
-      <tr><td><label>Blue print source</label></td><td><%= @app.repo %> </td></tr>
+      <tr><td><label>Image</label></td><td><%= @app.image %></td></tr>
+      <tr><td><label>Blue print source</label></td><td><%= @app.repo %></td></tr>
     </table>
   </div>
 
@@ -35,11 +35,23 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="row">
   <div class="col-sm-12 top-gap">
+
+    <label>Network activity</label>
+    <pre><table>
+      <tr><td><label>In</label></td><td><%= @app.network_metrics[:in].to_s + " bytes" %></td></tr>
+      <tr><td><label>Out</label></td><td><%= @app.network_metrics[:out].to_s + " bytes" %></td></tr>
+    </table></pre>
+
+    <label>Memory usage</label>
+    <pre><table>
+      <tr><td><label>Current</label></td><td><%= @app.memory_statistics[:current].to_s %></td></tr>
+      <tr><td><label>Maximum</label></td><td><%= @app.memory_statistics[:maximum].to_s %></td></tr>
+      <tr><td><label>Limit</label></td><td><%= @app.memory_statistics[:limit].to_s %></td></tr>
+    </table></pre>
 
     <label>Ports</label>
     <pre><table>

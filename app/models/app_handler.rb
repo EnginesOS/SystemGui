@@ -89,7 +89,7 @@ class AppHandler
   end
   
   def deregister_dns
-    engines_api.deregisterEngineDNS @id    
+    engines_api.deregisterEngineDNS @id
   end
 
   def state
@@ -186,6 +186,14 @@ class AppHandler
 
   def logs_container
     engine.logs_container
+  end
+
+  def network_metrics
+    engines_api.get_container_network_metrics @id
+  end
+
+  def memory_statistics
+    engines_api.get_engine_memory_statistics @id
   end
 
   ### Class methods

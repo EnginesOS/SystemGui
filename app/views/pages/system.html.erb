@@ -1,9 +1,11 @@
 <span class='system'>
+
   <div class="col-sm-12 well">
     <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-tachometer") %> System</h3>
 
     <div class='top-gap'>
-      <% cpu_cnt = Vmstat.cpu.length %>
+      <br>
+      <% cpu_cnt = @system_info[:old][:cpu].length %>
       <%= cpu_cnt %> Cpus<br />
       <table>
         <th>CPU</th>
@@ -11,7 +13,7 @@
         <th>nice</th>
         <th>system</th>
         <th>user</th>
-      <% Vmstat.cpu.each do  |cpu|%>
+      <% @system_info[:old][:cpu].each do  |cpu|%>
         <tr>
             <% total = cpu.nice + cpu.idle + cpu.system + cpu.user 
             idle = cpu.idle.to_f / total.to_f * 100.0
@@ -30,9 +32,9 @@
       </table>
 
       <% 
-      one = @snapshop.load_average.one_minute
-      five =  @snapshop.load_average.five_minutes
-      fithteen =  @snapshop.load_average.fifteen_minutes
+      one = @system_info[:old][:snapshot].load_average.one_minute
+      five =  @system_info[:old][:snapshot].load_average.five_minutes
+      fithteen =  @system_info[:old][:snapshot].load_average.fifteen_minutes
       %><p>
       <strong>Load Averages</strong><br/>
       1 Minute:<b><%= one %></b><br>
@@ -41,12 +43,12 @@
       </p>
       <p>
          <strong>Memory</strong><br>
-         <% ps = @snapshop.memory.pagesize
+         <% ps = @system_info[:old][:snapshot].memory.pagesize
              ps = ps/1024
-             active =  @snapshop.memory.active * ps
-             free =   @snapshop.memory.free * ps
-             inactive =  @snapshop.memory.inactive * ps
-             wired =  @snapshop.memory.wired * ps
+             active =  @system_info[:old][:snapshot].memory.active * ps
+             free =   @system_info[:old][:snapshot].memory.free * ps
+             inactive =  @system_info[:old][:snapshot].memory.inactive * ps
+             wired =  @system_info[:old][:snapshot].memory.wired * ps
          %>
          <table>
              <th>Swap size</th>
@@ -62,8 +64,8 @@
                  <td><%=active%></td>
                  <td><%=inactive%></td>
                  <td><%=wired%></td>
-                 <% rateout =@vm2.pageouts - @snapshop.memory.pageouts %>
-                 <% ratein = @vm2.pageins - @snapshop.memory.pageins %>
+                 <% rateout =@system_info[:old][:vm2].pageouts - @system_info[:old][:snapshot].memory.pageouts %>
+                 <% ratein = @system_info[:old][:vm2].pageins - @system_info[:old][:snapshot].memory.pageins %>
                  <td><%=rateout%> </td>
                  <td><%=ratein %> </td>
              </tr>
@@ -72,4 +74,7 @@
 
     </div>
   </div>
+
+  <%= (ap @system_info, {html: true, plain: true}).html_safe %>
+
 </span>

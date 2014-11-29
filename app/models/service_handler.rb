@@ -132,6 +132,19 @@ class ServiceHandler
     @engines_api.recreateService @id
   end
 
+  def network_metrics
+    @engines_api.get_container_network_metrics @id
+  end
+
+  def memory_statistics
+    result = @engines_api.get_service_memory_statistics @id
+    # if result != nil && result.instance_of?(Hash)
+    #   return result
+    # else
+    #   return result.mesg  #EnginesOSapiResult object
+    # end
+  end
+
   ### Class methods
 
   def self.all
