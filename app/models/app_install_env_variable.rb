@@ -6,6 +6,9 @@ class AppInstallEnvVariable < ActiveRecord::Base
  
       has_one :app_install
 
+  attr_accessor :build_time_only
+  attr_accessor :mandatory
+
       # attr_accessor :install_id
       # attr_accessor :name
       # attr_accessor :value

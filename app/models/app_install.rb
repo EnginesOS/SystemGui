@@ -38,6 +38,7 @@ class AppInstall < ActiveRecord::Base
     app_install.created_from_existing_engine = false
 
     blueprint_software['environment_variables'].each do |ev|
+p ev
       app_install.app_install_env_variables.build(ev)
     end
     return app_install
