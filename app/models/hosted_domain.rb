@@ -11,7 +11,8 @@ class HostedDomain < ActiveRecord::Base
   belongs_to :system_config
 
   def initialize params
-    hosted_domain = params[:domain_name]
+    @hosted_domain = params[:domain_name]
+    @internal_only = params[:internal_only]
   end
 
   def self.engines_api
@@ -44,17 +45,20 @@ p internal_only
     self.alll[domain_name]
   end
 
-  def self.alll
+  def HostedDomain.alll
     self_hosted_domains_hash = self.engines_api.list_self_hosted_domains
+    self_hosted_domains_hash = {
+      'jonesfamily.org' => {domain_name: 'jonesfamily.org', internal_only: true},
+      'zonepartners.net' => {domain_name: 'zonepartners.net', internal_only: false}
+    }
     # # return a Hash or EnginesOSapiResult if error
+    result = []
     self_hosted_domains_hash.keys.each do |domain_name|
-      self.new(domain_name: domain_name, internal_only: self_hosted_domains_hash[domain_name][:internal_only])
+      result << HostedDomain.new(domain_name: domain_name, internal_only: self_hosted_domains_hash[domain_name][:internal_only])
+p 'result.............................................'
+p result
     end
-
-    # hash = {}
-    # hash['jonesfamily.org'] = {domain_name: 'jonesfamily.org', internal_only: true}
-    # hash['zonepartners.net'] = {domain_name: 'zonepartners.net', internal_only: false}
-    # return hash
+    return result
   end
 
   # def count_of_self_hosted_domains

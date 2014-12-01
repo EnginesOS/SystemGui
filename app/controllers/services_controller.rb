@@ -8,7 +8,7 @@ class ServicesController < ApplicationController
   end
   
   def create_container
-    @result = @service.create_container.result_mesg
+    @result = @service.create_container
     set_flash_messages_and_redirect
   end
 
@@ -18,42 +18,42 @@ class ServicesController < ApplicationController
   end
 
   def stop
-    @result = @service.stop.result_mesg
+    @result = @service.stop
     set_flash_messages_and_redirect
   end
 
   def start
-    @result = @service.start.result_mesg
+    @result = @service.start
     set_flash_messages_and_redirect
   end
 
   def pause
-    @result = @service.pause.result_mesg
+    @result = @service.pause
     set_flash_messages_and_redirect
   end
 
   def unpause
-    @result = @service.unpause.result_mesg
+    @result = @service.unpause
     set_flash_messages_and_redirect
   end
 
   def register_website
-    @result = @service.register_website.result_mesg
+    @result = @service.register_website
     set_flash_messages_and_redirect
   end
 
   def deregister_website
-    @result = @service.deregister_website.result_mesg
+    @result = @service.deregister_website
     set_flash_messages_and_redirect
   end
 
   def register_dns
-    @result = @service.register_dns.result_mesg
+    @result = @service.register_dns
     set_flash_messages_and_redirect
   end
 
   def deregister_dns
-    @result = @service.deregister_dns.result_mesg
+    @result = @service.deregister_dns
     set_flash_messages_and_redirect
   end
 
@@ -64,12 +64,10 @@ private
   end
 
   def set_flash_messages_and_redirect
-    # if @result.was_success == true
-    if @result == 'Success'
-        # flash[:notice] = @result.result_mesg
-        flash[:notice] = '######WTF! returned String not ReturnObject'
-      else
-        flash[:error] = @result.result_mesg
+    if @result.was_success == true
+      flash[:notice] = @result.result_mesg
+    else
+      flash[:error] = @result.result_mesg
     end
     redirect_to app_manager_path
   end
