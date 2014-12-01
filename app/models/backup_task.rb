@@ -70,7 +70,7 @@ p destination_params
   end
 
   def self.all
-    engines_api.get_backups
+    self.engines_api.get_backups
   end
 
   def self.load_all

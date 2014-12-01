@@ -14,10 +14,6 @@ class AppHandler
 
   def app_install
     @app_install = @app_install || AppInstall.find_by(engine_name: @id) || AppInstall.new_from_engine(@id)
-    # if app_install.nil?
-    #   app_install = 
-    # end
-    # return app_install
   end
 
   def engine

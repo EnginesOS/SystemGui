@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 gem 'devise'
+gem "activerecord-tableless"
+
 gem 'vmstat'
 # gem 'therubyracer'
 gem 'git'

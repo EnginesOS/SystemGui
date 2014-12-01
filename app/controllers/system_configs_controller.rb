@@ -1,6 +1,6 @@
 class SystemConfigsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_system_config, only: [:update, :edit_default_domain, :edit_default_website, :edit_mail, :edit_wallpaper]
+  before_action :set_system_config, only: [:update, :edit_default_domain, :edit_default_website, :edit_mail, :edit_wallpaper, :hosted_domains]
 
   def update
     if (@system_config.update(system_config_params) && EnginesApiHandler.engines_api.save_system_preferences(system_config_params))
@@ -9,6 +9,9 @@ class SystemConfigsController < ApplicationController
       redirect_to settings_path, alert: 'Settings were not saved.'
     end
   end
+
+  # def manage_domains
+  # end
 
 private
 

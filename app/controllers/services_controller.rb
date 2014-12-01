@@ -12,6 +12,11 @@ class ServicesController < ApplicationController
     set_flash_messages_and_redirect
   end
 
+  def recreate
+    @result = @service.recreate
+    set_flash_messages_and_redirect
+  end
+
   def stop
     @result = @service.stop.result_mesg
     set_flash_messages_and_redirect
@@ -59,8 +64,10 @@ private
   end
 
   def set_flash_messages_and_redirect
-    if @result.was_success == true
-        flash[:notice] = @result.result_mesg
+    # if @result.was_success == true
+    if @result == 'Success'
+        # flash[:notice] = @result.result_mesg
+        flash[:notice] = '######WTF! returned String not ReturnObject'
       else
         flash[:error] = @result.result_mesg
     end

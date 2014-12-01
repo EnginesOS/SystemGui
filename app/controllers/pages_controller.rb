@@ -21,7 +21,7 @@ class PagesController < ApplicationController
   end
 
   def settings
-    @system_config = SystemConfig.settings
+    @settings = SystemConfig.settings
     @users = User.all
     @backup_tasks = BackupTask.all
     @gallery_installs = GalleryInstall.all

@@ -28,7 +28,7 @@ class AppInstall < ActiveRecord::Base
 
     app_install.engine_name = gallery_software['short_name'].gsub(/[^0-9A-Za-z]/, '').downcase
     app_install.host_name = app_install.engine_name
-    app_install.domain_name = SystemConfig.default_domain
+    app_install.domain_name = SystemConfig.settings.default_domain
     app_install.display_name = gallery_software['short_name']
     app_install.display_description = gallery_software['description']
     app_install.license_name = blueprint_software['license_name']

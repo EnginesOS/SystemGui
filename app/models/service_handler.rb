@@ -4,140 +4,152 @@ class ServiceHandler
 
   def initialize id
     @id = id
-    @engines_api = EnginesApiHandler.engines_api
-    @engine = @engines_api.getManagedService @id
+    # @engines_api = EnginesApiHandler.engines_api
+    # @engine = @engines_api.getManagedService @id
+  end
+
+  def engines_api
+    EnginesApiHandler.engines_api
+  end
+
+  def self.engines_api
+    EnginesApiHandler.engines_api
+  end
+
+  def engine
+    @engine ||= engines_api.getManagedService(@id)
   end
 
   def state
-    @engine.read_state
+    engine.read_state
   end
 
   def engine_name
-    @engine.containerName
+    engine.containerName
   end
 
   def fqdn
-    @engine.fqdn
+    engine.fqdn
   end
 
   def state_as_set_by_user
-    @engine.setState
+    engine.setState
   end
 
   def memory
-    @engine.memory
+    engine.memory
   end
 
   def monitored
-    @engine.monitored
+    engine.monitored
   end
 
   def framework
-    @engine.framework
+    engine.framework
   end
 
   def runtime
-    @engine.runtime
+    engine.runtime
   end
 
   def image
-    @engine.image
+    engine.image
   end
 
   def repo
-    @engine.repo
+    engine.repo
   end
 
   def port
-    @engine.port
+    engine.port
   end
 
   def eports
-    @engine.eports
+    engine.eports
   end
 
   def last_error
-    @engine.last_error
+    engine.last_error
   end
 
   def last_result
-    @engine.last_result
+    engine.last_result
   end
 
   def environments
-    @engine.environments
+    engine.environments
   end
 
   def volumes
-    @engine.volumes
+    engine.volumes
   end
 
   def consumers
-    @engine.consumers
+    engine.consumers
   end
 
   def databases
-    @engine.databases
+    engine.databases
   end
 
   def stats
-    @engine.stats
+    engine.stats
   end
 
   def ps_container
-    @engine.ps_container
+    engine.ps_container
   end
 
   def logs_container
-    @engine.logs_container
+    engine.logs_container
   end
 
   def stop
-    @engines_api.stopService @id
+    engines_api.stopService @id
   end
 
   def start
-    @engines_api.startService @id
+    engines_api.startService @id
   end
      
   def pause
-    @engines_api.pauseService @id
+    engines_api.pauseService @id
   end
     
   def unpause
-    @engines_api.unpauseService @id
+    engines_api.unpauseService @id
   end
     
   def register_website
-    @engines_api.registerServiceWebSite @id
+    engines_api.registerServiceWebSite @id
   end
    
   def deregister_website
-    @engines_api.deregisterServiceWebSite @id
+    engines_api.deregisterServiceWebSite @id
   end
 
   def register_dns
-    @engines_api.registerServiceDNS @id
+    engines_api.registerServiceDNS @id
   end
    
   def deregister_dns
-    @engines_api.deregisterServiceDNS @id
+    engines_api.deregisterServiceDNS @id
   end
 
   def create_container
-    @engines_api.createService @id
+    engines_api.createService @id
   end
     
   def recreate
-    @engines_api.recreateService @id
+    engines_api.recreateService @id
   end
 
   def network_metrics
-    @engines_api.get_container_network_metrics @id
+    engines_api.get_container_network_metrics @id
   end
 
   def memory_statistics
-    result = @engines_api.get_service_memory_statistics @id
+    result = engines_api.get_service_memory_statistics @id
     # if result != nil && result.instance_of?(Hash)
     #   return result
     # else
@@ -148,7 +160,7 @@ class ServiceHandler
   ### Class methods
 
   def self.all
-    EnginesApiHandler.engines_api.list_services.map do |service_name|
+    engines_api.list_services.map do |service_name|
       ServiceHandler.new(service_name)
     end
   end
