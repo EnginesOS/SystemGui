@@ -1,8 +1,10 @@
 class HostedDomainsController < ApplicationController
   before_action :authenticate_user!
 
+  attr_accessor :old_domain_name
+
   def index
-    @hosted_domains = HostedDomain.all
+    @hosted_domains = HostedDomain.refresh_db_and_load_all.sort_by{|d| d.domain_name}
   end
 
   def new
@@ -15,7 +17,7 @@ class HostedDomainsController < ApplicationController
 
   def update
     @hosted_domain = HostedDomain.find(params[:id])
-    @hosted_domain.update(hosted_domain_params)
+    @hosted_domain.update_via_api(hosted_domain_params)
     redirect_to hosted_domains_path
   end
 

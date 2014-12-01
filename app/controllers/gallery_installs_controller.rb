@@ -3,7 +3,7 @@ class GalleryInstallsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @galleries = GalleryInstall.all
+    @galleries = GalleryInstall.all.sort_by{|d| d.name}
     # @unadded_gallery_servers = GalleryInstall.get_unadded_gallery_servers
   end
 

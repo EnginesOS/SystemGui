@@ -41,6 +41,13 @@ class BackupTask
     self.new self.find(id)
   end
 
+  def backup_type_in_words
+    result = 'unknown backup type'
+    result = 'files' if backup_type == 'fs'
+    result = 'database' if backup_type == 'db'
+    return result
+  end
+
   def remove_backup_task
     engines_api.stop_backup @id
   end
@@ -74,7 +81,12 @@ p destination_params
   end
 
   def self.load_all
-    self.all.map{|b| self.new b}
+    all_from_api = self.engines_api.get_backups
+
+p 'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj'
+p all_from_api.inspect
+
+    result = all_from_api.map{|b| self.new b}
   end
 
   def self.count
@@ -82,64 +94,65 @@ p destination_params
   end
 
   def self.all_grouped_by_app
+    # application_backup_details = {}
+    # application_backup_tasks = {}
+    # backup_tasks = self.load_all
+    # applications = AppHandler.all
+ 
+self.load_all #.group_by{|k,v| v.engine_name}
 
-    application_backup_details = {}
-    application_backup_tasks = {}
 
-    backup_tasks = self.all
-    applications = AppHandler.all
+    # backup_tasks.keys.each do |backup_task_name|
+    #   backup_task_application_name = backup_tasks.engine_name
+    #   backup_task_source_name = backup_tasks.source_name
+    #   backup_task_type = backup_tasks.backup_type
 
-    backup_tasks.keys.each do |backup_task_name|
-      backup_task_application_name = backup_tasks[backup_task_name][:engine_name]
-      backup_task_source_name = backup_tasks[backup_task_name][:source_name]
-      backup_task_type = backup_tasks[backup_task_name][:backup_type]
+    #   if application_backup_tasks[backup_task_application_name].nil?
+    #     application_backup_tasks[backup_task_application_name] = {}
+    #   end
+    #   if application_backup_tasks[backup_task_application_name][backup_task_type].nil?
+    #     application_backup_tasks[backup_task_application_name][backup_task_type] = {}
+    #   end
+    #   if application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name].nil?
+    #     application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name] = []
+    #   end
+    #   temp = application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name]
+    #   temp << backup_task_name     
+    #   application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name] = temp
+    # end
 
-      if application_backup_tasks[backup_task_application_name].nil?
-        application_backup_tasks[backup_task_application_name] = {}
-      end
-      if application_backup_tasks[backup_task_application_name][backup_task_type].nil?
-        application_backup_tasks[backup_task_application_name][backup_task_type] = {}
-      end
-      if application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name].nil?
-        application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name] = []
-      end
-      temp = application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name]
-      temp << backup_task_name     
-      application_backup_tasks[backup_task_application_name][backup_task_type][backup_task_source_name] = temp
-    end
+    # applications.each do |application|
+    #   application_name = application.host_name
+    #   application_volume_names = application.volumes.map(&:name).reject(&:blank?)
+    #   application_database_names = application.databases.map(&:name).reject(&:blank?)
 
-    applications.each do |application|
-      application_name = application.host_name
-      application_volume_names = application.volumes.map(&:name).reject(&:blank?)
-      application_database_names = application.databases.map(&:name).reject(&:blank?)
+    #   application_volumes = []
+    #   application_volume_names.each do |application_volume_name|       
+    #     if application_backup_tasks[application_name].present? && application_backup_tasks[application_name]["fs"].present? && application_backup_tasks[application_name]["fs"][application_volume_name].present?
+    #       backup_tasks = application_backup_tasks[application_name]["fs"][application_volume_name]
+    #     else
+    #       backup_tasks = []
+    #     end
+    #     application_volumes << {name: application_volume_name, backup_tasks: backup_tasks}
+    #   end
 
-      application_volumes = []
-      application_volume_names.each do |application_volume_name|       
-        if application_backup_tasks[application_name].present? && application_backup_tasks[application_name]["fs"].present? && application_backup_tasks[application_name]["fs"][application_volume_name].present?
-          backup_tasks = application_backup_tasks[application_name]["fs"][application_volume_name]
-        else
-          backup_tasks = []
-        end
-        application_volumes << {name: application_volume_name, backup_tasks: backup_tasks}
-      end
+    #   application_databases = []
+    #   application_database_names.each do |application_database_name|
+    #     if application_backup_tasks[application_name].present? && application_backup_tasks[application_name]["db"].present? && application_backup_tasks[application_name]["db"][application_database_name].present?
+    #       backup_tasks = application_backup_tasks[application_name]["db"][application_database_name]
+    #     else
+    #       backup_tasks = []
+    #     end
+    #     application_databases << {name: application_database_name, backup_tasks: backup_tasks}
+    #   end
 
-      application_databases = []
-      application_database_names.each do |application_database_name|
-        if application_backup_tasks[application_name].present? && application_backup_tasks[application_name]["db"].present? && application_backup_tasks[application_name]["db"][application_database_name].present?
-          backup_tasks = application_backup_tasks[application_name]["db"][application_database_name]
-        else
-          backup_tasks = []
-        end
-        application_databases << {name: application_database_name, backup_tasks: backup_tasks}
-      end
+    #   application_backup_details[application_name] = {
+    #     volumes: application_volumes,
+    #     databases: application_databases
+    #   }
+    # end
 
-      application_backup_details[application_name] = {
-        volumes: application_volumes,
-        databases: application_databases
-      }
-    end
-
-    return application_backup_details
+    # return application_backup_details
   
   end
 
