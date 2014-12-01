@@ -3,12 +3,12 @@
     <h3 class="control-panel-title"><i class="fa fa-globe"></i> Domain hosting</h3>
     <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
-    <% if @hosted_domains %>
+    <% if @hosted_domains.present? %>
         <% @hosted_domains.each do |hosted_domain| %>
             <%= render partial: "show", locals: { hosted_domain: hosted_domain } %>
         <% end %>
     <% else %>
-        <p>No hosted domains.</p>
+        <p class='top-gap'>No hosted domains.</p>
     <% end %>
 
     <div class="btn-group">

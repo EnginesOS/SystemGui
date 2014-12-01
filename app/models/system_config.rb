@@ -14,7 +14,7 @@ class SystemConfig < ActiveRecord::Base
   end
 
   def engines_api
-    self.engines_api
+    EnginesApiHandler.engines_api
   end
 
   def self.settings_from_db

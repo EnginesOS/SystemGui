@@ -14,7 +14,7 @@ class HostedDomain < ActiveRecord::Base
   end
 
   def engines_api
-    self.engines_api
+    EnginesApiHandler.engines_api
   end
 
 
@@ -26,7 +26,9 @@ p 'domain_name and internal_only...............................................'
 p domain_name
 p internal_only
 
-    engines_api.add_self_host_domain ({domain_name: domain_name, internal_only: internal_only})
+# p engines_api
+
+    engines_api.add_self_hosted_domain ({domain_name: domain_name, internal_only: internal_only})
 
   end
 

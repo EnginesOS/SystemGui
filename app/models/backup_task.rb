@@ -30,7 +30,7 @@ class BackupTask
   end
 
   def engines_api
-    self.engines_api
+    EnginesApiHandler.engines_api
   end
 
   def self.find id

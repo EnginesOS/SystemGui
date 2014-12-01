@@ -5,7 +5,7 @@ gem 'activemodel-associations'
 
 
 gem 'vmstat'
-# gem 'therubyracer'
+gem 'therubyracer'
 gem 'git'
 # gem 'thin'
 gem "puma"
