@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
 gem 'devise'
-gem "activerecord-tableless"
+# gem "activerecord-tableless"
+gem 'activemodel-associations'
+
 
 gem 'vmstat'
 # gem 'therubyracer'

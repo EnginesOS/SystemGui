@@ -22,6 +22,10 @@ class PagesController < ApplicationController
 
   def settings
     @settings = SystemConfig.settings
+
+p 'pages controller hosted settings..................'
+p @settings.hosted_domains
+
     @users = User.all
     @backup_tasks = BackupTask.all
     @gallery_installs = GalleryInstall.all

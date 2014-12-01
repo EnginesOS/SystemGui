@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get "system", to: "pages#system", as: :system
   get "installer", to: "pages#installer", as: :installer
   get "settings", to: "pages#settings", as: :settings
-  get "manage_domains", to: "system_configs#hosted_domains", as: :hosted_domains
+  # get "manage_domains", to: "system_configs#hosted_domains", as: :hosted_domains
   get "edit_default_domain", to: "system_configs#edit_default_domain", as: :edit_default_domain
   get "edit_default_website", to: "system_configs#edit_default_website", as: :edit_default_website
   get "edit_mail", to: "system_configs#edit_mail", as: :edit_mail
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :gallery_installs
   resources :backup_tasks
   resources :users
+  resources :hosted_domains
 
   get "installing", to: "app_installs#installing", as: :installing
   resources :app_installs

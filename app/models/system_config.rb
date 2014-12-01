@@ -7,6 +7,7 @@ class SystemConfig < ActiveRecord::Base
   before_validation { wallpaper.clear if delete_wallpaper == '1' }
 
   has_many :hosted_domains
+  accepts_nested_attributes_for :hosted_domains
 
   def self.engines_api
     EnginesApiHandler.engines_api
@@ -16,7 +17,7 @@ class SystemConfig < ActiveRecord::Base
     self.engines_api
   end
 
-  def self.settings
+  def self.settings_from_db
     settings = self.first
     if settings.nil?
       settings = self.new
@@ -24,6 +25,20 @@ class SystemConfig < ActiveRecord::Base
     end
     return settings
   end
+
+  def self.settings
+    settings = self.settings_from_db
+    HostedDomain.self_hosted_domains_hash.each do |name, params|
+      settings.hosted_domains.build(params)
+    end
+
+p settings.hosted_domains
+
+
+    return settings
+  end
+
+
 
   # def self.default_domain
   #   record = self.first

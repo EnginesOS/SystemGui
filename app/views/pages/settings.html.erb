@@ -14,9 +14,8 @@
       <% link_body = (content_tag(:i, '', class: 'fa fa-th') + ' Galleries'.html_safe) + "<br>".html_safe + detail.html_safe  %>
       <%= link_to link_body, gallery_installs_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 
-      <% self_hosted_domains_detail =  @settings.hosted_domains.alll %>
-      <% self_hosted_domains_detail = self_hosted_domains_detail.empty? ? '' : ('Self-hosted: ' + self_hosted_domains_detail.map(&:domain_name).join('; ')) %>
-      <% detail = ('<span class="settings_btn_detail">' + self_hosted_domains_detail.to_s + '</span>').html_safe %>
+      <% hosted_domains =  @settings.hosted_domains.map(&:domain_name).join(', ') %>
+      <% detail = ('<span class="settings_btn_detail">' + hosted_domains.to_s + '</span>').html_safe %>
       <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domain hosting'.html_safe) + "<br>".html_safe + detail.html_safe  %>
       <%= link_to link_body, hosted_domains_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 
