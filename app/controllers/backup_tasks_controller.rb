@@ -3,7 +3,7 @@ class BackupTasksController < ApplicationController
 
   def index
     @application_backup_details = BackupTask.all_grouped_by_app
-    render text: @application_backup_details
+    # render text: @application_backup_details
   end
 
   def new
