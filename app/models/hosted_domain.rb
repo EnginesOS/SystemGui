@@ -26,8 +26,8 @@ p 'domain_name and internal_only...............................................'
 p domain_name
 p internal_only
 
-#    engines_api.add_self_host_domain ({domain_name: domain_name, internal_only: internal_only})
-true
+    engines_api.add_self_host_domain ({domain_name: domain_name, internal_only: internal_only})
+
   end
 
 #   def update params
