@@ -1,7 +1,7 @@
 class AppHandler
 
-  def initialize id
-    @id = id
+  def initialize engine_name
+    @engine_name = engine_name
   end
 
   def engines_api
@@ -13,15 +13,15 @@ class AppHandler
   end
 
   def app_install
-    @app_install = @app_install || AppInstall.find_by(engine_name: @id) || AppInstall.new_from_engine(@id)
+    @app_install ||= AppInstall.find_or_create_by(engine_name: @engine_name) # || AppInstall.new_from_engine(@engine_name)
   end
 
   def engine
-    @engine ||= engines_api.loadManagedEngine(@id)
+    @engine ||= engines_api.loadManagedEngine(@engine_name)
   end
 
   def blueprint
-    @blueprint ||= engines_api.get_engine_blueprint @id
+    @blueprint ||= engines_api.get_engine_blueprint @engine_name
   end
 
   def software
@@ -29,63 +29,63 @@ class AppHandler
   end
 
   def stop
-    engines_api.stopEngine @id
+    engines_api.stopEngine @engine_name
   end
   
   def start   
-    engines_api.startEngine @id
+    engines_api.startEngine @engine_name
   end
   
   def pause
-    engines_api.pauseEngine @id
+    engines_api.pauseEngine @engine_name
   end
   
   def unpause
-    engines_api.unpauseEngine @id
+    engines_api.unpauseEngine @engine_name
    end
    
   def destroy_container
-    engines_api.destroyEngine @id
+    engines_api.destroyEngine @engine_name
   end 
   
   def delete_image
-    engines_api.deleteEngineImage @id
+    engines_api.deleteEngineImage @engine_name
   end 
   
   def restart
-    engines_api.restartEngine @id
+    engines_api.restartEngine @engine_name
   end
   
   def create_container
-    engines_api.createEngine @id
+    engines_api.createEngine @engine_name
   end
 
   def recreate
-    engines_api.recreateEngine @id
+    engines_api.recreateEngine @engine_name
   end
 
   def monitor
-    engines_api.monitorEngine @id
+    engines_api.monitorEngine @engine_name
   end
   
   def demonitor
-    engines_api.demonitorEngine @id
+    engines_api.demonitorEngine @engine_name
   end
   
   def register_website
-    engines_api.registerEngineWebSite @id
+    engines_api.registerEngineWebSite @engine_name
   end
   
   def deregister_website
-    engines_api.deregisterEngineWebSite @id    
+    engines_api.deregisterEngineWebSite @engine_name    
   end
   
   def register_dns
-    engines_api.registerEngineDNS @id
+    engines_api.registerEngineDNS @engine_name
   end
   
   def deregister_dns
-    engines_api.deregisterEngineDNS @id
+    engines_api.deregisterEngineDNS @engine_name
   end
 
   def state
@@ -161,7 +161,7 @@ class AppHandler
   end
 
   def volumes
-    engine.volumes
+    engine.volumes.values
   end
 
   def consumers
@@ -185,11 +185,11 @@ class AppHandler
   end
 
   def network_metrics
-    engines_api.get_container_network_metrics @id
+    engines_api.get_container_network_metrics @engine_name
   end
 
   def memory_statistics
-    engines_api.get_engine_memory_statistics @id
+    engines_api.get_engine_memory_statistics @engine_name
   end
 
   ### Class methods

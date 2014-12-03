@@ -1,31 +1,36 @@
 class AppInstallsController < ApplicationController
   before_action :authenticate_user!
-  include ActionController::Live
-  # require 'open3'
+  before_action :set_app_install, only: [
+    :edit_display_properties,
+    :edit_runtime_properties,
+    :edit_network_properties,
+    :update_display_properties,
+    :update_network_properties,
+    :update_runtime_properties]
+  # before_action :set_app_install, only: [:edit_display_properties]
+  before_action :refresh_app_install_engine_data, only: [
+    :edit_runtime_properties,
+    :edit_network_properties]
+
+  def refresh_app_install_engine_data
+    @app_install.refresh_engine_data
+  end
 
   def new
     Maintenance.db_maintenance
     @app_install = AppInstall.new_from_gallery app_install_params
   end
 
-  def edit
-    @app_install = AppInstall.find_by(engine_name: params[:id])
-    if @app_install.nil?
-      @app_install = AppInstall.new_from_engine(params[:id])
-    else
-      @app_install.refresh_host_name_and_domain_name
-    end
-  end
-
   def create
+
     if app_install_params["terms_and_conditions_accepted"] == "0"
-     return redirect_to new_app_install_path(app_install: app_install_params), alert: 'You must accept the license terms and conditions to install this software.'
+     return redirect_to new_app_install_path app_install: app_install_params, alert: 'You must accept the license terms and conditions to install this software.'
     end
-     # || commit_create
+
     @app_install = AppInstall.new(app_install_params)
     @app_install.attach_icon_from_gallery if @app_install.icon.nil?
 
-    if @app_install.build_app.instance_of?(ManagedEngine)
+    if @app_install.build_app
       if @app_install.save
         redirect_to app_manager_path, notice: 'Application installation was successful.'
       else
@@ -35,64 +40,33 @@ class AppInstallsController < ApplicationController
       redirect_to installer_path, alert: 'Application installation was not successful.'
     end
 
-    # @app_install_log = AppInstall.install_log
-    # render stream: true
   end
 
-  def commit_create
-  end
-
-  def update
-    if app_install_params['created_from_existing_engine'] == 'true'
-      app_install = AppInstall.new(app_install_params)
-      if app_install.save
-        redirect_to app_manager_path, notice: 'Application details were successfully updated.'
-      else
-        render :edit, alert: 'Application details were not updated.'
-      end
+  def update_display_properties
+    if @app_install.update_display_properties(app_install_params)
+      redirect_to app_manager_path, notice: 'Display properties were successfully updated.'
     else
-      app_install = AppInstall.find(params[:id])
-      if app_install.update(app_install_params)
-        if app_install.update_app_engine == true
-          redirect_to app_manager_path, notice: 'Application details were successfully updated.'
-        else
-          redirect_to app_manager_path, alert: 'Display properties updated, but application host name and domain name not updated.'
-        end
-      else
-        render :edit, alert: 'Application details were not updated.'
-      end
+      render :edit_display_properties, alert: 'Display properties were not updated.'
     end
-    # redirect_to app_manager_path
   end
 
+  def update_network_properties
+p ':update_network_properties'
+p '@app_install'
+p @app_install.inspect
+    if @app_install.update_network_properties app_install_params
+p @app_install.inspect
+      redirect_to app_manager_path, notice: 'Network properties were successfully updated.'
+    else
+      render :edit_network_properties, alert: 'Network properties were not updated.'
+    end
+  end
 
-  # def update
-  #   app_install = AppInstall.find(params[:id])
-  #   if app_install_params['created_from_existing_engine'] == 'true'
-  #     if app_install.save
-  #       redirect_to app_manager_path, notice: 'Application details were successfully updated.'
-  #     else
-  #       render :edit, alert: 'Application details were not updated.'
-  #     end
-  #   else
-  #     if app_install.update(app_install_params)
-  #       if app_install.update_app_engine == true
-  #         redirect_to app_manager_path, notice: 'Application details were successfully updated.'
-  #       else
-  #         redirect_to app_manager_path, alert: 'Display properties updated, but application host name and domain name not updated.'
-  #       end
-  #     else
-  #       render :edit, alert: 'Application details were not updated.'
-  #     end
-  #   end
-  #   # redirect_to app_manager_path
-  # end
-
-  def destroy
-    @install.destroy
-    respond_to do |format|
-      format.html { redirect_to installs_url, notice: 'Install was successfully destroyed.' }
-      format.json { head :no_content }
+  def update_runtime_properties
+    if @app_install.update_runtime_properties app_install_params
+      redirect_to app_manager_path, notice: 'Runtime properties were successfully updated.'
+    else
+      render :edit_runtime_properties, alert: 'Runtime properties were not updated.'
     end
   end
 
@@ -102,4 +76,11 @@ private
     params.require(:app_install).permit!
   end
 
+  def set_app_install
+    @app_install = AppInstall.find_or_create_by(engine_name: params[:id])
+  end
+
 end
+
+
+

@@ -3,9 +3,9 @@
     <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-tablet") %> Apps</h3>
   </div>
 
-  <% if @apps %>
-      <% @apps.each do |app| %>
-          <%= render partial: "apps/app_manager_gadget", locals: {app: app} %>
+  <% if @app_installs %>
+      <% @app_installs.each do |app_install| %>
+          <%= render partial: "apps/app_manager_gadget", locals: {app_install: app_install} %>
       <% end %>
   <% else %>
       <p>No applications installed.</p>

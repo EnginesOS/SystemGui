@@ -4,12 +4,26 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
+
+
+get 'messaging' => 'app_installs#send_message'
+
+
+get "app_installs/:id/edit_display_properties", to: "app_installs#edit_display_properties", as: :edit_app_install_display_properties
+get "app_installs/:id/edit_network_properties", to: "app_installs#edit_network_properties", as: :edit_app_install_network_properties
+get "app_installs/:id/edit_runtime_properties", to: "app_installs#edit_runtime_properties", as: :edit_app_install_runtime_properties
+patch "app_installs/:id/update_display_properties", to: "app_installs#update_display_properties", as: :update_app_install_display_properties
+patch "app_installs/:id/update_network_properties", to: "app_installs#update_network_properties", as: :update_app_install_network_properties
+patch "app_installs/:id/update_runtime_properties", to: "app_installs#update_runtime_properties", as: :update_app_install_runtime_properties
+
+
   root "pages#home"
 
   get "app_manager", to: "pages#app_manager", as: :app_manager
   get "help", to: "pages#help", as: :help
   get "system", to: "pages#system", as: :system
   get "installer", to: "pages#installer", as: :installer
+  get "install_progress", to: "app_installs#install_progress", as: :install_progress
   get "settings", to: "pages#settings", as: :settings
   # get "manage_domains", to: "system_configs#hosted_domains", as: :hosted_domains
   get "edit_default_domain", to: "system_configs#edit_default_domain", as: :edit_default_domain

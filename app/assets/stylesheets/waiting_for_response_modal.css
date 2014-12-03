@@ -5,3 +5,13 @@
   margin-top: 10%;
 }
 
+#waiting-for-response-modal .streamed-text-holder {
+}
+
+#waiting-for-response-modal .streamed-text {
+  font-size: 5px;
+  max-height: 30px;
+  color: #999;
+  overflow: hidden;
+  background-color: #999;
+}

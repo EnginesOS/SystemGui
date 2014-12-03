@@ -1,11 +1,11 @@
 class ServiceHandler
 
-  attr_accessor :id
+  # attr_accessor :service_name
 
-  def initialize id
-    @id = id
+  def initialize service_name
+    @service_name = service_name
     # @engines_api = EnginesApiHandler.engines_api
-    # @engine = @engines_api.getManagedService @id
+    # @engine = @engines_api.getManagedService @service_name
   end
 
   def engines_api
@@ -17,7 +17,7 @@ class ServiceHandler
   end
 
   def engine
-    @engine ||= engines_api.getManagedService(@id)
+    @engine ||= engines_api.getManagedService(@service_name)
   end
 
   def state
@@ -81,7 +81,7 @@ class ServiceHandler
   end
 
   def volumes
-    engine.volumes
+    engine.volumes.values
   end
 
   def consumers
@@ -105,51 +105,51 @@ class ServiceHandler
   end
 
   def stop
-    engines_api.stopService @id
+    engines_api.stopService @service_name
   end
 
   def start
-    engines_api.startService @id
+    engines_api.startService @service_name
   end
      
   def pause
-    engines_api.pauseService @id
+    engines_api.pauseService @service_name
   end
     
   def unpause
-    engines_api.unpauseService @id
+    engines_api.unpauseService @service_name
   end
     
   def register_website
-    engines_api.registerServiceWebSite @id
+    engines_api.registerServiceWebSite @service_name
   end
    
   def deregister_website
-    engines_api.deregisterServiceWebSite @id
+    engines_api.deregisterServiceWebSite @service_name
   end
 
   def register_dns
-    engines_api.registerServiceDNS @id
+    engines_api.registerServiceDNS @service_name
   end
    
   def deregister_dns
-    engines_api.deregisterServiceDNS @id
+    engines_api.deregisterServiceDNS @service_name
   end
 
   def create_container
-    engines_api.createService @id
+    engines_api.createService @service_name
   end
     
   def recreate
-    engines_api.recreateService @id
+    engines_api.recreateService @service_name
   end
 
   def network_metrics
-    engines_api.get_container_network_metrics @id
+    engines_api.get_container_network_metrics @service_name
   end
 
   def memory_statistics
-    result = engines_api.get_service_memory_statistics @id
+    result = engines_api.get_service_memory_statistics @service_name
     # if result != nil && result.instance_of?(Hash)
     #   return result
     # else

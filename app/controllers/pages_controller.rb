@@ -9,8 +9,11 @@ class PagesController < ApplicationController
 
   def app_manager
     Maintenance.db_maintenance
-    @apps = AppHandler.all.sort_by{|e| e.engine_name}
-    @services = ServiceHandler.all.sort_by{|e| e.engine_name}
+    @app_installs = AppHandler.all.map(&:app_install) #.sort_by(&:engine_name)
+    @services = ServiceHandler.all.sort_by(&:engine_name)
+p ':app_manager'
+p @app_installs
+p @services
   end
 
   def system
@@ -22,10 +25,6 @@ class PagesController < ApplicationController
 
   def settings
     @settings = SystemConfig.settings
-
-p 'pages controller hosted settings..................'
-p @settings.hosted_domains
-
     @users = User.all
     @backup_tasks = BackupTask.all
     @gallery_installs = GalleryInstall.all

@@ -1,6 +1,6 @@
-# require "open-uri"
-
 class AppInstall < ActiveRecord::Base
+
+
 
   has_attached_file :icon
   validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
@@ -8,21 +8,34 @@ class AppInstall < ActiveRecord::Base
   accepts_nested_attributes_for :app_install_env_variables
 
   attr_accessor :delete_icon
-  attr_accessor :created_from_existing_engine
+  # attr_accessor :created_from_existing_engine
+  attr_accessor :memory
 
   before_validation { icon.clear if delete_icon == '1' }
+  after_create :set_display_properties_defaults
 
+  def set_display_properties_defaults
+
+p ':set_display_properties_defaults'
+p self
+    self.host_name = app.host_name
+    self.display_name = app.software['name']
+    self.display_description = app.software['description']
+save
+p self
+
+
+  end
 
   def engines_api
     EnginesApiHandler.engines_api
   end 
 
   def self.new_from_gallery opts
-    # software_definition_from_gallery = GalleryBlueprintHandler.new(opts)
     app_install = self.new(
       gallery_url: opts[:gallery_url],
-      blueprint_id: opts[:blueprint_id]
-    )
+      blueprint_id: opts[:blueprint_id])
+
     blueprint_software = app_install.software_definition_from_blueprint_in_repository
     gallery_software = app_install.software_definition_from_gallery
 
@@ -34,40 +47,32 @@ class AppInstall < ActiveRecord::Base
     app_install.license_name = blueprint_software['license_name']
     app_install.license_sourceurl = blueprint_software['license_sourceurl']
     app_install.terms_and_conditions_accepted = false
-    # app_install.icon = self.get_icon_from_url(gallery_software['image_url']) 
     app_install.created_from_existing_engine = false
 
     blueprint_software['environment_variables'].each do |ev|
-p ev
       app_install.app_install_env_variables.build(ev)
     end
     return app_install
   end
 
-  def self.new_from_engine engine_name
-    engine = AppHandler.new(engine_name)
-    app_install = self.new(
-      engine_name: engine_name
-    )
+  # def self.new_from_engine engine_name
+  #   engine = AppHandler.new(engine_name)
+  #   app_install = self.new(
+  #     engine_name: engine_name,
+  #     host_name: engine.host_name,
+  #     domain_name: engine.domain_name,
+  #     display_name: engine.software['name'],
+  #     display_description: engine.software['description'],
+  #     license_name: engine.software['license_name'],
+  #     license_sourceurl: engine.software['license_sourceurl'],
+  #     created_from_existing_engine: true)
 
-p "engine___________________________________________________________"
-p engine.inspect
+  #   engine.software['environment_variables'].each do |ev|
+  #     app_install.app_install_env_variables.build(ev)
+  #   end
 
-    app_install.host_name = engine.host_name
-    app_install.domain_name = engine.domain_name
-    app_install.display_name = engine.software['name']
-    app_install.display_description = engine.software['description']
-    app_install.license_name = engine.software['license_name']
-    app_install.license_sourceurl = engine.software['license_sourceurl']
-    # app_install.icon = self.get_icon_from_url(engine.software['icon_url'])
-    app_install.created_from_existing_engine = true
-
-    engine.software['environment_variables'].each do |ev|
-      app_install.app_install_env_variables.build(ev)
-    end
-
-    return app_install
-  end
+  #   return app_install
+  # end
 
   def attach_icon_from_gallery
     url = software_definition_from_gallery['image_url']
@@ -79,44 +84,41 @@ p engine.inspect
   end
 
   def app
-    AppHandler.new(engine_name)
+    @app_handler ||= AppHandler.new(engine_name)
   end
 
-  def update_app_engine
-p :selieeeeeeeeeeeeeeeeeeeeeeeeee
-p self.inspect
-    engines_api.set_engine_hostname_details engine_name: engine_name, host_name: host_name, domain_name: domain_name
+  def update_display_properties params
+      update(update_display_properties_params params)
   end
+
+  def update_network_properties params
+    engines_api.set_engine_hostname_properties(update_network_properties_params params).was_success
+  end
+
+  def update_runtime_properties params
+    engines_api.set_engine_runtime_properties(update_runtime_properties_params params).was_success
+  end
+
 
   def build_app
-
-
-p :aaaaaaaaaaaaaaaaaaaaaaa________________________________
-p repository_url_from_gallery
-p app_build_opts    
-
-
-    engines_api.build_engine(repository_url_from_gallery, app_build_opts)
+    engines_api.build_engine(repository_url_from_gallery, app_build_params).instance_of?(ManagedEngine)
   end
 
-  def refresh_host_name_and_domain_name
-    self.host_name = app.host_name
-    self.domain_name = app.domain_name
-  end
+  def refresh_engine_data
+    
+    @host_name = app.host_name
+    @domain_name = app.domain_name
+    # @display_name = app.software['name']
+    # @display_description = app.software['description']
+    @license_name = app.software['license_name']
+    @license_sourceurl = app.software['license_sourceurl']
+    @created_from_existing_engine = false
 
-  def install_log
-    response.headers['Content-Type'] = 'text/event-stream'
-    begin
-      follow_install_log do |line| 
-        response.stream.write line
-      end
-    rescue IOError
-    ensure
-      logger.info("Killing stream")
-      response.stream.close
+    app_install_env_variables.delete_all
+    app.software['environment_variables'].each do |ev|
+      app_install_env_variables.build(ev)
     end
   end
-
 
   def blueprint_handler
     @blueprint_handler ||= GalleryBlueprintHandler.new(gallery_url: gallery_url, blueprint_id: blueprint_id)
@@ -134,35 +136,50 @@ p app_build_opts
     blueprint_handler.repository.html_safe
   end
 
-
-
 private
 
-  def follow_install_log
-    begin
-      stdin, stdout, stderr, wait_thread = Open3.popen3("tail -F -n 0 /tmp/build.out")
-      stdout.each_line do |line|
-        yield line
-      end
-    rescue IOError
-    ensure
-      stdin.close; stdout.close; stderr.close
-      Process.kill('HUP', wait_thread[:pid])
-      logger.info("Killing Tail pid: #{wait_thread[:pid]}")
-    end
-  end
-
-  def app_build_opts
+  def update_display_properties_params params
     {
-      host_name: host_name,
-      domain_name: domain_name,
-      engine_name: engine_name,
-      gallery_url: gallery_url,
-      blueprint_id: blueprint_id
+      display_name: params[:display_name],
+      display_description: params[:display_description],
+      icon: params[:icon]
     }
   end
 
+  def update_network_properties_params params
+    {
+      engine_name: engine_name,
+      host_name: params[:host_name],
+      domain_name: params[:domain_name],
+    }
+  end
 
+  def update_runtime_properties_params params
+    {
+      engine_name: engine_name,
+      memory: params[:memory],
+      environment_variables: params[:environment_variables_params]
+    }
+  end
 
+  def app_build_params
+    {
+      engine_name: engine_name,
+      host_name: host_name,
+      domain_name: domain_name,
+      gallery_url: gallery_url,
+      blueprint_id: blueprint_id,
+      memory: memory,
+      environment_variables: environment_variables_params
+    }
+  end
+
+  def environment_variables_params
+    hash = {}
+    environment_variables.each do |ev|
+      hash[ev.name] = ev.value
+    end
+    return hash
+  end
 
 end

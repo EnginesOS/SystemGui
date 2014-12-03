@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
 gem 'devise'
 # gem "activerecord-tableless"
-gem 'activemodel-associations'
+# gem 'activemodel-associations'
 
+# gem 'file-tail'
 
 gem 'vmstat'
 gem 'therubyracer'

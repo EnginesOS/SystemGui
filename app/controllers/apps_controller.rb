@@ -85,6 +85,10 @@ class AppsController < ApplicationController
 private
 
   def set_app_handler
+
+p 'create AppHandler with id of'
+p params[:id]
+
     @app = AppHandler.new params[:id]
   end
 

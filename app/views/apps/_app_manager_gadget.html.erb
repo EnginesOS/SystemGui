@@ -1,4 +1,4 @@
-<% state = app.state
+<% state = app_install.app.state
  indicator_class = "indicator_" + state
  engine_state = "engine_" + state
 %>
@@ -6,17 +6,17 @@
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
   <div class="engine-gadget btn-group">
     <button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
-    <% app_install = AppInstall.find_by engine_name: app.engine_name %>
+    <% app_install = AppInstall.find_by engine_name: app_install.engine_name %>
     <% if app_install.present? && app_install.icon.present? %>
       <div class="icon_holder">
         <%= image_tag(app_install.icon.url, class: "engine_icon") %>
       </div>
     <% end %>
     <div class="text_holder">
-      <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= label_tag('', app.engine_name) %><br>
-      <%= content_tag(:i, "", class: "fa fa-globe") + ' ' + app.fqdn %><br>
-      <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + app.software['name'] %><br>
-      <% if app_install.present? && app_install.display_name.present? && app_install.display_name != app.software['name'] %>
+      <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= label_tag('', app_install.engine_name) %><br>
+      <%= content_tag(:i, "", class: "fa fa-globe") + ' ' + app_install.app.fqdn %><br>
+      <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + app_install.app.software['name'] %><br>
+      <% if app_install.present? && app_install.display_name.present? && app_install.display_name != app_install.app.software['name'] %>
         <%= content_tag(:i, '', class: 'fa fa-edit') + ' ' + app_install.display_name %><br>
       <% end %>
 
@@ -24,47 +24,51 @@
     </div>
     </button>
     <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
-      <li><div class="dropdown-title" %><%=app.engine_name %></div></li>
+      <li><div class="dropdown-title" %><%=app_install.engine_name %></div></li>
       <% if state == "running" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_app_path(app.engine_name), class: 'trigger-response-modal' %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_app_path(app.engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_app_path(app_install.engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_app_path(app_install.engine_name), class: 'trigger-response-modal' %></li>
       <% elsif state == "paused" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_app_path(app.engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_app_path(app_install.engine_name), class: 'trigger-response-modal' %></li>
       <% elsif state == "stopped" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_app_path(app.engine_name), class: 'trigger-response-modal'  %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-circle-o") + " Destroy", destroy_container_app_path(app.engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_app_path(app_install.engine_name), class: 'trigger-response-modal'  %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-circle-o") + " Destroy", destroy_container_app_path(app_install.engine_name), class: 'trigger-response-modal' %></li>
         <li class="divider"></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Recreate", recreate_app_path(app.engine_name), class: 'trigger-response-modal' %> </li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Recreate", recreate_app_path(app_install.engine_name), class: 'trigger-response-modal' %> </li>
       <% elsif  state == "nocontainer" %>   
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create", create_container_app_path(id: app.engine_name), class: 'trigger-response-modal' %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Delete", delete_image_app_path(app.engine_name), class: 'trigger-response-modal' %></li> 
+        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create", create_container_app_path(id: app_install.engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Delete", delete_image_app_path(app_install.engine_name), class: 'trigger-response-modal' %></li> 
       <% else %>
          <li>no state</li>
       <%  end %>
       <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-edit") + " Edit", edit_app_install_path(app.engine_name), class: 'trigger-response-modal' %>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-edit") + " Display", edit_app_install_display_properties_path(app_install.engine_name), class: 'trigger-response-modal' %>
+      </li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-edit") + " Network", edit_app_install_network_properties_path(app_install.engine_name), class: 'trigger-response-modal' %>
+      </li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-edit") + " Runtime", edit_app_install_runtime_properties_path(app_install.engine_name), class: 'trigger-response-modal' %>
       </li>
       <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + app.engine_name, container: app.engine_name, controller: "apps" }, role: "button", class: "advanced_menu_item" %>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + app_install.engine_name, container: app_install.engine_name, controller: "apps" }, role: "button", class: "advanced_menu_item" %>
       </li>
       <li class="divider"></li>
-       <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + app.fqdn, "http://" + app.fqdn, target: "_blank"%></li>
+       <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + app_install.app.fqdn, "http://" + app_install.app.fqdn, target: "_blank"%></li>
     </ul>
   </div>
 </div>
 
-<div class="modal" id="modal_<%= app.engine_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="modal_<%= app_install.engine_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced</h4>
       </div>
-      <div class="modal-body" id="modal_<%= app.engine_name %>_body">
+      <div class="modal-body" id="modal_<%= app_install.engine_name %>_body">
         <div class="loading-spinner">
           <%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> 
         </div>
