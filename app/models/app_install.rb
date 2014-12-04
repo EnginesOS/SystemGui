@@ -11,6 +11,7 @@ class AppInstall < ActiveRecord::Base
     :license_sourceurl,
     :host_name,
     :domain_name,
+    :web_protocol,
     :memory,
     :gallery_url,
     :blueprint_id,
@@ -105,7 +106,8 @@ p url
   end
 
   def update_network_properties params
-    engines_api.set_engine_hostname_properties(update_network_properties_params params).was_success
+    engines_api.set_engine_hostname_properties(update_hostname_properties_params params).was_success &&
+    engines_api.set_engine_network_properties(update_network_properties_params params).was_success
   end
 
   def update_runtime_properties params
@@ -153,6 +155,7 @@ p app.software.inspect
     self.license_sourceurl = app.software['license_sourceurl']
     self.host_name = app.host_name
     self.domain_name = app.domain_name
+    self.web_protocol = app.web_protocol
     self.memory = app.memory
     app_install_env_variables.delete_all
     app.software['environment_variables'].each do |ev|
@@ -186,11 +189,18 @@ private
     }
   end
 
-  def update_network_properties_params params
+  def update_hostname_properties_params params
     {
       engine_name: engine_name,
       host_name: params[:host_name],
       domain_name: params[:domain_name],
+    }
+  end
+
+  def update_network_properties_params params
+    {
+      engine_name: engine_name,
+      web_protocol: params[:web_protocol]
     }
   end
 

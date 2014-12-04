@@ -107,6 +107,10 @@ class AppHandler
     engine.hostName
   end
 
+  def web_protocol
+    engine.web_protocol
+  end
+
   def domain_name
     dn = engine.domainName
 p ':domain_name'
