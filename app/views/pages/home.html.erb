@@ -70,9 +70,9 @@
           </div>
         </div>
 
-        <% if @apps.present? %>
-            <% @apps.each do |app| %>
-                <%= render partial: "apps/home_page_gadget", locals: {app: app} %>
+        <% if @app_installs.present? %>
+            <% @app_installs.each do |app_install| %>
+                <%= render partial: "apps/home_page_gadget", locals: {app_install: app_install} %>
             <% end %>
         <% else %>
             <p class="top-gap">Welcome to Engines. No apps are installed.<br>

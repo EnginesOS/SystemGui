@@ -1,5 +1,7 @@
 class AppHandler
 
+  attr_reader :engine_name
+
   def initialize engine_name
     @engine_name = engine_name
   end
@@ -22,6 +24,11 @@ class AppHandler
 
   def blueprint
     @blueprint ||= engines_api.get_engine_blueprint @engine_name
+    if @blueprint.is_a?(EnginesOSapiResult)
+      {}
+    else
+      @blueprint
+    end
   end
 
   def software
@@ -92,16 +99,19 @@ class AppHandler
     engine.read_state
   end
 
-  def engine_name
-    engine.containerName
-  end
+  # def engine_name
+  #   engine.containerName
+  # end
 
   def host_name
     engine.hostName
   end
 
   def domain_name
-    engine.domainName
+    dn = engine.domainName
+p ':domain_name'
+p dn
+return dn
   end
 
   # def gallery_server_name
@@ -198,6 +208,14 @@ class AppHandler
     self.engines_api.list_apps.map do |engine_name|
       AppHandler.new(engine_name)
     end
+  end
+
+  def self.all_engine_names
+    self.all.map(&:engine_name)
+  end
+
+  def self.all_host_names
+    self.all.map(&:engine_name)
   end
 
   def self.user_visible_applications

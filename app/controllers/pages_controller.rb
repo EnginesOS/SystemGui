@@ -2,14 +2,14 @@ class PagesController < ApplicationController
   before_action :authenticate_user!
 
   def home
-    @apps = AppHandler.user_visible_applications.sort_by{|app| app.engine_name}
+    @app_installs = AppHandler.user_visible_applications.map(&:app_install).sort_by(&:engine_name)
     @wallpaper_url = wallpaper_url
     render :home, layout: false
   end
 
   def app_manager
     Maintenance.db_maintenance
-    @app_installs = AppHandler.all.map(&:app_install) #.sort_by(&:engine_name)
+    @app_installs = AppHandler.all.map(&:app_install).sort_by(&:engine_name)
     @services = ServiceHandler.all.sort_by(&:engine_name)
 p ':app_manager'
 p @app_installs

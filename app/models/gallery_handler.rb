@@ -1,4 +1,3 @@
-
 class GalleryHandler
   
   attr_accessor :url

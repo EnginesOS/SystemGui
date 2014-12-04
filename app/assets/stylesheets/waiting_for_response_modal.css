@@ -1,7 +1,7 @@
 #waiting-for-response-modal .big-spinner {
   font-size: 150px;
   text-align: center;
-  color: #999;
+  color: rgba(200,200,200,0.2);
   margin-top: 10%;
 }
 
@@ -11,7 +11,7 @@
 #waiting-for-response-modal .streamed-text {
   font-size: 5px;
   max-height: 30px;
-  color: #999;
+  color: rgba(200,200,200,0.2);
   overflow: hidden;
   background-color: #999;
 }

@@ -11,28 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141201035647) do
+ActiveRecord::Schema.define(version: 20141203195609) do
 
   create_table "app_install_env_variables", force: true do |t|
     t.integer "app_install_id"
-    t.string  "name"
-    t.string  "value"
-    t.string  "comment"
-    t.boolean "ask_at_runtime"
   end
 
   create_table "app_installs", force: true do |t|
-    t.string   "host_name"
-    t.string   "domain_name"
     t.string   "engine_name"
     t.string   "display_name"
     t.text     "display_description"
-    t.string   "gallery_url"
-    t.string   "blueprint_id"
-    t.string   "license_name"
-    t.string   "license_sourceurl"
-    t.boolean  "terms_and_conditions_accepted"
-    t.string   "image_url"
     t.string   "icon_file_name"
     t.string   "icon_content_type"
     t.integer  "icon_file_size"

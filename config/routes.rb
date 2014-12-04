@@ -16,6 +16,7 @@ patch "app_installs/:id/update_display_properties", to: "app_installs#update_dis
 patch "app_installs/:id/update_network_properties", to: "app_installs#update_network_properties", as: :update_app_install_network_properties
 patch "app_installs/:id/update_runtime_properties", to: "app_installs#update_runtime_properties", as: :update_app_install_runtime_properties
 
+get "app_installs/destroy_all_records", to: "app_installs#destroy_all_records", as: :app_install_destroy_all_records
 
   root "pages#home"
 

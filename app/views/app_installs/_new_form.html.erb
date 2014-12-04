@@ -19,6 +19,18 @@
 </button>
 
   <fieldset>
+    <legend>Engine name</legend>
+    <div class="form-group form-group-lg">
+      <div class="col-sm-2">
+        <%= f.label :name, class: "control-label" %>
+      </div>
+      <div class="col-sm-10">
+        <%= f.text_field :engine_name, class: "form-control" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
     <legend>URL</legend>
     <div class="form-group form-group-lg">
       <div class="col-sm-4">
@@ -48,17 +60,6 @@
       </div>
       <div class="col-sm-10">
         <%= f.text_field :display_description, class: "form-control" %>
-      </div>
-    </div>
-
-  <fieldset>
-    <legend>Container</legend>
-    <div class="form-group form-group-lg">
-      <div class="col-sm-2">
-        <%= f.label :name, class: "control-label" %>
-      </div>
-      <div class="col-sm-10">
-        <%= f.text_field :engine_name, class: "form-control" %>
       </div>
     </div>
   </fieldset>

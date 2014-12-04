@@ -1,53 +1,53 @@
 class AppInstall < ActiveRecord::Base
 
-
+  attr_accessor(
+    :name,
+    :description,
+    :requiredmemory,
+    :image_url,
+    :langauge_name,
+    :swframework_name,
+    :license_name,
+    :license_sourceurl,
+    :host_name,
+    :domain_name,
+    :memory,
+    :gallery_url,
+    :blueprint_id,
+    :terms_and_conditions_accepted,
+    :delete_icon)
 
   has_attached_file :icon
-  validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
   has_many :app_install_env_variables
   accepts_nested_attributes_for :app_install_env_variables
-
-  attr_accessor :delete_icon
-  # attr_accessor :created_from_existing_engine
-  attr_accessor :memory
-
+  validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
   before_validation { icon.clear if delete_icon == '1' }
   after_create :set_display_properties_defaults
-
-  def set_display_properties_defaults
-
-p ':set_display_properties_defaults'
-p self
-    self.host_name = app.host_name
-    self.display_name = app.software['name']
-    self.display_description = app.software['description']
-save
-p self
-
-
-  end
 
   def engines_api
     EnginesApiHandler.engines_api
   end 
 
-  def self.new_from_gallery opts
-    app_install = self.new(
-      gallery_url: opts[:gallery_url],
-      blueprint_id: opts[:blueprint_id])
+  # def self.create_empty_record
+  #   # self.skip_callback(:create)
+  #   self.new.save(skip_callbacks: true)
+  # end
+
+  def self.new_from_gallery params
+    
+    app_install = self.new(params)
 
     blueprint_software = app_install.software_definition_from_blueprint_in_repository
     gallery_software = app_install.software_definition_from_gallery
 
-    app_install.engine_name = gallery_software['short_name'].gsub(/[^0-9A-Za-z]/, '').downcase
-    app_install.host_name = app_install.engine_name
-    app_install.domain_name = SystemConfig.settings.default_domain
-    app_install.display_name = gallery_software['short_name']
-    app_install.display_description = gallery_software['description']
-    app_install.license_name = blueprint_software['license_name']
-    app_install.license_sourceurl = blueprint_software['license_sourceurl']
-    app_install.terms_and_conditions_accepted = false
-    app_install.created_from_existing_engine = false
+    app_install.engine_name ||= gallery_software['short_name'].gsub(/[^0-9A-Za-z]/, '').downcase
+    app_install.host_name ||= app_install.engine_name
+    app_install.domain_name ||= SystemConfig.settings.default_domain
+    app_install.display_name ||= gallery_software['short_name']
+    app_install.display_description ||= gallery_software['description']
+    app_install.license_name ||= blueprint_software['license_name']
+    app_install.license_sourceurl ||= blueprint_software['license_sourceurl']
+    app_install.terms_and_conditions_accepted ||= false
 
     blueprint_software['environment_variables'].each do |ev|
       app_install.app_install_env_variables.build(ev)
@@ -74,12 +74,25 @@ p self
   #   return app_install
   # end
 
-  def attach_icon_from_gallery
-    url = software_definition_from_gallery['image_url']
+  def attach_icon_using_icon_url_from_gallery
+p ':attach_icon_from_icon_url_from_gallery'    
+    self.icon = icon_from_url(software_definition_from_gallery['image_url'])
+  end
+
+  def icon_from_url url
+p ':icon_from_url'
+p url
     begin
-      @icon = URI.parse(url)
+      begin
+        @icon = URI.parse(url)
+      rescue Exception=>e
+  p e
+  p e.backtrace
+  p e.mesg
+
+      end
     rescue
-      return nil
+      nil
     end
   end
 
@@ -99,21 +112,48 @@ p self
     engines_api.set_engine_runtime_properties(update_runtime_properties_params params).was_success
   end
 
-
-  def build_app
-    engines_api.build_engine(repository_url_from_gallery, app_build_params).instance_of?(ManagedEngine)
+  def self.engine_name_not_unique params
+    AppHandler.all_engine_names.include?(params[:engine_name])
   end
 
-  def refresh_engine_data
-    
-    @host_name = app.host_name
-    @domain_name = app.domain_name
-    # @display_name = app.software['name']
-    # @display_description = app.software['description']
-    @license_name = app.software['license_name']
-    @license_sourceurl = app.software['license_sourceurl']
-    @created_from_existing_engine = false
+  def self.host_name_not_unique params
+    AppHandler.all_host_names.include?(params[:host_name])
+  end
 
+  def build_app
+    engines_api.build_engine(repository_url_from_gallery, app_build_params)
+  end
+
+  def set_display_properties_defaults
+p ':set_display_properties_defaults'
+    if self.display_name.nil?
+      self.display_name = app.software['name']
+      self.display_description = app.software['description']
+
+p app.software['icon_url']
+p app.software.inspect
+
+
+      if app.software['icon_url'].present?
+          self.icon = icon_from_url app.software['icon_url']
+      end
+
+      save
+    end
+  end
+
+  def load_properties_from_engine
+    self.name = app.software['name']
+    self.description = app.software['description']
+    self.requiredmemory = app.software['requiredmemory']
+    self.image_url = app.software['icon_url']
+    self.langauge_name = app.software['langauge_name']
+    self.swframework_name = app.software['swframework_name']
+    self.license_name = app.software['license_name']
+    self.license_sourceurl = app.software['license_sourceurl']
+    self.host_name = app.host_name
+    self.domain_name = app.domain_name
+    self.memory = app.memory
     app_install_env_variables.delete_all
     app.software['environment_variables'].each do |ev|
       app_install_env_variables.build(ev)
@@ -176,7 +216,7 @@ private
 
   def environment_variables_params
     hash = {}
-    environment_variables.each do |ev|
+    app_install_env_variables.each do |ev|
       hash[ev.name] = ev.value
     end
     return hash

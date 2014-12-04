@@ -1,8 +1,8 @@
 module Maintenance
 
   def self.db_maintenance
-    remove_dupes
-    remove_orphaned_records
+    # remove_dupes
+    # remove_orphaned_records
   end
 
   def self.remove_orphaned_records
