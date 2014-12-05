@@ -32,7 +32,7 @@ class AppHandler
   end
 
   def software
-    @software ||= blueprint['software']
+    blueprint['software']
   end
 
   def stop

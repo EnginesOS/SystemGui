@@ -1,6 +1,7 @@
 class AppInstallsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_app_install, only: [
+    :create,
     :edit_display_properties,
     :edit_runtime_properties,
     :edit_network_properties,
@@ -46,20 +47,21 @@ end
     elsif AppInstall.host_name_not_unique(app_install_params)
       redirect_to new_app_install_path(app_install: app_install_params), alert: "Host name must be unique."
     else
-      @app_install = AppInstall.new(app_install_params)
-      @app_install.attach_icon_using_icon_url_from_gallery #if !@app_install.icon.exists?
 
-      build_response = @app_install.build_app
+      @app_install.update(app_install_params)
+      @app_install.attach_icon_using_icon_url_from_gallery if !@app_install.icon.exists?
 
-      if build_response.instance_of?(ManagedEngine)
-        if @app_install.save
+      if @app_install.save
+        build_response = @app_install.build_app
+        if build_response.instance_of?(ManagedEngine)
           redirect_to app_manager_path, notice: "Application installation was successful for #{@app_install.engine_name}."
         else
-          redirect_to installer_path, alert: "Application installed but not configured for #{@app_install.engine_name}. Edit the app in the App Manager to complete app configuration."
+          redirect_to installer_path, alert: "Application installation was not successful for #{@app_install.engine_name}. " + build_response.result_mesg
         end
       else
-        redirect_to installer_path, alert: "Application installation was not successful for #{@app_install.engine_name}." + build_response.mesg
+          redirect_to installer_path, alert: "Application installation was not successful for #{@app_install.engine_name}. Failed to save display properties to database."
       end
+
     end
   end
 
@@ -76,7 +78,7 @@ p ':update_display_properties'
     if @app_install.update_display_properties(app_install_params)
       redirect_to app_manager_path, notice: "Display properties were successfully updated for #{@app_install.engine_name}."
     else
-      render :edit_display_properties, alert: "Display properties were not updated for #{@app_install.engine_name}."
+      redirect_to edit_app_install_display_properties_path(app_install: app_install_params), alert: "Display properties were not updated for #{@app_install.engine_name}."
     end
   end
 
@@ -88,7 +90,7 @@ p @app_install.inspect
 p @app_install.inspect
       redirect_to app_manager_path, notice: "Network properties were successfully updated for #{@app_install.engine_name}."
     else
-      render :edit_network_properties, alert: "Network properties were not updated for #{@app_install.engine_name}."
+      redirect_to edit_app_install_network_properties_path(app_install: app_install_params), alert: "Network properties were not updated for #{@app_install.engine_name}."
     end
   end
 
@@ -96,7 +98,7 @@ p @app_install.inspect
     if @app_install.update_runtime_properties app_install_params
       redirect_to app_manager_path, notice: "Runtime properties were successfully updated for #{@app_install.engine_name}."
     else
-      render :edit_runtime_properties, alert: "Runtime properties were not updated for #{@app_install.engine_name}."
+      render edit_app_install_runtime_properties_path(app_install: app_install_params), alert: "Runtime properties were not updated for #{@app_install.engine_name}."
     end
   end
 

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<% if @wallpaper_url.nil? %>
-  <html class="background-splash", style="background-color: <%= @settings.background_color %>">
+
+<% if @settings.wallpaper.exists? %>
+  <html style="<%= "background-color: " + @settings.background_color + "; background: url(" + @settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" %>">
 <% else %>
-  <html class="background-splash", style="<%= "background-color: " + @settings.background_color + "; background: url(" + @settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" %>">
+  <html class="background-splash", style="background-color: <%= @settings.background_color %>">
 <% end %>
 
 <head>
@@ -30,7 +31,7 @@
     <div class="home-view">
       <div class="row">
 
-        <div class="home_page_app_gadget_holder">
+        <div class="home_page_app_gadget_holder col-sm-2" style="width: 250px;">
           <div class="home_page_app_gadget">
             <div class="dropdown">
               <div class="" type="button" data-toggle="dropdown" aria-expanded="true"type="button" id="home_menu">
@@ -70,7 +71,9 @@
               </ul>
             </div>
           </div>
+        </div>
 
+        <div class="home_page_app_gadget_holder">
           <% if @app_installs.present? %>
               <% @app_installs.each do |app_install| %>
                   <%= render partial: "apps/home_page_gadget", locals: {app_install: app_install} %>

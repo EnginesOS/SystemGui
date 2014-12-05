@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller? 
   
   require "/opt/engines/lib/ruby/EnginesOSapi.rb"
-  require '/opt/engines/lib/ruby/SysConfig.rb'
+  # require '/opt/engines/lib/ruby/SysConfig.rb'
   require 'git'
   require "awesome_print"
   # require 'EngineGallery.rb'

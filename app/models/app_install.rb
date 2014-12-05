@@ -107,8 +107,8 @@ p url
   end
 
   def update_network_properties params
-    engines_api.set_engine_hostname_properties(update_hostname_properties_params params).was_success &&
-    engines_api.set_engine_network_properties(update_network_properties_params params).was_success
+    engines_api.set_engine_hostname_properties(update_hostname_properties_params(params)).was_success &&
+    engines_api.set_engine_network_properties(update_network_properties_params(params)).was_success
   end
 
   def update_runtime_properties params
@@ -129,7 +129,7 @@ p url
 
   def set_display_properties_defaults
 p ':set_display_properties_defaults'
-    if self.display_name.nil?
+    if self.display_name.nil? && app.software.present?
       self.display_name = app.software['name']
       self.display_description = app.software['description']
 
