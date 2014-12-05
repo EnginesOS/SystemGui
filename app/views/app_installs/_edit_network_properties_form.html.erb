@@ -29,10 +29,10 @@
   </fieldset>
 
   <fieldset>
-    <legend>Web protocol</legend>
+    <legend>HTTP protocol</legend>
     <div class="form-group form-group-lg">
       <div class="col-sm-12">
-        <%= f.collection_radio_buttons :web_protocol, [['HTTPS only', 'HTTPS only'], ['HTTP only', 'HTTP only'], ['HTTPS and HTTP', 'HTTPS and HTTP']], :first, :last %>
+        <%= f.collection_radio_buttons :http_protocol, [['HTTPS only', 'HTTPS only'], ['HTTP only', 'HTTP only'], ['HTTPS and HTTP', 'HTTPS and HTTP']], :first, :last, item_wrapper_class: :radio_button_collection_item %>
       </div>
     </div>
   </fieldset>

@@ -2,8 +2,8 @@ class PagesController < ApplicationController
   before_action :authenticate_user!
 
   def home
+    @settings = SystemConfig.settings
     @app_installs = AppHandler.user_visible_applications.map(&:app_install).sort_by(&:engine_name)
-    @wallpaper_url = wallpaper_url
     render :home, layout: false
   end
 
@@ -41,9 +41,9 @@ private
       services ||= []
     end
 
-    def wallpaper_url
-      wallpaper = SystemConfig.first.wallpaper if SystemConfig.first.present?
-      return wallpaper.url if wallpaper.present?
-    end
+    # def wallpaper_url
+    #   wallpaper = SystemConfig.first.wallpaper if SystemConfig.first.present?
+    #   return wallpaper.url if wallpaper.present?
+    # end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203195609) do
+ActiveRecord::Schema.define(version: 20141205012052) do
 
   create_table "app_install_env_variables", force: true do |t|
     t.integer "app_install_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20141203195609) do
     t.string   "wallpaper_content_type"
     t.integer  "wallpaper_file_size"
     t.datetime "wallpaper_updated_at"
+    t.string   "background_color"
   end
 
   create_table "users", force: true do |t|

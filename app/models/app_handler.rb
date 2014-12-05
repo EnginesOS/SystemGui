@@ -107,8 +107,8 @@ class AppHandler
     engine.hostName
   end
 
-  def web_protocol
-    engine.web_protocol
+  def http_protocol
+    engine.http_protocol
   end
 
   def domain_name

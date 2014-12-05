@@ -11,7 +11,7 @@ class AppInstall < ActiveRecord::Base
     :license_sourceurl,
     :host_name,
     :domain_name,
-    :web_protocol,
+    :http_protocol,
     :memory,
     :gallery_url,
     :blueprint_id,
@@ -45,6 +45,7 @@ class AppInstall < ActiveRecord::Base
     app_install.host_name ||= app_install.engine_name
     app_install.domain_name ||= SystemConfig.settings.default_domain
     app_install.display_name ||= gallery_software['short_name']
+    app_install.http_protocol ||= (blueprint_software['http_protocol'] || 'HTTPS and HTTP')
     app_install.display_description ||= gallery_software['description']
     app_install.license_name ||= blueprint_software['license_name']
     app_install.license_sourceurl ||= blueprint_software['license_sourceurl']
@@ -155,7 +156,7 @@ p app.software.inspect
     self.license_sourceurl = app.software['license_sourceurl']
     self.host_name = app.host_name
     self.domain_name = app.domain_name
-    self.web_protocol = app.web_protocol
+    self.http_protocol = app.http_protocol
     self.memory = app.memory
     app_install_env_variables.delete_all
     app.software['environment_variables'].each do |ev|
@@ -200,7 +201,7 @@ private
   def update_network_properties_params params
     {
       engine_name: engine_name,
-      web_protocol: params[:web_protocol]
+      http_protocol: params[:http_protocol]
     }
   end
 
@@ -217,6 +218,7 @@ private
       engine_name: engine_name,
       host_name: host_name,
       domain_name: domain_name,
+      http_protocol: http_protocol,      
       gallery_url: gallery_url,
       blueprint_id: blueprint_id,
       memory: memory,

@@ -29,13 +29,12 @@
   text-align: center;
 }
 
-.home_page_app_gadget {
+.home-view .home_page_app_gadget {
   display: inline-block;
 }
 
-.home_page_app_gadget_holder {
+.home-view .home_page_app_gadget_holder {
 }
-
 
 .btn.btn-launcher {
   width: 230px;

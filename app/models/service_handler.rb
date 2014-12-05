@@ -165,5 +165,7 @@ class ServiceHandler
     end
   end
 
-
+  def self.get_services_available_for ojbect
+  end
+  
 end
