@@ -31,7 +31,11 @@ p @services
   end
 
   def installer
-    @gallery_installs = GalleryInstall.all
+    if SystemConfig.settings.default_domain.blank?
+      redirect_to(edit_default_domain_path, alert: "Please set a default domain before installing software.")
+    else
+      @gallery_installs = GalleryInstall.all
+    end
   end
 
 private

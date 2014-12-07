@@ -39,3 +39,12 @@
   font-size: 1.2em;
   color: #666;
 }
+
+#new_app_install_form_advanced_fields{
+  display: none;
+}
+
+.form-data {
+  font-size: 18px;
+  padding-top: 10px;
+}

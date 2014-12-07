@@ -1,10 +1,10 @@
 <div class="col-sm-12 top-gap">
-  <h3 class="control-panel-title"><i class="fa fa-home"></i> Root</h3>
+  <h3 class="control-panel-title"><i class="fa fa-home"></i> Default website</h3>
 
   <%= simple_form_for @system_config, html: {class: "form-horizontal"} do |f| %>
 
     <fieldset>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :default_site, label: "Route"}, f: f} %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :default_site, label: "URL"}, f: f} %>
     </fieldset>
 
     <div class="actions top-gap">

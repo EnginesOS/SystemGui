@@ -41,8 +41,8 @@ class AppInstall < ActiveRecord::Base
     blueprint_software = app_install.software_definition_from_blueprint_in_repository
     gallery_software = app_install.software_definition_from_gallery
 
-    app_install.engine_name ||= gallery_software['short_name'].gsub(/[^0-9A-Za-z]/, '').downcase
-    app_install.host_name ||= app_install.engine_name
+    app_install.engine_name ||= self.unique_engine_name_for(gallery_software['short_name'].gsub(/[^0-9A-Za-z]/, '').downcase)
+    app_install.host_name ||= self.unique_host_name_for(app_install.engine_name)
     app_install.domain_name ||= SystemConfig.settings.default_domain
     app_install.display_name ||= gallery_software['short_name']
     app_install.http_protocol ||= (blueprint_software['http_protocol'] || 'HTTPS and HTTP')
@@ -55,6 +55,28 @@ class AppInstall < ActiveRecord::Base
       app_install.app_install_env_variables.build(ev)
     end
     return app_install
+  end
+
+  def self.unique_engine_name_for engine_name
+    existing_engine_names = AppHandler.all_engine_names
+    unique_engine_name = engine_name
+    index = 2
+    while existing_engine_names.include? unique_engine_name do
+      unique_engine_name = engine_name + index.to_s
+      index += 1
+    end
+    unique_engine_name
+  end
+
+  def self.unique_host_name_for host_name
+    existing_host_names = AppHandler.all_host_names
+    index = 1
+    unique_host_name = host_name
+    while existing_host_names.include? unique_host_name do
+      unique_host_name = host_name + index.to_s
+      index += 1
+    end
+    unique_host_name
   end
 
   # def self.new_from_engine engine_name
@@ -103,7 +125,7 @@ p url
   end
 
   def update_display_properties params
-      update(update_display_properties_params params)
+    update(update_display_properties_params params)
   end
 
   def update_network_properties params

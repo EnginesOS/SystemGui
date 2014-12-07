@@ -14,110 +14,117 @@
   <%= f.hidden_field :gallery_url %>
   <%= f.hidden_field :blueprint_id %>
 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#waiting-for-response-modal">
-  show waiting for response modal
-</button>
-
   <fieldset>
-    <legend>Engine name</legend>
-    <div class="form-group form-group-lg">
-      <div class="col-sm-2">
-        <%= f.label :name, class: "control-label" %>
-      </div>
-      <div class="col-sm-10">
-        <%= f.text_field :engine_name, class: "form-control" %>
-      </div>
-    </div>
+    <button type="button" class="btn btn-default btn-lg pull-right" id="new_app_install_form_show_advanced_fields_button">
+      <%= content_tag(:i, '', class: 'fa fa-code') %> Advanced install
+    </button>
   </fieldset>
 
-  <fieldset>
-    <legend>URL</legend>
-    <div class="form-group form-group-lg">
-      <div class="col-sm-4">
-        <%= f.label :host_name, class: "control-label" %>
-        <%= f.text_field :host_name, class: "form-control" %>
-      </div>
-      <div class="col-sm-8">
-        <%= f.label :domain_name, class: "control-label" %>
-        <%= f.text_field :domain_name, class: "form-control" %>
-      </div>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>HTTP protocol</legend>
-    <div class="form-group form-group-lg">
-      <div class="col-sm-12">
-        <%= f.collection_radio_buttons :http_protocol, [['HTTPS only', 'HTTPS only'], ['HTTP only', 'HTTP only'], ['HTTPS and HTTP', 'HTTPS and HTTP']], :first, :last, item_wrapper_class: :radio_button_collection_item %>
-      </div>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Display</legend>
-    <div class="form-group form-group-lg">
-      <div class="col-sm-2">
-        <%= f.label :name, class: "control-label" %>
-      </div>
-      <div class="col-sm-10">
-        <%= f.text_field :display_name, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group form-group-lg">
-      <div class="col-sm-2">
-        <%= f.label :description, class: "control-label" %>
-      </div>
-      <div class="col-sm-10">
-        <%= f.text_field :display_description, class: "form-control" %>
-      </div>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Icon</legend>
-    <div class="form-group form-group-lg">
-      <div class="col-sm-2">
-        <div class='form-image-control'>
-          <div class='form-image-centering'>
-            <%= image_tag(f.object.software_definition_from_gallery['image_url'], class: 'form-engine-icon') %>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-10">
-        <%= f.file_field :icon, class: 'form-control input-lg choose_file_form_control' %>
-      </div>
-    </div>
-  </fieldset>
-
-
-  <% if @app_install.app_install_env_variables.present? %>
+  <div id="new_app_install_form_default_details">
     <fieldset>
-      <legend>Environment variables</legend>
-      <%= f.fields_for :app_install_env_variables do |ev| %>
-        <div class="form-group form-group-lg">
-          <div class="col-sm-2">
-            <label class="text optional control-label"><%= ev.object.name.to_s.humanize %></label>
-          </div>
-          <div class="col-sm-10">
-            <% tooltip = (ev.object.comment || ev.object.name.to_s.humanize) %>
-            <%= ev.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
-            <%= ev.hidden_field :name %>
+      <legend>URL</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-10 col-sm-offset-2">
+          <%= content_tag(:div, (f.object.host_name + '.' + f.object.domain_name), class: "form-data") %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div id="new_app_install_form_advanced_fields">
+
+    <fieldset>
+      <legend>Engine</legend>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :engine_name, label: :name}, f: f} %>
+    </fieldset>
+
+    <fieldset>
+      <legend>URL</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-4">
+          <%= f.label :host_name, class: "control-label" %>
+          <%= f.text_field :host_name, class: "form-control" %>
+        </div>
+        <div class="col-sm-8">
+          <%= f.label :domain_name, class: "control-label" %>
+          <%= f.text_field :domain_name, class: "form-control" %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>HTTP protocol</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-12">
+          <%= f.collection_radio_buttons :http_protocol, ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], :to_s, :to_s, item_wrapper_class: :radio_button_collection_item %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Display</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2">
+          <%= f.label :name, class: "control-label" %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.text_field :display_name, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2">
+          <%= f.label :description, class: "control-label" %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.text_field :display_description, class: "form-control" %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Icon</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2">
+          <div class='form-image-control'>
+            <div class='form-image-centering'>
+              <%= image_tag(f.object.software_definition_from_gallery['image_url'], class: 'form-engine-icon') %>
+            </div>
           </div>
         </div>
-      <% end %>
+        <div class="col-sm-10">
+          <%= f.file_field :icon, class: 'form-control input-lg choose_file_form_control' %>
+        </div>
+      </div>
     </fieldset>
-  <% end %>
+
+
+    <% if @app_install.app_install_env_variables.present? %>
+      <fieldset>
+        <legend>Environment variables</legend>
+        <%= f.fields_for :app_install_env_variables do |ev| %>
+          <div class="form-group form-group-lg">
+            <div class="col-sm-2">
+              <label class="text optional control-label"><%= ev.object.name.to_s.humanize %></label>
+            </div>
+            <div class="col-sm-10">
+              <% tooltip = (ev.object.comment || ev.object.name.to_s.humanize) %>
+              <%= ev.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
+              <%= ev.hidden_field :name %>
+            </div>
+          </div>
+        <% end %>
+      </fieldset>
+    <% end %>
+  </div>
 
   <fieldset>
     <legend>License</legend>
     <div class="col-sm-10 col-sm-offset-2">
       <div class="form-group form-group-lg form-text-lg">
         <%= link_to f.object.license_name, f.object.license_sourceurl, target: "_blank" %> 
-        <span id="accept-label" class="btn btn-lg btn-default">
-          <%= f.check_box :terms_and_conditions_accepted %> Accept
-        </span>
       </div>
     </div>
+    <%= render partial: 'shared/gadgets/form_checkbox_inline', locals: {field: {name: :terms_and_conditions_accepted, label: 'Accept'}, f: f} %>
   </fieldset>
   <div class="actions top-gap">
     <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), installer_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
@@ -128,4 +135,7 @@
 
 <% end %>
 
-    
+<!-- <br>
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#waiting-for-response-modal">
+  show waiting for response modal
+</button> -->

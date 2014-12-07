@@ -65,9 +65,9 @@ private
 
   def set_flash_messages_and_redirect
     if @result.was_success == true
-      flash[:notice] = @result.result_mesg
+      flash[:notice] = @result.result_mesg[0..250]
     else
-      flash[:error] = @result.result_mesg
+      flash[:error] = @result.result_mesg[0..250]
     end
     redirect_to app_manager_path
   end

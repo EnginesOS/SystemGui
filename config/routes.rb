@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
 
 
-get 'messaging' => 'app_installs#send_message'
+# get 'messaging' => 'app_installs#send_message'
+get "installing/:id", to: "app_installs#installing", as: :installing
 
 
 get "app_installs/:id/edit_display_properties", to: "app_installs#edit_display_properties", as: :edit_app_install_display_properties
@@ -24,7 +25,7 @@ get "app_installs/destroy_all_records", to: "app_installs#destroy_all_records", 
   get "help", to: "pages#help", as: :help
   get "system", to: "pages#system", as: :system
   get "installer", to: "pages#installer", as: :installer
-  get "install_progress", to: "app_installs#install_progress", as: :install_progress
+  get "install_progress/:line", to: "app_installs#install_progress", as: :install_progress
   get "settings", to: "pages#settings", as: :settings
   # get "manage_domains", to: "system_configs#hosted_domains", as: :hosted_domains
   get "edit_default_domain", to: "system_configs#edit_default_domain", as: :edit_default_domain
@@ -38,7 +39,6 @@ get "app_installs/destroy_all_records", to: "app_installs#destroy_all_records", 
   resources :users
   resources :hosted_domains
 
-  get "installing", to: "app_installs#installing", as: :installing
   resources :app_installs
   
   resources :services do
