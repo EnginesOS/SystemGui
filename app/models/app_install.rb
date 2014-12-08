@@ -52,6 +52,7 @@ class AppInstall < ActiveRecord::Base
     app_install.terms_and_conditions_accepted ||= false
 
     blueprint_software['environment_variables'].each do |ev|
+p ev.inspect
       app_install.app_install_env_variables.build(ev)
     end
     return app_install

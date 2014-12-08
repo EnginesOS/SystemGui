@@ -1,12 +1,13 @@
 class AppInstallEnvVariable < ActiveRecord::Base
  
   attr_accessor(
-    :build_time_only,
-    :mandatory,
     :name,
     :value,
+    :label,
     :comment,
-    :ask_at_runtime)
+    :build_time_only,
+    :mandatory,
+    :ask_at_build_time)
 
   has_one :app_install
 
