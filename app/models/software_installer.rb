@@ -1,4 +1,4 @@
-class GalleryBlueprintHandler
+class SoftwareInstaller
 
   attr_reader :blueprint_id
   attr_reader :gallery_url
@@ -30,10 +30,10 @@ class GalleryBlueprintHandler
 
 # private
 
-  def gallery
-    GalleryHandler.new url: @gallery_url
-    # GalleryHandler.get_gallery @gallery_server_name, @gallery_url
-  end
+  # def gallery
+  #   GalleryHandler.new url: @gallery_url
+  #   # GalleryHandler.get_gallery @gallery_server_name, @gallery_url
+  # end
 
   def load_blueprint_from_repository
 p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ load_blueprint'    
@@ -63,13 +63,6 @@ p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ load_blueprint'
   end
            
   def clone_repo(repo, buildname)
-
-p :reporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporeporepo
-p repo
-p buildname
-p SysConfig.DeploymentDir
-
-
     backup_lastbuild repo
     g = Git.clone(repo, buildname, path: SysConfig.DeploymentDir)
   end

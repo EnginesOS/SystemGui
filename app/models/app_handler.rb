@@ -219,7 +219,7 @@ return dn
   end
 
   def self.all_host_names
-    self.all.map(&:engine_name)
+    self.all.map(&:host_name)
   end
 
   def self.user_visible_applications

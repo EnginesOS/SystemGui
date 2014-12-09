@@ -25,6 +25,10 @@ class AppInstall < ActiveRecord::Base
   before_validation { icon.clear if delete_icon == '1' }
   after_create :set_display_properties_defaults
 
+
+
+
+
   def engines_api
     EnginesApiHandler.engines_api
   end 
@@ -35,8 +39,12 @@ class AppInstall < ActiveRecord::Base
   # end
 
   def self.new_from_gallery params
-    
+p 'START NEW FROM GALLERY'
+p params    
     app_install = self.new(params)
+p app_install.inspect
+p app_install.gallery_url
+p app_install.blueprint_id
 
     blueprint_software = app_install.software_definition_from_blueprint_in_repository
     gallery_software = app_install.software_definition_from_gallery
@@ -50,13 +58,54 @@ class AppInstall < ActiveRecord::Base
     app_install.license_name ||= blueprint_software['license_name']
     app_install.license_sourceurl ||= blueprint_software['license_sourceurl']
     app_install.terms_and_conditions_accepted ||= false
-
-    blueprint_software['environment_variables'].each do |ev|
-p ev.inspect
-      app_install.app_install_env_variables.build(ev)
+    
+    if app_install.app_install_env_variables.blank? 
+      blueprint_software['environment_variables'].each do |ev|
+        app_install_env_variable = app_install.app_install_env_variables.new(ev)
+      end
     end
+
     return app_install
   end
+
+# p "app_install.app_install_env_variables"
+# p app_install.app_install_env_variables.inspect
+
+# p "blueprint_software['environment_variables']"
+# p blueprint_software['environment_variables']
+
+#     blueprint_software['environment_variables'].each do |ev|
+# p 'ev.inspect'
+# p ev.inspect
+#       app_install_env_variable = app_install.app_install_env_variables.new(ev)
+#       # app_install_env_variable.update(ev)
+#       # app_install_env_variable.save
+
+# p 'app install env vars'
+# p ev
+
+#     # @name = params['name']
+#     # @value = params['value']
+#     # @label = params['label']
+#     # @comment = params['comment']
+#     # @build_time_only = params['build_time_only']
+#     # @mandatory = params['mandatory']
+#     # @ask_at_build_time = params['ask_at_build_time']
+
+# p "ok"
+# p app_install_env_variable.name
+# p app_install_env_variable.value
+# p app_install_env_variable.label
+# p app_install_env_variable.comment
+# p app_install_env_variable.build_time_only
+# p app_install_env_variable.mandatory
+# p app_install_env_variable.ask_at_build_time
+
+
+
+#     end
+#     return app_install
+#   end
 
   def self.unique_engine_name_for engine_name
     existing_engine_names = AppHandler.all_engine_names
@@ -104,22 +153,6 @@ p ':attach_icon_from_icon_url_from_gallery'
     self.icon = icon_from_url(software_definition_from_gallery['image_url'])
   end
 
-  def icon_from_url url
-p ':icon_from_url'
-p url
-    begin
-      begin
-        @icon = URI.parse(url)
-      rescue Exception=>e
-  p e
-  p e.backtrace
-  p e.mesg
-
-      end
-    rescue
-      nil
-    end
-  end
 
   def app
     @app_handler ||= AppHandler.new(engine_name)
@@ -151,19 +184,12 @@ p url
   end
 
   def set_display_properties_defaults
-p ':set_display_properties_defaults'
     if self.display_name.nil? && app.software.present?
       self.display_name = app.software['name']
       self.display_description = app.software['description']
-
-p app.software['icon_url']
-p app.software.inspect
-
-
       if app.software['icon_url'].present?
           self.icon = icon_from_url app.software['icon_url']
       end
-
       save
     end
   end
@@ -188,7 +214,7 @@ p app.software.inspect
   end
 
   def blueprint_handler
-    @blueprint_handler ||= GalleryBlueprintHandler.new(gallery_url: gallery_url, blueprint_id: blueprint_id)
+    @blueprint_handler ||= SoftwareInstaller.new(gallery_url: gallery_url, blueprint_id: blueprint_id)
   end
 
   def software_definition_from_gallery
@@ -255,6 +281,18 @@ private
       hash[ev.name] = ev.value
     end
     return hash
+  end
+
+  def icon_from_url url
+    begin
+      begin
+        @icon = URI.parse(url)
+      rescue Exception=>e
+        nil
+      end
+    rescue
+      nil
+    end
   end
 
 end

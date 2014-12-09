@@ -96,51 +96,36 @@
         </div>
       </div>
     </fieldset>
-
-
-    <% if @app_install.app_install_env_variables.where(ask_at_build_time: :true).present? %>
-      <fieldset>
-        <legend>Optional environment variables</legend>
-        <%= f.fields_for :app_install_env_variables do |ev| %>
-          <% if ev.object.mandatory != "zzz" %>
-            <div class="form-group form-group-lg">
-              <div class="col-sm-2">
-                <label class="text optional control-label"><%= ev.object.name.to_s.humanize %></label>
-              </div>
-              <div class="col-sm-10">
-                <% tooltip = (ev.object.comment || ev.object.name.to_s.humanize) %>
-                <%= ev.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
-                <%= ev.hidden_field :name %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </fieldset>
-    <% end %>
   </div>
 
-  <%= @app_install.app_install_env_variables.map(&:ask_at_build_time).include? true %>
-  <%= @app_install.app_install_env_variables.where(ask_at_build_time: true).all.inspect %>
-
-  <% if @app_install.app_install_env_variables.where(ask_at_build_time: true).present? %>
-    <fieldset>
-      <legend>Mandatory environment variables</legend>
-      <%= f.fields_for :app_install_env_variables do |ev| %>
-        <% if ev.object.mandatory != "zzz" %>
-          <div class="form-group form-group-lg">
-            <div class="col-sm-2">
-              <label class="text optional control-label"><%= ev.object.name.to_s.humanize %></label>
-            </div>
-            <div class="col-sm-10">
-              <% tooltip = (ev.object.comment || ev.object.name.to_s.humanize) %>
-              <%= ev.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
-              <%= ev.hidden_field :name %>
-            </div>
+  <fieldset>
+    <legend>Environment variables</legend>
+    <%= f.fields_for :app_install_env_variables do |ev| %>
+        <div class="form-group form-group-lg">
+          <div class="col-sm-2">
+            <label class="text optional control-label"><%= ev.object.label || ev.object.name.to_s.humanize %></label>
           </div>
-        <% end %>
-      <% end %>
-    </fieldset>
-  <% end %>
+          <div class="col-sm-10">
+            <% tooltip = (ev.object.comment || ev.object.name.to_s.humanize) %>
+            <%= ev.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
+            <%= ev.hidden_field :name %>
+          </div>
+        </div>
+    <% end %>
+  </fieldset>
+
+<% @app_install.app_install_env_variables.each do |app_install_env_variable| %>
+  <% p 'name: ' + app_install_env_variable.name.to_s %>
+  <% p 'value: ' + app_install_env_variable.value.to_s %>
+  <% p 'label: ' + app_install_env_variable.label.to_s %>
+  <% p 'comment: ' + app_install_env_variable.comment.to_s %>
+  <% p 'build_time_only: ' + app_install_env_variable.build_time_only.to_s %>
+  <% p 'mandatory: ' + app_install_env_variable.mandatory.to_s %>
+  <% p 'ask_at_build_time: ' + app_install_env_variable.ask_at_build_time.to_s %>
+<% end %>
+
+
+
 
   <fieldset>
     <legend>License</legend>
@@ -158,9 +143,11 @@
     <% end %>
   </div>
 
-<% end %>
 
 <!-- <br>
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#waiting-for-response-modal">
   show waiting for response modal
 </button> -->
+
+
+<% end %>
