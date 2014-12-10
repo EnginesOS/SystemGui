@@ -39,7 +39,10 @@ class AppInstallsController < ApplicationController
       redirect_to new_app_install_path(app_install: app_install_params), alert: "Host name must be unique."
     else
       if @app_install.update(app_install_params)
-        @app_install.attach_icon_using_icon_url_from_gallery if !@app_install.icon.exists?
+        if @app_install.icon.exists? == false
+          @app_install.attach_icon_using_icon_url_from_gallery
+          @app_install.save
+        end
         redirect_to installing_path(id: app_install_params[:engine_name], app_install: app_install_params)
       else
         redirect_to installer_path, alert: "Unable to initiate application installation for #{@app_install.engine_name}. Failed to save display properties to database."

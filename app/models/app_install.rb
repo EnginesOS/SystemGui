@@ -18,11 +18,14 @@ class AppInstall < ActiveRecord::Base
     :terms_and_conditions_accepted,
     :delete_icon)
 
-  has_attached_file :icon
-  has_many :app_install_env_variables
+  has_attached_file :icon, :dependent => :destroy
+  has_many :app_install_env_variables, :dependent => :destroy
+
   accepts_nested_attributes_for :app_install_env_variables
+
   validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
   before_validation { icon.clear if delete_icon == '1' }
+
   after_create :set_display_properties_defaults
 
   def engines_api

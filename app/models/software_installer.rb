@@ -4,12 +4,10 @@ class SoftwareInstaller
   attr_reader :gallery_url
   attr_reader :software_definition_from_gallery
   attr_reader :blueprint_from_repository
-  # attr_accessor :app_install_created_from_existing_engine
 
   def initialize opts
     @blueprint_id = opts[:blueprint_id]
     @gallery_url = opts[:gallery_url]
-    # @app_install_created_from_existing_engine = opts[:app_install_created_from_existing_engine]
   end
 
   def software_definition_from_gallery
@@ -28,15 +26,10 @@ class SoftwareInstaller
     software_definition_from_gallery["repository"]
   end
 
-# private
-
-  # def gallery
-  #   GalleryHandler.new url: @gallery_url
-  #   # GalleryHandler.get_gallery @gallery_server_name, @gallery_url
-  # end
+private
 
   def load_blueprint_from_repository
-p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ load_blueprint'    
+    p '$$$ load_blueprint'    
     buildname = File.basename(repository)
     segments = buildname.split('.')
     buildname = segments[0]
@@ -64,7 +57,7 @@ p '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ load_blueprint'
            
   def clone_repo(repo, buildname)
     backup_lastbuild repo
-    g = Git.clone(repo, buildname, path: SysConfig.DeploymentDir)
+    Git.clone(repo, buildname, path: SysConfig.DeploymentDir)
   end
 
   def backup_lastbuild repo

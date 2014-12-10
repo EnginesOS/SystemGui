@@ -1,11 +1,7 @@
 class ServiceHandler
 
-  # attr_accessor :service_name
-
   def initialize service_name
     @service_name = service_name
-    # @engines_api = EnginesApiHandler.engines_api
-    # @engine = @engines_api.getManagedService @service_name
   end
 
   def engines_api

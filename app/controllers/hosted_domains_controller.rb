@@ -25,7 +25,7 @@ class HostedDomainsController < ApplicationController
     @hosted_domain = HostedDomain.new(hosted_domain_params)
     validation_result = @hosted_domain.validate_domain_name_not_blank
     if validation_result != 'OK'
-      redirect_to new_hosted_domain_path(hosted_domain_params), alert: validation_result
+      redirect_to new_hosted_domain_path(hosted_domain_params), alert: 'Domain name cannot be blank.'
     elsif @hosted_domain.save_via_api
       redirect_to hosted_domains_path, notice: 'Successfully created self-hosted domain.'
     else
