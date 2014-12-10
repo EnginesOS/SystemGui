@@ -99,10 +99,6 @@ class AppHandler
     engine.read_state
   end
 
-  # def engine_name
-  #   engine.containerName
-  # end
-
   def host_name
     engine.hostName
   end
@@ -112,10 +108,7 @@ class AppHandler
   end
 
   def domain_name
-    dn = engine.domainName
-p ':domain_name'
-p dn
-return dn
+    engine.domainName
   end
 
   # def gallery_server_name

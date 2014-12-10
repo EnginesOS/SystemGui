@@ -1,7 +1,6 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_service
-  # after_action :set_flash_messages_and_redirect, except: [:advanced_detail]
 
   def advanced_detail
     render partial: "advanced_detail"

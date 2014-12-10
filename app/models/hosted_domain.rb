@@ -1,13 +1,6 @@
 class HostedDomain < ActiveRecord::Base
 
-  # validates_presence_of :hosted_domain
-
-  # include ActiveModel::Model
-  # include Engines::Api
-
   belongs_to :system_config
-
-
 
   def self.engines_api
     EnginesApiHandler.engines_api
@@ -17,34 +10,24 @@ class HostedDomain < ActiveRecord::Base
     EnginesApiHandler.engines_api
   end
 
-
-
   def save_via_api
-    # params[:domain_name]
-    # params[:internal_only]
-p 'domain_name and internal_only...............................................'
-p domain_name
-p internal_only
-
-# p engines_api
-
-    engines_api.add_self_hosted_domain ({domain_name: domain_name, internal_only: internal_only})
-
+    engines_api.add_self_hosted_domain(domain_name: domain_name, internal_only: internal_only).was_success
   end
 
   def update_via_api params
-p :sssssssssssssssssssssssssssssssssss
-p params
     engines_api.update_self_hosted_domain params[:old_domain_name], {domain_name: params[:domain_name], internal_only: params[:internal_only]}
   end
 
   def destroy_via_api
-
-
-p 'domain_name///////////////////////////////////'
-p domain_name
-
     engines_api.remove_self_hosted_domain domain_name
+  end
+
+  def validate_domain_name_not_blank
+    if domain_name.blank?
+      'Domain name cannot be blank.'
+    else
+      'OK'
+    end
   end
 
   def self.refresh_db_and_load_all
@@ -54,10 +37,10 @@ p domain_name
 
   def self.load_all_via_api
     result = []
-    self.self_hosted_domains_hash.each do |name, params|
-      hosted_domain = self.new(params)
-      hosted_domain.save
-      result << hosted_domain
+    domains = self.self_hosted_domains_hash
+    domains.each do |name, params|
+      domain = self.create(params)
+      result << domain
     end
     return result
   end

@@ -23,8 +23,14 @@ class HostedDomainsController < ApplicationController
 
   def create
     @hosted_domain = HostedDomain.new(hosted_domain_params)
-    @hosted_domain.save_via_api
-    redirect_to hosted_domains_path
+    validation_result = @hosted_domain.validate_domain_name_not_blank
+    if validation_result != 'OK'
+      redirect_to new_hosted_domain_path(hosted_domain_params), alert: validation_result
+    elsif @hosted_domain.save_via_api
+      redirect_to hosted_domains_path, notice: 'Successfully created self-hosted domain.'
+    else
+      redirect_to new_hosted_domain_path(hosted_domain_params), alert: 'Unable to save self-hosted domain.'
+    end
   end
 
   def destroy

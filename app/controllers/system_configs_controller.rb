@@ -10,9 +10,6 @@ class SystemConfigsController < ApplicationController
     end
   end
 
-  # def manage_domains
-  # end
-
 private
 
   def set_system_config

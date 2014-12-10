@@ -60,15 +60,6 @@ class AppInstallsController < ApplicationController
   end
 
   def update_display_properties
-
-
-p ':update_display_properties'
-# p @app_install.icon.exists?
-
-    # @app_install.attach_icon_using_icon_url_in_engine if !@app_install.icon.exists?
-
-# p @app_install.icon
-
     if @app_install.update_display_properties(app_install_params)
       redirect_to app_manager_path, notice: "Display properties were successfully updated for #{@app_install.engine_name}."
     else
@@ -77,11 +68,7 @@ p ':update_display_properties'
   end
 
   def update_network_properties
-p ':update_network_properties'
-p '@app_install'
-p @app_install.inspect
     if @app_install.update_network_properties app_install_params
-p @app_install.inspect
       redirect_to app_manager_path, notice: "Network properties were successfully updated for #{@app_install.engine_name}."
     else
       redirect_to edit_app_install_network_properties_path(app_install: app_install_params), alert: "Network properties were not updated for #{@app_install.engine_name}."
@@ -111,6 +98,3 @@ private
   end
 
 end
-
-
-

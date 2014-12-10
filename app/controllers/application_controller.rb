@@ -4,13 +4,10 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller? 
   
   require "/opt/engines/lib/ruby/EnginesOSapi.rb"
-  # require '/opt/engines/lib/ruby/SysConfig.rb'
   require 'git'
   require "awesome_print"
-  # require 'EngineGallery.rb'
-  # require 'GalleryMaintainer.rb'
 
-  # Overwriting the sign_out redirect path method
+  # Overwriting the devise sign_out redirect path method
   def after_sign_out_path_for(resource_or_scope)
     user_session_path
   end

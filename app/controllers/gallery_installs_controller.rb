@@ -1,4 +1,3 @@
-# require 'EngineGallery.rb'
 class GalleryInstallsController < ApplicationController
   before_action :authenticate_user!
 

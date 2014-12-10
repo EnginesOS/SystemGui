@@ -28,17 +28,6 @@ class BackupTasksController < ApplicationController
   private
     def backup_task_params
       params.require(:backup_task).permit!
-      # ( \
-      #   :source_name, \
-      #   :backup_type, \
-      #   :engine_name, \
-      #   :backup_name, \
-      #   :protocol, \
-      #   :address, \
-      #   :username, \
-      #   :address, \
-      #   :password, \
-      #   :folder )
     end
 
     def set_backup_task

@@ -11,9 +11,6 @@ class PagesController < ApplicationController
     Maintenance.db_maintenance
     @app_installs = AppHandler.all.map(&:app_install).sort_by(&:engine_name)
     @services = ServiceHandler.all.sort_by(&:engine_name)
-p ':app_manager'
-p @app_installs
-p @services
   end
 
   def system
@@ -44,10 +41,5 @@ private
       services = EnginesApiHandler.enginesOS_api.getManagedServices()
       services ||= []
     end
-
-    # def wallpaper_url
-    #   wallpaper = SystemConfig.first.wallpaper if SystemConfig.first.present?
-    #   return wallpaper.url if wallpaper.present?
-    # end
 
 end

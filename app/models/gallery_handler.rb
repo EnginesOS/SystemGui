@@ -19,10 +19,5 @@ class GalleryHandler
       end    
     end
   end
-
-  # def get_blueprint blueprint_id
-  #   BlueprintHandler.new
-
-  
   
 end

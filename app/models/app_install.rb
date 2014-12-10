@@ -25,26 +25,12 @@ class AppInstall < ActiveRecord::Base
   before_validation { icon.clear if delete_icon == '1' }
   after_create :set_display_properties_defaults
 
-
-
-
-
   def engines_api
     EnginesApiHandler.engines_api
   end 
 
-  # def self.create_empty_record
-  #   # self.skip_callback(:create)
-  #   self.new.save(skip_callbacks: true)
-  # end
-
   def self.new_from_gallery params
-p 'START NEW FROM GALLERY'
-p params    
     app_install = self.new(params)
-p app_install.inspect
-p app_install.gallery_url
-p app_install.blueprint_id
 
     blueprint_software = app_install.software_definition_from_blueprint_in_repository
     gallery_software = app_install.software_definition_from_gallery
@@ -68,44 +54,6 @@ p app_install.blueprint_id
     return app_install
   end
 
-# p "app_install.app_install_env_variables"
-# p app_install.app_install_env_variables.inspect
-
-# p "blueprint_software['environment_variables']"
-# p blueprint_software['environment_variables']
-
-#     blueprint_software['environment_variables'].each do |ev|
-# p 'ev.inspect'
-# p ev.inspect
-#       app_install_env_variable = app_install.app_install_env_variables.new(ev)
-#       # app_install_env_variable.update(ev)
-#       # app_install_env_variable.save
-
-# p 'app install env vars'
-# p ev
-
-#     # @name = params['name']
-#     # @value = params['value']
-#     # @label = params['label']
-#     # @comment = params['comment']
-#     # @build_time_only = params['build_time_only']
-#     # @mandatory = params['mandatory']
-#     # @ask_at_build_time = params['ask_at_build_time']
-
-# p "ok"
-# p app_install_env_variable.name
-# p app_install_env_variable.value
-# p app_install_env_variable.label
-# p app_install_env_variable.comment
-# p app_install_env_variable.build_time_only
-# p app_install_env_variable.mandatory
-# p app_install_env_variable.ask_at_build_time
-
-
-
-#     end
-#     return app_install
-#   end
 
   def self.unique_engine_name_for engine_name
     existing_engine_names = AppHandler.all_engine_names
@@ -129,27 +77,7 @@ p app_install.blueprint_id
     unique_host_name
   end
 
-  # def self.new_from_engine engine_name
-  #   engine = AppHandler.new(engine_name)
-  #   app_install = self.new(
-  #     engine_name: engine_name,
-  #     host_name: engine.host_name,
-  #     domain_name: engine.domain_name,
-  #     display_name: engine.software['name'],
-  #     display_description: engine.software['description'],
-  #     license_name: engine.software['license_name'],
-  #     license_sourceurl: engine.software['license_sourceurl'],
-  #     created_from_existing_engine: true)
-
-  #   engine.software['environment_variables'].each do |ev|
-  #     app_install.app_install_env_variables.build(ev)
-  #   end
-
-  #   return app_install
-  # end
-
   def attach_icon_using_icon_url_from_gallery
-p ':attach_icon_from_icon_url_from_gallery'    
     self.icon = icon_from_url(software_definition_from_gallery['image_url'])
   end
 
