@@ -29,7 +29,7 @@ class SoftwareInstaller
 private
 
   def load_blueprint_from_repository
-    p '$$$ load_blueprint'    
+    p '$$$ Load blueprint from repository'    
     buildname = File.basename(repository)
     segments = buildname.split('.')
     buildname = segments[0]

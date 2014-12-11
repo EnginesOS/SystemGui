@@ -6,7 +6,11 @@ class GalleryHandler
     @url = params[:url]
   end
   
-  def list_blueprints
+  def blueprints
+    @blueprints ||= load_blueprints
+  end
+
+  def load_blueprints
     uri = URI(url)
     return {} if (uri.host.nil? || uri.port.nil?)
     Net::HTTP.start(uri.host, uri.port) do |http|
@@ -17,6 +21,14 @@ class GalleryHandler
       else
         return {} #FIXME should put error mesg somewhere
       end    
+    end
+  end
+
+  def search_blueprint_titles search_string
+    if search_string.nil?
+      blueprints
+    else
+      blueprints.select{|blueprint| blueprint['full_name'].downcase.include? search_string.downcase }
     end
   end
   

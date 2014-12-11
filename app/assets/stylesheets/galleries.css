@@ -10,4 +10,6 @@
   text-align: left;
 }
 
-
+.input-group-addon.search-clear-button {
+  font-size: 13px;
+}

@@ -1,44 +1,63 @@
 <span class='installer'>
+
+  <div class="top-gap">
+    <div class="col-lg-6 gallery-search">
+      <%= form_tag installer_path, method: 'get' do %>
+        <div class="input-group input-group-lg">
+          <div class="input-group-addon"><i class=" fa fa-search"></i></div>
+            <%= text_field_tag :search, params[:search], placeholder: "Search", class: 'form-control', autofocus: true %>
+            <a href="<%= installer_path %>" class="input-group-addon btn search-clear-button"><i class=" fa fa-eraser"></i> Clear</a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <div class="col-sm-12 top-gap">
     <% @gallery_installs.each do |gallery_install| %>
       <h3 class="control-panel-title">
         <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery_install.name %>
       </h3>
       <div class="row top-gap">
-          <% @blueprints = gallery_install.list_blueprints %>
-          <%  @blueprints.sort_by{|b| b["full_name"] }.each do |blueprint|  %>
-            <% blueprint_id = blueprint["id"]
-              name = blueprint["full_name"]
-              home_page =  blueprint["home_page"]
-              image_url =  blueprint["image_url"]
-              if image_url.blank?
-                image_url = "assets/_placeholder_for_missing_engine.jpg" 
-              end
-              description = blueprint["description"]
-            %>       
-            <% install_url = new_app_install_path(app_install: {gallery_url: gallery_install.url, blueprint_id: blueprint_id}) %>
-            <div class="col-md-12 engine-install-row">
-              <div class="col-md-3">
-                <div class="engine-install-icon-container">
-                  <img src=<%= image_url%> class="engine-install-icon">
+          <% @blueprints = gallery_install.search_blueprint_titles(params[:search]) %>
+
+          <% if @blueprints.present? %>
+            <% @blueprints.sort_by{|b| b["full_name"] }.each do |blueprint|  %>
+              <% blueprint_id = blueprint["id"]
+                name = blueprint["full_name"]
+                home_page =  blueprint["home_page"]
+                image_url =  blueprint["image_url"]
+                if image_url.blank?
+                  image_url = "assets/_placeholder_for_missing_engine.jpg" 
+                end
+                description = blueprint["description"]
+              %>       
+              <% install_url = new_app_install_path(app_install: {gallery_url: gallery_install.url, blueprint_id: blueprint_id}) %>
+              <div class="col-md-12 engine-install-row">
+                <div class="col-md-3">
+                  <div class="engine-install-icon-container">
+                    <img src=<%= image_url%> class="engine-install-icon">
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="engine-install-text">
+                    <% if name.present? %>
+                      <span class="engine-install-name"><%= name %><br></span>
+                    <% end %>
+                    <% if description.present? %>
+                      <%=description%><br>
+                    <% end %>
+                    <% if home_page.present? %>
+                      <a href=<%=home_page%>><i class="fa fa-globe"></i> website</a><br>
+                    <% end %>
+                    <a href=<%= install_url %> class="btn btn-default engine-install-button trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>">Install</a>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-9">
-                <div class="engine-install-text">
-                  <% if name.present? %>
-                    <span class="engine-install-name"><%= name %><br></span>
-                  <% end %>
-                  <% if description.present? %>
-                    <%=description%><br>
-                  <% end %>
-                  <% if home_page.present? %>
-                    <a href=<%=home_page%>><i class="fa fa-globe"></i> website</a><br>
-                  <% end %>
-                  <a href=<%= install_url %> class="btn btn-default engine-install-button trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>">Install</a>
-                </div>
-              </div>
-            </div>
+            <%end%>
           <%end%>
+
+
         </div>
       </div>
     <%end%>
