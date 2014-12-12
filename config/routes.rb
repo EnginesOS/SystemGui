@@ -39,6 +39,9 @@ get "app_installs/destroy_all_records", to: "app_installs#destroy_all_records", 
   resources :users
   resources :hosted_domains
 
+get "hosted_domains/:id/new_ssl_certificate", to: "hosted_domains#new_ssl_certificate", as: :new_hosted_domain_ssl_certificate
+patch "hosted_domains/:id/create_ssl_certificate", to: "hosted_domains#create_ssl_certificate", as: :create_hosted_domain_ssl_certificate
+
   resources :app_installs
   
   resources :services do

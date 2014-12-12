@@ -50,6 +50,13 @@ class AppInstall < ActiveRecord::Base
     
     if app_install.app_install_env_variables.blank? 
       blueprint_software['environment_variables'].each do |ev|
+        permitted_keys = [
+          :name, :value, :label, :comment, 
+          :build_time_only, :mandatory, 
+          :ask_at_build_time].map(&:to_s)
+        ev.select! {|k,v| permitted_keys.include? k}
+p :ev
+p ev        
         app_install_env_variable = app_install.app_install_env_variables.new(ev)
       end
     end

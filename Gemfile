@@ -16,7 +16,7 @@ gem "font-awesome-rails"
 
 gem 'newrelic_rpm'
 gem 'simple_form'
-gem 'country_select'
+# gem 'country_select'
 gem "nested_form"
 
 #gem 'carrierwave'
@@ -26,6 +26,8 @@ gem "jquery-fileupload-rails"
 
 gem 'rails_admin'
 gem 'awesome_print', '~> 1.2.0'
+
+gem 'i18n_country_select'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'

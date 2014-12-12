@@ -23,6 +23,7 @@
 
           <% if @blueprints.present? %>
             <% @blueprints.sort_by{|b| b["full_name"] }.each do |blueprint|  %>
+
               <% blueprint_id = blueprint["id"]
                 name = blueprint["full_name"]
                 home_page =  blueprint["home_page"]

@@ -39,9 +39,23 @@ class HostedDomainsController < ApplicationController
     redirect_to hosted_domains_path
   end
 
+  def new_ssl_certificate
+    @hosted_domain = HostedDomain.find(params[:id])
+  end
+
+  def create_ssl_certificate
+    @hosted_domain = HostedDomain.find(params[:id])
+    @hosted_domain.create_ssl_certificate ssl_certificate_params
+    redirect_to hosted_domains_path
+  end
+
 private
 
   def hosted_domain_params
+    params.require(:hosted_domain).permit!
+  end
+
+  def ssl_certificate_params
     params.require(:hosted_domain).permit!
   end
 

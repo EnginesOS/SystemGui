@@ -1,5 +1,12 @@
 class HostedDomain < ActiveRecord::Base
 
+  #SSL certificate fields
+  attr_accessor :country
+  attr_accessor :state
+  attr_accessor :city
+  attr_accessor :organization_name
+  attr_accessor :person_name
+
   belongs_to :system_config
 
   def self.engines_api
@@ -8,6 +15,10 @@ class HostedDomain < ActiveRecord::Base
 
   def engines_api
     EnginesApiHandler.engines_api
+  end
+
+  def create_ssl_certificate params
+    engines_api.create_ssl_certificate params
   end
 
   def save_via_api

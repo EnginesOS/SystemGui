@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205012052) do
+ActiveRecord::Schema.define(version: 20141212025259) do
 
   create_table "app_install_env_variables", force: true do |t|
     t.integer "app_install_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20141205012052) do
     t.string  "domain_name"
     t.boolean "internal_only"
     t.integer "system_config_id"
+    t.boolean "self_hosted"
   end
 
   create_table "system_configs", force: true do |t|

@@ -16,7 +16,7 @@
 
       <% hosted_domains =  @settings.hosted_domains.map(&:domain_name).join(', ') %>
       <% detail = ('<span class="settings_btn_detail">' + hosted_domains.to_s + '</span>').html_safe %>
-      <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domain hosting'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) + "<br>".html_safe + detail.html_safe  %>
       <%= link_to link_body, hosted_domains_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 
       <% detail = '<span class="settings_btn_detail">'.html_safe + @settings.default_domain.to_s + '</span>'.html_safe %>
