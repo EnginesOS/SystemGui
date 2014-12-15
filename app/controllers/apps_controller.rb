@@ -13,6 +13,10 @@ class AppsController < ApplicationController
   
   def start   
     @result = @app.start
+
+p 'result from call to api to start app'
+p @result
+
     set_flash_messages_and_redirect
   end
   
@@ -89,9 +93,19 @@ private
 
   def set_flash_messages_and_redirect
     if @result.was_success == true
-      flash[:notice] = @result.result_mesg[0..250]
+      if @result.result_mesg.blank?
+        message = 'Success. (No message in API result object.)'
+      else
+        message = @result.result_mesg[0..250]
+      end
+      flash[:notice] = message
     else
-      flash[:error] = @result.result_mesg[0..250]
+      if @result.result_mesg.blank?
+        message = 'Unknown error. (No message in API result object.)'
+      else
+        message = @result.result_mesg[0..250]
+      end
+      flash[:error] = message
     end
     redirect_to app_manager_path
   end

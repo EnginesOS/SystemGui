@@ -73,6 +73,11 @@ class BackupTask
     self.all.keys.count
   end
 
+  def self.all_grouped_by_appx
+   AppHandler.all.map(&:backup_tasks)
+  end
+
+
   def self.all_grouped_by_app
 
     application_backup_details = {}
@@ -80,6 +85,11 @@ class BackupTask
 
     backup_tasks = self.all
     applications = AppHandler.all
+
+p 'backup_tasks'
+p backup_tasks
+p 'applications'
+p applications
 
     backup_tasks.keys.each do |backup_task_name|
       backup_task_application_name = backup_tasks[backup_task_name][:engine_name]
@@ -130,6 +140,9 @@ class BackupTask
         databases: application_databases
       }
     end
+
+p 'application_backup_details'
+p application_backup_details
 
     return application_backup_details
   

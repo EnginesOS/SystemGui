@@ -199,16 +199,6 @@ class AppHandler
     engines_api.get_engine_memory_statistics @engine_name
   end
 
-
-
-  def self.all_grouped_by_appx
-   array = []
-   AppHandler.all.map(&:backup_tasks).each do |app|
-     # array << 
-    end
-  end
-
-
   ### Class methods
 
   def self.all

@@ -40,14 +40,13 @@
 
     <fieldset>
       <legend>URL</legend>
-      <div class="form-group form-group-lg">
+      <div class="form-group-lg">
         <div class="col-sm-4">
           <%= f.label :host_name, class: "control-label" %>
           <%= f.text_field :host_name, class: "form-control" %>
         </div>
         <div class="col-sm-8">
-          <%= f.label :domain_name, class: "control-label" %>
-          <%= f.text_field :domain_name, class: "form-control" %>
+          <%= f.input(:domain_name, collection: HostedDomain.self_hosted_domains_hash.keys, class: "form-control") %>
         </div>
       </div>
     </fieldset>

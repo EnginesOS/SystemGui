@@ -19,6 +19,8 @@ gem 'simple_form'
 # gem 'country_select'
 gem "nested_form"
 
+gem 'openssl'
+
 #gem 'carrierwave'
 # gem 'fog'
 gem "paperclip", "~> 4.2"
