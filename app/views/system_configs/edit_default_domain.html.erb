@@ -3,7 +3,11 @@
 
   <%= simple_form_for @system_config, html: {class: "form-horizontal"} do |f| %>
     <fieldset>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :default_domain, label: 'Domain name'}, f: f} %>
+      <div class="form-group-lg">
+        <div class="col-sm-12">
+          <%= f.input(:default_domain, collection: HostedDomain.self_hosted_domains_hash.keys, label: false, class: "form-control") %>
+        </div>
+      </div>
     </fieldset>
 
     <div class="actions top-gap">
