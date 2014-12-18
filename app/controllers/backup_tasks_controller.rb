@@ -2,8 +2,8 @@ class BackupTasksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @application_backup_details = BackupTask.all_grouped_by_app
-    # render text: @application_backup_details
+    @backup_tasks = BackupTask.all
+    @softwares = Software.all
   end
 
   def new

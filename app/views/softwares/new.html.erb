@@ -1,0 +1,8 @@
+<div class="col-sm-12 top-gap app_installs">
+  <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus-square") %> Install <%= @software.display_name %></h3>
+  <p class="top-gap">
+    <%= @software.display_description %>
+  </p>
+  <%= render 'new_form' %>
+
+</div>

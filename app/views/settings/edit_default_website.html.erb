@@ -1,0 +1,19 @@
+<div class="col-sm-12 top-gap">
+  <h3 class="control-panel-title"><i class="fa fa-home"></i> Default website</h3>
+
+  <%= simple_form_for @settings, html: {class: "form-horizontal"} do |f| %>
+
+    <fieldset>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :default_site, label: "URL"}, f: f} %>
+    </fieldset>
+
+    <div class="actions top-gap">
+      <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), settings_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
+        <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>

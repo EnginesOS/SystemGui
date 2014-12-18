@@ -17,7 +17,7 @@
           <%= link_to (image_tag("engines_icon_grey.png", class: "nav_bar_launcher_icon") + " Home"), root_path, class: 'trigger-response-modal' %>
         </li>
         <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'app_manager') || (params[:controller] == 'app_installs' && params[:action] == 'edit')) %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control Panel", app_manager_path, class: 'trigger-response-modal' %>
+          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control Panel", control_panel_path, class: 'trigger-response-modal' %>
         </li>
         <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'installer') || (params[:controller] == 'app_installs' && params[:action] == 'new')) %>">
           <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Installer", installer_path, class: 'trigger-response-modal' %>

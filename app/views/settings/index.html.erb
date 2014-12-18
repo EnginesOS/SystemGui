@@ -1,0 +1,40 @@
+<span class='settings'>
+  <div class="col-sm-12">
+    <div class='btn-group-vertical top-gap'>
+
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @users.map{|u| u.email + ' ('.html_safe + distance_of_time_in_words_to_now(u.last_sign_in_at) + ')'.html_safe }.join('<br>'.html_safe) + ' </span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-users') + ' Users'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, users_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @backup_tasks.count.to_s + ' scheduled</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-upload') + ' Backups'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, backup_tasks_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @galleries.map(&:name).join('<br>').to_s.html_safe + '</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-th') + ' Galleries'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, galleries_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+      <% hosted_domains =  @domains.map(&:domain_name).join(', ') %>
+      <% detail = ('<span class="settings_btn_detail">' + hosted_domains.to_s + '</span>').html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, domains_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @settings.default_domain.to_s + '</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-bolt') + ' Default domain'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, settings_edit_default_domain_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+      <% detail = '<span class="settings_btn_detail">'.html_safe + @settings.default_site.to_s + '</span>'.html_safe %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-home') + ' Default website'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, settings_edit_default_website_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+      <% detail = (('<span class="settings_btn_detail">'.html_safe + label_tag("", "SMTP smarthost") + @settings.smtp_smarthost.to_s + '</span>'.html_safe) if @settings.smtp_smarthost.present?) || '' %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-envelope-o') + ' Mail'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, settings_edit_mail_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+      <% detail = (image_tag(@settings.wallpaper.url, height: "64") if @settings.wallpaper.present?) || '' %>
+      <% link_body = (content_tag(:i, '', class: 'fa fa-picture-o') + ' Wallpaper'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%= link_to link_body, settings_edit_wallpaper_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
+    </div>
+  </div>
+</span>

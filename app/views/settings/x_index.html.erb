@@ -1,0 +1,22 @@
+<div class="col-sm-12">
+  <h2 class="control-panel-title"><i class="fa fa-gear"></i> Settings</h2>
+
+  <%= form_for @settings, html: {multipart: true } do |f| %>
+
+    <%= f.label :default_domain, class: "top-gap" %>
+    <%= f.text_field :default_domain, class: "form-control form-text-lg" %>
+    <%= f.label :default_site, class: "top-gap" %>
+    <%= f.text_field :default_site, class: "form-control form-text-lg" %>
+    <%= f.label :smtp_smarthost, "SMTP Smarthost", class: "top-gap" %>
+    <%= f.text_field :smtp_smarthost, class: "form-control form-text-lg" %>
+    <%= f.label :wallpaper, class: "top-gap" %><br>
+    <% if @settings.wallpaper.present? %>
+      <%= image_tag @settings.wallpaper.url, height: "64" %><br>
+      <%= f.check_box :delete_wallpaper %> <%= f.label :delete %><br>
+    <% end %>
+    <%= f.file_field :wallpaper %>
+    <%= f.submit :save, class: "btn btn-primary top-gap" %>
+
+  <% end %>
+
+</div>

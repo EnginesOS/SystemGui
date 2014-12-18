@@ -18,6 +18,8 @@ gem 'newrelic_rpm'
 gem 'simple_form'
 # gem 'country_select'
 gem "nested_form"
+# gem 'activemodel-associations'
+gem "activerecord-tableless"
 
 gem 'openssl'
 

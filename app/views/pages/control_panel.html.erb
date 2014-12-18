@@ -1,0 +1,28 @@
+<span class='app-manager'>
+
+  <div class='row'>
+    <div class="col-sm-12 top-gap">
+      <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-tablet") %> Software</h3>
+    </div>
+
+    <% if @software %>
+        <% @software.each do |software| %>
+            <%= render partial: "softwares/app_manager_gadget", locals: {software: software} %>
+        <% end %>
+    <% else %>
+        <p>No applications installed.</p>
+    <% end %>
+  </div>
+
+  <div class='row'>
+    <div class="col-sm-12 top-gap">
+      <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
+    </div>
+
+    <% @services.each do |service| %>
+      <%= render partial: "services/app_manager_gadget", locals: {service: service} %>
+    <% end %>
+  </div>
+
+</span>
+

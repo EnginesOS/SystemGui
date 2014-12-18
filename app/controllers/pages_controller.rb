@@ -3,43 +3,37 @@ class PagesController < ApplicationController
 
   def home
     @settings = SystemConfig.settings
-    @app_installs = AppHandler.user_visible_applications.map(&:app_install).sort_by(&:engine_name)
+    @app_installs = EnginesSoftware.user_visible_applications.map(&:app_install).sort_by(&:engine_name)
     render :home, layout: false
   end
 
-  def app_manager
+  def control_panel
     Maintenance.db_maintenance
-    @app_installs = AppHandler.all.map(&:app_install).sort_by(&:engine_name)
-    @services = ServiceHandler.all.sort_by(&:engine_name)
+    @software = Software.all.sort_by(&:engine_name)
+    @services = Service.all.sort_by(&:engine_name)
+    # render text: @software.map(&:engine_name)
   end
 
   def system
-    @system_info = SystemHandler.system_info
+    @system_info = EnginesSystem.system_info
     @snapshop = Vmstat.snapshot
     sleep(1)
     @vm2 = Vmstat.memory
-  end
-
-  def settings
-    @settings = SystemConfig.settings
-    @users = User.all
-    @backup_tasks = BackupTask.all
-    @gallery_installs = GalleryInstall.all
   end
 
   def installer
     if SystemConfig.settings.default_domain.blank?
       redirect_to(edit_default_domain_path, alert: "Please set a default domain before installing software.")
     else
-      @gallery_installs = GalleryInstall.all
+      @gallery_installs = Gallery.all
     end
   end
 
-private
+# private
 
-    def services
-      services = EnginesApiHandler.enginesOS_api.getManagedServices()
-      services ||= []
-    end
+#     def services
+#       services = EnginesApi.enginesOS_api.getManagedServices()
+#       services ||= []
+#     end
 
 end
