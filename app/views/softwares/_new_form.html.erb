@@ -1,0 +1,151 @@
+<%= simple_nested_form_for(@software, url: softwares_path, html: {class: "form-horizontal"}) do |f| %>
+  <% true || if @software.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@software.errors.count, "error") %> prohibited this install from being saved:</h2>
+
+      <ul>
+      <% @software.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :gallery_url %>
+  <%= f.hidden_field :software_id %>
+  <%= f.hidden_field :default_image_url %>
+  <%= f.hidden_field :repository_url %>
+
+  <fieldset>
+    <button type="button" class="btn btn-default btn-lg pull-right" id="new_software_form_show_advanced_fields_button">
+      <%= content_tag(:i, '', class: 'fa fa-code') %> Advanced install
+    </button>
+  </fieldset>
+
+  <div id="new_software_form_default_details">
+    <fieldset>
+      <legend>URL</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-10 col-sm-offset-2">
+          <%= content_tag(:div, (f.object.host_name.to_s + '.' + f.object.domain_name.to_s), class: "form-data") %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div id="new_software_form_advanced_fields">
+
+    <fieldset>
+      <legend>Engine</legend>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :engine_name, label: :name}, f: f} %>
+    </fieldset>
+
+    <fieldset>
+      <legend>URL</legend>
+      <div class="form-group-lg">
+        <div class="col-sm-4">
+          <%= f.label :host_name, class: "control-label" %>
+          <%= f.text_field :host_name, class: "form-control" %>
+        </div>
+        <div class="col-sm-8">
+          <%= f.input(:domain_name, collection: Domain.all.map(&:domain_name), class: "form-control") %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>HTTP protocol</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-10 col-sm-offset-2">
+          <%= f.collection_radio_buttons :http_protocol, ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], :to_s, :to_s, item_wrapper_class: :radio_button_collection_item %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Display</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2">
+          <%= f.label :name, class: "control-label" %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.text_field :display_name, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2">
+          <%= f.label :description, class: "control-label" %>
+        </div>
+        <div class="col-sm-10">
+          <%= f.text_field :display_description, class: "form-control" %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Icon</legend>
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2">
+          <div class='form-image-control'>
+            <div class='form-image-centering'>
+              <%= image_tag(f.object.default_image_url, class: 'form-engine-icon') %>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-10">
+          <%= f.file_field :icon, class: 'form-control input-lg choose_file_form_control' %>
+        </div>
+      </div>
+    </fieldset>
+
+
+    <% optional_environment_variables = f.object.software_environment_variables.select{|ev| ev.mandatory.to_s != 'true'} %>
+    <% if optional_environment_variables.present? %>
+
+      <fieldset>
+        <legend>Optional environment variables</legend>
+        <%= f.fields_for :software_environment_variables do |ev| %>
+          <% if ev.object.mandatory.to_s != 'true' %>
+            <%= render partial: 'environment_variable_fields', locals: {ev: ev} %>
+          <% end %>
+        <% end %>
+      </fieldset>
+    <% end %>
+  </div>
+
+  <% mandatory_environment_variables = f.object.software_environment_variables.select{|ev| ev.mandatory.to_s == 'true'} %>
+  <% if mandatory_environment_variables.present? %>
+    <fieldset>
+      <legend>Mandatory environment variables</legend>
+      <%= f.fields_for :software_environment_variables do |ev| %>
+        <% if ev.object.mandatory.to_s == 'true' %>
+          <%= render partial: 'environment_variable_fields', locals: {ev: ev} %>
+        <% end %>
+      <% end %>
+    </fieldset>
+  <% end %>
+
+  <fieldset>
+    <legend>License</legend>
+    <div class="col-sm-10 col-sm-offset-2">
+      <div class="form-group form-group-lg form-text-lg">
+        <%= link_to f.object.license_name, f.object.license_sourceurl, target: "_blank" %> 
+      </div>
+    </div>
+    <%= render partial: 'shared/gadgets/form_checkbox_inline', locals: {field: {name: :terms_and_conditions_accepted, label: 'Accept'}, f: f} %>
+  </fieldset>
+  <div class="actions top-gap">
+    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), installer_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
+      <%= content_tag(:i, "", class: "fa fa-check") + " Install" %>
+    <% end %>
+  </div>
+
+
+<!-- <br>
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#waiting-for-response-modal">
+  show waiting for response modal
+</button> -->
+
+
+<% end %>

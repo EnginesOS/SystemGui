@@ -1,0 +1,10 @@
+<div class="form-group form-group-lg">
+  <div class="col-sm-2">
+    <label class="text optional control-label"><%= (ev.object.label if ev.object.label.present?) || ev.object.name.to_s.humanize %></label>
+  </div>
+  <div class="col-sm-10">
+    <% tooltip = (ev.object.comment || ev.object.name.to_s.humanize) %>
+    <%= ev.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
+    <%= ev.hidden_field :name %>
+  </div>
+</div>

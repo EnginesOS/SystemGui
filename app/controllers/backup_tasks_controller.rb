@@ -2,8 +2,9 @@ class BackupTasksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @application_backup_details = BackupTask.all_grouped_by_app
-    # render text: @application_backup_details
+    EnginesMaintenance.db_maintenance
+    @backup_tasks = BackupTask.all
+    @softwares = Software.all
   end
 
   def new
@@ -17,10 +18,10 @@ class BackupTasksController < ApplicationController
 
   def create
     result = BackupTask.new(backup_task_params).save
-    if result.was_success != true
-      flash[:error] = result.result_mesg[0..250]
-    else
+    if result.was_success == true
       flash[:notice] = result.result_mesg[0..250]
+    else
+      flash[:error] = result.result_mesg[0..250]
     end
     redirect_to backup_tasks_path 
   end

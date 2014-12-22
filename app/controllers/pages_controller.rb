@@ -1,45 +1,51 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!
 
+  def start
+    if EnginesFirstRun.required?
+      redirect_to(first_run_path)
+    else
+      redirect_to(control_panel_path)
+    end
+  end      
+
+  def first_run
+    redirect_to(control_panel_path, alert: 'First run did not happen...')
+  end
+
   def home
-    @settings = SystemConfig.settings
-    @app_installs = AppHandler.user_visible_applications.map(&:app_install).sort_by(&:engine_name)
+    EnginesMaintenance.db_maintenance
+    @settings = Setting.first_or_create
+    @softwares = Software.user_visible_applications.sort_by(&:engine_name)
     render :home, layout: false
   end
 
-  def app_manager
-    Maintenance.db_maintenance
-    @app_installs = AppHandler.all.map(&:app_install).sort_by(&:engine_name)
-    @services = ServiceHandler.all.sort_by(&:engine_name)
+  def control_panel
+    EnginesMaintenance.db_maintenance
+    @softwares = Software.all.sort_by(&:engine_name)
+    @service_names = EnginesService.all_service_names.sort
   end
 
   def system
-    @system_info = SystemHandler.system_info
+    @system_info = EnginesSystem.system_info
     @snapshop = Vmstat.snapshot
     sleep(1)
     @vm2 = Vmstat.memory
   end
 
-  def settings
-    @settings = SystemConfig.settings
-    @users = User.all
-    @backup_tasks = BackupTask.all
-    @gallery_installs = GalleryInstall.all
-  end
-
   def installer
-    if SystemConfig.settings.default_domain.blank?
+    if Setting.first_or_create.default_domain.blank?
       redirect_to(edit_default_domain_path, alert: "Please set a default domain before installing software.")
     else
-      @gallery_installs = GalleryInstall.all
+      @galleries = Gallery.all
     end
   end
 
-private
+# private
 
-    def services
-      services = EnginesApiHandler.enginesOS_api.getManagedServices()
-      services ||= []
-    end
+#     def services
+#       services = EnginesApi.enginesOS_api.getManagedServices()
+#       services ||= []
+#     end
 
 end
