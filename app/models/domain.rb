@@ -26,4 +26,11 @@ class Domain < ActiveRecord::Base
     EnginesDomain.engines_domains.map { |domain_params| create domain_params }
   end
 
+  def save_via_api
+    EnginesDomain.add_self_hosted_domain(
+      domain_name: domain_name,
+      internal_only: internal_only,
+      self_hosted: self_hosted)
+  end
+
 end

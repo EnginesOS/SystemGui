@@ -42,7 +42,7 @@ class BackupTask
   end
 
   def self.all
-    x = EnginesBackupTask.all.map do |engines_backup_task|
+    EnginesBackupTask.all.map do |engines_backup_task|
       self.new(
         source_name: engines_backup_task[:source_name],
         backup_type: engines_backup_task[:backup_type],
@@ -54,9 +54,6 @@ class BackupTask
         username: engines_backup_task[:dest_user],
         password: engines_backup_task[:dest_pass])
     end
-p x
-x
-
   end    
 
 private

@@ -1,6 +1,18 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!
 
+  def start
+    if EnginesFirstRun.required?
+      redirect_to(first_run_path)
+    else
+      redirect_to(control_panel_path)
+    end
+  end      
+
+  def first_run
+    redirect_to(control_panel_path, alert: 'First run did not happen...')
+  end
+
   def home
     EnginesMaintenance.db_maintenance
     @settings = Setting.first_or_create

@@ -7,9 +7,11 @@ Rails.application.routes.draw do
 # get 'messaging' => 'softwares#send_message'
 get "install/:id", to: "softwares#install", as: :install
 
-  root to: redirect("/control_panel")
+  root to: redirect("/start")
 
-  get "/desktop", to: "pages#home"
+  get "first_run", to: "pages#first_run"
+  get "start", to: "pages#start"
+  get "desktop", to: "pages#home"
   get "control_panel", to: "pages#control_panel"
   get "help", to: "pages#help"
   get "system", to: "pages#system"

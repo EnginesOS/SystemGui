@@ -1,11 +1,11 @@
-<%= simple_form_for @hosted_domain, html: {class: "form-horizontal"} do |f| %>
+<%= simple_form_for @domain, html: {class: "form-horizontal"} do |f| %>
   <fieldset>
     <%= (f.hidden_field :old_domain_name, value: f.object.domain_name) if !f.object.new_record? %>
     <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :domain_name, label: 'Domain'}, f: f} %>
     <%= render partial: 'shared/gadgets/form_checkbox_inline', locals: {field: {name: :internal_only}, f: f} %>
     <%= render partial: 'shared/gadgets/form_checkbox_inline', locals: {field: {name: :self_hosted, label: 'Self-hosted'}, f: f} %>
   <div class="actions top-gap">
-    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), hosted_domains_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), domains_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
     <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
       <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
     <% end %>
