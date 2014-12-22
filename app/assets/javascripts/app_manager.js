@@ -4,10 +4,9 @@ $(document).ready(function(){
       modal_id = $(this).attr("data-target");
       modal_body_id = modal_id + "_body";
 
-      container_name = $(this).attr("data-enginename");
+      engine_name = $(this).attr("data-engine");
       controller = $(this).attr("data-controller");
-      partial_url = "/" + controller + "/" + container_name + "/advanced_detail";
-      alert(partial_url);
+      partial_url = "/" + controller + "/" + engine_name + "/advanced_detail";
 
       $.ajax({
           url: partial_url,

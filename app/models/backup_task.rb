@@ -2,15 +2,16 @@ class BackupTask
 
   include ActiveModel::Model
 
-  attr_accessor :source_name
-  attr_accessor :backup_type
-  attr_accessor :engine_name
-  attr_accessor :backup_name
-  attr_accessor :protocol
-  attr_accessor :address
-  attr_accessor :folder
-  attr_accessor :username
-  attr_accessor :password
+  attr_accessor(
+    :source_name,
+    :backup_type,
+    :engine_name,
+    :backup_name,
+    :protocol,
+    :address,
+    :folder,
+    :username,
+    :password)
 
   def initialize params
     @source_name = params[:source_name]
@@ -25,11 +26,15 @@ class BackupTask
   end
 
   def backup_type_in_words
-    'files' if backup_type == 'fs' || 'database' if backup_type == 'db' || 'unknown backup type'
+    case backup_type
+    when 'fs'; 'files'
+    when 'db'; 'database'
+    else 'unknown backup type'
+    end
   end
 
   def count
-    EnginesBackupTask.all.count
+    EnginesBackupTask.count
   end
 
   def save

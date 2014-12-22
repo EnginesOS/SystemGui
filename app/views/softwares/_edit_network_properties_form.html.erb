@@ -1,10 +1,10 @@
-<%= simple_nested_form_for(@software, url: update_software_network_properties_path(id: @software.engine_name), method: :patch, html: {class: "form-horizontal"}) do |f| %>
+<%= simple_nested_form_for(@software, url: update_network_properties_software_path(@software), method: :patch, html: {class: "form-horizontal"}) do |f| %>
   <% true || if @software.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@software.errors.count, "error") %> prohibited this install from being saved:</h2>
 
       <ul>
-      <% @install.errors.full_messages.each do |message| %>
+      <% @software.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>

@@ -4,25 +4,22 @@ class Service
   #   @service_name = service_name
   # end
 
-  include ActiveModel::Model
+  # include ActiveModel::Model
 
-  attr_accessor :engine_name
+  # attr_accessor :engine_name
 
-  def self.all
-    EnginesService.all_engine_names.map do |service_name|
-      self.new(engine_name: service_name)
-    end
-  end
+  # def self.all
+  #   EnginesService.all_service_names.map do |service_name|
+  #     self.new(engine_name: service_name)
+  #   end
+  # end
 
-  def state
-    EnginesService.state engine_name
-  end
+  # def state
+  #   EnginesService.state engine_name
+  # end
 
-  def fqdn
-    EnginesService.fqdn engine_name
-  end
-    
+  # def fqdn
+  #   EnginesService.fqdn engine_name
+  # end
 
-
-  
 end

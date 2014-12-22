@@ -14,26 +14,26 @@
   </div>
 
   <div class="col-sm-12 top-gap">
-    <% @gallery_installs.each do |gallery_install| %>
+    <% @galleries.each do |gallery| %>
       <h3 class="control-panel-title">
-        <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery_install.name %>
+        <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.name %>
       </h3>
       <div class="row top-gap">
-          <% @blueprints = gallery_install.search_blueprint_titles(params[:search]) %>
+          <% @softwares = gallery.search_software_titles(params["search"]) %>
 
-          <% if @blueprints.present? %>
-            <% @blueprints.sort_by{|b| b["full_name"] }.each do |blueprint|  %>
+          <% if @softwares.present? %>
+            <% @softwares.sort_by{|b| b["full_name"] }.each do |software|  %>
 
-              <% blueprint_id = blueprint["id"]
-                name = blueprint["full_name"]
-                home_page =  blueprint["home_page"]
-                image_url =  blueprint["image_url"]
+              <% software_id = software["id"]
+                name = software["full_name"]
+                home_page =  software["home_page"]
+                image_url =  software["image_url"]
                 if image_url.blank?
                   image_url = "assets/_placeholder_for_missing_engine.jpg" 
                 end
-                description = blueprint["description"]
+                description = software["description"]
               %>       
-              <% install_url = new_app_install_path(app_install: {gallery_url: gallery_install.url, blueprint_id: blueprint_id}) %>
+              <% install_url = new_software_path(software: {gallery_url: gallery.url, software_id: software_id}) %>
               <div class="col-md-12 engine-install-row">
                 <div class="col-md-3">
                   <div class="engine-install-icon-container">

@@ -1,5 +1,7 @@
 module EnginesSystem
 
+  extend EnginesApi
+
   def self.system_info
     {
       memory: engines_api.get_system_memory_info,

@@ -4,16 +4,17 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: :rails_admin
 
-# get 'messaging' => 'app_installs#send_message'
-get "installing/:id", to: "app_installs#installing"
+# get 'messaging' => 'softwares#send_message'
+get "install/:id", to: "softwares#install", as: :install
 
   root to: redirect("/control_panel")
 
+  get "/desktop", to: "pages#home"
   get "control_panel", to: "pages#control_panel"
   get "help", to: "pages#help"
   get "system", to: "pages#system"
   get "installer", to: "pages#installer"
-  get "install_progress/:line", to: "app_installs#install_progress"
+  get "install_progress/:line", to: "softwares#install_progress"
   # get "settings", to: "settings#index"
   get "settings/edit_default_domain", to: "settings#edit_default_domain"
   get "settings/edit_default_website", to: "settings#edit_default_website"
@@ -31,19 +32,22 @@ get "installing/:id", to: "app_installs#installing"
 
   
   resources :services do
-    get :advanced_detail, on: :member
-    get :pause, on: :member
-    get :unpause, on: :member
-    get :start, on: :member
-    get :stop, on: :member
-    get :restart, on: :member
-    get :show, on: :member
-    get :recreate, on: :member
-    get :create_container, on: :member
-    get :register_website, on: :member
-    get :deregister_website, on: :member     
-    get :register_dns, on: :member
-    get :deregister_dns, on: :member
+    member do
+      get(
+        :advanced_detail,
+        :pause,
+        :unpause,
+        :start,
+        :stop,
+        :restart,
+        :show,
+        :recreate,
+        :create_container,
+        :register_website,
+        :deregister_website,
+        :register_dns,
+        :deregister_dns)
+    end
   end
 
 
@@ -57,6 +61,7 @@ get "installing/:id", to: "app_installs#installing"
     member do
       #get :edit_display_properties #, as: :edit_app_install_display_properties
       get(
+        :new,
         :start, :stop, :pause, :unpause, :restart,
         :delete_image, :create_container, :destroy_container,
         :build, :show, :recreate, :monitor, :demonitor,

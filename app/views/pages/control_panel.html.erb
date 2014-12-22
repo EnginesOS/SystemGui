@@ -5,8 +5,8 @@
       <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-tablet") %> Software</h3>
     </div>
 
-    <% if @software %>
-        <% @software.each do |software| %>
+    <% if @softwares.present? %>
+        <% @softwares.each do |software| %>
             <%= render partial: "softwares/app_manager_gadget", locals: {software: software} %>
         <% end %>
     <% else %>
@@ -19,8 +19,8 @@
       <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
     </div>
 
-    <% @services.each do |service| %>
-      <%= render partial: "services/app_manager_gadget", locals: {service: service} %>
+    <% @service_names.each do |service_name| %>
+      <%= render partial: "services/app_manager_gadget", locals: {service_name: service_name} %>
     <% end %>
   </div>
 

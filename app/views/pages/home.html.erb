@@ -29,62 +29,56 @@
 
   <div class="contaner-fluid home-view">
     <div class="home-view">
-      <div class="row">
 
-        <div class="home_page_app_gadget_holder col-sm-2" style="width: 250px;">
-          <div class="home_page_app_gadget">
-            <div class="dropdown">
-              <div class="" type="button" data-toggle="dropdown" aria-expanded="true"type="button" id="home_menu">
-                <a class="btn btn-default btn-launcher dropdown-toggle" data-toggle="tooltip" title="Menu">
+      <div class="home_page_app_gadget">
+        <div class="dropdown">
+          <div class="" type="button" data-toggle="dropdown" aria-expanded="true"type="button" id="home_menu">
+            <a class="btn btn-default btn-launcher dropdown-toggle" data-toggle="tooltip" title="Menu">
+              <div class= "launcher_icon_and_label_holder">
+                <%= image_tag("engines_icon_white.png", class: "fa-launcher launcher-icon") %>
+              </div>
+            </a>
+          </div>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="home_menu">
+          <div class="dropdown-holder">
+            <li>
+              <div class="btn-group">
+                <a href=<%= control_panel_path %> class="btn btn-default btn-launcher trigger-response-modal">
                   <div class= "launcher_icon_and_label_holder">
-                    <%= image_tag("engines_icon_white.png", class: "fa-launcher launcher-icon") %>
+                    <i class="fa fa-gears fa-launcher"></i>
+                    <div class="launcher-label">
+                      Control Panel
+                    </div>
                   </div>
                 </a>
               </div>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="home_menu">
-              <div class="dropdown-holder">
-                <li>
-                  <div class="btn-group">
-                    <a href=<%= control_panel_path %> class="btn btn-default btn-launcher trigger-response-modal">
-                      <div class= "launcher_icon_and_label_holder">
-                        <i class="fa fa-gears fa-launcher"></i>
-                        <div class="launcher-label">
-                          Control Panel
-                        </div>
-                      </div>
-                    </a>
+            </li>
+            <li>
+              <div class="btn-group">
+                <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher trigger-response-modal" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
+                  <div class= "launcher_icon_and_label_holder">
+                    <i class="fa fa-sign-out fa-launcher"></i>
+                    <div class="launcher-label">
+                      Sign out<br>
+                      <%= current_user.username %>
+                    </div>
                   </div>
-                </li>
-                <li>
-                  <div class="btn-group">
-                    <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher trigger-response-modal" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
-                      <div class= "launcher_icon_and_label_holder">
-                        <i class="fa fa-sign-out fa-launcher"></i>
-                        <div class="launcher-label">
-                          Sign out<br>
-                          <%= current_user.username %>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+                </a>
+              </div>
+            </li>
+          </ul>
         </div>
-
-        <div class="home_page_app_gadget_holder">
-          <% if @app_installs.present? %>
-              <% @app_installs.each do |app_install| %>
-                  <%= render partial: "apps/home_page_gadget", locals: {app_install: app_install} %>
-              <% end %>
-          <% else %>
-              <p class="top-gap">Welcome to Engines. No apps are installed.<br>
-                Fire-up a new app using the Installer in the Control Panel.</p>
-          <% end %>
-        </div>
-
       </div>
+
+      <% if @softwares.present? %>
+          <% @softwares.each do |software| %>
+              <%= render partial: "softwares/home_page_gadget", locals: {software: software} %>
+          <% end %>
+      <% else %>
+          <p class="top-gap">Welcome to Engines. No apps are installed.<br>
+            Fire-up a new app using the Installer in the Control Panel.</p>
+      <% end %>
+
     </div>
 
   </div>

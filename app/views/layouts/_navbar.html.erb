@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li>
-          <%= link_to (image_tag("engines_icon_grey.png", class: "nav_bar_launcher_icon") + " Home"), root_path, class: 'trigger-response-modal' %>
+          <%= link_to (image_tag("engines_icon_grey.png", class: "nav_bar_launcher_icon") + " Home"), desktop_path, class: 'trigger-response-modal' %>
         </li>
         <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'app_manager') || (params[:controller] == 'app_installs' && params[:action] == 'edit')) %>">
           <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control Panel", control_panel_path, class: 'trigger-response-modal' %>

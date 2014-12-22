@@ -1,5 +1,4 @@
-module EnginesServices
-  Actions
+module EnginesServicesActions
 
   def create_container
     @result = EnginesService.create_container params[:id]

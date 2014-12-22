@@ -1,9 +1,9 @@
 <%  engine_name = software.engine_name
-    state = engines_software_state engine_name
+    state = EnginesSoftware.state engine_name
     indicator_class = "indicator_" + state
     engine_state = "engine_" + state
-    default_name = engines_software_name_from_blueprint engine_name
-    software_fqdn = engines_software_fqdn engine_name
+    default_name = EnginesSoftware.blueprint_software_name engine_name
+    software_fqdn = EnginesSoftware.fqdn engine_name
 %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
@@ -54,7 +54,7 @@
       <li><%= link_to content_tag(:i, "", class: "fa fa-road") + " Runtime properties", edit_runtime_properties_software_path(software), class: 'trigger-response-modal' %>
       </li>
       <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, enginename: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, engine: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>
       </li>
       <li class="divider"></li>
        <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + software_fqdn, "http://" + software_fqdn, target: "_blank"%></li>

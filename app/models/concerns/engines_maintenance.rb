@@ -1,4 +1,4 @@
-module Maintenance
+module EnginesMaintenance
 
   def self.db_maintenance
     remove_orphaned_softwares
@@ -20,10 +20,6 @@ module Maintenance
     software_engines = EnginesSoftware.all_engine_names
     software = Software.all.map(&:engine_name)
     orphaned_software = software - software_engines
-
-p :orphaned_software
-p orphaned_software
-
     orphaned_software.each do |software|
       Software.find_by(engine_name: software).destroy
     end
@@ -34,7 +30,7 @@ p orphaned_software
     software = Software.all.map(&:engine_name)
     missing_software = software_engines - software
     missing_software.each do |software|
-      Software.create(engine_name: software).load_display_property_defaults
+      Software.create(engine_name: software).load_display_property_defaults.save
     end
   end
 

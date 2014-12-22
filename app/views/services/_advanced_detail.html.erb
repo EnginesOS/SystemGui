@@ -1,17 +1,17 @@
-<% state = @service.state %>
+<%  state = EnginesService.state @service_name %>
 
 <div class="row">
   <div class="col-sm-6">
     <table>
-      <tr><td><label>Engine name</label></td><td><%=@service.engine_name %></td></tr> 
-      <tr><td><label>Host name</label></td><td><a href=http://<%=@service.fqdn %>><%=@service.fqdn %></a></td></tr> 
+      <tr><td><label>Service name</label></td><td><%= @service_name %></td></tr> 
+      <tr><td><label>Host name</label></td><td><a href=http://<%= EnginesService.fqdn @service_name %>><%= EnginesService.fqdn @service_name %></a></td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
-      <tr><td><label>Default state</label></td><td><%=@service.state_as_set_by_user %></td></tr> 
-      <tr><td><label>Memory required</label></td><td><%= @service.memory %> MB</td></tr>
-      <tr><td><label>Monitored</label></td><td><%=@service.monitored %></td></tr>
-      <tr><td><label>Framework</label></td><td><%=@service.framework %>/<%=@service.runtime %></td></tr>
-      <tr><td><label>Image</label></td><td><%= @service.image %> </td></tr>
-      <tr><td><label>Blue print source</label></td><td><%= @service.repo %> </td></tr>
+      <tr><td><label>Default state</label></td><td><%= EnginesService.state_as_set_by_user @service_name %></td></tr> 
+      <tr><td><label>Memory required</label></td><td><%= EnginesService.memory @service_name %> MB</td></tr>
+      <tr><td><label>Monitored</label></td><td><%= EnginesService.monitored @service_name %></td></tr>
+      <tr><td><label>Framework</label></td><td><%= EnginesService.framework @service_name %>/<%= EnginesService.runtime @service_name %></td></tr>
+      <tr><td><label>Image</label></td><td><%= EnginesService.image @service_name %> </td></tr>
+      <tr><td><label>Blue print source</label></td><td><%= EnginesService.repo @service_name %> </td></tr>
     </table>
   </div>
 
@@ -20,8 +20,8 @@
       <label>Router registration</label>
       <div class="btn-toolbar">
         <div class="btn-group"> 
-          <%= link_to 'Register', register_website_service_path(@service.engine_name), class: "btn btn-default" %>
-          <%= link_to 'Deregister', deregister_website_service_path(@service.engine_name), class: "btn btn-default" %>
+          <%= link_to 'Register', register_website_service_path(@service_name), class: "btn btn-default" %>
+          <%= link_to 'Deregister', deregister_website_service_path(@service_name), class: "btn btn-default" %>
         </div>
       </div>
     </div>
@@ -29,8 +29,8 @@
       <label>DNS registration</label>
       <div class="btn-toolbar">
         <div class="btn-group"> 
-          <%= link_to 'Register', register_dns_service_path(@service.engine_name), class: "btn btn-default" %> 
-          <%= link_to 'Deregister', deregister_dns_service_path(@service.engine_name), class: "btn btn-default" %>
+          <%= link_to 'Register', register_dns_service_path(@service_name), class: "btn btn-default" %> 
+          <%= link_to 'Deregister', deregister_dns_service_path(@service_name), class: "btn btn-default" %>
         </div>
       </div>
     </div>
@@ -43,24 +43,24 @@
 
     <label>Network activity</label>
     <pre><table>
-      <tr><td><label>In</label></td><td><%= @service.network_metrics[:in].to_s + " bytes" %></td></tr>
-      <tr><td><label>Out</label></td><td><%= @service.network_metrics[:out].to_s + " bytes" %></td></tr>
+      <tr><td><label>In</label></td><td><%= EnginesService.network_metrics(@service_name)[:in].to_s + " bytes" %></td></tr>
+      <tr><td><label>Out</label></td><td><%= EnginesService.network_metrics(@service_name)[:out].to_s + " bytes" %></td></tr>
     </table></pre>
 
     <label>Memory usage</label>
     <pre><table>
-      <tr><td><label>Current</label></td><td><%= @service.memory_statistics[:current].to_s %></td></tr>
-      <tr><td><label>Maximum</label></td><td><%= @service.memory_statistics[:maximum].to_s %></td></tr>
-      <tr><td><label>Limit</label></td><td><%= @service.memory_statistics[:limit].to_s %></td></tr>
+      <tr><td><label>Current</label></td><td><%= EnginesService.memory_statistics(@service_name)[:current].to_s %></td></tr>
+      <tr><td><label>Maximum</label></td><td><%= EnginesService.memory_statistics(@service_name)[:maximum].to_s %></td></tr>
+      <tr><td><label>Limit</label></td><td><%= EnginesService.memory_statistics(@service_name)[:limit].to_s %></td></tr>
     </table></pre>
 
     <label>Ports</label>
     <pre><table>
-      <tr><td>Web port: <%= @service.port || "n/a" %></td></tr>
+      <tr><td>Web port: <%= EnginesService.port(@service_name) || "n/a" %></td></tr>
       <tr><td colspan=2>This port is internal to docker environ webport is always 443 and 80 externally</td></tr>
-       <% if @service.eports && @service.eports.length >0 %>
+       <% if EnginesService.eports(@service_name) && EnginesService.eports(@service_name).length >0 %>
          <tr><td colspan=2>Open Ports, Public ports are represented as internal:external port</td></tr>
-         <% @service.eports.each do |port| %>
+         <% EnginesService.eports(@service_name).each do |port| %>
            <% if port != nil %>
              <tr><td><%= port.name%></td><td><%= port.port.to_s %>:<%= port.external.to_s %> <%= port.publicFacing%></td></tr>
            <%end%>
@@ -69,14 +69,14 @@
     </table></pre>
 
     <label>Last error</label>
-    <pre><table><tr><td><%= @service.last_error %></td></tr></table></pre>
+    <pre><table><tr><td><%= EnginesService.last_error @service_name %></td></tr></table></pre>
   
     <label>Environment</label>
-    <% if @service.environments&& @service.environments.length > 0 %>
+    <% if EnginesService.environments(@service_name) && EnginesService.environments(@service_name).length > 0 %>
       <pre><table>
         <th>Name</th>
         <th>Value</th>
-        <% @service.environments.each do |v|%>
+        <% EnginesService.environments(@service_name).each do |v|%>
           <% if v != nil %>
             <tr>
               <td><%=v.name %></td>
@@ -91,9 +91,9 @@
     <% end %>
 
     <label>Volumes</label>
-    <% if @service.volumes && @service.volumes.length > 0 %>
+    <% if EnginesService.volumes(@service_name) && EnginesService.volumes(@service_name).length > 0 %>
       <pre><table>
-        <% @service.volumes.each do |v|%>
+        <% EnginesService.volumes(@service_name).each do |v|%>
            <tr>
             <td><%=v.localpath%>/<%=v.name%>:<%=v.remotepath%>/<%=v.name%></td>
           </tr>
@@ -104,9 +104,9 @@
     <% end %>  
 
     <label>Consumers</label>
-    <% if @service.consumers.present? %>                
+    <% if EnginesService.consumers(@service_name).present? %>                
       <pre><table>
-        <% @service.consumers.each do |cons|%>
+        <% EnginesService.consumers(@service_name).each do |cons|%>
            <tr><td><%= cons %></td></tr>
         <% end %>
       </table></pre>
@@ -115,9 +115,9 @@
     <% end %>  
 
     <label>Database</label>
-    <% if @service.databases && @service.databases.length > 0 %>
+    <% if EnginesService.databases(@service_name) && EnginesService.databases(@service_name).length > 0 %>
       <pre><table>
-        <% @service.databases.each do |db|%>
+        <% EnginesService.databases(@service_name).each do |db|%>
            <tr><td><%= db %></td></tr>
         <% end %>
       </table></pre>
@@ -127,7 +127,7 @@
 
      <label>Statistics</label>  
     <% if state != "nocontainer" 
-      stats = @service.stats
+      stats = EnginesService.stats(@service_name)
       if stats != nil  %>
         <pre><table>
           <tr><td>State: <%= stats.state  %></tr></td>
@@ -144,10 +144,10 @@
      <% end %>
   
      <label>Processes</label>
-     <% res = @service.ps_container %>
-     <% if @service.last_result.present? %>
+     <% res = EnginesService.ps_container @service_name %>
+     <% if EnginesService.last_result(@service_name).present? %>
        <pre><table>
-         <% @service.last_result.each_line do |line | 
+         <% EnginesService.last_result(@service_name).each_line do |line | 
            vals = line.split %>
            <tr>
              <% vals.each do |v| %>  
@@ -161,9 +161,9 @@
      <% end %>
 
     <label>Logs</label>
-    <% res = @service.logs_container%>
-    <% if @service.last_result.present? %>
-      <pre><%= @service.last_result %></pre>
+    <% res = EnginesService.logs_container(@service_name)%>
+    <% if EnginesService.last_result(@service_name).present? %>
+      <pre><%= EnginesService.last_result @service_name %></pre>
     <% else %>
       <pre>None</pre>
      <% end %>

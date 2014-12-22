@@ -3,63 +3,60 @@ class SoftwaresController < ApplicationController
   include EnginesSoftwaresActions
 
   before_action :authenticate_user!
-  before_action :set_software, only: [
-    :create,
-    :installing,
-    :edit_display_properties,
-    :edit_runtime_properties,
-    :edit_network_properties,
-    # :show_about_properties,
-    :update_display_properties,
-    :update_network_properties,
-    :update_runtime_properties]
-  before_action :refresh_software_properties, only: [
-    # :edit_display_properties,
-    :edit_network_properties,
-    # :show_about_properties,
-    :edit_runtime_properties]
-  before_action :set_softwares, only: :index
-  # before_action :refresh_all_softwares_properties, only: :index
 
+  before_action :set_softwares, only: :index
+  before_action :set_software,
+    only: [
+      :edit_display_properties,
+      :edit_runtime_properties,
+      :edit_network_properties,
+      # :show_about_properties,
+      :update_display_properties,
+      :update_network_properties,
+      :update_runtime_properties]
+  before_action :load_software_network_properties, only: :edit_network_properties
+  before_action :load_software_runtime_properties, only: :edit_runtime_properties
+  
   def destroy_all_records
     Software.delete_all
     redirect_to softwares_path 
   end
 
   def new
-    Maintenance.db_maintenance
-    @software = Software.new_from_gallery software_params
+    EnginesMaintenance.db_maintenance
+    @software = Software.new_from_repository gallery_url: software_params["gallery_url"], software_id: software_params["software_id"]
   end
 
   def create
     if software_params["terms_and_conditions_accepted"] == "0"
       redirect_to new_software_path(software: software_params), alert: "You must accept the license terms and conditions to install this software."
-    elsif Software.engine_name_not_unique(software_params)
+    elsif EnginesInstaller.engine_name_not_unique?(software_params[:engine_name])
       redirect_to new_software_path(software: software_params), alert: "Engine name must be unique."
-    elsif Software.host_name_not_unique(software_params)
+    elsif EnginesInstaller.host_name_not_unique?(software_params[:host_name])
       redirect_to new_software_path(software: software_params), alert: "Host name must be unique."
     else
-      if @software.update(software_params)
+      if @software = Software.create(software_params)
         if @software.icon.exists? == false
-          @software.attach_icon_using_icon_url_from_gallery
+          @software.attach_default_icon
           @software.save
         end
-        redirect_to installing_path(id: software_params[:engine_name], software: software_params)
+        redirect_to install_path(id: software_params[:engine_name], software: software_params)
       else
         redirect_to installer_path, alert: "Unable to initiate application installation for #{@software.engine_name}. Failed to save display properties to database."
       end
     end
+
+
   end
 
-  def installing
-    @software.update(software_params)
-    build_response = @software.build_app
-    if build_response.instance_of?(ManagedEngine)
-      redirect_to control_panel_path, notice: "Application installation was successful for #{@software.engine_name}."
-    elsif build_response.instance_of?(EnginesOSapiResult)
-      redirect_to installer_path, alert: "Application installation was not successful for #{@software.engine_name}. " + build_response.result_mesg[0..250]
+  def install
+    install_response = EnginesInstaller.install_engines_software software_params
+    if install_response.instance_of?(ManagedEngine)
+      redirect_to control_panel_path, notice: "Application installation was successful for #{params[:id]}."
+    elsif install_response.instance_of?(EnginesOSapiResult)
+      redirect_to installer_path, alert: "Application installation was not successful for #{params[:id]}. " + install_response.result_mesg[0..250]
     else
-      return render text: 'Unexpected response from build_app.'
+      render text: "Unexpected response from software installation process for #{params[:id]}."
     end
   end
 
@@ -89,7 +86,6 @@ class SoftwaresController < ApplicationController
 
   def advanced_detail
     @engine_name = params[:id]
-    # render text: @engine_name
     render partial: "advanced_detail"
   end
 
@@ -107,12 +103,12 @@ private
     @softwares = Software.all
   end
 
-  def refresh_software_properties
-    @software.load_properties_from_engine
+  def load_software_network_properties
+    @software.load_engines_software_network_parameters
   end
 
-  # def refresh_all_softwares_properties
-  #   @softwares.each(&:load_properties_from_engine)
-  # end
+  def load_software_runtime_properties
+    @software.load_engines_software_runtime_parameters
+  end
 
 end

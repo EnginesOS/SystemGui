@@ -4,14 +4,7 @@
   </div>
   <div class="col-sm-10">
     <% tooltip = (ev.object.comment || ev.object.name.to_s.humanize) %>
-    <%= ev.fields_for :env_variable_values do |evv| %>
-      <%= evv.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
-    <% end %>
+    <%= ev.text_field :value, class: "form-control", data: {toggle: "tooltip"}, title: tooltip %>
     <%= ev.hidden_field :name %>
-    <% #= ev.hidden_field :label %>
-    <% #= ev.hidden_field :comment %>
-    <% #= ev.hidden_field :build_time_only %>
-    <% #= ev.hidden_field :mandatory %>
-    <% #= ev.hidden_field :ask_at_build_time %>
   </div>
 </div>

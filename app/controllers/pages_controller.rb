@@ -2,16 +2,16 @@ class PagesController < ApplicationController
   before_action :authenticate_user!
 
   def home
-    @settings = SystemConfig.settings
-    @app_installs = EnginesSoftware.user_visible_applications.map(&:app_install).sort_by(&:engine_name)
+    EnginesMaintenance.db_maintenance
+    @settings = Setting.first_or_create
+    @softwares = Software.user_visible_applications.sort_by(&:engine_name)
     render :home, layout: false
   end
 
   def control_panel
-    Maintenance.db_maintenance
-    @software = Software.all.sort_by(&:engine_name)
-    @services = Service.all.sort_by(&:engine_name)
-    # render text: @software.map(&:engine_name)
+    EnginesMaintenance.db_maintenance
+    @softwares = Software.all.sort_by(&:engine_name)
+    @service_names = EnginesService.all_service_names.sort
   end
 
   def system
@@ -22,10 +22,10 @@ class PagesController < ApplicationController
   end
 
   def installer
-    if SystemConfig.settings.default_domain.blank?
+    if Setting.first_or_create.default_domain.blank?
       redirect_to(edit_default_domain_path, alert: "Please set a default domain before installing software.")
     else
-      @gallery_installs = Gallery.all
+      @galleries = Gallery.all
     end
   end
 
