@@ -9,10 +9,6 @@ class PagesController < ApplicationController
     end
   end      
 
-  def first_run
-    redirect_to(control_panel_path, alert: 'First run did not happen...')
-  end
-
   def home
     EnginesMaintenance.db_maintenance
     @settings = Setting.first_or_create

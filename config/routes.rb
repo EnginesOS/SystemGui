@@ -9,7 +9,8 @@ get "install/:id", to: "softwares#install", as: :install
 
   root to: redirect("/start")
 
-  get "first_run", to: "pages#first_run"
+  get "first_run", to: "first_runs#first_run"
+  post "first_runs", to: "first_runs#submit_first_run"
   get "start", to: "pages#start"
   get "desktop", to: "pages#home"
   get "control_panel", to: "pages#control_panel"
