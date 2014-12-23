@@ -1,0 +1,13 @@
+  <div class="form-group form-group-lg">
+    <div class="col-sm-3 control-label">
+      <% a = "f.label :#{field[:name]}, '#{(field[:label] || field[:name].to_s.humanize.capitalize)}', class: 'control-label', for: 'form_field_for_#{field[:name]}'" %>
+      <%= eval a %>
+    </div>
+    <div class="col-sm-6 input-lg">
+      <% if field[:collection] %>
+        <%= eval "f.select :#{field[:name]}, #{field[:collection]}, {}, {class: 'form-control'}" %>
+      <% else %>
+        <%= eval "f.text_field :#{field[:name]}, class: 'form-control', id: 'form_field_for_#{field[:name]}'" %>
+      <% end %>
+    </div>
+  </div>

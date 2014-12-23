@@ -5,43 +5,43 @@
 
     <fieldset>
       <legend>Passwords</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :admin_password, label: "Admin"}, f: f, as: :password_field} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :ssh_password, label: "SSH"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :mysql_password, label: "MySQL"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :psql_password, label: "Postgres"}, f: f} %>
       <legend>Smarthost</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :smarthost_hostname, label: "Hostname"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :smarthost_username, label: "Username"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :smarthost_password, label: "Password"}, f: f} %>
-#need pulldown for auth type
-      <%= render partial: 'shared/gadgets/form_field_inline',
-            locals: {field: {name: :smarthost_authtype, label: "Authentication type"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
+            locals: {field: {name: :smarthost_authtype, collection: EnginesSettings.smtp_auth_types,
+            label: "Authentication type"}, f: f} %>
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :smarthost_port, label: "Port"}, f: f} %>
       <legend>Default Domain</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :default_domain, label: "Domain name"}, f: f} %>
       <legend>SSL</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :ssl_country, label: "Country"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :ssl_state, label: "State"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :ssl_city, label: "City"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :ssl_organisation_name, label: "Organisation name"}, f: f} %>
-      <%= render partial: 'shared/gadgets/form_field_inline',
+      <%= render partial: 'first_run_form_field',
             locals: {field: {name: :ssl_person_name, label: "Person name"}, f: f} %>
     </fieldset>
 
-    <div class="actions top-gap">
+    <div class="col-sm-8 col-sm-offset-2 actions top-gap">
       <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), destroy_user_session_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
       <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
         <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
