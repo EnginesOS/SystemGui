@@ -4,6 +4,7 @@
     <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :domain_name, label: 'Domain'}, f: f} %>
     <%= render partial: 'shared/gadgets/form_checkbox_inline', locals: {field: {name: :internal_only}, f: f} %>
     <%= render partial: 'shared/gadgets/form_checkbox_inline', locals: {field: {name: :self_hosted, label: 'Self-hosted'}, f: f} %>
+  </fieldset>
   <div class="actions top-gap">
     <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), domains_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
     <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>

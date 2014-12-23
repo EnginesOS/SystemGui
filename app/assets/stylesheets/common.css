@@ -43,19 +43,10 @@ body {
   background-color: #f8f8f8;
 }
 
-label {
-  color: #777;
-  margin-right: 5px;
-  margin-bottom: 0px;
-}
-
 hr {
   margin: 2px;
 }
 
-fieldset {
-  margin-top: 20px;
-}
 
 #content {
   background-color: transparent;
@@ -69,16 +60,14 @@ fieldset {
   height: 300px;
 }
 
-.form-text-lg {
-  font-size: 18px;
-}
+
 
 .navbar {
   font-size: 20px;
 }
 
-.navbar-brand {
-  font-size: 16px;
+.navbar > .container-fluid .navbar-brand {
+  margin-left: 0px;
 }
 
 .nav_bar_launcher_icon {

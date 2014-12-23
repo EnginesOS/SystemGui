@@ -1,5 +1,71 @@
 <div class="col-sm-12">
-  <h2 class="control-panel-title"><i class="fa fa-users"></i> Users</h2>
-  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+  <h2 class="control-panel-title"><i class="fa fa-user"></i> Admin user</h2>
+  <div>
+    <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+  </div>
+</div>
+
+<div class="top-gap col-sm-12">
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label>email</label>
+    </div>
+    <div class="col-sm-10">
+      <%= @user.email %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label>Sign-in count</label>
+    </div>
+    <div class="col-sm-10">
+      <%= @user.sign_in_count %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label>Current sign-in at</label>
+    </div>
+    <div class="col-sm-10">
+      <%= distance_of_time_in_words @user.current_sign_in_at, DateTime.now %> ago
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label>Last sign-in at</label>
+    </div>
+    <div class="col-sm-10">
+      <%= distance_of_time_in_words @user.last_sign_in_at, DateTime.now %> ago
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label>Current sign-in IP</label>
+    </div>
+    <div class="col-sm-10">
+      <%= @user.current_sign_in_ip %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label>Last sign-in IP</label>
+    </div>
+    <div class="col-sm-10">
+      <%= @user.last_sign_in_ip %>
+    </div>
+  </div>
 
 </div>
+
+
+<div class="col-sm-12 top-gap">
+  <%= link_to content_tag(:i, "", class: "fa fa-lock") + ' Change password', edit_user_path(current_user), class: "btn btn-default btn-lg trigger-response-modal" %>
+</div>
+
+

@@ -1,3 +1,5 @@
+
+
 <%= simple_nested_form_for(@software, url: softwares_path, html: {class: "form-horizontal"}) do |f| %>
   <% true || if @software.errors.any? %>
     <div id="error_explanation">
@@ -37,18 +39,20 @@
 
     <fieldset>
       <legend>Engine</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :engine_name, label: :name}, f: f} %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :engine_name, label: 'Name'}, f: f} %>
     </fieldset>
 
     <fieldset>
       <legend>URL</legend>
-      <div class="form-group-lg">
-        <div class="col-sm-4">
-          <%= f.label :host_name, class: "control-label" %>
-          <%= f.text_field :host_name, class: "form-control" %>
+      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :host_name}, f: f} %>
+
+      <div class="form-group form-group-lg">
+        <div class="col-sm-2">
+          <%= f.label :domain_name, class: "control-label" %>
         </div>
-        <div class="col-sm-8">
-          <%= f.input(:domain_name, collection: Domain.all.map(&:domain_name), class: "form-control") %>
+        <div class="col-sm-10">
+          <%= f.collection_select(
+                :domain_name, Domain.all.map(&:domain_name), :to_s, :to_s, {}, { class: "form-control" } ) %>
         </div>
       </div>
     </fieldset>
@@ -57,7 +61,11 @@
       <legend>HTTP protocol</legend>
       <div class="form-group form-group-lg">
         <div class="col-sm-10 col-sm-offset-2">
-          <%= f.collection_radio_buttons :http_protocol, ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], :to_s, :to_s, item_wrapper_class: :radio_button_collection_item %>
+          <%= f.collection_radio_buttons :http_protocol, ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], :to_s, :to_s, {item_wrapper_class: "radio radio-label-lg" } %>
+
+ 
+
+
         </div>
       </div>
     </fieldset>

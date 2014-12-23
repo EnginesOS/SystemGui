@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable :registerable,
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-         
+  validates_presence_of :password_confirmation, :if => :password_changed?
+
   attr_accessor :login
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

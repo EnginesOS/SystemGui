@@ -30,11 +30,7 @@ class PagesController < ApplicationController
   end
 
   def installer
-    if Setting.first_or_create.default_domain.blank?
-      redirect_to(edit_default_domain_path, alert: "Please set a default domain before installing software.")
-    else
-      @galleries = Gallery.all
-    end
+    @galleries = Gallery.all
   end
 
 # private
