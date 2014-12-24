@@ -4,7 +4,7 @@
     <%= eval a %>
   </div>
   <div class="col-sm-10">
-    <% if password %>
+    <% if password.present? %>
       <%= eval "f.password_field :#{field[:name]}, class: 'form-control'" %>
     <% elsif field[:collection] %>
       <%= eval "f.select :#{field[:name]}, #{field[:collection]}, {}, {class: 'form-control'}" %>
@@ -13,7 +13,7 @@
     <% end %>
   </div>
 
-  <% if password %>
+  <% if password.present?  %>
     <div class="col-sm-2 top-gap">
       <%= f.label :reenter %>
     </div>
