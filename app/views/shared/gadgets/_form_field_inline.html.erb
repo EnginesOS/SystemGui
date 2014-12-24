@@ -2,7 +2,7 @@
   <div class="col-sm-2">
     <% a = "f.label :#{field[:name]}, '#{(field[:label] || field[:name].to_s.humanize.capitalize)}', class: 'control-label'" %>
     <%= eval a %>
-  </div>
+  </div> 
   <div class="col-sm-10">
     <% if a.include?("password") %>
       <%= eval "f.password_field :#{field[:name]}, class: 'form-control'" %>
