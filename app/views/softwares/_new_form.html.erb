@@ -39,22 +39,13 @@
 
     <fieldset>
       <legend>Engine</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :engine_name, label: 'Name'}, f: f} %>
+      <%= render partial: 'shared/form/field', locals: {field_name: :engine_name, field_label: 'Name', f: f} %>
     </fieldset>
 
     <fieldset>
       <legend>URL</legend>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :host_name}, f: f} %>
-
-      <div class="form-group form-group-lg">
-        <div class="col-sm-2">
-          <%= f.label :domain_name, class: "control-label" %>
-        </div>
-        <div class="col-sm-10">
-          <%= f.collection_select(
-                :domain_name, Domain.all.map(&:domain_name), :to_s, :to_s, {}, { class: "form-control" } ) %>
-        </div>
-      </div>
+      <%= render partial: 'shared/form/field', locals: {field_name: :host_name, f: f} %>
+      <%= render partial: 'shared/form/select', locals: {field_name: :domain_name, select_collection: Domain.all.map(&:domain_name), f: f} %>
     </fieldset>
 
     <fieldset>
@@ -62,10 +53,6 @@
       <div class="form-group form-group-lg">
         <div class="col-sm-10 col-sm-offset-2">
           <%= f.collection_radio_buttons :http_protocol, ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], :to_s, :to_s, {item_wrapper_class: "radio radio-label-lg" } %>
-
- 
-
-
         </div>
       </div>
     </fieldset>
@@ -140,7 +127,7 @@
         <%= link_to f.object.license_name, f.object.license_sourceurl, target: "_blank" %> 
       </div>
     </div>
-    <%= render partial: 'shared/gadgets/form_checkbox_inline', locals: {field: {name: :terms_and_conditions_accepted, label: 'Accept'}, f: f} %>
+    <%= render partial: 'shared/form/checkbox', locals: {field_name: :terms_and_conditions_accepted, field_label: 'Accept', f: f} %>
   </fieldset>
   <div class="actions top-gap">
     <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), installer_path, class: "btn btn-lg btn-warning trigger-response-modal") %>

@@ -1,0 +1,9 @@
+<%  field_label ||= field_name.to_s.humanize.capitalize %>
+
+<div class="form-group form-group-lg">
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-6">
+    <%= eval "f.label :#{field_name}, class: 'btn btn-default btn-lg' do; (f.check_box :#{field_name}) + ' #{(field_label || field_name.to_s.humanize.capitalize)}'; end" %>
+  </div>
+</div>

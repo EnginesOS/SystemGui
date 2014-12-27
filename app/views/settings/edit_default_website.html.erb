@@ -4,7 +4,7 @@
   <%= simple_form_for @settings, html: {class: "form-horizontal"} do |f| %>
 
     <fieldset>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :default_site, label: "URL"}, f: f} %>
+      <%= render partial: 'shared/form/field', locals: {field_name: :default_site, field_label: "URL", f: f} %>
     </fieldset>
 
     <div class="actions top-gap">
