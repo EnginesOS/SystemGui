@@ -16,7 +16,7 @@
 
   <fieldset>
     <legend>Resources</legend>
-    <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :memory}, f: f} %>
+    <%= render partial: 'shared/form/field', locals: {field_name: :memory, f: f} %>
   </fieldset>
 
   <% environment_variables = f.object.software_environment_variables %>

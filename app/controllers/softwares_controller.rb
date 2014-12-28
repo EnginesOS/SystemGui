@@ -64,7 +64,7 @@ class SoftwaresController < ApplicationController
     if @software.update_display_properties(software_params)
       redirect_to control_panel_path, notice: "Display properties were successfully updated for #{@software.engine_name}."
     else
-      redirect_to edit_display_properties_app_path(software: software_params), alert: "Display properties were not updated for #{@software.engine_name}."
+      redirect_to edit_display_properties_software_path(software: software_params), alert: "Display properties were not updated for #{@software.engine_name}."
     end
   end
 
@@ -72,7 +72,7 @@ class SoftwaresController < ApplicationController
     if @software.update_network_properties software_params
       redirect_to control_panel_path, notice: "Network properties were successfully updated for #{@software.engine_name}."
     else
-      redirect_to edit_software_network_properties_path(software: software_params), alert: "Network properties were not updated for #{@software.engine_name}."
+      redirect_to edit_network_properties_software_path(software: software_params), alert: "Network properties were not updated for #{@software.engine_name}."
     end
   end
 
@@ -80,7 +80,7 @@ class SoftwaresController < ApplicationController
     if @software.update_runtime_properties software_params
       redirect_to control_panel_path, notice: "Runtime properties were successfully updated for #{@software.engine_name}."
     else
-      render edit_software_runtime_properties_path(software: software_params), alert: "Runtime properties were not updated for #{@software.engine_name}."
+      render edit_runtime_properties_software_path(software: software_params), alert: "Runtime properties were not updated for #{@software.engine_name}."
     end
   end
 

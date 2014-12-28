@@ -3,7 +3,7 @@
   <%= simple_form_for @settings, html: {class: "form-horizontal"} do |f| %>
 
     <fieldset>
-      <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :smtp_smarthost, label: "SMTP Smarthost"}, f: f} %>
+      <%= render partial: 'shared/form/field', locals: {field_name: :smtp_smarthost, field_label: "SMTP Smarthost", f: f} %>
     </fieldset>
 
     <div class="actions top-gap">

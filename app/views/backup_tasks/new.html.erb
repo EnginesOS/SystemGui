@@ -11,16 +11,16 @@
     <%= f.input :backup_type, as: :hidden %>
     <%= f.input :engine_name, as: :hidden %>
 
-    <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :backup_name}, f: f} %>
+    <%= render partial: 'shared/form/field', locals: {field_name: :backup_name, f: f} %>
 
     <fieldset>
       <legend>Destination</legend>
-        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :folder}, f: f} %>
-        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"]}, f: f} %>
+        <%= render partial: 'shared/form/field', locals: {field_name: :folder, f: f} %>
+        <%= render partial: 'shared/form/select', locals: {field_name: :protocol, select_collection: ["ftp", "s3", "smbfs", "nfs", "local"], f: f} %>
       <div id="backup-task-external-destination-details">
-        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :address}, f: f} %>
-        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :username}, f: f} %>
-        <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :password}, f: f} %>
+        <%= render partial: 'shared/form/field', locals: {field_name: :address, f: f} %>
+        <%= render partial: 'shared/form/field', locals: {field_name: :username, f: f} %>
+        <%= render partial: 'shared/form/field', locals: {field_name: :password, f: f} %>
       </div>
     </fieldset>
 

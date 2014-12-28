@@ -8,8 +8,8 @@
       <h3 class="control-panel-title"><%= engine_name %></h3>
 
       <%  backup_tasks = EnginesSoftware.backup_tasks engine_name
-          volumes_backup_tasks = backup_tasks.select { |volume_backup_task| volume_backup_task.serviceType == 'fs'}
-          databases_backup_tasks = backup_tasks.select { |database_backup_task| database_backup_task.serviceType == 'fs'} %>
+          volumes_backup_tasks = backup_tasks.select { |volume_backup_task| p :volume_backup_task; p volume_backup_task; volume_backup_task[:backup_type] == 'fs'}
+          databases_backup_tasks = backup_tasks.select { |database_backup_task| database_backup_task[:backup_type] == 'fs'} %>
 
       <% EnginesSoftware.volumes(engine_name).each do |volume| %>
         <div>

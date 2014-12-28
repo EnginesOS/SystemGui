@@ -14,10 +14,11 @@
   <% end %>
 
   <fieldset>
-    <%= render partial: 'shared/gadgets/form_field_inline', locals: {field: {name: :password, label: 'New password'}, password: true, f: f} %>
+    <%= render partial: 'shared/form/password', locals: {field_name: :password, field_label: 'New password', f: f} %>
   </fieldset>
+
   <div class="actions top-gap">
-    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), users_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), new_user_session_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
     <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
       <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
     <% end %>
