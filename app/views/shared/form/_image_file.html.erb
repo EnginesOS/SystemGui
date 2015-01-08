@@ -1,0 +1,20 @@
+<div class="col-sm-8 col-sm-offset-2">
+  <div class="form-group">
+    <% if label != false %>
+      <%  label ||= name.to_s.humanize.capitalize %>
+      <%= f.label name, class: 'control-label' do %>
+        <%= label %>?
+      <% end %>
+    <% end %>
+
+    <% if f.object.send(name).present? %>
+      <div class='form-image-control'>
+        <div class='form-image-centering'>
+          <%= image_tag(f.object.send(name).url, class: 'form-engine-icon') %> <%= f.check_box('delete_' + name) %> <%= label_tag :delete %>
+        </div>
+      </div>
+    <% end %>
+    <%= f.file_field name, class: 'choose_file_form_control' %>
+
+  </div>
+</div>

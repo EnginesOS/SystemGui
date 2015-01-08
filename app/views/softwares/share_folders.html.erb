@@ -1,0 +1,15 @@
+<% engine_name = @software.engine_name %>
+
+<div class="col-sm-12 top-gap app_installs">
+
+  <h3 class='control-panel-title'><i class='fa fa-share-alt'></i> Share <%= @software.engine_name %> folders</h3>
+  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+  <% EnginesSoftware.volumes(engine_name).each do |volume| %>
+    <div>
+      <% volume_name = volume.name %>
+      <h4 class="control-panel-title top-gap"><i class="fa fa-hdd-o"></i> <%= volume_name %></h4>
+    </div>
+  <% end %>
+
+</div>

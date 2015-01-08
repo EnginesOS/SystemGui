@@ -1,5 +1,7 @@
 class Gallery < ActiveRecord::Base
 
+  validates_presence_of :url, :name
+
   def softwares
     @softwares ||= EnginesGallery.softwares gallery_url: url
   end

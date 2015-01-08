@@ -1,9 +1,15 @@
 <%  engine_name = software.engine_name
     state = EnginesSoftware.state engine_name
+    if state.kind_of?(EnginesOSapiResult)
+      state = "state_error"
+    end
     indicator_class = "indicator_" + state
     engine_state = "engine_" + state
     default_name = EnginesSoftware.blueprint_software_name engine_name
     software_fqdn = EnginesSoftware.fqdn engine_name
+    if software_fqdn.kind_of?(EnginesOSapiResult)
+      software_fqdn = "?"
+    end
 %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
@@ -36,7 +42,7 @@
       <% elsif state == "stopped" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_software_path(id: engine_name), class: 'trigger-response-modal'  %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-circle-o") + " Destroy", destroy_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy", destroy_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
         <li class="divider"></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Recreate", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %> </li>
       <% elsif  state == "nocontainer" %>   
@@ -44,7 +50,7 @@
         <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create", create_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Delete", delete_image_software_path(id: engine_name), class: 'trigger-response-modal' %></li> 
       <% else %>
-         <li>no state</li>
+         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
       <%  end %>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Display properties", edit_display_properties_software_path(software), class: 'trigger-response-modal' %>
@@ -52,6 +58,11 @@
       <li><%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_network_properties_software_path(software), class: 'trigger-response-modal' %>
       </li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-road") + " Runtime properties", edit_runtime_properties_software_path(software), class: 'trigger-response-modal' %>
+      </li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-question") + " Software variables", edit_software_variables_software_path(software), class: 'trigger-response-modal' %>
+      </li>
+      <li class="divider"></li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Share folders", share_folders_software_path(software),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, engine: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>

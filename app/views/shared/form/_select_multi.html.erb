@@ -1,0 +1,12 @@
+<%  label ||= name.to_s.humanize.capitalize
+    value ||= f.object.send(name) %>
+
+<div class="col-sm-8  col-sm-offset-2">
+  <div class="form-group">
+    <%= f.label name, class: 'control-label' do %>
+      <%= label %>
+    <% end %>
+    Multi-select not working.
+    <%= f.select name, collection, {selected: value, include_blank: value.nil?, input_html: {class: "input-lg"}}, class: 'selectize-single' %>
+  </div>
+</div>

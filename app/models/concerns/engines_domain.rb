@@ -11,7 +11,7 @@ module EnginesDomain
 
   def self.update params
     engines_api.update_domain(
-      params[:old_domain_name],
+      params[:original_domain_name],
       domain_name: params[:domain_name],
       internal_only: params[:internal_only],
       self_hosted: params[:self_hosted])
@@ -30,7 +30,7 @@ module EnginesDomain
   end
 
   def self.engines_domains
-    domains_hash.values
+    domains_hash.keys
   end
 
 end

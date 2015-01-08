@@ -1,36 +1,32 @@
 class Domain < ActiveRecord::Base
 
-  attr_accessor :old_domain_name
+  attr_accessor :original_domain_name
   attr_accessor :country
   attr_accessor :state
   attr_accessor :city
   attr_accessor :organization_name
   attr_accessor :person_name
 
-  # belongs_to :system_config
+  validates_presence_of :domain_name
 
-  def validate_domain_name_not_blank
-    if domain_name.blank?
-      'Domain name cannot be blank.'
-    else
-      'OK'
-    end
-  end
-
-  def self.refresh_db_and_load_all
-    self.delete_all
-    self.load_all_via_api
-  end
-
-  def self.load_all_via_api
-    EnginesDomain.engines_domains.map { |domain_params| create domain_params }
-  end
-
-  def save_via_api
-    EnginesDomain.add_self_hosted_domain(
+  def update_via_api
+    EnginesDomain.update(
+      original_domain_name: original_domain_name,
       domain_name: domain_name,
       internal_only: internal_only,
       self_hosted: self_hosted)
+  end
+
+  def save_via_api
+    EnginesDomain.create(
+      domain_name: domain_name,
+      internal_only: internal_only,
+      self_hosted: self_hosted)
+  end
+
+  def destroy_via_api
+    EnginesDomain.destroy(
+      domain_name: domain_name)
   end
 
 end

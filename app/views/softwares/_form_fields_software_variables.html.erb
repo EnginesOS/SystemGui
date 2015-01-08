@@ -1,0 +1,6 @@
+<% if f.object.software_environment_variables.present? %>
+  <legend>Environment variables</legend>
+  <%= f.fields_for :software_environment_variables do |ev| %>
+      <%= render partial: 'form_field_software_variable', locals: {ev: ev} %>
+  <% end %>
+<% end %>

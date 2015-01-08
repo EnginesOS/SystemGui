@@ -5,7 +5,7 @@
 <%= @backup_task.backup_type %>
   <h4><%= "Source: " + @backup_task.source_name + "(" + @backup_task.backup_type_in_words.to_s + ")" %></h4>
 
-  <%= simple_form_for @backup_task, html: {class: "form-horizontal"} do |f| %>
+  <%= form_for @backup_task, html: {class: "form-horizontal"} do |f| %>
 
     <%= f.input :source_name, as: :hidden %>
     <%= f.input :backup_type, as: :hidden %>

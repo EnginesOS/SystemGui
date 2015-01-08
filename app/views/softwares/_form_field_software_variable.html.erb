@@ -1,0 +1,27 @@
+<% if (@software.form_type == "new" && ev.object.ask_at_build_time == true) ||
+  (@software.form_type != "new" && ev.object.build_time_only != true) 
+    (html_class = "new_software_form_advanced_fields") if ev.object.mandatory != true
+end
+
+type = ev.object.type || 'text_field'
+name = ev.object.name
+label = ev.object.label || ev.object.name.to_s.humanize.titleize
+tooltip = ev.object.comment || label
+value = ev.object.value %>
+
+<%= ev.hidden_field :name %>
+<%= ev.hidden_field :type %>
+
+<% if type == 'text_field' %>
+  <%= render partial: 'shared/form/text_field', locals: {name: :value, label: label, tooltip: tooltip, value: value, f: ev} %>
+<% elsif type == 'select' || type == 'select_single' %>
+  <%= render partial: 'shared/form/select', locals: {name: :value, label: label, collection: ev.object.collection, tooltip: tooltip, value: value, f: ev} %>
+<% elsif type == 'select_multi' %>
+  <%= render partial: 'shared/form/select_multi', locals: {name: :value, label: label, collection: ev.object.collection, tooltip: tooltip, value: value, f: ev} %>
+<% elsif type == 'password_with_confirmation' %>
+  <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :value, label: label, collection: ev.object.collection, tooltip: tooltip, value: value, f: ev} %>
+<% else %>
+  <div class="col-sm-8 col-sm-offset-2">
+    Error: field type has been improperly defined.
+  </div>
+<% end %>

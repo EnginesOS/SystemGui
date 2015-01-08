@@ -1,0 +1,16 @@
+<% form_object = f.object
+   label ||= form_object.class.to_s.humanize.downcase %>
+
+<% if form_object.errors.any? %>
+  <div class="col-sm-8 col-sm-offset-2">
+    <div id="error_explanation" class='well'>
+      <h4><%= pluralize(form_object.errors.count, "error") %> prohibited this <%= label %> from being saved:</h4>
+
+      <ul>
+      <% form_object.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

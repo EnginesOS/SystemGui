@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 gem 'devise'
 # gem "activerecord-tableless"
-# gem 'activemodel-associations'
+gem 'activemodel-associations'
 
 # gem 'file-tail'
 
@@ -13,11 +13,12 @@ gem "puma"
 gem "oink"
 gem 'bootstrap3-rails'
 gem "font-awesome-rails"
-
+# gem 'bootstrap-multiselect-rails'
+gem "selectize-rails"
 gem 'newrelic_rpm'
 gem 'simple_form'
 # gem 'country_select'
-gem "nested_form"
+# gem "nested_form"
 # gem 'activemodel-associations'
 # gem "activerecord-tableless"
 

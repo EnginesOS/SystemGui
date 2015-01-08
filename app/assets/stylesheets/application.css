@@ -11,6 +11,8 @@
  * file per style scope.
  *
  *= require bootstrap
+ *= require selectize
+ *= require selectize.bootstrap3
  *= require font-awesome
  *= require_tree .
  *= require_self

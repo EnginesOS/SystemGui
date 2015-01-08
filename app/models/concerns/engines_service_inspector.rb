@@ -23,7 +23,14 @@ module EnginesServiceInspector
     logs_container: 'logs_container'
   }.
   each do |method, instruction|
-    define_method(method) { |service_name| send(:engines_service, service_name).send(instruction) }
+    define_method(method) do |service_name|
+      result = send(:engines_service, service_name)
+      if result.kind_of?(EnginesOSapiResult)
+        result
+      else
+        result.send(instruction)
+      end
+    end
   end
 
 end
