@@ -71,9 +71,12 @@ get "install/:id", to: "softwares#install", as: :install
         :advanced_detail,
         :register_website, :deregister_website,
         :register_dns, :deregister_dns,
-        :edit_display_properties, :edit_network_properties, :edit_runtime_properties)
+        :share_folders,
+        :edit_display_properties, :edit_network_properties, :edit_runtime_properties,
+        :edit_software_variables)
       patch(
-        :update_display_properties, :update_network_properties, :update_runtime_properties)
+        :update_display_properties, :update_network_properties, :update_runtime_properties,
+        :update_software_variables)
     end
   end
 

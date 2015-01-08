@@ -1,0 +1,37 @@
+name:
+value:
+label:
+comment:
+type:
+    text_field
+    text_area
+    dropdown_list
+    dropdown_list_multi
+    radio_buttons
+    checkbox
+    password
+    password_with_confirmation
+    date
+
+regexvalidator:
+allow_multiple: # not used?????
+collection:
+ask_at_build_time:
+build_time_only:
+
+
+type:
+
+
+
+group: # string containing a group name. EVs will be grouped by this string.
+label: # string for group title on form.
+comment: # string to appear under title on form to help user complete the fields in the group.
+build_time_only: # boolean. hide this group on edit form when true.
+ask_at_build_time: # boolean. show this group on install form.
+mandatory: # boolean. always ask - do not put in advanced install.
+
+
+
+
+{environment_variables: {'Admin': {comment: 'Enter details for creating an administrator account', variables, }}}

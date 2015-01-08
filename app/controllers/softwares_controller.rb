@@ -10,12 +10,17 @@ class SoftwaresController < ApplicationController
       :edit_display_properties,
       :edit_runtime_properties,
       :edit_network_properties,
+      :edit_software_variables,
       # :show_about_properties,
+      :share_folders,
       :update_display_properties,
       :update_network_properties,
-      :update_runtime_properties]
+      :update_runtime_properties,
+      :update_software_variables]
+  before_action :load_software_display_properties, only: :edit_display_properties
   before_action :load_software_network_properties, only: :edit_network_properties
   before_action :load_software_runtime_properties, only: :edit_runtime_properties
+  before_action :load_software_variables, only: :edit_software_variables
   
   def destroy_all_records
     Software.delete_all
@@ -28,29 +33,38 @@ class SoftwaresController < ApplicationController
   end
 
   def create
-    if software_params["terms_and_conditions_accepted"] == "0"
-      redirect_to new_software_path(software: software_params), alert: "You must accept the license terms and conditions to install this software."
-    elsif EnginesInstaller.engine_name_not_unique?(software_params[:engine_name])
-      redirect_to new_software_path(software: software_params), alert: "Engine name must be unique."
-    elsif EnginesInstaller.host_name_not_unique?(software_params[:host_name])
-      redirect_to new_software_path(software: software_params), alert: "Host name must be unique."
-    else
-      if @software = Software.create(software_params)
+p :software_params
+p software_params
+
+    # if software_params["terms_and_conditions_accepted"] == "0"
+    #   redirect_to new_software_path(software: software_params), alert: "You must accept the license terms and conditions to install this software."
+    # elsif EnginesInstaller.engine_name_not_unique?(software_params[:engine_name])
+    #   redirect_to new_software_path(software: software_params), alert: "Engine name must be unique."
+    # elsif EnginesInstaller.fqdn_not_unique?(software_params[:host_name] + '.' + software_params[:domain_name])
+    #   redirect_to new_software_path(software: software_params), alert: "Host name plus domain name must be unique."
+    # elsif EnginesInstaller.software_variable_passwords_not_confimed?(software_environment_variable_params_with_password_confirmations)
+    #   redirect_to new_software_path(software: software_params), alert: "Password did not match password confirmation."
+    # else
+    @software = Software.new(software_params)
+      if @software.save
         if @software.icon.exists? == false
           @software.attach_default_icon
           @software.save
         end
         redirect_to install_path(id: software_params[:engine_name], software: software_params)
       else
-        redirect_to installer_path, alert: "Unable to initiate application installation for #{@software.engine_name}. Failed to save display properties to database."
+        render :new
+        # redirect_to installer_path, alert: "Unable to initiate application installation for #{@software.engine_name}. Failed to save display properties to database."
       end
-    end
-
-
+    # end
   end
 
   def install
-    install_response = EnginesInstaller.install_engines_software software_params
+
+p :software_engine_install_params
+p software_engine_install_params
+
+    install_response = EnginesInstaller.install_engines_software software_engine_install_params
     if install_response.instance_of?(ManagedEngine)
       redirect_to control_panel_path, notice: "Application installation was successful for #{params[:id]}."
     elsif install_response.instance_of?(EnginesOSapiResult)
@@ -60,19 +74,26 @@ class SoftwaresController < ApplicationController
     end
   end
 
+  def edit_software_variables
+  end
+
   def update_display_properties
-    if @software.update_display_properties(software_params)
+    if @software.update_display_properties software_params
       redirect_to control_panel_path, notice: "Display properties were successfully updated for #{@software.engine_name}."
     else
-      redirect_to edit_display_properties_software_path(software: software_params), alert: "Display properties were not updated for #{@software.engine_name}."
+      render :edit_display_properties
     end
   end
 
   def update_network_properties
-    if @software.update_network_properties software_params
-      redirect_to control_panel_path, notice: "Network properties were successfully updated for #{@software.engine_name}."
+    if EnginesInstaller.fqdn_not_unique?(software_params[:host_name] + '.' + software_params[:domain_name])
+      redirect_to new_software_path(software: software_params), alert: "Host name plus domain name must be unique."
     else
-      redirect_to edit_network_properties_software_path(software: software_params), alert: "Network properties were not updated for #{@software.engine_name}."
+      if @software.update_network_properties software_params
+        redirect_to control_panel_path, notice: "Network properties were successfully updated for #{@software.engine_name}."
+      else
+        render :edit_network_properties
+      end
     end
   end
 
@@ -80,7 +101,19 @@ class SoftwaresController < ApplicationController
     if @software.update_runtime_properties software_params
       redirect_to control_panel_path, notice: "Runtime properties were successfully updated for #{@software.engine_name}."
     else
-      render edit_runtime_properties_software_path(software: software_params), alert: "Runtime properties were not updated for #{@software.engine_name}."
+      render :edit_runtime_properties
+    end
+  end
+
+  def update_software_variables
+    if EnginesInstaller.software_variable_passwords_not_confimed?(software_environment_variable_params_with_password_confirmations)
+      redirect_to new_software_path(software: software_params), alert: "Password did not match password confirmation."
+    else
+      if @software.update_software_variables software_params
+        redirect_to control_panel_path, notice: "Runtime properties were successfully updated for #{@software.engine_name}."
+      else
+        render :edit_runtime_properties
+      end
     end
   end
 
@@ -91,8 +124,41 @@ class SoftwaresController < ApplicationController
 
 private
 
+  def software_engine_install_params
+    result = {}
+    software_params.each do |k,v|
+      if v.kind_of? Hash
+        v.each do |k,v|
+          result[k] = v
+        end
+      else
+        result[k] = v
+      end
+    end
+p :software_engine_install_params
+p result
+    
+    result
+  end
+
   def software_params
-    @software_params ||= params.require(:software).permit!
+    @software_params ||= params_without_password_confirmations
+  end
+
+  def software_environment_variable_params_with_password_confirmations
+    params.require(:software)["software_environment_variables_attributes"]
+  end
+
+  def params_without_password_confirmations
+    software_params_temp = params.require(:software).permit!
+    if software_params_temp["software_environment_variables_attributes"].present?
+      software_params_temp["software_environment_variables_attributes"] =
+        software_params_temp["software_environment_variables_attributes"].each do |k,v|
+          { k => (v.delete("password_confirmation"); v) }
+        end
+    else
+      software_params_temp
+    end
   end
 
   def set_software
@@ -103,12 +169,20 @@ private
     @softwares = Software.all
   end
 
+  def load_software_display_properties
+    @software.load_engines_software_display_parameters
+  end
+
   def load_software_network_properties
     @software.load_engines_software_network_parameters
   end
 
   def load_software_runtime_properties
     @software.load_engines_software_runtime_parameters
+  end
+
+  def load_software_variables
+    @software.load_engines_software_environment_variables
   end
 
 end

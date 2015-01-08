@@ -2,13 +2,11 @@ module EnginesInstaller
 
   extend EnginesApi
 
-  def self.install_engines_software software_params
-    repository_url = software_params[:repository_url]
-    software_params.delete(:repository_url)
-    build_engine repository_url, software_params
+  def self.install_engines_software(software_params)
+    engines_api.build_engine software_params
   end
 
-  def self.generate_next_unique_engine_name_for engine_name
+  def self.generate_next_unique_engine_name_for(engine_name)
     existing_engine_names = EnginesSoftware.all_engine_names
     unique_engine_name_candidate = engine_name
     index = 2
@@ -19,7 +17,7 @@ module EnginesInstaller
     unique_engine_name_candidate
   end
 
-  def self.generate_next_unique_host_name_for host_name
+  def self.generate_next_unique_host_name_for(host_name)
     existing_host_names = EnginesSoftware.all_host_names
     unique_host_name_candidate = host_name
     index = 2
@@ -34,14 +32,20 @@ module EnginesInstaller
     EnginesSoftware.all_engine_names.include?(engine_name)
   end
 
-  def self.host_name_not_unique? host_name
-    EnginesSoftware.all_host_names.include?(host_name)
+  def self.fqdn_not_unique? fqdn
+    EnginesSoftware.all_fqdns.include?(fqdn)
   end
 
-private
-
-  def self.build_engine repository_url_from_gallery, software_params
-    engines_api.build_engine(repository_url_from_gallery, software_params)
+  def self.software_variable_passwords_not_confimed?(params)
+    params.each do |k,v|
+      if v["type"] == "password_with_confirmation"
+        if v["value"] != v["password_confirmation"]
+          next
+        else
+          return false
+        end
+      end
+    end
   end
 
 end

@@ -1,16 +1,37 @@
-.radio-label-lg {
+.label-lg{
   font-size: 18px;
   color: #555;
+  font-weight: normal;
 }
 
 input[type="radio"] {
-  width: 1em;
-  height: 1em;
+  width: 1.1em;
+  height: 1.1em;
 }
 
 input[type="checkbox"] {
-  width: 1em;
-  height: 1em;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+legend {
+  padding-top: 20px;
+}
+
+.selectize-input {
+  height: 44px;
+  font-size: 18px;
+  padding: 10px 16px;
+}
+
+.selectize-input .item{
+  padding-top: 2px;
+}
+
+.selectize-dropdown-content {
+  line-height: 44px;
+  font-size: 18px;
+  padding: 10px 16px;
 }
 
 

@@ -1,17 +1,9 @@
 
 
-<%= simple_nested_form_for(@software, url: softwares_path, html: {class: "form-horizontal"}) do |f| %>
-  <% true || if @software.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@software.errors.count, "error") %> prohibited this install from being saved:</h2>
+<%= form_for(@software, url: softwares_path, html: {class: "form-horizontal"}) do |f| %>
 
-      <ul>
-      <% @software.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <%= form_errors f, name: 'network properties' %>
+
 
   <%= f.hidden_field :gallery_url %>
   <%= f.hidden_field :software_id %>
@@ -135,12 +127,5 @@
       <%= content_tag(:i, "", class: "fa fa-check") + " Install" %>
     <% end %>
   </div>
-
-
-<!-- <br>
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#waiting-for-response-modal">
-  show waiting for response modal
-</button> -->
-
 
 <% end %>

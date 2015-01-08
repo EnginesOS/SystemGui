@@ -1,15 +1,7 @@
-<%= simple_form_for @domain, html: {class: "form-horizontal"} do |f| %>
-  <fieldset>
-    <%= (f.hidden_field :old_domain_name, value: f.object.domain_name) if !f.object.new_record? %>
-    <%= render partial: 'shared/form/field', locals: {field_name: :domain_name, field_label: 'Domain', f: f} %>
-    <%= render partial: 'shared/form/checkbox', locals: {field_name: :internal_only, f: f} %>
-    <%= render partial: 'shared/form/checkbox', locals: {field_name: :self_hosted, field_label: 'Self-hosted', f: f} %>
-  </fieldset>
-  <div class="actions top-gap">
-    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), domains_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
-    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
-      <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
-    <% end %>
-  </div>
-
+<%= form_for @domain, html: {class: "form-horizontal"} do |f| %>
+  <%= (f.hidden_field :original_domain_name, value: f.object.domain_name) if !f.object.new_record? %>
+  <%= render partial: 'shared/form/text_field', locals: {name: :domain_name, label: 'Domain', f: f} %>
+  <%= render partial: 'shared/form/checkbox', locals: {name: :internal_only, f: f} %>
+  <%= render partial: 'shared/form/checkbox', locals: {name: :self_hosted, label: 'Self-hosted', f: f} %>
+  <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: domains_path} %>
 <% end %>

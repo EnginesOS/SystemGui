@@ -1,0 +1,16 @@
+<%  tooltip ||= label %>
+<%  value ||= "" %>
+
+<div class="col-sm-8 col-sm-offset-2">
+  <div class="form-group ">
+    <% if label != false %>
+      <%  label ||= name.to_s.humanize.capitalize %>
+      <%= f.label name, class: 'control-label' do %>
+        <%= label %>?
+      <% end %>
+    <% end %>
+    <%= f.collection_radio_buttons name, collection, :to_s, :to_s, {}, {title: tooltip} do |radio|
+         radio.label(class: "label-lg", :"data-value" => radio.value) { radio.radio_button + ' ' + radio.text } + '<br>'.html_safe
+       end %>
+  </div>
+</div>

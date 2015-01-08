@@ -22,8 +22,11 @@ class GalleriesController < ApplicationController
 
   def create
     @gallery = Gallery.new(gallery_install_params)
-    @gallery.save
-    redirect_to galleries_path
+    if @gallery.save
+      redirect_to galleries_path
+    else
+      render :new
+    end
   end
 
   def destroy

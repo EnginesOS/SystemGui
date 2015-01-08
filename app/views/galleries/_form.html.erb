@@ -1,28 +1,6 @@
-<%= simple_form_for @gallery, html: {class: "form-horizontal"} do |f| %>
-
-  <div class='form-group form-group-lg'>
-    <div class="col-sm-2">
-      <%= f.label :url, 'URL', class: "control-label" %>
-    </div>
-    <div class="col-sm-10">
-      <%= f.text_field :url, class: "form-control" %>
-    </div>
-  </div>
-  <div class='form-group form-group-lg'>
-    <div class="col-sm-2">
-      <%= f.label :name, class: "control-label" %>
-    </div>
-    <div class="col-sm-10">
-      <%= f.text_field :name, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="actions top-gap">
-    <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), galleries_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
-    <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
-      <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
-    <% end %>
-  </div>
-
-
+<%= form_for @gallery, html: {class: "form-horizontal"} do |f| %>
+  <%= render partial: 'shared/form/errors', locals: {f: f} %>
+  <%= render partial: 'shared/form/text_field', locals: {name: :url, label: 'URL', f: f} %>
+  <%= render partial: 'shared/form/text_field', locals: {name: :name, label: 'Name', f: f} %>
+  <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: galleries_path} %>
 <% end %>

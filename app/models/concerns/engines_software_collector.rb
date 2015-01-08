@@ -8,6 +8,10 @@ module EnginesSoftwareCollector
     all_engine_names.map { |engine_name| engines_software(engine_name).hostName }
   end
 
+  def all_fqdns
+    all_engine_names.map { |engine_name| engines_software(engine_name).fqdn }
+  end
+
   def count
     all_engine_names.count
   end

@@ -4,7 +4,10 @@ module EnginesMaintenance
     remove_orphaned_softwares
     create_missing_softwares
     remove_duplicate_softwares if Software.count != EnginesSoftware.count
+    reload_domains
   end
+
+private
 
   def self.remove_duplicate_softwares
     app_installs = Software.all
@@ -34,7 +37,20 @@ module EnginesMaintenance
     end
   end
 
-private
+  def self.reload_domains
+    Domain.delete_all
+
+p :EnginesDomain_engines_domains
+p EnginesDomain.engines_domains
+
+
+    EnginesDomain.engines_domains.each do |domain|
+p :domain
+p domain      
+      Domain.create(domain_name: domain)
+    end
+  end
+
 
   # def software_params software_engine_name
   #   software_engine = EnginesSoftware.engines_software software_engine_name

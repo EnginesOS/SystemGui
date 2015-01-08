@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218032051) do
+ActiveRecord::Schema.define(version: 20150107020509) do
 
   create_table "domains", force: true do |t|
     t.string  "domain_name"
@@ -43,6 +43,10 @@ ActiveRecord::Schema.define(version: 20141218032051) do
   end
 
   create_table "software_environment_variables", force: true do |t|
+    t.integer "software_id"
+  end
+
+  create_table "software_network_parameters", force: true do |t|
     t.integer "software_id"
   end
 

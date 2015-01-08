@@ -30,6 +30,10 @@
   color: #bbb;
 }
 
+.indicator_state_error {
+  color: #aaa;
+}
+
 .engine_running {
   background-color: #fff;
 }
