@@ -68,7 +68,7 @@ p software_engine_install_params
     if install_response.instance_of?(ManagedEngine)
       redirect_to control_panel_path, notice: "Application installation was successful for #{params[:id]}."
     elsif install_response.instance_of?(EnginesOSapiResult)
-      redirect_to installer_path, alert: "Application installation was not successful for #{params[:id]}. " + install_response.result_mesg[0..250]
+      redirect_to installer_path, alert: "Application installation was not successful for #{params[:id]}. " + install_response.result_mesg[0..1000]
     else
       render text: "Unexpected response from software installation process for #{params[:id]}."
     end
@@ -129,15 +129,15 @@ private
     software_params.each do |k,v|
       if v.kind_of? Hash
         v.each do |k,v|
-          result[k] = v
+          result[k.to_sym] = v
         end
       else
-        result[k] = v
+        result[k.to_sym] = v
       end
     end
 p :software_engine_install_params
 p result
-    
+
     result
   end
 

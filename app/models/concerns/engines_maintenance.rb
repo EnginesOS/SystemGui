@@ -30,10 +30,25 @@ private
 
   def self.create_missing_softwares
     software_engines = EnginesSoftware.all_engine_names
+
+p :software_engines
+p software_engines
+
     software = Software.all.map(&:engine_name)
+
+p :software
+p software
+
+
     missing_software = software_engines - software
     missing_software.each do |software|
-      Software.create(engine_name: software).load_display_property_defaults.save
+      software = Software.create(engine_name: software)
+      software.load_display_property_defaults
+      result = software.save
+p :result_on_create_missing_software
+p result
+p software.errors
+
     end
   end
 

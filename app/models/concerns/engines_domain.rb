@@ -11,14 +11,15 @@ module EnginesDomain
 
   def self.update params
     engines_api.update_domain(
-      params[:original_domain_name],
+      original_domain_name: params[:original_domain_name],
       domain_name: params[:domain_name],
       internal_only: params[:internal_only],
       self_hosted: params[:self_hosted])
   end
 
-  def self.destroy domain_name
-    engines_api.remove_domain domain_name
+  def self.destroy params
+    engines_api.remove_domain (
+      { domain_name: params[:domain_name] } )
   end
 
   def self.create_ssl_certificate params
