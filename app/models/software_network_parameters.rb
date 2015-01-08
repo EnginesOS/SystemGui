@@ -8,13 +8,9 @@ class SoftwareNetworkParameters < ActiveRecord::Base
 
   belongs_to :software
 
+  host_name_regex = /^[A-Za-z]{2,6}$/
+  validates :host_name, presence: true, format: { with: host_name_regex, :multiline => true, message: "is invalid" }
   validates_presence_of :domain_name
-  domain_name_regex = /^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$/
-  validates :domain_name, format: { with: domain_name_regex, :multiline => true  }
-
-  validates_presence_of :host_name
-  host_name_regex = /^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/
-  validates :host_name, format: { with: host_name_regex, :multiline => true, message: "is invalid" }
 
   def load_engines_software_network_parameters
     self.form_type = :edit_network_properties

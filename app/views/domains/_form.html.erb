@@ -1,4 +1,5 @@
 <%= form_for @domain, html: {class: "form-horizontal"} do |f| %>
+  <%= render partial: 'shared/form/errors', locals: {f: f} %>
   <%= (f.hidden_field :original_domain_name, value: f.object.domain_name) if !f.object.new_record? %>
   <%= render partial: 'shared/form/text_field', locals: {name: :domain_name, label: 'Domain', f: f} %>
   <%= render partial: 'shared/form/checkbox', locals: {name: :internal_only, f: f} %>

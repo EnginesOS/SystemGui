@@ -44,11 +44,17 @@ class Software < ActiveRecord::Base
     self.display_name = engines_software_details['name']
     self.display_description = engines_software_details['description']
     self.icon = EnginesUtilities.icon_from_url(engines_software_details['icon_url'])
+    self.terms_and_conditions_accepted = "1"
+
+# next line needs to go once software model broken-out
+    self.memory = EnginesSoftware.memory engine_name
+
+
     self
   end
 
   def load_engines_software_display_parameters
-    self.form_type = :edit_display_properties
+    # self.form_type = :edit_display_properties
   end
 
   # def load_engines_software_network_parameters
@@ -60,7 +66,7 @@ class Software < ActiveRecord::Base
   # end
 
   def load_engines_software_runtime_parameters
-    self.form_type = :edit_runtime_properties
+    # self.form_type = :edit_runtime_properties
     self.memory = EnginesSoftware.memory engine_name
     self
   end
