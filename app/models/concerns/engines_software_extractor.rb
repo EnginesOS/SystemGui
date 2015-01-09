@@ -1,7 +1,15 @@
 module EnginesSoftwareExtractor
 
   def blueprint_software_details(engine_name)
-    @blueprint_software_details ||= blueprint(engine_name)['software']
+    @blueprint_software_details = blueprint(engine_name)['software']
+
+p :@blueprint_software_details
+p engine_name
+p @blueprint_software_details
+
+@blueprint_software_details
+
+
   end
 
   # def repository_url engine_name(engine_name)

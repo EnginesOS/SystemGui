@@ -34,8 +34,7 @@ legend {
   padding: 10px 16px;
 }
 
-
-/*.form-image-control {
+.form-image-control {
   margin-bottom: 10px;
   margin-right: 10px;
   padding: 5px;
@@ -58,7 +57,7 @@ legend {
   border-radius: 5px;
 }
 
-.radio_button_collection_item{
+/*.radio_button_collection_item{
   display: block;
   margin-bottom: 5px;
 }

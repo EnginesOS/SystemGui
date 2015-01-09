@@ -18,6 +18,7 @@ module EnginesInstaller
   end
 
   def self.generate_next_unique_host_name_for(host_name)
+    host_name = host_name.sub('-', '')
     existing_host_names = EnginesSoftware.all_host_names
     unique_host_name_candidate = host_name
     index = 2

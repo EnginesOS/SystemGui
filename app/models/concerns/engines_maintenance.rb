@@ -21,10 +21,12 @@ private
 
   def self.remove_orphaned_softwares
     software_engines = EnginesSoftware.all_engine_names
-    software = Software.all.map(&:engine_name)
-    orphaned_software = software - software_engines
+    softwares = Software.all.map(&:engine_name)
+    orphaned_software = softwares - software_engines
     orphaned_software.each do |software|
-      Software.find_by(engine_name: software).destroy
+      p :software
+      p software
+      # Software.find_by(engine_name: software).destroy
     end
   end
 
@@ -34,18 +36,19 @@ private
 p :software_engines
 p software_engines
 
-    software = Software.all.map(&:engine_name)
+    softwares = Software.all.map(&:engine_name)
 
 p :software
-p software
+p softwares
 
 
-    missing_software = software_engines - software
+    missing_software = software_engines - softwares
     missing_software.each do |software|
       software = Software.create(engine_name: software)
       software.load_display_property_defaults
       result = software.save
 p :result_on_create_missing_software
+p software
 p result
 p software.errors
 

@@ -1,4 +1,4 @@
-<%= form_for(@software, url: update_runtime_properties_software_path(@software), method: :patch) do |f| %>
+<%= form_for(@software, url: update_runtime_software_path(@software), method: :patch) do |f| %>
 
   <%= form_errors f, name: 'network properties' %>
 
@@ -7,7 +7,6 @@
 
   <legend>Resources</legend>
   <%= f.input :memory, wrapper_html: { class: 'col-sm-12' } %>
-
 
   <% environment_variables = f.object.software_environment_variables %>
   <% if environment_variables.present? %>

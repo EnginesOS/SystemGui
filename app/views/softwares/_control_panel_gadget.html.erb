@@ -1,0 +1,93 @@
+<%  engine_name = software.engine_name
+    state = EnginesSoftware.state engine_name
+    if state.kind_of?(EnginesOSapiResult)
+      state = "state_error"
+    end
+    indicator_class = "indicator_" + state
+    engine_state = "engine_" + state
+    default_name = EnginesSoftware.blueprint_software_name engine_name
+    software_fqdn = EnginesSoftware.fqdn engine_name
+    if software_fqdn.kind_of?(EnginesOSapiResult)
+      software_fqdn = "?"
+    end
+%>
+
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+  <div class="engine-gadget btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
+      <% if software.display.icon.exists? %>
+        <div class="icon_holder">
+          <%= image_tag(software.display.icon.url, class: "engine_icon") %>
+        </div>
+      <% end %>
+      <div class="text_holder">
+        <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= label_tag('', engine_name) %><br>
+        <%= content_tag(:i, "", class: "fa fa-globe") + ' ' + software_fqdn %><br>
+        <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + default_name %><br>
+        <% if software.display.display_name.present? && software.display.display_name != default_name %>
+          <%= content_tag(:i, '', class: 'fa fa-edit') + ' ' + software.display.display_name %><br>
+        <% end %>
+      </div>
+    </button>
+
+    <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
+      <li><div class="dropdown-title" %><%=engine_name %></div></li>
+      <% if state == "running" %>
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+      <% elsif state == "paused" %>
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+      <% elsif state == "stopped" %>
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_software_path(id: engine_name), class: 'trigger-response-modal'  %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy", destroy_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li class="divider"></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Recreate", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %> </li>
+      <% elsif  state == "nocontainer" %>   
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create", create_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Delete", delete_image_software_path(id: engine_name), class: 'trigger-response-modal' %></li> 
+      <% else %>
+         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
+      <%  end %>
+      <li class="divider"></li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Display properties", edit_display_path(software), class: 'trigger-response-modal' %>
+      </li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_network_path(software), class: 'trigger-response-modal' %>
+      </li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-road") + " Runtime properties", edit_resource_path(software), class: 'trigger-response-modal' %>
+      </li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-question") + " Software variables", edit_variable_path(software), class: 'trigger-response-modal' %>
+      </li>
+      <li class="divider"></li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Share folders", shares_path(software),  class: "trigger-response-modal" %>
+      </li>
+      <li class="divider"></li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, engine: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>
+      </li>
+      <li class="divider"></li>
+       <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + software_fqdn, "http://" + software_fqdn, target: "_blank"%></li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal" id="modal_<%= engine_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced</h4>
+      </div>
+      <div class="modal-body" id="modal_<%= engine_name %>_body">
+        <div class="loading-spinner">
+          <%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

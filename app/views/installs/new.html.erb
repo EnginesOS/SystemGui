@@ -1,0 +1,54 @@
+<div class="col-sm-12 top-gap software_installation_form">
+  <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-plus-square") %> Install <%= @software.display.display_name %></h3>
+  <p class="top-gap">
+    <%= @software.display.display_description %>
+  </p>
+
+  <button type="button" class="btn btn-default btn-lg pull-right" id="new_software_form_show_advanced_fields_button">
+    <%= content_tag(:i, '', class: 'fa fa-code') %> Advanced install
+  </button>
+
+  <%= form_for @software, url: installs_path do |f| %>
+
+    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+
+
+
+
+
+    <div class="new_software_form_default_details">
+      <legend>URL</legend>
+      <%= render partial: 'shared/form/text', locals: {text: (f.object.network.host_name.to_s + '.' + f.object.network.domain_name.to_s)} %>
+    </div>
+
+    <div class="new_software_form_advanced_fields">
+      <%= render partial: 'softwares/form_fields', locals: {f: f} %>
+
+      <%= f.fields_for :display do |ff| %>
+        <%= render partial: 'displays/form_fields', locals: {f: ff} %>
+      <% end %>
+      <%= f.fields_for :network do |ff| %>
+        <%= render partial: 'networks/form_fields', locals: {f: ff} %>
+      <% end %>
+      <%= f.fields_for :resource do |ff| %>
+        <%= render partial: 'resources/form_fields', locals: {f: ff} %>
+      <% end %>
+      <%= f.fields_for :variables do |ff| %>
+        <%= render partial: 'variables/form_fields', locals: {f: ff} %>
+      <% end %>
+    </div>
+
+    <%= f.fields_for :install do |ff| %>
+      <%= render partial: 'form_fields', locals: {f: ff} %>
+    <% end %>
+
+    <div class="col-sm-12 actions top-gap">
+      <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), installer_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
+      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
+        <%= content_tag(:i, "", class: "fa fa-check") + " Install" %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+</div>

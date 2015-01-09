@@ -7,7 +7,7 @@ class Domain < ActiveRecord::Base
   attr_accessor :organization_name
   attr_accessor :person_name
 
-  domain_name_regex = /[A-Za-z0-9]$/
+  domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
   validates :domain_name, presence: true, format: { with: domain_name_regex, :multiline => true  }
 
   def update_via_api

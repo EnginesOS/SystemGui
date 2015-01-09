@@ -1,0 +1,11 @@
+<legend>License</legend>
+<%= render partial: 'shared/form/link', locals: {link_text: f.object.license_name, label_text: false, url: f.object.license_sourceurl} %>
+<%= render partial: 'shared/form/checkbox', locals: {name: :terms_and_conditions_accepted, label: 'Accept', f: f} %>
+
+<%= f.hidden_field :gallery_url %>
+<%= f.hidden_field :software_id %>
+<%= f.hidden_field :default_image_url %>
+<%= f.hidden_field :repository_url %>
+<%= f.hidden_field :license_name %>
+<%= f.hidden_field :license_sourceurl %>
+<%= f.hidden_field :swframework_name %>

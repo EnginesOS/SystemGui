@@ -1,0 +1,9 @@
+<div class="col-sm-12 top-gap app_installs">
+  <h3 class='control-panel-title'><i class='fa fa-question'></i> Edit software variables for <%= @software.engine_name %></h3>
+  <%= form_for(@software, url: update_software_variables_software_path(@software), method: :patch, defaults: { input_html: { class: 'input-lg' } } ) do |f| %>
+    <%= form_errors f, name: 'runtime properties' %>
+    <%= f.hidden_field :engine_name %>
+    <%= render partial: 'form_fields_software_variables', locals: {f: f} %>
+    <%= render partial: 'form_buttons' %>
+  <% end %>
+</div>

@@ -2,21 +2,9 @@
   <h3 class="control-panel-title"><i class="fa fa-bolt"></i> Default domain</h3>
 
   <%= form_for @settings, html: {class: "form-horizontal"} do |f| %>
-    <fieldset>
-      <div class="form-group-lg">
-        <div class="col-sm-12">
-          <%= f.input(:default_domain, collection: Domain.all.map(&:domain_name), label: false, class: "form-control") %>
-        </div>
-      </div>
-    </fieldset>
-
-    <div class="actions top-gap">
-      <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), settings_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
-      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
-        <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
-      <% end %>
-    </div>
-
+    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+    <%= render partial: 'shared/form/select', locals: {name: :default_domain, label: false, f: f, collection: Domain.all.map(&:domain_name)} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: galleries_path} %>
   <% end %>
 
 </div>
