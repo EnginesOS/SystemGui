@@ -1,8 +1,10 @@
 <div class="col-sm-12 top-gap app_installs">
   <h3 class='control-panel-title'><i class='fa fa-sitemap'></i> Edit network properties for <%= @software.engine_name %></h3>
-  <%= form_for @software.network, html: {class: "form-horizontal"} do |f| %>
-    <%= form_errors f, name: 'network properties' %>
-    <%= render partial: 'network/form_fields', locals: {f: f} %>
+  <%= form_for @software, url: network_path(@software) do |f| %>
+    <%= f.fields_for :network do |ff| %>
+      <%= render partial: 'shared/form/errors', locals: {f: ff, label: 'network properties'} %>
+    <% end %>
+    <%= render partial: 'networks/form_fields', locals: {f: f} %>
     <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
   <% end %>
 </div>

@@ -19,10 +19,6 @@ class Install < ActiveRecord::Base
     Software.new(new_software_params(repository_params))
   end
 
-  def attach_default_icon
-    self.icon = EnginesUtilities.icon_from_url default_image_url
-  end
-
 private
 
   def self.new_software_params(repository_params)
@@ -50,7 +46,8 @@ private
         http_protocol: Network.best_http_protocol(repository_software_params['http_protocol'])
       },
       resource_attributes: {
-        memory: repository_software_params['requiredmemory']
+        required_memory: repository_software_params['requiredmemory'],
+        memory: repository_software_params['recommended_memory'] || repository_software_params['requiredmemory']
       }
     }
   end

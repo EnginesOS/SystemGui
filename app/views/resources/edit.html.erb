@@ -1,10 +1,10 @@
 <div class="col-sm-12 top-gap app_installs">
-  <h3 class='control-panel-title'><i class='fa fa-road'></i> Edit runtime properties for <%= @software.engine_name %></h3>
-  <%= form_for(@software, url: update_runtime_software_path(@software), method: :patch, defaults: { input_html: { class: 'input-lg' } } ) do |f| %>
-    <%= form_errors f, name: 'runtime properties' %>
-    <% #= f.hidden_field :engine_name %>
-    <% #= f.hidden_field :form_type %>
-    <%= render partial: 'form_fields_runtime', locals: {f: f} %>
-    <%= render partial: 'form_buttons' %>
+  <h3 class='control-panel-title'><i class='fa fa-pie-chart'></i> Edit resources for <%= @software.engine_name %></h3>
+  <%= form_for( @software, url: resource_path(@software) ) do |f| %>
+    <%= f.fields_for :resource do |ff| %>
+      <%= render partial: 'shared/form/errors', locals: {f: ff, label: 'resources properties'} %>
+    <% end %>
+    <%= render partial: 'form_fields', locals: {f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
   <% end %>
 </div>

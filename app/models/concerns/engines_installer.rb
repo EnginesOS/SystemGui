@@ -29,12 +29,12 @@ module EnginesInstaller
     unique_host_name_candidate
   end
 
-  def self.engine_name_not_unique? engine_name
-    EnginesSoftware.all_engine_names.include?(engine_name)
+  def self.engine_name_is_unique? engine_name
+    EnginesSoftware.all_engine_names.exclude?(engine_name)
   end
 
-  def self.fqdn_not_unique? fqdn
-    EnginesSoftware.all_fqdns.include?(fqdn)
+  def self.fqdn_is_unique? fqdn
+    EnginesSoftware.all_fqdns.exclude?(fqdn)
   end
 
   def self.software_variable_passwords_not_confimed?(params)

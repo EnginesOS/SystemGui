@@ -26,7 +26,14 @@ module EnginesSoftwareInspector
     databases: 'databases'
   }.
   each do |method, instruction|
-    define_method(method) { |engine_name| send(:engines_software, engine_name).send(instruction) }
+    define_method(method) do |engine_name| 
+      software = send(:engines_software, engine_name)
+      if software.kind_of?(EnginesOSapiResult)
+        return software
+      else
+        software.send(instruction)
+      end
+    end
   end
 
 end

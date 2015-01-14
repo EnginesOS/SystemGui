@@ -6,6 +6,9 @@
     indicator_class = "indicator_" + state
     engine_state = "engine_" + state
     default_name = EnginesSoftware.blueprint_software_name engine_name
+    if default_name.kind_of?(EnginesOSapiResult)
+      default_name = "?"
+    end
     software_fqdn = EnginesSoftware.fqdn engine_name
     if software_fqdn.kind_of?(EnginesOSapiResult)
       software_fqdn = "?"
@@ -57,7 +60,7 @@
       </li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_network_path(software), class: 'trigger-response-modal' %>
       </li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-road") + " Runtime properties", edit_resource_path(software), class: 'trigger-response-modal' %>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources", edit_resource_path(software), class: 'trigger-response-modal' %>
       </li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-question") + " Software variables", edit_variable_path(software), class: 'trigger-response-modal' %>
       </li>

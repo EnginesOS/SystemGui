@@ -1,11 +1,12 @@
-<legend>License</legend>
-<%= render partial: 'shared/form/link', locals: {link_text: f.object.license_name, label_text: false, url: f.object.license_sourceurl} %>
-<%= render partial: 'shared/form/checkbox', locals: {name: :terms_and_conditions_accepted, label: 'Accept', f: f} %>
-
-<%= f.hidden_field :gallery_url %>
-<%= f.hidden_field :software_id %>
-<%= f.hidden_field :default_image_url %>
-<%= f.hidden_field :repository_url %>
-<%= f.hidden_field :license_name %>
-<%= f.hidden_field :license_sourceurl %>
-<%= f.hidden_field :swframework_name %>
+<%= f.fields_for :install do |ff| %>
+  <legend>License</legend>
+  <%= render partial: 'shared/form/link', locals: {link_text: ff.object.license_name, label_text: false, url: ff.object.license_sourceurl} %>
+  <%= render partial: 'shared/form/checkbox', locals: {name: :terms_and_conditions_accepted, label: 'Accept', f: ff} %>
+  <%= ff.hidden_field :gallery_url %>
+  <%= ff.hidden_field :software_id %>
+  <%= ff.hidden_field :default_image_url %>
+  <%= ff.hidden_field :repository_url %>
+  <%= ff.hidden_field :license_name %>
+  <%= ff.hidden_field :license_sourceurl %>
+  <%= ff.hidden_field :swframework_name %>
+<% end %>

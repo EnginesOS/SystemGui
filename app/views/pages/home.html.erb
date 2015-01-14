@@ -72,7 +72,7 @@
 
       <% if @softwares.present? %>
           <% @softwares.each do |software| %>
-              <%= render partial: "softwares/home_page_gadget", locals: {software: software} %>
+              <%= render partial: "softwares/desktop_gadget", locals: {software: software} %>
           <% end %>
       <% else %>
           <p class="top-gap">Welcome to Engines. No apps are installed.<br>

@@ -13,11 +13,8 @@ class InstallsController < ApplicationController
 
   def create
     @software = Software.new(software_install_params)
+    @software.display.icon = EnginesUtilities.icon_from_url @software.install.default_image_url
     if @software.save
-      # if @software.icon.exists? == false
-      #   @software.attach_default_icon
-      #   @software.save
-      # end
       redirect_to engine_install_path(software: software_install_params)
     else
       render :new
@@ -55,7 +52,11 @@ private
   end
 
   def software_install_params
-    @software_install_params ||= params.require(:software).permit!
+    @software_install_params = params.require(:software).permit!
+
+    p :@software_install_params
+    p @software_install_params
+    @software_install_params
   end
 
   def set_software

@@ -10,22 +10,34 @@ class Domain < ActiveRecord::Base
   domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
   validates :domain_name, presence: true, format: { with: domain_name_regex, :multiline => true  }
 
-  def update_via_api
-    EnginesDomain.update(
+  def api_save
+    result = EnginesDomain.update(
       original_domain_name: original_domain_name,
       domain_name: domain_name,
       internal_only: internal_only,
       self_hosted: self_hosted)
+    if result.was_success == false
+      errors.add(:base, result.result_mesg)
+      return false
+    else
+      return true
+    end
   end
 
-  def save_via_api
-    EnginesDomain.create(
+  def api_create
+    result = EnginesDomain.create(
       domain_name: domain_name,
       internal_only: internal_only,
       self_hosted: self_hosted)
+    if result.was_success == false
+      errors.add(:base, result.result_mesg)
+      return false
+    else
+      return true
+    end
   end
 
-  def destroy_via_api
+  def api_destroy
     EnginesDomain.destroy(
       domain_name: domain_name)
   end

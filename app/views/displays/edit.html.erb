@@ -1,10 +1,9 @@
 <div class="col-sm-12 top-gap app_installs">
   <h3 class='control-panel-title'><i class='fa fa-desktop'></i> Edit display properties for <%= @software.engine_name %></h3>
-  <%= form_for(@software, url: update_display_properties_software_path(@software), method: :patch, defaults: { input_html: { class: 'input-lg' } } ) do |f| %>
-    <%= form_errors f, name: 'display properties' %>
-    <% #= f.hidden_field :engine_name %>
-    <% #= f.hidden_field :form_type %>
+  <%= form_for(@software, url: display_path(@software), defaults: { input_html: { class: 'input-lg' } } ) do |f| %>
+    <%= render partial: 'shared/form/errors', locals: {f: f, label: 'display properties'} %>
     <%= render partial: 'form_fields', locals: {f: f} %>
     <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
   <% end %>
 </div>
+
