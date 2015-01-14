@@ -20,21 +20,17 @@ class DomainsController < ApplicationController
   def update
     @domain = Domain.find(params[:id])
     @domain.update(domain_params)
-    @domain.update_via_api
+    @domain.api_save
     redirect_to domains_path
   end
 
   def create
     @domain = Domain.new(domain_params)
-    if !@domain.save
-      render :new
+    result = @domain.api_create
+    if result == true
+      redirect_to domains_path, notice: 'Successfully created self-hosted domain.'
     else
-      result = @domain.save_via_api
-      if result.was_success
-        redirect_to domains_path, notice: 'Successfully created self-hosted domain.'
-      else
-        redirect_to domains_path, alert: ('Unable to create self-hosted domain. ' + result.result_mesg.to_s)[0..1000]
-      end
+      render :new
     end
   end
 

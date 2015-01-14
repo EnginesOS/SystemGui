@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: :rails_admin
 
 # get 'messaging' => 'softwares#send_message'
-get "install/:id", to: "softwares#install", as: :install
 
   root to: redirect("/start")
 
@@ -16,19 +15,27 @@ get "install/:id", to: "softwares#install", as: :install
   get "control_panel", to: "pages#control_panel"
   get "help", to: "pages#help"
   get "system", to: "pages#system"
-  get "installer", to: "pages#installer"
-  get "install_progress/:line", to: "softwares#install_progress"
+  # get "install_progress/:line", to: "softwares#install_progress"
   # get "settings", to: "settings#index"
   get "settings/edit_default_domain", to: "settings#edit_default_domain"
   get "settings/edit_default_website", to: "settings#edit_default_website"
   get "settings/edit_mail", to: "settings#edit_mail"
   get "settings/edit_wallpaper", to: "settings#edit_wallpaper"
+  get "installer", to: "installs#installer"
+  get "engine_install", to: "installs#engine_install", as: :engine_install
 
+  resources :installs
   resources :settings
   resources :galleries
   resources :backup_tasks
   resources :users
   resources :domains
+  resources :networks
+  resources :resources
+  resources :variables
+  resources :displays
+  resources :shares
+
 
   get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
   patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
@@ -53,16 +60,11 @@ get "install/:id", to: "softwares#install", as: :install
     end
   end
 
-
-  # resources :softwares
-
-
   resources :softwares do
     collection do
       get :destroy_all_records
     end
     member do
-      #get :edit_display_properties #, as: :edit_app_install_display_properties
       get(
         :new,
         :start, :stop, :pause, :unpause, :restart,
@@ -70,13 +72,7 @@ get "install/:id", to: "softwares#install", as: :install
         :build, :show, :recreate, :monitor, :demonitor,
         :advanced_detail,
         :register_website, :deregister_website,
-        :register_dns, :deregister_dns,
-        :share_folders,
-        :edit_display_properties, :edit_network_properties, :edit_runtime_properties,
-        :edit_software_variables)
-      patch(
-        :update_display_properties, :update_network_properties, :update_runtime_properties,
-        :update_software_variables)
+        :register_dns, :deregister_dns)
     end
   end
 

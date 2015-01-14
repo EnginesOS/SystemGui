@@ -1,7 +1,12 @@
 module EnginesSoftwareExtractor
 
   def blueprint_software_details(engine_name)
-    @blueprint_software_details ||= blueprint(engine_name)['software']
+    blueprint = blueprint(engine_name)
+    if blueprint.kind_of?(EnginesOSapiResult)
+      return blueprint
+    else
+      blueprint['software']
+    end
   end
 
   # def repository_url engine_name(engine_name)
@@ -9,29 +14,20 @@ module EnginesSoftwareExtractor
   # end
 
   def blueprint_software_name(engine_name)
-    blueprint_software_details(engine_name)['name']
+    blueprint_software_details = blueprint_software_details(engine_name)
+    if blueprint_software_details.kind_of?(EnginesOSapiResult)
+      return blueprint_software_details
+    else
+      blueprint_software_details['name']
+    end
   end
 
   def environment_variables(engine_name)
     blueprint_environment_variables = blueprint_software_details(engine_name)['environment_variables']
     environments(engine_name).map(&:attributes).each do |environment_variable|
-
-p :environment_variable
-p environment_variable 
-
-p :blueprint_environment_variables
-p blueprint_environment_variables
-
       blueprint_environment_variable = blueprint_environment_variables.find do |ev|
-        ev["name"] == environment_variable[:name]
+        ev["name"].gsub(' ', '_') == environment_variable[:name]
       end
-
-
-
-p :blueprint_environment_variable
-p blueprint_environment_variable
-
-
       environment_variable[:label] = blueprint_environment_variable["label"]
       environment_variable[:comment] = blueprint_environment_variable["comment"] 
       environment_variable[:type] = blueprint_environment_variable["type"] 

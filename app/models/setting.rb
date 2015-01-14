@@ -9,7 +9,7 @@ class Setting < ActiveRecord::Base
   # accepts_nested_attributes_for :domains
 
   def update_engines settings_params
-    Domain.update_engines settings_params
+    EnginesSettings.update_engines settings_params
   end
 
   # def self.settings

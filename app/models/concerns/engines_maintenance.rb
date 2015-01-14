@@ -21,48 +21,34 @@ private
 
   def self.remove_orphaned_softwares
     software_engines = EnginesSoftware.all_engine_names
-    software = Software.all.map(&:engine_name)
-    orphaned_software = software - software_engines
+    softwares = Software.all.map(&:engine_name)
+    orphaned_software = softwares - software_engines
     orphaned_software.each do |software|
-      Software.find_by(engine_name: software).destroy
+      p :software
+      p software
+      # Software.find_by(engine_name: software).destroy
     end
   end
 
   def self.create_missing_softwares
     software_engines = EnginesSoftware.all_engine_names
-
-p :software_engines
-p software_engines
-
-    software = Software.all.map(&:engine_name)
-
-p :software
-p software
-
-
-    missing_software = software_engines - software
+    softwares = Software.all.map(&:engine_name)
+    missing_software = software_engines - softwares
     missing_software.each do |software|
       software = Software.create(engine_name: software)
-      software.load_display_property_defaults
-      result = software.save
-p :result_on_create_missing_software
-p result
-p software.errors
-
+      software.build_display if software.display.nil?
+      software.display.load_display_property_defaults
+      software.save
+      engines_software_details = EnginesSoftware.blueprint_software_details(software.engine_name)
+      software.display.icon = EnginesUtilities.icon_from_url(engines_software_details['icon_url'])
+      software.save
     end
   end
 
   def self.reload_domains
     Domain.delete_all
-
-p :EnginesDomain_engines_domains
-p EnginesDomain.engines_domains
-
-
     EnginesDomain.engines_domains.each do |domain|
-p :domain
-p domain      
-      Domain.create(domain_name: domain)
+    Domain.create(domain_name: domain)
     end
   end
 

@@ -14,7 +14,8 @@ class Service
      smtp: 'Outbound mail',
      volmanager: 'File system manager',
      shareservice: 'File system sharing',
-     couriermail: 'Inbound mail'
+     couriermail: 'Inbound mail',
+     cron: 'Job scheduler'
     }[service_name.to_sym]
   end
 

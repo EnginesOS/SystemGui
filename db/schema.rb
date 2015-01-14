@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107020509) do
+ActiveRecord::Schema.define(version: 20150109043400) do
+
+  create_table "displays", force: true do |t|
+    t.integer "software_id"
+    t.string  "display_name"
+    t.text    "display_description"
+    t.string  "icon_file_name"
+    t.string  "icon_content_type"
+    t.integer "icon_file_size"
+    t.string  "icon_updated_at"
+  end
 
   create_table "domains", force: true do |t|
     t.string  "domain_name"
@@ -27,6 +37,18 @@ ActiveRecord::Schema.define(version: 20150107020509) do
     t.datetime "updated_at"
   end
 
+  create_table "installs", force: true do |t|
+    t.integer "software_id"
+  end
+
+  create_table "networks", force: true do |t|
+    t.integer "software_id"
+  end
+
+  create_table "resources", force: true do |t|
+    t.integer "software_id"
+  end
+
   create_table "settings", force: true do |t|
     t.string   "default_domain"
     t.string   "default_site"
@@ -38,26 +60,8 @@ ActiveRecord::Schema.define(version: 20150107020509) do
     t.string   "background_color"
   end
 
-  create_table "software_environment_variable_values", force: true do |t|
-    t.integer "software_environment_variable_id"
-  end
-
-  create_table "software_environment_variables", force: true do |t|
-    t.integer "software_id"
-  end
-
-  create_table "software_network_parameters", force: true do |t|
-    t.integer "software_id"
-  end
-
   create_table "softwares", force: true do |t|
     t.string   "engine_name"
-    t.string   "display_name"
-    t.text     "display_description"
-    t.string   "icon_file_name"
-    t.string   "icon_content_type"
-    t.integer  "icon_file_size"
-    t.datetime "icon_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -82,5 +86,9 @@ ActiveRecord::Schema.define(version: 20150107020509) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
+
+  create_table "variables", force: true do |t|
+    t.integer "software_id"
+  end
 
 end

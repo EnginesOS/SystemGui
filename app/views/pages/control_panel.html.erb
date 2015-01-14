@@ -7,7 +7,7 @@
 
     <% if @softwares.present? %>
         <% @softwares.each do |software| %>
-            <%= render partial: "softwares/app_manager_gadget", locals: {software: software} %>
+            <%= render partial: "softwares/control_panel_gadget", locals: {software: software} %>
         <% end %>
     <% else %>
         <div class="col-sm-12">No applications installed.</div>
@@ -20,7 +20,7 @@
     </div>
 
     <% @service_names.each do |service_name| %>
-      <%= render partial: "services/app_manager_gadget", locals: {service_name: service_name} %>
+      <%= render partial: "services/control_panel_gadget", locals: {service_name: service_name} %>
     <% end %>
   </div>
 

@@ -29,10 +29,6 @@ class PagesController < ApplicationController
     @vm2 = Vmstat.memory
   end
 
-  def installer
-    @galleries = Gallery.all
-  end
-
 # private
 
 #     def services

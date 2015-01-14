@@ -1,4 +1,4 @@
-<%= form_for @gallery, html: {class: "form-horizontal"} do |f| %>
+<%= form_for @gallery do |f| %>
   <%= render partial: 'shared/form/errors', locals: {f: f} %>
   <%= render partial: 'shared/form/text_field', locals: {name: :url, label: 'URL', f: f} %>
   <%= render partial: 'shared/form/text_field', locals: {name: :name, label: 'Name', f: f} %>

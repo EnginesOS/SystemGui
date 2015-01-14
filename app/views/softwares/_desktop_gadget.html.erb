@@ -1,0 +1,16 @@
+<div class='home_page_app_gadget'>
+  <a class="btn btn-default btn-launcher" href="http://<%= EnginesSoftware.fqdn(software.engine_name) %>" target="_blank">
+    <div class="launcher_icon_and_label_holder">
+      <% if software.display.icon.exists? %>
+        <%= image_tag(software.display.icon.url, class: "launcher-icon") %>
+      <% else %>
+        <%= image_tag("_placeholder_for_missing_engine.jpg", class: "launcher-icon") %><br>
+      <% end %>
+      <div class="launcher-label">
+        <%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if EnginesSoftware.state(software.engine_name) != "running" %>
+        <%= software.display.display_name %>
+      </div>
+    </div>
+  </a>
+</div>
+

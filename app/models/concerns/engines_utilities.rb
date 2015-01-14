@@ -1,17 +1,26 @@
 module EnginesUtilities
 
   def self.icon_from_url url
-  if url.present?
+
+p :downloading_image_from_url
+p url
+
+    if url.present?
       begin
-        begin
-          @icon = URI.parse(url)
-        rescue Exception=>e
-          nil
-        end
-      rescue
+
+
+
+        @icon = URI.parse(url)
+
+
+      rescue Exception=>e
+
+p :nok
+p e      
+
         nil
       end
-    end
+    end  
   end  
 
 end

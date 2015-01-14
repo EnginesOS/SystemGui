@@ -1,8 +1,0 @@
-<% domains = EnginesDomain.engines_domains %>
-
-<legend>URL</legend>
-<%= render partial: 'shared/form/text_field', locals: {name: :host_name, tooltip: "Letters, numbers and '.'", f: f} %>
-<%= render partial: 'shared/form/select', locals: {name: :domain_name, collection: domains, tooltip: "Letters, numbers and '.'", f: f} %>
-<legend>HTTP protocol</legend>
-<%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false, collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: f} %>
-
