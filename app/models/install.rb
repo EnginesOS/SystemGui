@@ -9,29 +9,30 @@ class Install < ActiveRecord::Base
     :license_sourceurl,
     :gallery_url,
     :software_id,
-    :terms_and_conditions_accepted)
+    :license_terms_and_conditions)
 
   belongs_to :software
 
-  validates :terms_and_conditions_accepted, acceptance: true
+  validates :license_terms_and_conditions, acceptance: { is: true }
 
-  def self.new_software repository_params
-    Software.new(new_software_params(repository_params))
+  def self.new_software gallery_software_params
+    Software.new(new_software_params(gallery_software_params))
   end
 
 private
 
-  def self.new_software_params(repository_params)
-    repository_url = EnginesGallery.software(repository_params)["repository"]
+  def self.new_software_params(gallery_software_params)
+    gallery_software = EnginesGallery.software(gallery_software_params)
+    repository_url = gallery_software["repository"]
     repository_software_params = EnginesRepository.software_params repository_url: repository_url
     software_name = repository_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
     {
       engine_name: EnginesInstaller.generate_next_unique_engine_name_for(software_name),
       install_attributes: {
         repository_url: repository_url,
-        gallery_url: repository_params[:gallery_url],
-        software_id: repository_params[:software_id],
-        default_image_url: repository_software_params['icon_url'],
+        gallery_url: gallery_software_params[:gallery_url],
+        software_id: gallery_software_params[:software_id],
+        default_image_url: gallery_software['image_url'],
         license_name: repository_software_params['license_name'],
         license_sourceurl: repository_software_params['license_sourceurl']
       },

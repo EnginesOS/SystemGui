@@ -1,6 +1,7 @@
 module EnginesMaintenance
 
   def self.db_maintenance
+    remove_nameless_softwares
     remove_orphaned_softwares
     create_missing_softwares
     remove_duplicate_softwares if Software.count != EnginesSoftware.count
@@ -9,10 +10,15 @@ module EnginesMaintenance
 
 private
 
+  def self.remove_nameless_softwares
+    nameless_software = Software.all.select{|software| software.engine_name == nil}
+    nameless_software.each{|software| software.destroy}
+  end
+
   def self.remove_duplicate_softwares
-    app_installs = Software.all
-    grouped_app_installs = app_installs.group_by(&:engine_name)
-    grouped_app_installs.each do |softwares|
+    software = Software.all
+    grouped_software = software.group_by(&:engine_name)
+    grouped_software.each do |softwares|
       softwares = softwares[1]
       softwares.shift
       softwares.each{|software| software.destroy}
@@ -34,13 +40,11 @@ private
     software_engines = EnginesSoftware.all_engine_names
     softwares = Software.all.map(&:engine_name)
     missing_software = software_engines - softwares
-    missing_software.each do |software|
-      software = Software.create(engine_name: software)
-      software.build_display if software.display.nil?
-      software.display.load_display_property_defaults
-      software.save
-      engines_software_details = EnginesSoftware.blueprint_software_details(software.engine_name)
-      software.display.icon = EnginesUtilities.icon_from_url(engines_software_details['icon_url'])
+    missing_software.each do |software_name|
+      software = Software.create(engine_name: software_name, display_attributes: (Display.engine_display_properties_from_api(software_name)) )
+      url = Display.engine_icon_url_from_api(software_name)
+
+      software.display.icon = EnginesUtilities.icon_from_url(url)
       software.save
     end
   end
@@ -51,11 +55,5 @@ private
     Domain.create(domain_name: domain)
     end
   end
-
-
-  # def software_params software_engine_name
-  #   software_engine = EnginesSoftware.engines_software software_engine_name
-  # end
-
 
 end

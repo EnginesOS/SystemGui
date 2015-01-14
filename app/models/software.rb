@@ -12,6 +12,8 @@ class Software < ActiveRecord::Base
   accepts_nested_attributes_for :resource
   accepts_nested_attributes_for :install
 
+  validates :engine_name, uniqueness: true
+
   def self.user_visible_applications
     all.select { |software| EnginesSoftware.state_as_set_by_user(software.engine_name) == 'running' }
   end

@@ -11,17 +11,22 @@ class Display < ActiveRecord::Base
   validates :display_name, length: { maximum: 30 }
   validates :display_description, length: { maximum: 1000 }
 
-  def load_display_property_defaults
-    engines_software_details = EnginesSoftware.blueprint_software_details(software.engine_name)
+  def self.engine_display_properties_from_api engine_name
+    engines_software_details = EnginesSoftware.blueprint_software_details(engine_name)
+    {
+      display_name: engines_software_details['name'],
+      display_description: engines_software_details['description']
+    }
+  end
 
-p :engines_software_detailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  def self.engine_icon_url_from_api engine_name
+p :engine_name
+p engine_name    
+    engines_software_details = EnginesSoftware.blueprint_software_details(engine_name)
+p :engines_software_details
 p engines_software_details
 
-    self.display_name = engines_software_details['name']
-    self.display_description = engines_software_details['description']
-    # self.terms_and_conditions_accepted = "1"
-
-    self
+    engines_software_details['icon_url']
   end
 
 end

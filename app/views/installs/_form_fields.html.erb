@@ -1,7 +1,9 @@
 <%= f.fields_for :install do |ff| %>
-  <legend>License</legend>
+  <div class="col-sm-12">
+    <legend>License</legend>
+  </div>
   <%= render partial: 'shared/form/link', locals: {link_text: ff.object.license_name, label_text: false, url: ff.object.license_sourceurl} %>
-  <%= render partial: 'shared/form/checkbox', locals: {name: :terms_and_conditions_accepted, label: 'Accept', f: ff} %>
+  <%= render partial: 'shared/form/checkbox', locals: {name: :license_terms_and_conditions, label: 'Accept', f: ff} %>
   <%= ff.hidden_field :gallery_url %>
   <%= ff.hidden_field :software_id %>
   <%= ff.hidden_field :default_image_url %>

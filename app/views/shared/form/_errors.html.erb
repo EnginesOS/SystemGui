@@ -2,7 +2,7 @@
    label ||= form_object.class.to_s.humanize.downcase %>
 
 <% if form_object.errors.any? %>
-  <div class="col-sm-8 col-sm-offset-2">
+  <div class="col-sm-8 col-sm-offset-2 top-gap">
     <div id="error_explanation" class='well error-well'>
       <h4><%= pluralize(form_object.errors.count, "error") %> prohibited the <%= label %> from being saved:</h4>
 

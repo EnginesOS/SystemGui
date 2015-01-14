@@ -28,22 +28,4 @@ module EnginesBackupTask
     all.count
   end
 
-# private
-
-#   def self.create_volume_backup_task engines_backup_task_params
-#     engines_api.backup_volume(
-#       engines_backup_task_params[:backup_name],
-#       engines_backup_task_params[:engine_name],
-#       engines_backup_task_params[:source_name],
-#       engines_backup_task_params[:destination_hash])
-#   end
-
-#   def self.create_database_backup_task engines_backup_task_params
-#     engines_api.backup_database(
-#       engines_backup_task_params[:backup_name],
-#       engines_backup_task_params[:engine_name],
-#       engines_backup_task_params[:source_name],
-#       engines_backup_task_params[:destination_hash])
-#   end
-
 end

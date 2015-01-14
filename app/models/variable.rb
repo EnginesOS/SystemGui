@@ -77,24 +77,24 @@ class Variable < ActiveRecord::Base
     EnginesSoftware.update_variables(params).was_success
   end
 
-  def self.load_from_params params
+  # def self.load_from_params params
 
-    params.values.each do |environment_variable|
-      variable = @software.variables.build
-      variable.name = environment_variable[:name]
-      variable.value = environment_variable[:value]
-      variable.label = environment_variable[:label]
-      variable.comment = environment_variable[:comment]
-      variable.type = environment_variable[:type]
-      variable.regex_validator = environment_variable[:regex_validator]
-      variable.mandatory = environment_variable[:mandatory]
-      variable.collection = environment_variable[:collection]
-      variable.ask_at_build_time = environment_variable[:ask_at_build_time]
-      variable.build_time_only = environment_variable[:build_time_only]
-      variable.immutable = environment_variable[:immutable]
-    end
+  #   params.values.each do |environment_variable|
+  #     variable = @software.variables.build
+  #     variable.name = environment_variable[:name]
+  #     variable.value = environment_variable[:value]
+  #     variable.label = environment_variable[:label]
+  #     variable.comment = environment_variable[:comment]
+  #     variable.type = environment_variable[:type]
+  #     variable.regex_validator = environment_variable[:regex_validator]
+  #     variable.mandatory = environment_variable[:mandatory]
+  #     variable.collection = environment_variable[:collection]
+  #     variable.ask_at_build_time = environment_variable[:ask_at_build_time]
+  #     variable.build_time_only = environment_variable[:build_time_only]
+  #     variable.immutable = environment_variable[:immutable]
+  #   end
 
-  end
+  # end
 
 # private
 
