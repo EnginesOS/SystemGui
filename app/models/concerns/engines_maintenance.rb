@@ -30,9 +30,7 @@ private
     softwares = Software.all.map(&:engine_name)
     orphaned_software = softwares - software_engines
     orphaned_software.each do |software|
-      p :software
-      p software
-      # Software.find_by(engine_name: software).destroy
+      Software.find_by(engine_name: software).destroy
     end
   end
 
@@ -43,7 +41,6 @@ private
     missing_software.each do |software_name|
       software = Software.create(engine_name: software_name, display_attributes: (Display.engine_display_properties_from_api(software_name)) )
       url = Display.engine_icon_url_from_api(software_name)
-
       software.display.icon = EnginesUtilities.icon_from_url(url)
       software.save
     end
