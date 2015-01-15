@@ -1,7 +1,7 @@
 <%= f.fields_for :display do |ff| %>
-  <legend>Display</legend>
-  <%= render partial: 'shared/form/text_field', locals: {name: :display_name, label: 'Name', tooltip: "Give the software installation a unique name for use by the system.", f: ff} %>
-  <%= render partial: 'shared/form/text_field', locals: {name: :display_description, label: 'Description', tooltip: "Give the software a human name for the display.", f: ff} %>
-  <legend>Icon</legend>
-  <%= render partial: 'shared/form/image_file', locals: {name: :icon, label: false, tooltip: "Add an icon.", f: ff} %>
+  <div class="col-sm-12">
+    <legend>Display</legend>
+  </div>
+  <%= render partial: 'shared/form/text_field', locals: {name: :display_name, label: 'Name', tooltip: "Give the software a name.", f: ff} %>
+  <%= render partial: 'shared/form/text_field', locals: {name: :display_description, label: 'Description', tooltip: "Give the software a description.", f: ff} %>
 <% end %>

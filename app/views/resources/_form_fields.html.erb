@@ -1,6 +1,7 @@
 <%= f.fields_for :resource do |ff| %>
-  <legend>Resources</legend>
-  <%= render partial: 'shared/form/text_field', locals: {name: :memory, tooltip: "How much memory should the system allocate to running this software.", f: ff} %>
+  <div class="col-sm-12">
+    <legend>Resources</legend>
+  </div>
+  <%= render partial: 'shared/form/text_field', locals: {name: :memory, tooltip: "How much memory should the system allocate to running this software.", hint: "Minimum is #{ff.object.required_memory}", f: ff} %>
   <%= ff.hidden_field :required_memory %>
-  <%= render partial: 'shared/form/text', locals: {label_text: 'Minimum required memory', text: ff.object.required_memory} %>
 <% end %>

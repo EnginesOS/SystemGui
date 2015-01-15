@@ -13,6 +13,8 @@ class InstallsController < ApplicationController
 
   def create
     @software = Software.new(software_install_params)
+p :default_image_url    
+p @software.install.default_image_url    
     @software.display.icon = EnginesUtilities.icon_from_url @software.install.default_image_url
     if @software.save
       redirect_to engine_install_path(software: software_install_params)

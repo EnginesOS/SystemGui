@@ -1,6 +1,7 @@
 <%  label ||= name.to_s.humanize.capitalize %>
 <%  tooltip ||= label %>
 <%  value ||= nil %>
+<%  hint ||= nil %>
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
@@ -11,6 +12,11 @@
       <%= f.text_field name, title: tooltip, class: 'form-control input-lg' %>
     <% else %>
       <%= f.text_field name, value: value, title: tooltip, class: 'form-control input-lg' %>
+    <% end %>
+    <% if hint.present? %>
+      <div class='form-field-hint'>
+        <%= hint %>
+      </div>
     <% end %>
   </div>
 </div>

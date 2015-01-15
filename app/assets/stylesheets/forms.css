@@ -18,6 +18,11 @@ legend {
   padding-top: 20px;
 }
 
+.form-field-hint {
+  padding-left: 10px;
+  font-style: italic;
+}
+
 .selectize-input {
   height: 44px;
   font-size: 18px;
