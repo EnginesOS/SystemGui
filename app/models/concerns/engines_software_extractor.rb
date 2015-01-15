@@ -9,10 +9,6 @@ module EnginesSoftwareExtractor
     end
   end
 
-  # def repository_url engine_name(engine_name)
-  #   blueprint(engine_name)["repository"]
-  # end
-
   def blueprint_software_name(engine_name)
     blueprint_software_details = blueprint_software_details(engine_name)
     if blueprint_software_details.kind_of?(EnginesOSapiResult)

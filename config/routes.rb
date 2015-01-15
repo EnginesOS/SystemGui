@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: :rails_admin
 
-# get 'messaging' => 'softwares#send_message'
-
   root to: redirect("/start")
 
   get "first_run", to: "first_runs#first_run"
@@ -23,6 +21,8 @@ Rails.application.routes.draw do
   get "settings/edit_wallpaper", to: "settings#edit_wallpaper"
   get "installer", to: "installs#installer"
   get "engine_install", to: "installs#engine_install", as: :engine_install
+  get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
+  patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
 
   resources :installs
   resources :settings
@@ -34,13 +34,8 @@ Rails.application.routes.draw do
   resources :resources
   resources :variables
   resources :displays
-  resources :shares
+  resources :attach_services
 
-
-  get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
-  patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
-
-  
   resources :services do
     member do
       get(

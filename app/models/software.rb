@@ -20,8 +20,7 @@ class Software < ActiveRecord::Base
 
   def load_variables_from_api
     variables.destroy_all
-    environment_variable_params = EnginesSoftware.environment_variables(engine_name)
-    variables.create environment_variable_params
+    variables.create( Variable.params_from_api( engine_name ) )
     self
   end
 

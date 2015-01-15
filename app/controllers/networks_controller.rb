@@ -24,8 +24,4 @@ private
     params.require(:software).permit!
   end
 
-  # def set_network
-  #   @network = Network.find params[:id]
-  # end
-
 end

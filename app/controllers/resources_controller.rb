@@ -24,9 +24,5 @@ private
     @resource_params ||= params.require(:software).permit!
   end
 
-  # def set_resource
-  #   @resource = Runtime.find params[:id]
-  # end
-
 end
 

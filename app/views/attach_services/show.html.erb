@@ -2,8 +2,12 @@
 
 <div class="col-sm-12 top-gap app_installs">
 
-  <h3 class='control-panel-title'><i class='fa fa-share-alt'></i> Share <%= @software.engine_name %> folders</h3>
+  <h3 class='control-panel-title'><i class='fa fa-share-alt'></i> Attach services to <%= @software.engine_name %></h3>
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+<p>
+<%= @available_services %>
+</p>
 
   <% EnginesSoftware.volumes(engine_name).each do |volume| %>
     <div>

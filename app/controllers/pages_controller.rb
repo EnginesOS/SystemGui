@@ -29,11 +29,4 @@ class PagesController < ApplicationController
     @vm2 = Vmstat.memory
   end
 
-# private
-
-#     def services
-#       services = EnginesApi.enginesOS_api.getManagedServices()
-#       services ||= []
-#     end
-
 end

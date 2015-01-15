@@ -20,13 +20,7 @@ class Display < ActiveRecord::Base
   end
 
   def self.engine_icon_url_from_api engine_name
-p :engine_name
-p engine_name    
-    engines_software_details = EnginesSoftware.blueprint_software_details(engine_name)
-p :engines_software_details
-p engines_software_details
-
-    engines_software_details['icon_url']
+    EnginesSoftware.blueprint_software_details(engine_name)['icon_url']
   end
 
 end

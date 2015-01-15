@@ -1,3 +1,23 @@
+<%
+  active_menu_item = :control_panel
+  if (params[:controller] == 'installs')
+    active_menu_item = :installer
+  end
+  if (params[:controller] == 'users') ||
+     (params[:controller] == 'backup_tasks') ||
+     (params[:controller] == 'galleries') ||
+     (params[:controller] == 'domains') ||
+     (params[:controller] == 'settings')
+    active_menu_item = :settings
+  end
+  if (params[:controller] == 'pages' && params[:action] == 'system')
+    active_menu_item = :system
+  end
+  if (params[:controller] == 'pages' && params[:action] == 'help')
+    active_menu_item = :help
+  end
+%>
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -16,21 +36,21 @@
         <li>
           <%= link_to (image_tag("engines_icon.png", class: "nav_bar_launcher_icon") + " Engines desktop"), desktop_path, class: 'trigger-response-modal' %>
         </li>
-        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'app_manager') || (params[:controller] == 'app_installs' && params[:action] == 'edit')) %>">
+        <li class="<%= 'active' if active_menu_item == :control_panel %>">
           <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control Panel", control_panel_path, class: 'trigger-response-modal' %>
         </li>
-        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'installer') || (params[:controller] == 'app_installs' && params[:action] == 'new')) %>">
+        <li class="<%= 'active' if active_menu_item == :installer %>">
           <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Installer", installer_path, class: 'trigger-response-modal' %>
         </li>
-        <li class="<%= 'active' if ((params[:controller] == 'pages' && params[:action] == 'settings') || params[:controller] == 'users' || params[:controller] == 'backup_tasks' || params[:controller] == 'gallery_installs') %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-gear") + " Settings", settings_path, class: 'trigger-response-modal' %>
+        <li class="<%= 'active' if active_menu_item == :settings %>">
+          <%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Settings", settings_path, class: 'trigger-response-modal' %>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="<%= 'active' if (params[:controller] == 'pages' && params[:action] == 'system') %>">
+        <li class="<%= 'active' if active_menu_item == :system %>">
           <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System", system_path, class: 'trigger-response-modal' %>
         </li>
-        <li class="<%= 'active' if (params[:controller] == 'pages' && params[:action] == 'help') %>">
+        <li class="<%= 'active' if active_menu_item == :help %>">
           <%= link_to content_tag(:i, "", class: "fa fa-question") + " Help", help_path, class: 'trigger-response-modal' %>
         </li>
         <li class="dropdown">
@@ -40,6 +60,6 @@
           </ul>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
