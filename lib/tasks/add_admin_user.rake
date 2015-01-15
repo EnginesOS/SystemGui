@@ -1,7 +1,7 @@
 namespace :db do
   desc "Add admin user"
   task populate: :environment do
-    admin = User.create!(#FIXME this is to be dynamic 
+    admin = User.create!( 
                 email: "admin@engines.onl",
                 username: "admin",
                 password: "EngOS2014",
