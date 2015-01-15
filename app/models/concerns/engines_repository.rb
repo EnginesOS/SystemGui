@@ -1,10 +1,6 @@
 module EnginesRepository
 
   def self.repository repository_params
-
-p :repository_params
-p repository_params
-
     load_blueprint repository_params[:repository_url]
   end
 

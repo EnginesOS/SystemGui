@@ -51,13 +51,6 @@ class Network < ActiveRecord::Base
 
 private
 
-  # def load_from_params params
-  #   self.host_name = params[:host_name]
-  #   self.domain_name = params[:domain_name]
-  #   self.http_protocol = params[:http_protocol]
-  #   self
-  # end
-
   def params_for_api_update
     {
       engine_name: software.engine_name,

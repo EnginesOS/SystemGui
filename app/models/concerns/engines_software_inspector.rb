@@ -2,6 +2,7 @@ module EnginesSoftwareInspector
 
   {
     state: 'read_state',
+    is_active: 'is_active',
     host_name: 'hostName',
     http_protocol: 'http_protocol',
     domain_name: 'domainName',

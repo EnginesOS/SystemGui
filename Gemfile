@@ -1,39 +1,30 @@
 source 'http://rubygems.org'
 gem 'devise'
-# gem "activerecord-tableless"
-gem 'activemodel-associations'
 
 # gem 'file-tail'
 
 gem 'vmstat'
 gem 'therubyracer'
 gem 'git'
-# gem 'thin'
 gem "puma"
 gem "oink"
 gem 'bootstrap3-rails'
 gem "font-awesome-rails"
-# gem 'bootstrap-multiselect-rails'
 gem "selectize-rails"
 gem 'newrelic_rpm'
 gem 'simple_form'
-# gem 'country_select'
-# gem "nested_form"
-# gem 'activemodel-associations'
-# gem "activerecord-tableless"
 
 gem 'openssl'
 
-#gem 'carrierwave'
-# gem 'fog'
 gem "paperclip", "~> 4.2"
-gem "jquery-fileupload-rails"
+# gem "jquery-fileupload-rails"
 gem 'open_uri_redirections'
 
 gem 'rails_admin'
 gem 'awesome_print', '~> 1.2.0'
 
 gem 'i18n_country_select'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'

@@ -3,37 +3,61 @@
 
   <%= form_for @first_run do |f| %>
 
-    <fieldset>
-      <legend>Admin password</legend>
-      <%= render partial: 'shared/form/password', locals: {field_name: :admin_password, f: f, password: true} %>
-      <legend>SSH password</legend>
-      <%= render partial: 'shared/form/password', locals: {field_name: :ssh_password, f: f} %>
-      <legend>MySQL password</legend>
-      <%= render partial: 'shared/form/password', locals: {field_name: :mysql_password, f: f} %>
-      <legend>Postgres password</legend>
-      <%= render partial: 'shared/form/password', locals: {field_name: :psql_password, f: f} %>
-      <legend>Smarthost</legend>
-      <%= render partial: 'shared/form/field', locals: {field_name: :smarthost_hostname, field_label: "Hostname", f: f} %>
-      <%= render partial: 'shared/form/field', locals: {field_name: :smarthost_username, field_label: "Username", f: f} %>
-      <%= render partial: 'shared/form/field', locals: {field_name: :smarthost_password, field_label: "Password", f: f} %>
-      <%= render partial: 'shared/form/field', locals: {field_name: :smarthost_authtype, collection: EnginesSettings.smtp_auth_types, field_label: "Authentication type", f: f} %>
-      <%= render partial: 'shared/form/field', locals: {field_name: :smarthost_port, field_label: "Port", f: f} %>
-      <legend>Default Domain</legend>
-      <%= render partial: 'shared/form/field', locals: {field_name: :default_domain, field_label: "Domain name", f: f} %>
-      <legend>SSL</legend>
-      <%= render partial: 'shared/form/field', locals: {field_name: :ssl_person_name, field_label: "Person name", f: f} %>
-      <%= render partial: 'shared/form/field', locals: {field_name: :ssl_organisation_name, field_label: "Organisation name", f: f} %>
-      <%= render partial: 'shared/form/field', locals: {field_name: :ssl_city, field_label: "City", f: f} %>
-      <%= render partial: 'shared/form/field', locals: {field_name: :ssl_state, field_label: "State", f: f} %>
-      <%= render partial: 'shared/form/country_select', locals: {field_name: :ssl_country, field_label: "Country", f: f} %>
-    </fieldset>
+    <%= render partial: 'shared/form/errors', locals: {f: f} %>
 
-    <div class="col-sm-12 actions top-gap">
-      <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), destroy_user_session_path, :method => :delete , class: "btn btn-lg btn-warning trigger-response-modal") %>
-      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
-        <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
-      <% end %>
+    <div class="col-sm-8 clearfix" id="first_run_form_auto_generated_passwords">
     </div>
+
+    <div class="col-sm-4 clearfix">
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-lg" id="first_run_form_auto_generate_passwords_button">
+          <%= content_tag(:i, '', class: 'fa fa-paint-brush') %> Auto-generate passwords
+        </button>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <h4>Keep a safe record of your passwords. You will need them later.</h4>
+    </div>
+
+    <div class="col-sm-12">
+      <legend>Admin password</legend>
+    </div>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, password: true} %>
+    <div class="col-sm-12">
+      <legend>SSH password</legend>
+    </div>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :ssh_password, f: f} %>
+    <div class="col-sm-12">
+      <legend>MySQL password</legend>
+    </div>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f} %>
+    <div class="col-sm-12">
+      <legend>Postgres password</legend>
+    </div>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :psql_password, f: f} %>
+    <div class="col-sm-12">
+      <legend>Smarthost</legend>
+    </div>
+    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_hostname, label: "Hostname", f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_username, label: "Username", f: f} %>
+    <%= render partial: 'shared/form/password', locals: {name: :smarthost_password, label: "Password", f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_authtype, collection: EnginesSettings.smtp_auth_types, label: "Authentication type", f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_port, label: "Port", f: f} %>
+    <div class="col-sm-12">
+      <legend>Default Domain</legend>
+    </div>
+    <%= render partial: 'shared/form/text_field', locals: {name: :default_domain, label: "Domain name", f: f} %>
+    <div class="col-sm-12">
+      <legend>SSL</legend>
+    </div>
+    <%= render partial: 'shared/form/text_field', locals: {name: :ssl_person_name, label: "Person name", f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :ssl_organisation_name, label: "Organisation name", f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :ssl_city, label: "City", f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :ssl_state, label: "State", f: f} %>
+    <%= render partial: 'shared/form/country_select', locals: {name: :ssl_country, label: "Country", f: f} %>
+
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: destroy_user_session_path, submit_label: "Submit"} %>
 
   <% end %>
 

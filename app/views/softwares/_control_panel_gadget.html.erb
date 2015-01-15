@@ -1,4 +1,6 @@
 <%  engine_name = software.engine_name
+    engine_active = EnginesSoftware.is_active engine_name
+    has_volumes = EnginesSoftware.volumes(engine_name).present?
     state = EnginesSoftware.state engine_name
     if state.kind_of?(EnginesOSapiResult)
       state = "state_error"
@@ -14,7 +16,6 @@
       software_fqdn = "?"
     end
 %>
-
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
   <div class="engine-gadget btn-group">
     <button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
@@ -47,7 +48,7 @@
         <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_software_path(id: engine_name), class: 'trigger-response-modal'  %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy", destroy_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
         <li class="divider"></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Recreate", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %> </li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
       <% elsif  state == "nocontainer" %>   
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create", create_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
@@ -56,17 +57,23 @@
          <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
       <%  end %>
       <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Display properties", edit_display_path(software), class: 'trigger-response-modal' %>
+      <li>
+        <%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Display properties", edit_display_path(software), class: 'trigger-response-modal' %>
       </li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_network_path(software), class: 'trigger-response-modal' %>
+      <li>
+        <%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_network_path(software), class: 'trigger-response-modal' %>
       </li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources", edit_resource_path(software), class: 'trigger-response-modal' %>
+      <li class="<%= 'disabled' if engine_active == true %>">
+        <%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources", edit_resource_path(software), class: 'trigger-response-modal' %>
       </li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-question") + " Software variables", edit_variable_path(software), class: 'trigger-response-modal' %>
+      <li class="<%= 'disabled' if engine_active == true %>">
+        <%= link_to content_tag(:i, "", class: "fa fa-question") + " Software variables", edit_variable_path(software), class: 'trigger-response-modal' %>
       </li>
-      <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Share folders", shares_path(software),  class: "trigger-response-modal" %>
-      </li>
+      <% if has_volumes %>
+        <li class="divider"></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Attach services", attach_service_path(software),  class: "trigger-response-modal" %>
+        </li>
+      <% end %>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, engine: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>
       </li>
