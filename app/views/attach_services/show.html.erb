@@ -9,11 +9,21 @@
 <%= @available_services %>
 </p>
 
-  <% EnginesSoftware.volumes(engine_name).each do |volume| %>
-    <div>
-      <% volume_name = volume.name %>
-      <h4 class="control-panel-title top-gap"><i class="fa fa-hdd-o"></i> <%= volume_name %></h4>
-    </div>
+  <h3 class="top-gap"><i class="fa fa-circle"></i> Software services</h3>
+  <% @available_services[:services].each do |service| %>
+    <% if service[:accepts].present? && service[:accepts].include?("ManagedEngine") %>
+      <h4><%= service[:title] %></h4>
+    <% end %>
   <% end %>
+
+  <% @available_services[:components].each do |k,v| %>
+    <h3 class="top-gap"><i class="fa fa-circle-o"></i> <%= k.to_s.singularize.capitalize + "  services" %></h3>
+    <% v.each do |vv| %>
+      <% if vv.present? && vv[:accepts].include?("ManagedEngine") %>
+        <h4><%= vv[:title] %></h4>
+      <% end %>
+    <% end %>
+  <% end %>
+
 
 </div>
