@@ -19,11 +19,11 @@ class InstallsController < ApplicationController
   def create_attach_icon
     url = @software.install.default_image_url
     if url == "Broken"
-      redirect_to installer_path, alert: "Software installation was not successful for #{@software.engine_name}. The URL for the icon image is invalid."
+      flash[:alert] = "The URL for the icon image is invalid for #{@software.engine_name}. "
     else
       @software.display.icon = EnginesUtilities.icon_from_url url
-      create_validate_software
     end
+    create_validate_software
   end
 
   def create_validate_software
@@ -39,7 +39,8 @@ class InstallsController < ApplicationController
     if build_response.instance_of?(ManagedEngine)
       redirect_to control_panel_path, notice: "Software installation was successful for #{@software.engine_name}."
     elsif build_response.instance_of?(EnginesOSapiResult)
-      redirect_to installer_path, alert: "Software installation was not successful for #{@software.engine_name}. " + build_response.result_mesg[0..1000]
+      flash[:alert] << "Software installation was not successful for #{@software.engine_name}. (" + build_response.result_mesg[0..1000] + ')'
+      redirect_to installer_path
     else
       redirect_to installer_path, alert: "Unexpected response from software installation process for #{@software.engine_name}."
     end

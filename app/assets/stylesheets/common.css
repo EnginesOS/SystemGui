@@ -1,17 +1,14 @@
 .alert {
-  margin-bottom: 10px;
-  margin-top: 0px;
-  margin-right: 0px;
-  margin-left: 0px;  
+  margin: 0px;
   border: none;
   border-radius: 0px;
   font-size: 1.2em;
 }
 
-.alert button {
+/*.alert button {
   font-size: 2em;
   margin-top: -5px;
-}
+}*/
 
 .top-gap {
   margin-top: 15px;
