@@ -9,11 +9,12 @@ class PagesController < ApplicationController
     end
   end      
 
-  def home
+  def desktop
     EnginesMaintenance.db_maintenance
     @settings = Setting.first_or_create
     @softwares = Software.user_visible_applications.sort_by(&:engine_name)
-    render :home, layout: false
+    # flash[:alert] = "fake error"
+    render :desktop, layout: false
   end
 
   def control_panel

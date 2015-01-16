@@ -15,7 +15,7 @@ class Software < ActiveRecord::Base
   validates :engine_name, uniqueness: true
 
   def self.user_visible_applications
-    all.select { |software| EnginesSoftware.state_as_set_by_user(software.engine_name) == 'running' }
+    all.select { |software| EnginesSoftware.default_startup_state(software.engine_name) == 'running' }
   end
 
   def load_variables_from_api

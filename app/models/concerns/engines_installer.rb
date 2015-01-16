@@ -2,8 +2,8 @@ module EnginesInstaller
 
   extend EnginesApi
 
-  def self.install_engines_software(software_params)
-    engines_api.build_engine software_params
+  def self.build_engine (engine_build_params)
+    engines_api.build_engine engine_build_params
   end
 
   def self.generate_next_unique_engine_name_for(engine_name)
@@ -37,16 +37,16 @@ module EnginesInstaller
     EnginesSoftware.all_fqdns.exclude?(fqdn)
   end
 
-  def self.software_variable_passwords_not_confimed?(params)
-    params.each do |k,v|
-      if v["type"] == "password_with_confirmation"
-        if v["value"] != v["password_confirmation"]
-          next
-        else
-          return false
-        end
-      end
-    end
-  end
+  # def self.software_variable_passwords_not_confimed?(params)
+  #   params.each do |k,v|
+  #     if v["type"] == "password_with_confirmation"
+  #       if v["value"] != v["password_confirmation"]
+  #         next
+  #       else
+  #         return false
+  #       end
+  #     end
+  #   end
+  # end
 
 end

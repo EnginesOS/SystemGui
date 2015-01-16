@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<% if @settings.wallpaper.exists? %>
+  <html style="<%= "background-color: " + @settings.background_color + "; background: url(" + @settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" %>">
+<% else %>
+  <html class="background-splash", style="background-color: <%= @settings.background_color %>">
+<% end %>
+
+<head>
+  <title>Engines</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div id="content" >
+
+  <%= render partial: 'shared/flash_messages' %>
+
+  <div class="contaner-fluid home-view">
+    <div class="home-view">
+      <%= render partial: 'desktop_menu' %>
+      <%= render partial: 'desktop_softwares' %>
+    </div>
+  </div>
+
+  <div id="footer">
+  </div>
+
+</div>
+
+<%= render partial: 'shared/waiting_for_response' %>
+
+</body>
+</html>
+
+
+
+
+
+

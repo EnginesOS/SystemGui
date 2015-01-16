@@ -3,6 +3,7 @@ class Variable < ActiveRecord::Base
   attr_accessor(
     :name,
     :value,
+    :value_confirmation,
     :label,
     :comment,
     :type,
