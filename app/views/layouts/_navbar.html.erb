@@ -37,7 +37,7 @@
           <%= link_to (image_tag("engines_icon.png", class: "nav_bar_launcher_icon") + " Engines desktop"), desktop_path, class: 'trigger-response-modal' %>
         </li>
         <li class="<%= 'active' if active_menu_item == :control_panel %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control Panel", control_panel_path, class: 'trigger-response-modal' %>
+          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path, class: 'trigger-response-modal' %>
         </li>
         <li class="<%= 'active' if active_menu_item == :installer %>">
           <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Installer", installer_path, class: 'trigger-response-modal' %>
