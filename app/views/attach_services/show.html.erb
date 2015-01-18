@@ -19,7 +19,7 @@
   <% @available_services[:components].each do |k,v| %>
     <h3 class="top-gap"><i class="fa fa-circle-o"></i> <%= k.to_s.singularize.capitalize + "  services" %></h3>
     <% v.each do |vv| %>
-      <% if vv.present? && vv[:accepts].include?("ManagedEngine") %>
+      <% if vv.present? %>
         <h4><%= vv[:title] %></h4>
       <% end %>
     <% end %>

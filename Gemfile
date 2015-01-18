@@ -13,6 +13,7 @@ gem "font-awesome-rails"
 gem "selectize-rails"
 gem 'newrelic_rpm'
 gem 'simple_form'
+gem 'twitter-bootstrap-rails-confirm'
 
 gem 'openssl'
 

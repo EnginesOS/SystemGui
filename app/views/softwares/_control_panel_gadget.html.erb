@@ -45,13 +45,13 @@
       <% elsif state == "stopped" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_software_path(id: engine_name), class: 'trigger-response-modal'  %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy", destroy_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy", destroy_container_software_path(id: engine_name), class: 'trigger-response-modal', data: { confirm: "Are you sure?" } %></li>
         <li class="divider"></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
       <% elsif  state == "nocontainer" %>   
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create", create_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Delete", delete_image_software_path(id: engine_name), class: 'trigger-response-modal' %></li> 
+        <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", delete_image_software_path(id: engine_name), class: 'trigger-response-modal', data: { confirm: "Are you sure?" } %></li> 
       <% else %>
          <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
       <%  end %>
