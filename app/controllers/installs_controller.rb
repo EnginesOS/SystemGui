@@ -13,31 +13,42 @@ class InstallsController < ApplicationController
 
   def create
     @software = Software.new(software_install_params)
-    @software.display.icon = EnginesUtilities.icon_from_url @software.install.default_image_url
-    if @software.save
-      redirect_to engine_install_path(software: software_install_params)
-    else
-      render :new
-      # redirect_to installer_path, alert: "Unable to initiate application installation for #{@software.engine_name}. Failed to save display properties to database."
-    end
-    # end
+    create_attach_icon
   end
 
-  def engine_install
-    install_response = EnginesInstaller.install_engines_software engine_install_params
-    engine_name = engine_install_params[:engine_name]
-    if install_response.instance_of?(ManagedEngine)
-      redirect_to control_panel_path, notice: "Application installation was successful for #{engine_name}."
-    elsif install_response.instance_of?(EnginesOSapiResult)
-      redirect_to installer_path, alert: "Application installation was not successful for #{engine_name}. " + install_response.result_mesg[0..1000]
+  def create_attach_icon
+    url = @software.install.default_image_url
+    if url == "Broken"
+      flash[:alert] = "The URL for the icon image is invalid for #{@software.engine_name}. "
     else
-      render text: "Unexpected response from software installation process for #{engine_name}."
+      @software.display.icon = EnginesUtilities.icon_from_url url
+    end
+    create_validate_software
+  end
+
+  def create_validate_software
+    if @software.save
+      create_engine_build
+    else
+      render :new
+    end
+  end
+
+  def create_engine_build
+    build_response = EnginesInstaller.build_engine engine_build_params
+    if build_response.instance_of?(ManagedEngine)
+      redirect_to control_panel_path, notice: "Software installation was successful for #{@software.engine_name}."
+    elsif build_response.instance_of?(EnginesOSapiResult)
+      flash[:alert] << "Software installation was not successful for #{@software.engine_name}. (" + build_response.result_mesg[0..1000] + ')'
+      redirect_to installer_path
+    else
+      redirect_to installer_path, alert: "Unexpected response from software installation process for #{@software.engine_name}."
     end
   end
 
 private
 
-  def engine_install_params
+  def engine_build_params
     result = {}
     software_install_params.each do |k,v|
       if v.kind_of? Hash

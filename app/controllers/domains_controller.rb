@@ -39,7 +39,7 @@ class DomainsController < ApplicationController
     if !@domain.delete
       redirect_to domains_path, alert: 'Unable to delete domain.'
     else
-      result = @domain.destroy_via_api
+      result = @domain.api_destroy
       if result.was_success
         redirect_to domains_path, notice: 'Successfully deleted domain.'
       else

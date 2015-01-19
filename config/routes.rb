@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "first_run", to: "first_runs#first_run"
   post "first_runs", to: "first_runs#submit_first_run"
   get "start", to: "pages#start"
-  get "desktop", to: "pages#home"
+  get "desktop", to: "pages#desktop"
   get "control_panel", to: "pages#control_panel"
   get "help", to: "pages#help"
   get "system", to: "pages#system"
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get "settings/edit_mail", to: "settings#edit_mail"
   get "settings/edit_wallpaper", to: "settings#edit_wallpaper"
   get "installer", to: "installs#installer"
-  get "engine_install", to: "installs#engine_install", as: :engine_install
+  # get "engine_install", to: "installs#engine_install", as: :engine_install
   get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
   patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
 

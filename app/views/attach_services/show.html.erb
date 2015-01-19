@@ -6,7 +6,7 @@
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
 <p>
-<%= @available_services %>
+<%= (ap @available_services, index: false, plain: true).html_safe %>
 </p>
 
   <h3 class="top-gap"><i class="fa fa-circle"></i> Software services</h3>
@@ -19,7 +19,7 @@
   <% @available_services[:components].each do |k,v| %>
     <h3 class="top-gap"><i class="fa fa-circle-o"></i> <%= k.to_s.singularize.capitalize + "  services" %></h3>
     <% v.each do |vv| %>
-      <% if vv.present? && vv[:accepts].include?("ManagedEngine") %>
+      <% if vv.present? %>
         <h4><%= vv[:title] %></h4>
       <% end %>
     <% end %>

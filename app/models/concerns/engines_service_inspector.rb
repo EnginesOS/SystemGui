@@ -3,7 +3,7 @@ module EnginesServiceInspector
   {
     state: 'read_state',
     fqdn: 'fqdn',
-    state_as_set_by_user: 'setState',
+    default_startup_state: 'setState',
     memory: 'memory',
     monitored: 'monitored',
     framework: 'framework',
