@@ -32,9 +32,10 @@ Rails.application.routes.draw do
   resources :domains
   resources :networks
   resources :resources
-  resources :variables
+  resources :software_variables
   resources :displays
-  resources :attach_services
+  resources :attached_services
+  resources :attached_subservices
 
   resources :services do
     member do

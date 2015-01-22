@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109043400) do
+ActiveRecord::Schema.define(version: 20150121230224) do
+
+  create_table "attached_services", force: true do |t|
+    t.integer "attached_service_consumer_id"
+    t.string  "attached_service_consumer_type"
+  end
+
+  create_table "component_services", force: true do |t|
+    t.integer "component_id"
+  end
 
   create_table "displays", force: true do |t|
     t.integer "software_id"
@@ -60,6 +69,10 @@ ActiveRecord::Schema.define(version: 20150109043400) do
     t.string   "background_color"
   end
 
+  create_table "software_variables", force: true do |t|
+    t.integer "software_id"
+  end
+
   create_table "softwares", force: true do |t|
     t.string   "engine_name"
     t.datetime "created_at"
@@ -88,7 +101,8 @@ ActiveRecord::Schema.define(version: 20150109043400) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 
   create_table "variables", force: true do |t|
-    t.integer "software_id"
+    t.integer "variable_consumer_id"
+    t.string  "variable_consumer_type"
   end
 
 end

@@ -1,0 +1,12 @@
+<div class="col-sm-12 top-gap app_installs">
+  <h3 class='control-panel-title'><i class='fa fa-question'></i> Edit software variables for <%= @software.engine_name %></h3>
+  <%= form_for @software, url: software_variable_path(@software) do |f| %>
+    <%= f.fields_for :software_variable do |ff| %>
+      <%= render partial: 'shared/form/errors', locals: {f: ff, label: 'software variables'} %>
+    <% end %>
+    <%= render partial: 'software_variables/form_fields', locals: {f: f} %>
+    <%= f.fields_for :software_variable do |ff| %>
+      <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: ff, cancel_path: control_panel_path} %>
+    <% end %>
+  <% end %>
+</div>

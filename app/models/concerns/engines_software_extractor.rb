@@ -18,7 +18,7 @@ module EnginesSoftwareExtractor
     end
   end
 
-  def environment_variables(engine_name)
+  def software_variables(engine_name)
     blueprint_environment_variables = blueprint_software_details(engine_name)['environment_variables']
     environments(engine_name).map(&:attributes).each do |environment_variable|
       blueprint_environment_variable = blueprint_environment_variables.find do |ev|
@@ -34,6 +34,10 @@ module EnginesSoftwareExtractor
       environment_variable[:build_time_only] = blueprint_environment_variable["build_time_only"] 
       environment_variable[:immutable] = blueprint_environment_variable["immutable"] 
     end
+  end
+
+  def attached_services(engine_name)
+    attached_services_hash(engine_name).reject{|k,v| v.empty?}.keys
   end
 
   def volumes(engine_name)

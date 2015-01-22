@@ -8,15 +8,8 @@ class Resource < ActiveRecord::Base
 
   validate :sufficient_memory
 
-  def load_from_api
-    self.memory = EnginesSoftware.memory software.engine_name
-    self.required_memory = EnginesSoftware.blueprint_software_details(software.engine_name)["requiredmemory"]
-    self
-  end
-
   def save_to_api
-    return false if !save
-    EnginesSoftware.update_resources(params_for_api_update).was_success
+    EnginesSoftware.update_resources(params_for_api_update)
   end
 
 private
@@ -34,5 +27,11 @@ private
     }
   end
 
+  def self.api_data_for engine_name
+    {
+      memory: EnginesSoftware.memory(engine_name),
+      required_memory: EnginesSoftware.blueprint_software_details(engine_name)["requiredmemory"]
+    }
+  end
  
 end

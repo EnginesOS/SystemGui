@@ -27,7 +27,8 @@ class InstallsController < ApplicationController
   end
 
   def create_validate_software
-    if @software.save
+    # @software.update software_install_params
+    if @software.valid?
       create_engine_build
     else
       render :new
@@ -35,11 +36,17 @@ class InstallsController < ApplicationController
   end
 
   def create_engine_build
-    build_response = EnginesInstaller.build_engine engine_build_params
+    build_response = EnginesInstaller.build_engine(Install.engine_build_params(@software))
     if build_response.instance_of?(ManagedEngine)
+      @software.save
       redirect_to control_panel_path, notice: "Software installation was successful for #{@software.engine_name}."
     elsif build_response.instance_of?(EnginesOSapiResult)
-      flash[:alert] << "Software installation was not successful for #{@software.engine_name}. (" + build_response.result_mesg[0..1000] + ')'
+      alert_message = "Software installation was not successful for #{@software.engine_name.to_s}. (" + build_response.result_mesg.to_s[0..1000] + ')'
+      if flash[:alert].nil?
+        flash[:alert] = alert_message
+      else
+        flash[:alert] << alert_message
+      end
       redirect_to installer_path
     else
       redirect_to installer_path, alert: "Unexpected response from software installation process for #{@software.engine_name}."
@@ -47,20 +54,6 @@ class InstallsController < ApplicationController
   end
 
 private
-
-  def engine_build_params
-    result = {}
-    software_install_params.each do |k,v|
-      if v.kind_of? Hash
-        v.each do |k,v|
-          result[k.to_sym] = v
-        end
-      else
-        result[k.to_sym] = v
-      end
-    end
-    result
-  end
 
   def software_install_params
     params.require(:software).permit!

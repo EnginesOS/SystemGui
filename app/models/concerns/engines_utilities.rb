@@ -2,25 +2,20 @@ module EnginesUtilities
 
   def self.icon_from_url url
 
-p :downloading_image_from_url
-p url
+    extname = File.extname(url)
+    basename = File.basename(url, extname)
 
-    if url.present?
-      begin
+    file = Tempfile.new([basename, extname])
+    file.binmode
 
+    open(URI.parse(url)) do |data|  
+      file.write data.read
+    end
 
+    file.rewind
 
-        @icon = URI.parse(url)
+    return file
 
-
-      rescue Exception=>e
-
-p :nok
-p e      
-
-        nil
-      end
-    end  
   end  
 
 end

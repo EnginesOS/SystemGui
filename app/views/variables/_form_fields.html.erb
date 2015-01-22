@@ -1,5 +1,5 @@
 <% if f.object.variables.present? %>
-  <legend>Environment variables</legend>
+  <legend>Variables</legend>
   <%= f.fields_for :variables do |ff| %>
     <%= render partial: 'variables/form_field', locals: {f: ff} %>
   <% end %>
