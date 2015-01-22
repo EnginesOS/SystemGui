@@ -71,11 +71,12 @@
     <pre><table><tr><td><%= EnginesSoftware.last_error(@engine_name) %></td></tr></table></pre>
   
     <label>Environment</label>
-    <% if EnginesSoftware.environment_variables(@engine_name).present? %>
+    <% software_variables = EnginesSoftware.software_variables(@engine_name) %>
+      <% if software_variables.present? %>
       <pre><table>
         <th>Name</th>
         <th>Value</th>
-        <% EnginesSoftware.environment_variables(@engine_name).each do |v|%>
+        <% software_variables.each do |v|%>
           <tr>
             <td><%= v[:name] %></td>
             <td><%= v[:value] %></td>
@@ -87,9 +88,10 @@
     <% end %>
 
     <label>Volumes</label>
-    <% if EnginesSoftware.volumes(@engine_name) && EnginesSoftware.volumes(@engine_name).length > 0 %>
+    <% volumes = EnginesSoftware.volumes(@engine_name) %>
+    <% if volumes && volumes.length > 0 %>
       <pre><table>
-        <% EnginesSoftware.volumes(@engine_name).each do |v|%>
+        <% volumes.each do |v|%>
            <tr>
             <td><%=v.localpath%>/<%=v.name%>:<%=v.remotepath%>/<%=v.name%></td>
           </tr>
@@ -100,9 +102,10 @@
     <% end %>  
 
     <label>Database</label>
-    <% if EnginesSoftware.databases(@engine_name) && EnginesSoftware.databases(@engine_name).length > 0 %>
+    <% databases = EnginesSoftware.databases(@engine_name) %>
+    <% if databases && databases.length > 0 %>
       <pre><table>
-        <% EnginesSoftware.databases(@engine_name).each do |db|%>
+        <% databases.each do |db|%>
            <tr><td><%= db %></td></tr>
         <% end %>
       </table></pre>
@@ -134,9 +137,10 @@
   
      <label>Processes</label>
      <% res = EnginesSoftware.ps_container(@engine_name) %>
-     <% if EnginesSoftware.last_result(@engine_name).present? %>
+     <% processes = EnginesSoftware.last_result(@engine_name) %>
+     <% if processes.present? %>
        <pre><table>
-         <% EnginesSoftware.last_result(@engine_name).each_line do |line | 
+         <% processes.each_line do |line | 
            vals = line.split %>
            <tr>
              <% vals.each do |v| %>  
@@ -151,8 +155,9 @@
 
     <label>Logs</label>
     <% res = EnginesSoftware.logs_container(@engine_name)%>
-    <% if EnginesSoftware.last_result(@engine_name).present? %>
-      <pre><%= EnginesSoftware.last_result(@engine_name) %></pre>
+    <% logs = EnginesSoftware.last_result(@engine_name) %>
+    <% if logs.present? %>
+      <pre><%= logs %></pre>
     <% else %>
       <pre>None</pre>
      <% end %>

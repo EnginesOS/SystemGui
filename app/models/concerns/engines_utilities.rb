@@ -2,6 +2,8 @@ module EnginesUtilities
 
   def self.icon_from_url url
 
+    return nil if url.blank?
+
     extname = File.extname(url)
     basename = File.basename(url, extname)
 
@@ -16,6 +18,8 @@ module EnginesUtilities
 
     return file
 
+  rescue
+    return nil
   end  
 
 end
