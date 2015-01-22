@@ -1,11 +1,21 @@
 <%  label ||= name.to_s.humanize.capitalize
-    value ||= f.object.send(name) %>
+    value ||= f.object.send(name)
+    collection ||= []
+    id ||= ''
+    attach_selectize = true if attach_selectize.nil?
+    include_blank ||= value.nil?
+
+    if attach_selectize
+      select_class = 'selectize-single'
+    else
+      select_class = ''
+    end %>
 
 <div class="col-sm-8  col-sm-offset-2">
   <div class="form-group">
     <%= f.label name, class: 'control-label' do %>
       <%= label %>
     <% end %>
-    <%= f.select name, collection, {selected: value, include_blank: value.nil?, input_html: {class: "input-lg"}}, class: 'selectize-single' %>
+    <%= f.select name, collection, {selected: value, include_blank: include_blank}, {class: select_class, id: id} %>
   </div>
 </div>

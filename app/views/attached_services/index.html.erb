@@ -1,0 +1,15 @@
+<% engine_name = @software.engine_name %>
+
+<div class="col-sm-12 top-gap app_installs">
+
+  <h3 class='control-panel-title'><i class='fa fa-share-alt'></i> Attached services for <%= @software.engine_name %></h3>
+  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+  <p>
+    <div><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach a service', new_attached_service_path(software_id: @software), class: "btn btn-primary btn-lg trigger-response-modal" %></div>
+    <% @software.attached_services.each do |attached_service| %>
+      <h4><%= attached_service.name.to_s.titleize %> <%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach a sub-service', new_attached_subservice_path(software_id: @software, attached_service_name: attached_service.name), class: "btn btn-primary btn-lg trigger-response-modal" %></h4>
+    <% end %>
+  </p>
+
+</div>

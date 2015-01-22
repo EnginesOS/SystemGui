@@ -24,7 +24,8 @@ module EnginesSoftwareInspector
     environments: 'environments',
     volumes_hash: 'volumes',
     consumers_hash: 'consumers',
-    databases: 'databases'
+    # databases_hash: 'databases',
+    attached_services_hash: 'attached_services'
   }.
   each do |method, instruction|
     define_method(method) do |engine_name| 

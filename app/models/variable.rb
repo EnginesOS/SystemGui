@@ -14,14 +14,6 @@ class Variable < ActiveRecord::Base
     :build_time_only,
     :immutable)
 
-  belongs_to :software
-
-  def self.save_to_api params
-    EnginesSoftware.update_variables(params).was_success
-  end
-
-  def self.params_from_api engine_name
-    EnginesSoftware.environment_variables(engine_name)
-  end
+  belongs_to :variable_consumer, polymorphic: true
 
 end
