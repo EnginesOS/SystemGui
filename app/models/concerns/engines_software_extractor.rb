@@ -56,15 +56,15 @@ module EnginesSoftwareExtractor
   end
 
   def attached_services(engine_name)
-    engines_api.attached_services_for(engine_name, 'ManagedEngine')
+    engines_api.list_attached_services_for('ManagedEngine', engine_name)
   end
 
   def attached_service_types(engine_name)
     attached_services(engine_name).keys
   end
 
-  def attached_subservices(service_name, service_class)
-    engines_api.attached_services_for(service_name, service_class)
+  def attached_subservices(service_class, service_name)
+    engines_api.list_attached_services_for(service_class, service_name)
   end
 
   def available_services(engine_name)

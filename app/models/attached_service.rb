@@ -2,6 +2,7 @@ class AttachedService < ActiveRecord::Base
 
   attr_accessor(
     :title,
+    :name,
     :service_type)
 
   belongs_to :attached_services_handler
@@ -16,3 +17,4 @@ class AttachedService < ActiveRecord::Base
   end
 
 end
+
