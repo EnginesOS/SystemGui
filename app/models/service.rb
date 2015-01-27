@@ -5,7 +5,7 @@ class Service
      backup: 'Backup manager',
      dns: 'Local DNS server',
      ftp: 'Local FTP server',
-     mgmt: 'Management interface',
+     mgmt: 'Engines system manager',
      mongo_server: 'Mongo NoSQL database',
      mysql_server: 'MySQL database',
      nginx: 'Web router',

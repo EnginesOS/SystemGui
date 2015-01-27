@@ -31,7 +31,7 @@ result = {
   domain_name: software.network.domain_name,
   http_protocol: software.network.http_protocol,
   memory: software.resource.memory,
-  software_environment_variables: (software_variables_params(software.software_variable)),
+  software_environment_variables: (software_variables_params(software.software_variables_handler)),
   repository_url: software.install.repository_url
 }
 
@@ -42,10 +42,10 @@ result
 
   end
 
-  def self.software_variables_params software_variable
-    return nil if software_variable.nil?
+  def self.software_variables_params software_variables_handler
+    return nil if software_variables_handler.nil?
     result = []
-    software_variable.variables.each do |variable|
+    software_variables_handler.variables.each do |variable|
       result << {
        name: variable.name,
        value: variable.value
@@ -78,7 +78,7 @@ private
         display_name: repository_software_params['name'],
         display_description: repository_software_params['description']
       },
-      software_variable_attributes: {variables_attributes: repository_software_params["environment_variables"]},
+      software_variables_handler_attributes: {variables_attributes: repository_software_params["environment_variables"]},
       network_attributes: {
         host_name: EnginesInstaller.generate_next_unique_host_name_for(software_name),
         domain_name: Network.best_default_domain,

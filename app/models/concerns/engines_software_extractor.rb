@@ -56,11 +56,23 @@ module EnginesSoftwareExtractor
   end
 
   def attached_services(engine_name)
-    attached_services_hash(engine_name).reject{|k,v| v.empty?}.keys
+    engines_api.attached_services_for(engine_name, 'ManagedEngine')
+  end
+
+  def attached_service_types(engine_name)
+    attached_services(engine_name).keys
+  end
+
+  def attached_subservices(service_name, service_class)
+    engines_api.attached_services_for(service_name, service_class)
   end
 
   def available_services(engine_name)
-    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))
+    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))[:services]
+  end
+
+  def available_subservices(engine_name, service_type)
+    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))[:subservices][service_type]
   end
 
 end
