@@ -39,10 +39,6 @@ module EnginesSoftwareExtractor
     end
   end
 
-  def attached_services(engine_name)
-    attached_services_hash(engine_name).reject{|k,v| v.empty?}.keys
-  end
-
   def volumes(engine_name)
     volumes_hash(engine_name).values
   end
@@ -57,6 +53,14 @@ module EnginesSoftwareExtractor
 
   def backup_tasks(engine_name)
     EnginesBackupTask.all #.select { |backup_task| backup_task.present? }
+  end
+
+  def attached_services(engine_name)
+    attached_services_hash(engine_name).reject{|k,v| v.empty?}.keys
+  end
+
+  def available_services(engine_name)
+    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))
   end
 
 end

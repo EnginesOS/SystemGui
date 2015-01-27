@@ -6,10 +6,23 @@
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
   <p>
-    <div><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach a service', new_attached_service_path(software_id: @software), class: "btn btn-primary btn-lg trigger-response-modal" %></div>
+
+    <h4><%= @software.engine_name + ' software' %></h4>
+
+    <% @available_services[:services].map{|s|s[:title]}.each do |s| %>
+      <div><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach ' + s, new_attached_service_path(software_id: @software), class: "btn btn-default btn-lg trigger-response-modal" %></div>
+    <% end %>
+
     <% @software.attached_services.each do |attached_service| %>
-      <h4><%= attached_service.name.to_s.titleize %> <%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach a sub-service', new_attached_subservice_path(software_id: @software, attached_service_name: attached_service.name), class: "btn btn-primary btn-lg trigger-response-modal" %></h4>
+      <h4><%= @software.engine_name + ' ' + attached_service.name.to_s %></h4>
+
+      <% @available_services[:components][attached_service.name].map{|s|s[:title]}.each do |s| %>
+        <div><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach ' + s, new_attached_service_path(software_id: @software), class: "btn btn-default btn-lg trigger-response-modal" %></div>
+      <% end %>
+
     <% end %>
   </p>
+
+<%= (ap @available_services, plain: true, index: false).html_safe %>
 
 </div>
