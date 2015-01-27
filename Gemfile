@@ -15,7 +15,7 @@ gem 'newrelic_rpm'
 # gem 'simple_form'
 gem 'twitter-bootstrap-rails-confirm'
 
-gem 'tree'
+gem 'rubytree'
 
 gem 'openssl'
 
