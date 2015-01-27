@@ -4,7 +4,13 @@
     <%= f.fields_for :software_variable do |ff| %>
       <%= render partial: 'shared/form/errors', locals: {f: ff, label: 'software variables'} %>
     <% end %>
-    <%= render partial: 'software_variables/form_fields', locals: {f: f} %>
+    <% if @software.software_variable.present? && @software.software_variable.variables.present? %>
+      <%= render partial: 'software_variables/form_fields', locals: {f: f} %>
+    <% else %>
+      <div class="col-sm-8 col-sm-offset-2">
+        <h4>This software does not have software variables.<h4>
+      </div>
+    <% end %>
     <%= f.fields_for :software_variable do |ff| %>
       <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: ff, cancel_path: control_panel_path} %>
     <% end %>

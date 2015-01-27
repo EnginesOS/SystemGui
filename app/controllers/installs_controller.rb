@@ -18,10 +18,11 @@ class InstallsController < ApplicationController
 
   def create_attach_icon
     url = @software.install.default_image_url
-    if url == "Broken"
-      flash[:alert] = "The URL for the icon image is invalid for #{@software.engine_name}. "
+    file = EnginesUtilities.icon_from_url url
+    if file == nil
+      flash[:alert] = "The icon image could not be loaded for #{@software.engine_name}. "
     else
-      @software.display.icon = EnginesUtilities.icon_from_url url
+      @software.display.icon = file
     end
     create_validate_software
   end
