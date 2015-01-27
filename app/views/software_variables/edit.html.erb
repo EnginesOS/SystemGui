@@ -1,17 +1,17 @@
 <div class="col-sm-12 top-gap app_installs">
   <h3 class='control-panel-title'><i class='fa fa-question'></i> Edit software variables for <%= @software.engine_name %></h3>
   <%= form_for @software, url: software_variable_path(@software) do |f| %>
-    <%= f.fields_for :software_variable do |ff| %>
+    <%= f.fields_for :software_variables_handler do |ff| %>
       <%= render partial: 'shared/form/errors', locals: {f: ff, label: 'software variables'} %>
     <% end %>
-    <% if @software.software_variable.present? && @software.software_variable.variables.present? %>
+    <% if @software.software_variables_handler.present? && @software.software_variables_handler.variables.present? %>
       <%= render partial: 'software_variables/form_fields', locals: {f: f} %>
     <% else %>
       <div class="col-sm-8 col-sm-offset-2">
         <h4>This software does not have software variables.<h4>
       </div>
     <% end %>
-    <%= f.fields_for :software_variable do |ff| %>
+    <%= f.fields_for :software_variables_handler do |ff| %>
       <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: ff, cancel_path: control_panel_path} %>
     <% end %>
   <% end %>

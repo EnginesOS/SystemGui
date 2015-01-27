@@ -1,14 +1,14 @@
 class Software < ActiveRecord::Base
 
-  has_many :attached_services, as: :attached_service_consumer, dependent: :destroy
-  has_one :software_variable, dependent: :destroy
+  has_one :software_variables_handler, dependent: :destroy
+  has_one :attached_services_handler, dependent: :destroy
   has_one :display, dependent: :destroy
   has_one :network, dependent: :destroy
   has_one :resource, dependent: :destroy
   has_one :install, dependent: :destroy
 
-  accepts_nested_attributes_for :software_variable
-  accepts_nested_attributes_for :attached_services
+  accepts_nested_attributes_for :software_variables_handler
+  accepts_nested_attributes_for :attached_services_handler
   accepts_nested_attributes_for :display
   accepts_nested_attributes_for :network
   accepts_nested_attributes_for :resource

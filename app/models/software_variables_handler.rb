@@ -1,4 +1,4 @@
-class SoftwareVariable < ActiveRecord::Base
+class SoftwareVariablesHandler < ActiveRecord::Base
 
   has_many :variables, as: :variable_consumer, dependent: :destroy
   belongs_to :software

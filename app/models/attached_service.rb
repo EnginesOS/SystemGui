@@ -1,41 +1,18 @@
 class AttachedService < ActiveRecord::Base
 
   attr_accessor(
-    :name)
+    :title,
+    :service_type)
 
-  belongs_to :attached_services_consumer
-
+  belongs_to :attached_services_handler
   has_many :variables, as: :variable_consumer, dependent: :destroy
-  has_many :attached_services, as: :attached_service_consumer, dependent: :destroy
-  belongs_to :software
+  has_many :attached_subservices, dependent: :destroy
 
   accepts_nested_attributes_for :variables
+  accepts_nested_attributes_for :attached_subservices
 
-  # def self.save_to_api params
-  #   EnginesAttachedServices.update_components(params_for_api_update).was_success
-  # end
-
-  def self.available_services engine_name
-    EnginesAttachedServices.available_services_for(software.engine_name)
+  def available_subservices
+    EnginesSoftware.available_services(software.engine_name, service_type)
   end
-
-private
-
-  def self.params_from_api_data(engine_name)
-    EnginesSoftware.attached_services(engine_name).map{|name| {name: name}}
-  end
-
-  # def params_for_api_update
-  #   {
-  #     engine_name: engine_name,
-  #     environment_variables:
-  #       variables.map do |variable|
-  #         {
-  #           name: variable.name,
-  #           value: variable.value
-  #         }
-  #       end
-  #   }
-  # end
 
 end
