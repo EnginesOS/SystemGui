@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127034304) do
+ActiveRecord::Schema.define(version: 20150127075938) do
 
   create_table "attached_services", force: true do |t|
     t.integer "attached_services_handler_id"
@@ -36,17 +36,11 @@ ActiveRecord::Schema.define(version: 20150127034304) do
   end
 
   create_table "domains", force: true do |t|
-    t.string  "domain_name"
-    t.boolean "internal_only"
-    t.integer "system_config_id"
-    t.boolean "self_hosted"
   end
 
   create_table "galleries", force: true do |t|
-    t.string   "url"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "url"
+    t.string "name"
   end
 
   create_table "installs", force: true do |t|
@@ -77,9 +71,7 @@ ActiveRecord::Schema.define(version: 20150127034304) do
   end
 
   create_table "softwares", force: true do |t|
-    t.string   "engine_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "engine_name"
   end
 
   create_table "users", force: true do |t|

@@ -6,6 +6,9 @@ class Domain < ActiveRecord::Base
   attr_accessor :city
   attr_accessor :organization_name
   attr_accessor :person_name
+  attr_accessor :domain_name
+  attr_accessor :internal_only
+  attr_accessor :self_hosted
 
   domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
   validates :domain_name, presence: true, format: { with: domain_name_regex, :multiline => true  }
