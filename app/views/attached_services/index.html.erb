@@ -19,10 +19,7 @@
   </div>
 
   <% @software.attached_services_handler.available_services.each do |available_service| %>
-    <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach ' + available_service[:title], new_attached_service_path(software_id: @software, service_type: available_service[:service_type], service_provider: available_service[:service_provider]), class: "btn btn-default btn-lg trigger-response-modal" %></div><br>
-      engine_name: <%= @software.engine_name %><br>
-      service_type: <%= available_service[:service_type] %><br>
-      service_provider: <%= available_service[:service_provider] %><br><br>
+    <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' ' + available_service[:title], new_attached_service_path(software_id: @software.id, service_type: available_service[:service_type], service_provider: available_service[:service_provider]), class: "btn btn-default btn-lg trigger-response-modal" %></div>
   <% end %>
  
 

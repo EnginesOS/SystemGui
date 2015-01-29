@@ -4,19 +4,47 @@ class AttachedServicesController < ApplicationController
   
   def index
     @software = Software.find(params[:software_id])
-    @software.attached_services_handler.destroy if @software.attached_services_handler.present?
+    # @software.attached_services_handler.destroy if @software.attached_services_handler.present?
     @software.build_attached_services_handler.load_attached_services
-
-
   end
 
   def new
     @software = Software.find(params[:software_id])
-    @software.attached_services_handler.attached_services
-    @software.attached_services_handler.
-      attached_services.build(AttachedService.params_from_api_data(@software.engine_name))
+
+    available_services = EnginesSoftware.available_services(@software.engine_name)
+
+    service_detail = available_services.find do |service|
+      service[:service_type] == params[:service_type] &&
+      service[:service_provider] == params[:service_provider]
+    end
+    
+    @attached_service = @software.build_attached_services_handler.attached_services.build(
+      {
+        service_type: params[:service_type],
+        service_provider: params[:service_provider],
+        title: service_detail[:title],
+        variables_attributes: variables_attributes(service_detail[:setup_params].values)
+      })
+
   end
 
+  def variables_attributes variables_params
+
+    variables_params.map do |variable|
+      {
+        name: variable[:name],
+        label: variable[:title],
+        regex_validator: variable[:regexverifer],
+        type: variable[:type],
+        tooltip: variable[:tooltip],
+        hint: variable[:hint],
+        placeholder: variable[:placeholder],
+        mandatory: variable[:required],
+        value: variable[:default_value],
+        comment: variable[:comment]
+      }
+    end
+  end
 
 
   # def 

@@ -1,6 +1,10 @@
+  <%= (ap EnginesSoftware.available_subservices(@software.engine_name, @attached_service.service_type), plain: true, index: false).html_safe %>
+
+  
+
 <div class="col-sm-12">
 
-  <h2><i class='fa fa-share-alt'></i> Attach services to <%= @software.engine_name %></h2>
+  <h2><i class='fa fa-share-alt'></i> Attach <%=  %> to <%= @software.engine_name %></h2>
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
 <p>
