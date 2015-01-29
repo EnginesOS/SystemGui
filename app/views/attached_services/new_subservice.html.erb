@@ -1,0 +1,21 @@
+  <% if false #@software.attached_services_handler.attached_services.present? %>
+
+    <%= @software.attached_services_handler.attached_services.each do |attached_service| %>
+      <h4><%= attached_service.software.engine_name + ' ' + attached_service.name.to_s %></h4>
+
+      <% attached_service.available_subservices.map{|s|s[:title]}.each do |s| %>
+        <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach ' + s, new_attached_service_path(software_id: @software, service_name: s[:service_name]), class: "btn btn-default btn-lg trigger-response-modal" %></div>
+      <% end %>
+
+    <% end %>
+
+  <% end %>
+
+
+  
+
+<h3>Attached services</h3>
+<%= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe %>
+<h3>Available services</h3>
+<%= (ap @software.attached_services_handler.available_services, plain: true, index: false).html_safe %>
+

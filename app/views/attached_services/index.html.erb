@@ -1,31 +1,22 @@
-<% engine_name = @software.engine_name %>
-
 <div class="col-sm-12">
 
-  <h2 class=''><i class='fa fa-share-alt'></i> Attached services</h2>
+  <h2 class=''><i class='fa fa-share-alt'></i> Attach services</h2>
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
-  <h3><%= @software.engine_name %></h3>
+  <h3>Attached services</h3>
+  <div>
+    <% @software.attached_services_handler.attached_services.each do |attached_service| %>
+      <h4 class="well well-sm"><%= attached_service.name %><h4>
+    <% end %>
+  </div>
 
   <% @software.attached_services_handler.available_services.each do |available_service| %>
-    <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach ' + available_service[:title], new_attached_service_path(software_id: @software, service_type: available_service[:service_type], service_provider: available_service[:service_provider]), class: "btn btn-default btn-lg trigger-response-modal" %></div>
+    <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach ' + available_service[:title], new_attached_service_path(software_id: @software, service_type: available_service[:service_type], service_provider: available_service[:service_provider]), class: "btn btn-default btn-lg trigger-response-modal" %></div><br>
+      engine_name: <%= @software.engine_name %><br>
+      service_type: <%= available_service[:service_type] %><br>
+      service_provider: <%= available_service[:service_provider] %><br><br>
   <% end %>
-
-  <% if false #@software.attached_services_handler.attached_services.present? %>
-
-    <%= @software.attached_services_handler.attached_services.each do |attached_service| %>
-      <h4><%= attached_service.software.engine_name + ' ' + attached_service.name.to_s %></h4>
-
-      <% attached_service.available_subservices.map{|s|s[:title]}.each do |s| %>
-        <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' Attach ' + s, new_attached_service_path(software_id: @software, service_name: s[:service_name]), class: "btn btn-default btn-lg trigger-response-modal" %></div>
-      <% end %>
-
-    <% end %>
-
-  <% end %>
-
-
-  
+ 
 
 <h3>Attached services</h3>
 <%= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe %>

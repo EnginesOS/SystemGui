@@ -17,7 +17,7 @@ class AttachedServicesHandler < ActiveRecord::Base
 
 
   def load_attached_services
-    attached_services.clear
+    attached_services.delete_all
     attached_services.build(attached_services_params_from_api_data)
   end
 
@@ -28,7 +28,7 @@ class AttachedServicesHandler < ActiveRecord::Base
 
 
 
-private
+# private
 
   def attached_services_params_from_api_data
 
@@ -119,35 +119,47 @@ p x
 
 #     EnginesSoftware.attached_services(software.engine_name).map{|service_type, params| {service_type: service_type, title: params_title}}
 
-{}
+result = x.map do |attached_service_type, attached_service_type_detail|
+  attached_service_type_detail.each do |attached_service_provider_detail|
+    attached_service_provider_detail.each do |attached_service_provider, attached_services_detail|
+      attached_services_detail.each do |attached_service|
+        name = attached_service[:name]
+        {title: ('title for ' + attached_service_type), name: name, service_type: attached_service_type }
+      end
+    end
+  end
+end
+
+p result
+result
 
   end
 
-  def params_for_api_update
-    {
-      engine_name: engine_name,
-      services: {hash_key: "dunno"}
-    }
+#   def params_for_api_update
+#     {
+#       engine_name: engine_name,
+#       services: {hash_key: "dunno"}
+#     }
 
-    #     attached_services.map do |attached_service|
-    #       {
-    #         service_type: attached_service.service_type,
-    #         service_provider: 'something_or_other',
+#     #     attached_services.map do |attached_service|
+#     #       {
+#     #         service_type: attached_service.service_type,
+#     #         service_provider: 'something_or_other',
 
-    #       }
-    #     end
+#     #       }
+#     #     end
 
-    #   environment_variables:
-    #     variables.map do |variable|
-    #       {
-    #         name: variable.name,
-    #         value: variable.value
-    #       }
-    #     end
+#     #   environment_variables:
+#     #     variables.map do |variable|
+#     #       {
+#     #         name: variable.name,
+#     #         value: variable.value
+#     #       }
+#     #     end
 
 
-    # }
+#     # }
 
-  end
+#   end
 
 end
