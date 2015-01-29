@@ -9,15 +9,19 @@
 <body>
 
 <%= render partial: 'layouts/navbar' %>
-<%= render partial: 'shared/flash_messages' %>
+
+    <div class="navbar-buffer">
+      <%= render partial: 'shared/flash_messages' %>
+    </div>      
 
 <div id="content">
   <div class="container">
-    <div class="row navbar-buffer">
+    <div class="row">
       <%= yield %>
     </div>      
   </div>
 </div>
+
 
 <div id="footer">
 </div>
