@@ -1,12 +1,20 @@
 <div class="col-sm-12">
 
-  <h2 class=''><i class='fa fa-share-alt'></i> Attach services</h2>
+  <h2 class=''><i class='fa fa-share-alt'></i> Attach services for <%= @software.engine_name %></h2>
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
   <h3>Attached services</h3>
   <div>
     <% @software.attached_services_handler.attached_services.each do |attached_service| %>
-      <h4 class="well well-sm"><%= attached_service.name %><h4>
+      <div class="well well-sm">
+        <h4><%= attached_service.title %></h4>
+        <% available_subservices = EnginesSoftware.available_subservices(@software.engine_name, attached_service.service_type) %>
+        <% if available_subservices.present? %>
+          <% (ap EnginesSoftware.available_services_hash(@software.engine_name), plain: true, index: false).html_safe %>
+        <% else %>
+          There are no sub-service available to be added to this service.
+        <% end %>
+      </div>
     <% end %>
   </div>
 

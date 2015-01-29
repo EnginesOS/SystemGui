@@ -67,12 +67,16 @@ module EnginesSoftwareExtractor
     engines_api.list_attached_services_for(service_class, service_name)
   end
 
+  def available_services_hash(engine_name)
+    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))
+  end
+
   def available_services(engine_name)
-    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))[:services]
+    available_services_hash(engine_name)[:services]
   end
 
   def available_subservices(engine_name, service_type)
-    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))[:subservices][service_type]
+    available_services_hash(engine_name)[:subservices][service_type]
   end
 
 end
