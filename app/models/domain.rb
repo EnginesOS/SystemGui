@@ -6,12 +6,21 @@ class Domain < ActiveRecord::Base
   attr_accessor :city
   attr_accessor :organization_name
   attr_accessor :person_name
-  attr_accessor :domain_name
-  attr_accessor :internal_only
-  attr_accessor :self_hosted
 
   domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
   validates :domain_name, presence: true, format: { with: domain_name_regex, :multiline => true  }
+
+  def self.reload_from_api
+    Domain.delete_all
+    EnginesDomain.engines_domains.each do |domain|
+      Domain.create(domain_name: domain)
+    end
+  end
+
+  def self.all_with_reload
+    Domain.reload_from_api
+    Domain.all
+  end
 
   def api_save
     result = EnginesDomain.update(

@@ -1,10 +1,10 @@
 <div class="top-gap">
-  <div class="gallery-panel">
+  <div class="typea_indexer_panel">
     <div class="input-group btn-group btn-group-lg">
       <span class="input-group-addon"><%= domain.domain_name %></span>
-      <%= link_to (content_tag(:i, "", class: "fa fa-edit") + ' Edit'), edit_domain_path(id: domain.id), class: "btn btn-default gallery-entry-button trigger-response-modal" %>
-      <%= link_to (content_tag(:i, "", class: "fa fa-certificate") + ' SSL'), new_domain_ssl_certificate_path(id: domain.id), class: "btn btn-default gallery-entry-button trigger-response-modal" %>
-      <%= link_to content_tag(:i, "", class: "fa fa-trash-o"), domain, method: :delete, data: { confirm: 'Are you sure that you want to remove this hosted domain?' }, class: 'btn btn-default gallery-entry-button' %>
+      <%= link_to (content_tag(:i, "", class: "fa fa-edit") + ' Edit'), edit_domain_path(id: domain.id), class: "btn btn-default trigger-response-modal" %>
+      <%= link_to (content_tag(:i, "", class: "fa fa-certificate") + ' SSL'), new_domain_ssl_certificate_path(id: domain.id), class: "btn btn-default trigger-response-modal" %>
+      <%= link_to content_tag(:i, "", class: "fa fa-trash-o"), domain, method: :delete, data: { confirm: 'Are you sure that you want to remove this hosted domain?' }, class: 'btn btn-default' %>
     </div>
   </div>
 </div>

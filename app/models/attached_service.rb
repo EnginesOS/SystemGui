@@ -13,7 +13,11 @@ class AttachedService < ActiveRecord::Base
   accepts_nested_attributes_for :attached_subservices
 
   def available_subservices
-    EnginesSoftware.available_services(software.engine_name, service_type)
+    EnginesSoftware.available_services(service_type, software.engine_name)
+  end
+
+  def reload_from_api(service_type, service_provider)
+    
   end
 
 end

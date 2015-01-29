@@ -5,8 +5,7 @@ class DomainsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    EnginesMaintenance.reload_domains
-    @domains = Domain.all.sort_by{|d| d.domain_name}
+    @domains = Domain.all_with_reload.sort_by{|d| d.domain_name}
   end
 
   def new

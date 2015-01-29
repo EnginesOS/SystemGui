@@ -13,10 +13,6 @@ class AttachedServicesHandler < ActiveRecord::Base
   #   EnginesAttachedServices.update_components(params_for_api_update).was_success
   # end
 
-  def available_subservices
-    EnginesSoftware.available_services(software.engine_name, service_type)
-  end
-
 # [:components][attached_service.name]
 
 

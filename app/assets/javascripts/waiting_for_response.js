@@ -12,6 +12,7 @@ function bind_button_events() {
 function bind_form_button_events() {
   $(".form-button-submit").click(function(){
     show_submit_message();
+    $('#waiting-for-response-modal').modal('show');
   });
   $(".form-button-cancel").click(function(){
     show_cancel_message();
