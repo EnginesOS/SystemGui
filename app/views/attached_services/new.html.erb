@@ -1,0 +1,14 @@
+<div class="col-sm-12">
+
+  <h2><i class='fa fa-share-alt'></i> Attach <%= @attached_service.title %> to <%= @software.engine_name %></h2>
+
+  <%= form_for @attached_service do |f| %>
+
+    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+    <%= render partial: 'variables/form_fields', locals: {f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: attached_services_path(software_id: @software.id)} %>
+  <% end %>
+
+</div>
+
+

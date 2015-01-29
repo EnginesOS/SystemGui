@@ -9,7 +9,7 @@ value = f.object.value %>
 <%= f.hidden_field :name %>
 <%= f.hidden_field :type %>
 
-<% if type == 'text_field' %>
+<% if type == 'text_field' || type == 'string' %>
   <%= render partial: 'shared/form/text_field', locals: {name: :value, label: label, tooltip: tooltip, value: value, f: f} %>
 <% elsif type == 'select' || type == 'select_single' %>
   <%= render partial: 'shared/form/select', locals: {name: :value, label: label, collection: f.object.collection, tooltip: tooltip, value: value, f: f} %>
