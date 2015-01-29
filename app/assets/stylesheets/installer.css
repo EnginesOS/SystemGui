@@ -1,0 +1,69 @@
+.installer .engine-install-icon-container {
+  height: 100px;
+  width: 100px;
+  padding: 2px;
+}
+
+.installer .engine-install-row {
+  min-height: 120px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.installer .engine-install-icon {
+  max-height: 96px;
+  max-width: 96px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.installer .engine-install-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.installer .engine-install-name {
+  font-size: 1.2em;
+  color: #666;
+}
+
+.installer .engine-install-text {
+  word-wrap: break-word;
+}
+
+#new_app_install_form_advanced_fields{
+  display: none;
+}
+
+
+
+/*.galleries .gallery_title {
+  font-size: 2em;
+  color: #333;
+  padding-top: 10px;
+}*/
+
+
+
+/*.input-group-addon.search-clear-button {
+  font-size: 13px;
+}*/
+/*
+
+
+
+
+
+/*
+*/
+/**/
+
+/*.form-data {
+  font-size: 18px;
+  padding-top: 10px;
+}*/*/

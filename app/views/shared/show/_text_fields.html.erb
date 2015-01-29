@@ -1,0 +1,9 @@
+<% fields ||= :inspect %>
+
+<% if fields.kind_of?(Array) %>
+  <% fields.each do |field| %>
+    <%= render partial: 'shared/show/text_field', locals: {object: object, field: field} %>
+  <% end %>
+<% else %>
+  <%= render partial: 'shared/show/text_field', locals: {object: object, field: fields} %>
+<% end %>

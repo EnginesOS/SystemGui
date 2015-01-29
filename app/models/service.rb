@@ -15,7 +15,8 @@ class Service
      volmanager: 'File system manager',
      shareservice: 'File system sharing',
      couriermail: 'Inbound mail',
-     cron: 'Job scheduler'
+     cron: 'Job scheduler',
+     servicemanager: 'Controls services interaction'
     }[service_name.to_sym]
   end
 

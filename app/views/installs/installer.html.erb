@@ -1,24 +1,22 @@
-<span class='installer'>
+<div class="installer">
 
-  <div class="top-gap">
-    <div class="col-lg-6 gallery-search">
-      <%= form_tag installer_path, method: 'get' do %>
-        <div class="input-group input-group-lg">
-          <div class="input-group-addon"><i class=" fa fa-search"></i></div>
-            <%= text_field_tag :search, params[:search], placeholder: "Search", class: 'form-control', autofocus: true %>
-            <a href="<%= installer_path %>" class="input-group-addon btn search-clear-button"><i class=" fa fa-eraser"></i> Clear</a>
-          </div>
-        </div>
-      <% end %>
-    </div>
+  <div class="col-sm-8 col-md-6">
+    <%= form_tag installer_path, method: 'get' do %>
+      <div class="input-group input-group-lg">
+        <div class="input-group-addon"><i class=" fa fa-search"></i></div>
+        <%= text_field_tag :search, params[:search], placeholder: "Search", class: 'form-control', autofocus: true %>
+        <a href="<%= installer_path %>" class="input-group-addon btn search-clear-button"><i class=" fa fa-eraser"></i> Clear</a>
+      </div>
+    <% end %>
   </div>
 
-  <div class="col-sm-12 top-gap">
+  <div class="col-sm-12">
+
     <% @galleries.each do |gallery| %>
-      <h3 class="control-panel-title">
+      <h3>
         <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.name %>
       </h3>
-      <div class="row top-gap">
+      <div class="top-gap">
           <% softwares = gallery.search_software_titles(params["search"]) %>
 
           <% if softwares.present? %>
@@ -63,4 +61,5 @@
       </div>
     <%end%>
   </div>
-</span>
+
+</div>

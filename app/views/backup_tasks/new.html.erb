@@ -1,7 +1,7 @@
 <div class="col-sm-12 top-gap backup-tasks">
 
-  <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task</h3>
-  <h3 class="control-panel-title"><%= @backup_task.engine_name %></h3>
+  <h2><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task</h2>
+  <h3><%= @backup_task.engine_name %></h3>
 <%= @backup_task.backup_type %>
   <h4><%= "Source: " + @backup_task.source_name + "(" + @backup_task.backup_type_in_words.to_s + ")" %></h4>
 

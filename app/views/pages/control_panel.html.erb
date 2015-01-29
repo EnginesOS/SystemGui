@@ -1,8 +1,8 @@
-<span class='app-manager'>
+<div class='control_panel'>
 
   <div class='row'>
-    <div class="col-sm-12 top-gap">
-      <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-tablet") %> Software</h3>
+    <div class="col-sm-12">
+      <h2><%= content_tag(:i, "", class: "fa fa-tablet") %> Software</h2>
     </div>
 
     <% if @softwares.present? %>
@@ -10,13 +10,13 @@
             <%= render partial: "softwares/control_panel_gadget", locals: {software: software} %>
         <% end %>
     <% else %>
-        <div class="col-sm-12">No applications installed.</div>
+        <div class="col-sm-12">No software installed.</div>
     <% end %>
   </div>
 
   <div class='row'>
-    <div class="col-sm-12 top-gap">
-      <h3 class="control-panel-title"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h3>
+    <div class="col-sm-12">
+      <h2><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h2>
     </div>
 
     <% @service_names.each do |service_name| %>
@@ -24,5 +24,5 @@
     <% end %>
   </div>
 
-</span>
+</div>
 

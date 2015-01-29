@@ -5,7 +5,7 @@ module EnginesMaintenance
     remove_orphaned_softwares
     create_missing_softwares
     remove_duplicate_softwares if Software.count != EnginesSoftware.count
-    reload_domains
+    Domain.reload_from_api
   end
 
 private
@@ -43,13 +43,6 @@ private
       url = Display.engine_icon_url_from_api(software_name)
       software.display.icon = EnginesUtilities.icon_from_url(url)
       software.save
-    end
-  end
-
-  def self.reload_domains
-    Domain.delete_all
-    EnginesDomain.engines_domains.each do |domain|
-    Domain.create(domain_name: domain)
     end
   end
 

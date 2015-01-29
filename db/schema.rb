@@ -36,6 +36,9 @@ ActiveRecord::Schema.define(version: 20150127075938) do
   end
 
   create_table "domains", force: true do |t|
+    t.string  "domain_name"
+    t.boolean "internal_only"
+    t.boolean "self_hosted"
   end
 
   create_table "galleries", force: true do |t|

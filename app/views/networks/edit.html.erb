@@ -1,5 +1,5 @@
 <div class="col-sm-12 top-gap app_installs">
-  <h3 class='control-panel-title'><i class='fa fa-sitemap'></i> Edit network properties for <%= @software.engine_name %></h3>
+  <h3 class=''><i class='fa fa-sitemap'></i> Edit network properties for <%= @software.engine_name %></h3>
   <%= form_for @software, url: network_path(@software) do |f| %>
     <%= f.fields_for :network do |ff| %>
       <%= render partial: 'shared/form/errors', locals: {f: ff, label: 'network properties'} %>

@@ -77,11 +77,11 @@
         <th>Name</th>
         <th>Value</th>
         <% EnginesService.environments(@service_name).each do |v|%>
-          <% if v != nil %>
+          <% if v.present? %>
             <tr>
-              <td><%=v.name %></td>
-              <td><%=v.value%></td>
-              <td><%=v.setatrun=%></td>
+              <td><%= v.name %></td>
+              <td><%= v.value %></td>
+              <td><%= v.setatrun %></td>
             </tr>
           <%end%>
         <%end%>

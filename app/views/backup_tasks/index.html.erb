@@ -1,11 +1,11 @@
 <div class="col-sm-12 top-gap backup-tasks">
-  <h3 class="control-panel-title"><i class="fa fa-upload"></i> Backups</h3>
+  <h2><i class="fa fa-upload"></i> Backups</h2>
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
   <% @softwares.each do |software| %>
     <% engine_name = software.engine_name %>
     <div class="backup-panel">
-      <h3 class="control-panel-title"><%= engine_name %></h3>
+      <h3><%= engine_name %></h3>
 
       <%  backup_tasks = EnginesSoftware.backup_tasks engine_name
           volumes_backup_tasks = backup_tasks.select { |volume_backup_task| p :volume_backup_task; p volume_backup_task; volume_backup_task[:backup_type] == 'fs'}
@@ -14,7 +14,7 @@
       <% EnginesSoftware.volumes(engine_name).each do |volume| %>
         <div>
           <% volume_name = volume.name %>
-          <h4 class="control-panel-title"><i class="fa fa-hdd-o"></i> <%= volume_name %> files</h4>
+          <h4><i class="fa fa-hdd-o"></i> <%= volume_name %> files</h4>
           <% volume_backup_tasks = volumes_backup_tasks.select { |volume_backup_task| volume_backup_task.sourceName == volume_name} %>
           <% volume_backup_tasks.each.map(&:name).each do |backup_task_name| %>
             <div>
@@ -29,7 +29,7 @@
       <% EnginesSoftware.databases(engine_name).each do |database| %>
         <div>
           <% database_name = database.name %>
-          <h4 class="control-panel-title"><i class="fa fa-hdd-o"></i> <%= database_name %> database</h4>
+          <h4><i class="fa fa-hdd-o"></i> <%= database_name %> database</h4>
           <% database_backup_tasks = databases_backup_tasks.select { |database_backup_task| database_backup_task.sourceName == database_name} %>
           <% database_backup_tasks.each.map(&:name).each do |backup_task_name| %>
             <div>
