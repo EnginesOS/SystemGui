@@ -119,12 +119,14 @@ p x
 
 #     EnginesSoftware.attached_services(software.engine_name).map{|service_type, params| {service_type: service_type, title: params_title}}
 
-result = x.map do |attached_service_type, attached_service_type_detail|
+result = []
+
+x.each do |attached_service_type, attached_service_type_detail|
   attached_service_type_detail.each do |attached_service_provider_detail|
     attached_service_provider_detail.each do |attached_service_provider, attached_services_detail|
       attached_services_detail.each do |attached_service|
         name = attached_service[:name]
-        {title: ('title for ' + attached_service_type), name: name, service_type: attached_service_type }
+        result << {title: ('title for ' + attached_service_type), name: name, service_type: attached_service_type }
       end
     end
   end
