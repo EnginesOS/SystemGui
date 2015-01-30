@@ -9,6 +9,14 @@ function bind_button_events() {
   });
 };
 
+// function confirmation_popup(object, message) {
+//   if(confirm(message)){
+//     $("#waiting-for-response-modal").modal("show");
+//   }else{
+//     object.data("method", ""); object[0].href = "";
+//   };
+// };
+
 function bind_form_button_events() {
   $(".form-button-submit").click(function(){
     show_submit_message();
@@ -16,6 +24,7 @@ function bind_form_button_events() {
   });
   $(".form-button-cancel").click(function(){
     show_cancel_message();
+    $('#waiting-for-response-modal').modal('show');
   });
   function show_submit_message() {
       $('.form-buttons').hide();

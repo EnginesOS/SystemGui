@@ -44,7 +44,7 @@
 
       <%= render partial: 'form_fields', locals: {f: f} %>
 
-      <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: installer_path, submit_label: 'Install'} %>
+      <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..."} %>
 
     <% end %>
   </div>

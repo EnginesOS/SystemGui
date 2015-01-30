@@ -15,7 +15,7 @@ class Variable < ActiveRecord::Base
     :tooltip,
     :hint,
     :placeholder,
-    :collection,
+    :collection
   )
 
   belongs_to :variable_consumer, polymorphic: true
