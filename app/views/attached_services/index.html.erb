@@ -1,33 +1,55 @@
 <div class="col-sm-12">
 
-  <h2 class=''><i class='fa fa-share-alt'></i> Attach services for <%= @software.engine_name %></h2>
+  <h2 class=''><i class='fa fa-share-alt'></i> Services for <%= @software.engine_name %></h2>
+
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
-  <h3>Attached services</h3>
+  <button class="btn btn-default btn-lg" type="button" data-toggle="collapse" data-target="#collapsing-panel-available-services">
+    <%= content_tag(:i, "", class: "fa fa-plus") + " Add service" %>
+  </button>
+  <div class="collapse" id="collapsing-panel-available-services">
+    <div class="well well-sm top-gap">
+      <% @software.attached_services_handler.available_services.each do |available_service| %>
+        <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus-circle") + ' ' + available_service[:title], new_attached_service_path(software_id: @software.id, service_type: available_service[:service_type], service_provider: available_service[:service_provider]), class: "btn btn-default btn-lg trigger-response-modal" %></div>
+      <% end %>
+    </div>
+  </div>
+
   <div>
     <% @software.attached_services_handler.attached_services.each do |attached_service| %>
-      <div class="well well-sm">
-        <h4><%= attached_service.title %></h4>
-        <% available_subservices = EnginesSoftware.available_subservices(@software.engine_name, attached_service.service_type) %>
-        <% if available_subservices.present? %>
-          <% (ap EnginesSoftware.available_services_hash(@software.engine_name), plain: true, index: false).html_safe %>
-        <% else %>
-          There are no sub-service available to be added to this service.
-        <% end %>
+      <div class="panel panel-default top-gap">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= attached_service.title + " - " + attached_service.service_type %></h3>
+        </div>
+        <div class="panel-body">
+          <% available_subservices = EnginesSoftware.available_subservices(@software.engine_name, attached_service.service_type) %>
+          <% subservice_id = "collapsing-panel-available-subservices-" + attached_service.service_type + "-" + attached_service.name %>
+          <button class="btn btn-default btn-lg" type="button" data-toggle="collapse" data-target="#<%= subservice_id %>">
+            <%= content_tag(:i, "", class: "fa fa-plus") + " Add subservice" %>
+          </button>
+          <div class="collapse" id="<%= subservice_id %>">
+            <div class="well well-sm top-gap">
+              <% if available_subservices.present? %>
+                <% available_subservices.each do |available_subservice| %>
+                  <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus-circle") + ' ' + available_subservice[:title], new_attached_subservice_path(software_id: @software.id, parent_service: attached_service.name, service_type: available_subservice[:service_type], service_provider: available_subservice[:service_provider]), class: "btn btn-default btn-lg trigger-response-modal" %></div>
+                <% end %>
+              <% else %>
+                There are no sub-service available to be added to this service.
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
 
-  <% @software.attached_services_handler.available_services.each do |available_service| %>
-    <div class="btn-group"><%= link_to content_tag(:i, "", class: "fa fa-plus") + ' ' + available_service[:title], new_attached_service_path(software_id: @software.id, service_type: available_service[:service_type], service_provider: available_service[:service_provider]), class: "btn btn-default btn-lg trigger-response-modal" %></div>
-  <% end %>
  
 
-<h3>Attached services</h3>
-<%= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe %>
+<!-- <h3>Attached services</h3>
+< %= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe %>
 <h3>Available services</h3>
-<%= (ap @software.attached_services_handler.available_services, plain: true, index: false).html_safe %>
-
+< %= (ap EnginesSoftware.available_services_hash(@software.engine_name), plain: true, index: false).html_safe %>
+ -->
 
 
 

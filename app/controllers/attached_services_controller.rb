@@ -17,7 +17,7 @@ class AttachedServicesController < ApplicationController
       service[:service_type] == params[:service_type] &&
       service[:service_provider] == params[:service_provider]
     end
-    
+
     @attached_service = @software.build_attached_services_handler.attached_services.build(
       {
         service_type: params[:service_type],
@@ -28,19 +28,26 @@ class AttachedServicesController < ApplicationController
 
   end
 
+  def create
+    render text: params
+  end
+
+
+private
+
   def variables_attributes variables_params
 
     variables_params.map do |variable|
       {
         name: variable[:name],
-        label: variable[:title],
-        regex_validator: variable[:regexverifer],
+        label: variable[:label],
+        regex_validator: variable[:regex_validator],
         type: variable[:type],
         tooltip: variable[:tooltip],
         hint: variable[:hint],
         placeholder: variable[:placeholder],
-        mandatory: variable[:required],
-        value: variable[:default_value],
+        mandatory: variable[:mandatory],
+        value: variable[:value],
         comment: variable[:comment]
       }
     end

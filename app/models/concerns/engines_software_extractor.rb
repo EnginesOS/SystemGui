@@ -76,7 +76,7 @@ module EnginesSoftwareExtractor
   end
 
   def available_subservices(engine_name, service_type)
-    available_services_hash(engine_name)[:subservices][service_type]
+    available_services_hash(engine_name)[:subservices][service_type.to_sym]
   end
 
 end
