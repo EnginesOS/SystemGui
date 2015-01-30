@@ -1,7 +1,7 @@
 <div class="col-sm-12">
   <h1><i class="fa fa-user"></i> Admin user</h1>
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
-  <%= link_to content_tag(:i, "", class: "fa fa-lock") + ' Change password', edit_user_path(current_user), class: "btn btn-default btn-lg trigger-response-modal" %>
+  <%= link_to content_tag(:i, "", class: "fa fa-lock") + ' Change password', edit_user_path(current_user), class: "btn btn-primary btn-lg trigger-response-modal" %>
   <div class="top-gap">
     <%= render partial: 'shared/show/text_fields', locals: {object: @user, fields: [:email, :sign_in_count]} %>
     <%= render partial: 'shared/show/distance_of_time_fields', locals: {object: @user, fields: [:current_sign_in_at, :last_sign_in_at]} %>

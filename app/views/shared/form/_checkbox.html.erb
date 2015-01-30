@@ -1,8 +1,14 @@
 <%  label ||= name.to_s.humanize.capitalize
-    tooltip ||= '' %>
+    tooltip ||= nil 
+    value ||= nil
+    hint ||= nil
+    comment ||= nil %>
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
-    <%= f.check_box(name) + ' ' + f.label(name, label, class: 'label-lg') %>
+    <%= f.check_box(name, checked: value, title: tooltip) + ' ' + f.label(name, label, class: 'label-lg', title: tooltip) %> <%= comment %>
+    <div class='form-field-hint'>
+      <%= hint %>
+    </div>
   </div>
 </div>

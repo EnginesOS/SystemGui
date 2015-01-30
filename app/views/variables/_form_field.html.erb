@@ -1,24 +1,28 @@
 <% html_class = "new_software_form_advanced_fields" #) if f.object.mandatory != true
 
-type = f.object.type.present? ? f.object.type : 'text_field'
+type = f.object.type || 'text_field'
 name = f.object.name
-label = f.object.label || f.object.name.to_s.humanize.titleize
-tooltip = f.object.comment || label
-value = f.object.value %>
+label = f.object.label
+comment = f.object.comment
+hint = f.object.hint
+tooltip = f.object.tooltip
+value = f.object.value
+collection = f.object.collection
+placeholder = f.object.placeholder %>
 
 <%= f.hidden_field :name %>
 <%= f.hidden_field :type %>
 
 <% if type == 'text_field' || type == 'string' %>
-  <%= render partial: 'shared/form/text_field', locals: {name: :value, label: label, tooltip: tooltip, value: value, f: f} %>
+  <%= render partial: 'shared/form/text_field', locals: {name: :value, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 <% elsif type == 'checkbox' %>
-  <%= render partial: 'shared/form/checkbox', locals: {name: :value, label: label, tooltip: tooltip, value: value, f: f} %>
+  <%= render partial: 'shared/form/checkbox', locals: {name: :value, label: label, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 <% elsif type == 'select' || type == 'select_single' %>
-  <%= render partial: 'shared/form/select', locals: {name: :value, label: label, collection: f.object.collection, tooltip: tooltip, value: value, f: f} %>
+  <%= render partial: 'shared/form/select', locals: {name: :value, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 <% elsif type == 'select_multi' %>
-  <%= render partial: 'shared/form/select_multi', locals: {name: :value, label: label, collection: f.object.collection, tooltip: tooltip, value: value, f: f} %>
+  <%= render partial: 'shared/form/select_multi', locals: {name: :value, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 <% elsif type == 'password_with_confirmation' %>
-  <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :value, label: label, collection: f.object.collection, tooltip: tooltip, value: value, f: f} %>
+  <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :value, label: label, placeholder: placeholder, collection: f.object.collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 <% elsif type == 'hidden' %>
   <%= f.hidden_field :value %>
 <% else %>

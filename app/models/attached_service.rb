@@ -3,6 +3,7 @@ class AttachedService < ActiveRecord::Base
   attr_accessor(
     :title,
     :name,
+    :description,
     :service_type,
     :service_provider)
 
@@ -17,9 +18,9 @@ class AttachedService < ActiveRecord::Base
     EnginesSoftware.available_services(service_type, software.engine_name)
   end
 
-  def reload_from_api(service_type, service_provider)
+  # def reload_from_api(service_type, service_provider)
     
-  end
+  # end
 
 end
 
