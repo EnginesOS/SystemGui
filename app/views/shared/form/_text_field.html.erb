@@ -1,17 +1,20 @@
 <%  label ||= name.to_s.humanize.capitalize
     tooltip ||= label
     value ||= nil
-    hint ||= nil %>
+    hint ||= nil
+    placeholder ||= nil
+    comment ||= nil %>
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
     <%= f.label name, class: 'control-label' do %>
       <%= label %>
     <% end %>
+    <%= comment %>
     <% if value.nil? %>
-      <%= f.text_field name, title: tooltip, class: 'form-control input-lg' %>
+      <%= f.text_field name, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
     <% else %>
-      <%= f.text_field name, value: value, title: tooltip, class: 'form-control input-lg' %>
+      <%= f.text_field name, value: value, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
     <% end %>
     <% if hint.present? %>
       <div class='form-field-hint'>
@@ -20,3 +23,11 @@
     <% end %>
   </div>
 </div>
+
+
+<%  label ||= name.to_s.humanize.capitalize
+    tooltip ||= "This is #{label} and it likes to party!!!!!" 
+    value ||= nil
+    hint ||= "This should be filled out!"
+    placeholder ||= "type in here..."
+    comment ||= "This is a comment about this field." %>
