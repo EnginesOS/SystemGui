@@ -1,21 +1,54 @@
 <%  label ||= name.to_s.humanize.capitalize
-    value ||= f.object.send(name)
+    value ||= f.object.send(name); value = nil if value.blank?
     collection ||= []
     id ||= ''
-    attach_selectize = true if attach_selectize.nil?
+    attach_selectize ||= false
+    tooltip ||= nil
+    hint ||= nil
+    placeholder ||= nil
+    comment ||= nil
     include_blank ||= value.nil?
+    errors ||= f.object.errors[name]
+    errors_class = "field_with_errors" if errors.present?
+    collection_as_array = collection.class != Array ? JSON.parse(collection) : collection
 
     if attach_selectize
       select_class = 'selectize-single'
     else
-      select_class = ''
+      select_class = 'form-control input-lg'
     end %>
 
-<div class="col-sm-8  col-sm-offset-2">
+<div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
   <div class="form-group">
     <%= f.label name, class: 'control-label' do %>
       <%= label %>
     <% end %>
-    <%= f.select name, collection, {selected: value, include_blank: include_blank}, {class: select_class, id: id} %>
+    <%= comment %>
+    <%= f.select name, collection_as_array, {selected: value, include_blank: include_blank}, {title: tooltip, placeholder: placeholder, class: select_class, id: id} %>
+    <% if errors.present? %>
+      <div class='form-field-errors'>
+        <% errors.each do |error| %>
+          <%if error.class == Array %>
+            <%= error[1] %>
+          <% else %>
+            <%= error %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+    <% if hint.present? %>
+      <div class='form-field-hint'>
+        <%= hint %>
+      </div>
+    <% end %>
   </div>
 </div>
+
+
+
+
+
+    <% if value.nil? %>
+    <% else %>
+    <% end %>
+

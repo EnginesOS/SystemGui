@@ -5,7 +5,13 @@ module EnginesGallery
   end
 
   def self.software(params)
-    load_gallery_software params[:gallery_url], params[:software_id]
+
+p "+++++++++++++++++++++++++++"
+p params
+
+
+
+    load_gallery_software params[:gallery_url], params[:gallery_software_id]
   end
 
 private

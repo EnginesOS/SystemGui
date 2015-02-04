@@ -7,8 +7,14 @@
       <h4><%= pluralize(form_object.errors.count, "error") %> prohibited the <%= label %> from being saved:</h4>
 
       <ul>
-      <% form_object.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+      <% form_object.errors.each do |attribute, error| %>
+        <li>
+          <%if error.class == Array %>
+            <%= error.join(' ') %>
+          <% else %>
+            <%= error %>
+          <% end %>
+        </li>
       <% end %>
       </ul>
     </div>

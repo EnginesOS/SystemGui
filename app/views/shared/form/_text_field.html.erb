@@ -1,20 +1,29 @@
 <%  label ||= name.to_s.humanize.capitalize
-    tooltip ||= label
-    value ||= nil
+    tooltip ||= nil
+    value ||= f.object.send(name); value = nil if value.blank?
     hint ||= nil
     placeholder ||= nil
-    comment ||= nil %>
+    comment ||= nil
+    errors ||= f.object.errors[name]
+    errors_class = "field_with_errors" if errors.present? %>
 
-<div class="col-sm-8 col-sm-offset-2">
+<div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
   <div class="form-group">
     <%= f.label name, class: 'control-label' do %>
       <%= label %>
     <% end %>
     <%= comment %>
-    <% if value.nil? %>
-      <%= f.text_field name, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
-    <% else %>
-      <%= f.text_field name, value: value, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
+    <%= f.text_field name, value: value, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
+    <% if errors.present? %>
+      <div class='form-field-errors'>
+        <% errors.each do |error| %>
+          <%if error.class == Array %>
+            <%= error[1] %>
+          <% else %>
+            <%= error %>
+          <% end %>
+        <% end %>
+      </div>
     <% end %>
     <% if hint.present? %>
       <div class='form-field-hint'>
@@ -23,11 +32,3 @@
     <% end %>
   </div>
 </div>
-
-
-<%  label ||= name.to_s.humanize.capitalize
-    tooltip ||= "This is #{label} and it likes to party!!!!!" 
-    value ||= nil
-    hint ||= "This should be filled out!"
-    placeholder ||= "type in here..."
-    comment ||= "This is a comment about this field." %>

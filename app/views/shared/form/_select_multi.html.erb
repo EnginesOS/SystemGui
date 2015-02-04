@@ -1,5 +1,6 @@
 <%  label ||= name.to_s.humanize.capitalize
-    value ||= f.object.send(name) %>
+    value ||= f.object.send(name); value = nil if value.blank?
+     %>
 
 <div class="col-sm-8  col-sm-offset-2">
   <div class="form-group">

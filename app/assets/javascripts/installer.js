@@ -11,12 +11,11 @@ $(document).ready(function(){
     //   $(this).children().first().next().trigger("click");
     // });
 
-    $(".software_installation_form .new_software_form_advanced_fields").hide();
+    $(".software_installation_form .advanced_fields").hide();
 
     $("#new_software_form_show_advanced_fields_button").click(function() {
-      $(".new_software_form_default_details").slideUp();
-      $("#new_software_form_show_advanced_fields_button").slideUp();
-      $(".new_software_form_advanced_fields").slideDown();
+      $("#new_software_form_show_advanced_fields_button").hide();
+      $(".advanced_fields").slideDown();
     });
 
     // $("#new_software_form_show_advanced_fields_button").click(function() {

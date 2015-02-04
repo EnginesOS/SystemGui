@@ -2,11 +2,10 @@ module EnginesAttachedService
 
   extend EnginesApi
 
-  def self.service_detail(params)
-    engines_api.software_service_definition(
+  def self.service_detail_for(params)
+    result = engines_api.software_service_definition(
       service_provider: params[:service_provider],
       service_type: params[:service_type])
-    # {title: "Fake title", description: "Fake description about this thing."}
   end
 
   def self.attach_service params

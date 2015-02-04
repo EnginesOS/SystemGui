@@ -7,7 +7,7 @@ class AttachedServicesHandler < ActiveRecord::Base
 
   def load_attached_services
     # attached_services.delete_all
-    attached_services.build(attached_services_params_from_api_data)
+    attached_services.build(attached_services_params_from_api)
   end
 
   def available_services
@@ -16,16 +16,19 @@ class AttachedServicesHandler < ActiveRecord::Base
 
 private
 
-  def attached_services_params_from_api_data
+  def attached_services_params_from_api
 
     result = []
     EnginesSoftware.attached_services(software.engine_name).each do |attached_service_type, attached_service_type_detail|
       attached_service_type_detail.each do |attached_service_provider_detail|
         attached_service_provider_detail.each do |attached_service_provider, attached_services_detail|
 
-          service_detail = EnginesAttachedService.service_detail(
+          service_detail = EnginesAttachedService.service_detail_for(
             service_provider: attached_service_provider,
             service_type: attached_service_type)
+          if service_detail.kind_of?(EnginesOSapiResult)
+            service_detail = {title: "Title error", description: "Could not load service detail."}
+          end
 
           attached_services_detail.each do |attached_service|
             name = attached_service[:name]
@@ -43,6 +46,11 @@ private
     result
 
   end
+
+
+
+
+
 
 #   def params_for_api_update
 #     {
