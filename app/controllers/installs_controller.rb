@@ -8,11 +8,11 @@ class InstallsController < ApplicationController
 
   def new
     EnginesMaintenance.db_maintenance
-    @software = Install.new_software gallery_url: software_install_params["gallery_url"], software_id: software_install_params["software_id"]
+    @software = Install.new_software_from_gallery(new_software_from_gallery_params)
   end
 
   def create
-    @software = Software.new(software_install_params)
+    @software = Software.new(new_software_install_params)
     create_attach_icon
   end
 
@@ -28,7 +28,7 @@ class InstallsController < ApplicationController
   end
 
   def create_validate_software
-    # @software.update software_install_params
+    # @software.update new_software_install_params
     if @software.valid?
       create_engine_build
     else
@@ -39,6 +39,7 @@ class InstallsController < ApplicationController
   def create_engine_build
     build_response = EnginesInstaller.build_engine(Install.engine_build_params(@software))
     if build_response.instance_of?(ManagedEngine)
+      # @software.
       @software.save
       redirect_to control_panel_path, notice: "Software installation was successful for #{@software.engine_name}."
     elsif build_response.instance_of?(EnginesOSapiResult)
@@ -56,12 +57,16 @@ class InstallsController < ApplicationController
 
 private
 
-  def software_install_params
+  def new_software_from_gallery_params
+    params.require(:software).permit(:gallery_url, :gallery_software_id)
+  end
+
+  def new_software_install_params
     params.require(:software).permit!
   end
 
-  def set_software
-    @software = Software.find params[:id]
-  end
+  # def set_software
+  #   @software = Software.find params[:id]
+  # end
 
 end

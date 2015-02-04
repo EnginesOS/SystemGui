@@ -1,10 +1,22 @@
-<%  label ||= name.to_s.humanize.capitalize %>
+<%  label ||= name.to_s.humanize.capitalize
+    tooltip ||= nil
+    value ||= f.object.send(name); value = nil if value.blank?
+    hint ||= nil
+    placeholder ||= "Select a country..."
+    comment ||= nil
+    collection ||= nil %>
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
     <%= f.label name, class: 'control-label' do %>
       <%= label %>
     <% end %>
-    <%= f.country_code_select name, nil, {include_blank: true}, class: 'form-control input-lg' %>
+    <%= comment %>
+    <%= f.country_code_select name, collection, {include_blank: placeholder}, {title: tooltip, class: 'form-control input-lg'} %>
+    <% if hint.present? %>
+      <div class='form-field-hint'>
+        <%= hint %>
+      </div>
+    <% end %>
   </div>
 </div>

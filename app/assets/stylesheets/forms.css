@@ -20,8 +20,16 @@ input[type="checkbox"] {
 */
 .form-field-hint {
   padding-left: 10px;
-  font-style: italic;
+  font-size: 90%;
 }
+
+.form-field-errors {
+  padding-left: 10px;
+  color: #f00;
+  font-style: italic;
+  font-size: 90%;
+}
+
 
 .selectize-input {
   height: 44px;

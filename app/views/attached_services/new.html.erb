@@ -2,15 +2,17 @@
 
   <h2><i class='fa fa-share-alt'></i> Attach <%= @attached_service.title %> to <%= @software.engine_name %></h2>
 
-  <%= form_for @attached_service do |f| %>
+  <%= form_for @attached_service, url: attached_services_path(software_id: @software.id) do |f| %>
 
     <%= f.hidden_field :service_type %>
     <%= f.hidden_field :service_provider %>
-    <%= f.hidden_field :engine_name, value: @software.engine_name %>
+    <%= f.hidden_field :title %>
+    <% #= f.hidden_field :software_id, value: @software.id %>
 
-    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+    <%= render partial: 'shared/form/errors', locals: {f: f, label: @attached_service.title} %>
     <%= render partial: 'variables/form_fields', locals: {f: f} %>
     <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: attached_services_path(software_id: @software.id)} %>
+
   <% end %>
 
 </div>

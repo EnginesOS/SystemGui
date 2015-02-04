@@ -8,58 +8,36 @@ class Install < ActiveRecord::Base
     :license_name,
     :license_sourceurl,
     :gallery_url,
-    :software_id,
+    :gallery_software_id,
     :license_terms_and_conditions)
 
   belongs_to :software
 
   validates :license_terms_and_conditions, acceptance: { is: true }
 
-  def self.new_software gallery_software_params
-    Software.new(new_software_params(gallery_software_params))
+  def self.new_software_from_gallery(gallery_params)
+    Software.new(new_software_from_gallery_params(gallery_params))
   end
 
-  def self.engine_build_params software
+  # def self.new_software_from_params(software_install_params)
+  #   Software.new(new_software_params(software_install_params))
+  # end
 
-p "======================================"
-p software
-
-
-result = {
-  engine_name: software.engine_name,
-  host_name: software.network.host_name,
-  domain_name: software.network.domain_name,
-  http_protocol: software.network.http_protocol,
-  memory: software.resource.memory,
-  software_environment_variables: (software_variables_params(software.software_variables_handler)),
-  repository_url: software.install.repository_url
-}
-
-p "======================================"
-p result
-
-result
-
+  def self.engine_build_params(software)
+    {
+      engine_name: software.engine_name,
+      host_name: software.network.host_name,
+      domain_name: software.network.domain_name,
+      http_protocol: software.network.http_protocol,
+      memory: software.resource.memory,
+      software_environment_variables: (software_variables_params(software.software_variables_handler)),
+      repository_url: software.install.repository_url
+    }
   end
-
-  def self.software_variables_params software_variables_handler
-    return nil if software_variables_handler.nil?
-    result = []
-    software_variables_handler.variables.each do |variable|
-      result << {
-       name: variable.name,
-       value: variable.value
-      }
-    end
-    result
-  end
-
-
-
 
 private
-
-  def self.new_software_params(gallery_software_params)
+ 
+  def self.new_software_from_gallery_params(gallery_software_params)
     gallery_software = EnginesGallery.software(gallery_software_params)
     repository_url = gallery_software["repository"]
     repository_software_params = EnginesRepository.software_params repository_url: repository_url
@@ -69,10 +47,11 @@ private
       install_attributes: {
         repository_url: repository_url,
         gallery_url: gallery_software_params[:gallery_url],
-        software_id: gallery_software_params[:software_id],
+        gallery_software_id: gallery_software_params[:gallery_software_id],
         default_image_url: gallery_software['image_url'],
         license_name: repository_software_params['license_name'],
-        license_sourceurl: repository_software_params['license_sourceurl']
+        license_sourceurl: repository_software_params['license_sourceurl'],
+        license_terms_and_conditions: false
       },
       display_attributes: {
         display_name: repository_software_params['name'],
@@ -90,5 +69,28 @@ private
       }
     }
   end
+
+  # def self.new_software_params(software_install_params)
+  #   gallery_software_params = new_software_from_gallery_params(
+  #     gallery_url: software_install_params["install_attributes"]["gallery_url"], 
+  #     gallery_software_id: software_install_params["install_attributes"]["gallery_software_id"])
+  #   gallery_software_params[:software_variables_handler_attributes][:variables_attributes]
+  #   @software.install.update_install(software_install_params)
+  # end
+
+  def self.software_variables_params software_variables_handler
+    return nil if software_variables_handler.nil?
+    result = []
+    software_variables_handler.variables.each do |variable|
+      result << {
+       name: variable.name,
+       value: variable.value
+      }
+    end
+    result
+  end
+
+
+
 
 end
