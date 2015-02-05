@@ -1,6 +1,7 @@
-<%  label ||= name.to_s.humanize.capitalize
+<%  label = label.nil? ? name.to_s.humanize.capitalize : label
     tooltip ||= nil 
-    value ||= f.object.send(name); value = true if [1, "1", "true", "yes", "Y"].include?(value)
+    value = value.nil? ? f.object.send(name) : value
+    value = [false, 0, nil, "0", "false", "n", "no", "N", "No", "NO"].exclude?(value)
     hint ||= nil
     comment ||= nil
     errors ||= f.object.errors[name]
@@ -8,7 +9,7 @@
 
 <div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
   <div class="form-group">
-    <%= f.check_box(name, checked: value, title: tooltip) + ' ' + f.label(name, label, class: 'label-lg', title: tooltip) %> <%= comment %><br>
+    <%= f.check_box(name, checked: value, title: tooltip) + ' ' + f.label(name, label, class: 'form-text-lg', title: tooltip) %> <%= comment %><br>
     <% if errors.present? %>
       <div class='form-field-errors'>
         <% errors.each do |error| %>

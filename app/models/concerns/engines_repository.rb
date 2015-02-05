@@ -5,7 +5,7 @@ module EnginesRepository
   end
 
   def self.software_params repository_params
-    repository(repository_params)['software']
+    repository(repository_params)[:software]
   end
 
 private
@@ -18,7 +18,7 @@ private
     blueprint_filename =  SysConfig.DeploymentDir + "/" + buildname + "/blueprint.json"
     blueprint_json_str = File.read(blueprint_filename)
     bluePrint = JSON.parse(blueprint_json_str)
-    return bluePrint
+    return bluePrint.symbolize_keys!
   end
 
   def self.clone_repo(repo, buildname)

@@ -26,12 +26,16 @@ module EnginesDomain
     engines_api.create_ssl_certificate params
   end
 
-  def self.domains_hash
+  def self.domain_names_hash
     engines_api.list_domains
   end
 
-  def self.engines_domains
-    domains_hash.keys
+  def self.all_domain_names
+    domain_names_hash.keys
+  end
+
+  def self.count
+    all_domain_names.count
   end
 
 end

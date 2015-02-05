@@ -1,4 +1,4 @@
-<%  label ||= name.to_s.humanize.capitalize
+<%  label = label.nil? ? name.to_s.humanize.capitalize : label
     value ||= f.object.send(name); value = nil if value.blank?
      %>
 

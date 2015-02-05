@@ -18,6 +18,11 @@ class InstallsController < ApplicationController
 
   def create_attach_icon
     url = @software.install.default_image_url
+
+p "::::::::::::"
+p "image url " + url.to_s
+
+
     file = EnginesUtilities.icon_from_url url
     if file == nil
       flash[:alert] = "The icon image could not be loaded for #{@software.engine_name}. "

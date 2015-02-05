@@ -1,4 +1,4 @@
-<%  label ||= name.to_s.humanize.capitalize
+<%  label = label.nil? ? name.to_s.humanize.capitalize : label
     tooltip ||= nil
     value ||= f.object.send(name); value = nil if value.blank?
     hint ||= nil
@@ -9,6 +9,7 @@
 
 <div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
   <div class="form-group ">
+
     <% if label != false %>
       <%= f.label name, class: 'control-label' do %>
         <%= label %>
@@ -17,7 +18,7 @@
     <%= comment %>
     <div class="form-group ">
       <%= f.collection_radio_buttons name, collection, :to_s, :to_s, {}, {title: tooltip} do |radio|
-           radio.label(class: "label-lg", :"data-value" => radio.value) { radio.radio_button + ' ' + radio.text } + '<br>'.html_safe
+           radio.label(class: "form-text-lg", :"data-value" => radio.value) { radio.radio_button + ' ' + radio.text } + '<br>'.html_safe
          end %>
       <% if errors.present? %>
         <div class='form-field-errors'>

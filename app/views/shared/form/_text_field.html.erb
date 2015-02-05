@@ -1,6 +1,7 @@
 <%  label ||= name.to_s.humanize.capitalize
     tooltip ||= nil
-    value ||= f.object.send(name); value = nil if value.blank?
+    value = value.nil? ? f.object.send(name) : value
+    value = nil if value.blank? #placeholder is visible to user only when value is nil
     hint ||= nil
     placeholder ||= nil
     comment ||= nil

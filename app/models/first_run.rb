@@ -26,16 +26,40 @@ class FirstRun
     :ssl_organisation_name,
     :ssl_person_name)
 
-  validates :admin_password, confirmation: true, length: { minimum: 6 }
-  validates :ssh_password, confirmation: true, length: { minimum: 6 }
-  validates :mysql_password, confirmation: true, length: { minimum: 6 }
-  validates :psql_password, confirmation: true, length: { minimum: 6 }
-  validate :admin_password_different_to_ssh_password
+  validate :password_confirmation_validation
+  validate :password_present_and_length_validation
+  validate :admin_password_different_to_ssh_password_validation
 
-  def admin_password_different_to_ssh_password
-    if (admin_password == ssh_password)
-      errors.add(:ssh_password, "must be different from Admin password")
+  def password_confirmation_validation
+    password_types.each do |password_name|
+      if send("#{password_name.downcase}_password") != send("#{password_name.downcase}_password_confirmation")
+        errors.add(:ssh_password, ["#{password_name} passwords", "do not match"])
+      end
     end
   end
+
+  def password_present_and_length_validation
+    password_types.each do |password_name|
+      password_value = send("#{password_name.downcase}_password")
+      if password_value.blank?
+        errors.add(:ssh_password, ["#{password_name} password", "can't be blank"])
+      elsif password_value.length < 6
+        errors.add(:ssh_password, ["#{password_name} password", "must be at least 6 charters long"])
+      end
+    end
+  end
+
+  def admin_password_different_to_ssh_password_validation
+    if admin_password == ssh_password
+      errors.add(:ssh_password, ["SSH password", "must be different from Admin password"])
+    end
+  end
+
+private
+
+  def password_types
+    ["Admin", "SSH", "MySQL", "PSQL"]
+  end
+
 
 end
