@@ -13,7 +13,7 @@ class Install < ActiveRecord::Base
 
   belongs_to :software
 
-  validates :license_terms_and_conditions, acceptance: { is: true }
+  validate :license_terms_and_conditions_accepted_validation
 
   def self.new_software_from_gallery(gallery_params)
     Software.new(new_software_from_gallery_params(gallery_params))
@@ -36,10 +36,19 @@ class Install < ActiveRecord::Base
   end
 
 private
+
+  def license_terms_and_conditions_accepted_validation
+    if license_terms_and_conditions != "1"
+      errors.add(:license_terms_and_conditions, ["License", "must be accepted"])
+    end
+  end
+
+
+
  
   def self.new_software_from_gallery_params(gallery_software_params)
     gallery_software = EnginesGallery.software(gallery_software_params)
-    repository_url = gallery_software["repository"]
+    repository_url = gallery_software[:repository]
     repository_software_params = EnginesRepository.software_params repository_url: repository_url
     software_name = repository_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
     {
@@ -48,7 +57,7 @@ private
         repository_url: repository_url,
         gallery_url: gallery_software_params[:gallery_url],
         gallery_software_id: gallery_software_params[:gallery_software_id],
-        default_image_url: gallery_software['image_url'],
+        default_image_url: gallery_software[:image_url],
         license_name: repository_software_params['license_name'],
         license_sourceurl: repository_software_params['license_sourceurl'],
         license_terms_and_conditions: false

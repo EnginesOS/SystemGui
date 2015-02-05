@@ -1,5 +1,5 @@
 <%= f.fields_for :network do |ff| %>
-<% domains = EnginesDomain.engines_domains %>
+<% domains = Domain.all.map(&:domain_name) %>
   <div class="col-sm-12">
     <legend>URL</legend>
   </div>

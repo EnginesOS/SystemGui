@@ -6,10 +6,10 @@ $(document).ready(function() {
     mysql_password = randomPassword();
     psql_password = randomPassword();
 
-    var passwords_html = '<div><label>Admin password: </label> ' + admin_password +'</div>' +
-      '<div><label>SSH password: </label> ' + ssh_password + '</div>' +
-      '<div><label>MySQL password: </label> ' + mysql_password + '</div>' +
-      '<div><label>Postgres password: </label> ' + psql_password + '</div>';
+    var passwords_html = '<pre style="font-size: 18px;"><div><label>   Admin password: </label> ' + admin_password +'</div>' +
+      '<div><label>     SSH password: </label> ' + ssh_password + '</div>' +
+      '<div><label>   MySQL password: </label> ' + mysql_password + '</div>' +
+      '<div><label>Postgres password: </label> ' + psql_password + '</div></pre>';
 
     $("#first_run_form_auto_generated_passwords").html(passwords_html);
 
@@ -26,7 +26,7 @@ $("#first_run_psql_password_confirmation").val(psql_password);
   });
 
   function randomPassword() {
-    var chars = "23456789ABCDEFGHJKLMNPQRSTUVWXTZabcdefghikmnopqrstuvwxyz";
+    var chars = "23456789ABCDEFGHJKLMNPQRSTUVWXTZabcdefghikmnpqrstuvwxyz";
     var string_length = 10;
     var randomstring = '';
     for (var i=0; i<string_length; i++) {

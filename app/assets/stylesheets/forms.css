@@ -83,6 +83,12 @@ input[type="checkbox"] {
   border-color: #F00;
 }
 
+.form-text-lg {
+  font-size: 18px;
+  font-weight: normal;
+};
+
+
 /*.radio_button_collection_item{
   display: block;
   margin-bottom: 5px;
@@ -111,9 +117,7 @@ fieldset {
   margin-top: 20px;
 }
 
-.form-text-lg {
-  font-size: 18px;
-}
+
 
 
 */

@@ -43,12 +43,7 @@ class Variable < ActiveRecord::Base
 
   def value_confirmation_validation
     if (type == "password_with_confirmation" && value != value_confirmation)
-
-p "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-p value
-p value_confirmation
-
-      errors.add(name, ["Passwords", "must match."])
+      errors.add(name, ["Passwords", "must match"])
     end
   end
 

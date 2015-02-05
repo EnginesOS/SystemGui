@@ -39,7 +39,7 @@ private
       blueprint_request = Net::HTTP::Get.new blueprint_uri
       blueprint_response = http.request blueprint_request
       if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400
-        return JSON.parse(blueprint_response.body)
+        return JSON.parse(blueprint_response.body).symbolize_keys!
       else
         return nil
       end    

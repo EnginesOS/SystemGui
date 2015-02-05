@@ -1,12 +1,12 @@
-<% label_text ||= false %>
+<% label ||= false %>
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
-    <% if label_text != false %>
-      <%= label '', '', class: 'control-label' do %>
-        <%= label_text %>
+    <% if label != false %>
+      <%= f.label '', '', class: 'control-label' do %>
+        <%= label %>
       <% end %>
     <% end %>
-    <p><%= text %></p> 
+    <div class="form-text-lg"><%= text %></div> 
   </div>
 </div>

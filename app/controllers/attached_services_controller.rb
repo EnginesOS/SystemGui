@@ -24,18 +24,19 @@ class AttachedServicesController < ApplicationController
     if @attached_service.valid?
 
 
-      api_create_params = params["attached_service"].permit!
-      api_create_params["variables_attributes"].values.each do |variable|
-        api_create_params[variable["name"]] = variable["value"]
+      api_create_params = params[:attached_service].permit!
+      api_create_params[:parent_engine] = @software.engine_name
+      api_create_params[:variables_attributes].values.each do |variable|
+        api_create_params[variable[:name]] = variable[:value]
       end
-      api_create_params.delete("variables_attributes")
+      api_create_params.delete(:variables_attributes)
+      api_create_params = api_create_params.to_hash.symbolize_keys!
 
-      result = EnginesAttachedService.attach_service api_create_params
+      result = EnginesAttachedService.attach_service(api_create_params)
 
-      render text: (api_create_params.to_s + '<br><br>' + result.to_s).html_safe
+      render text: (api_create_params.class.to_s + '<br>' + api_create_params.to_s + '<br><br>' + result.to_s).html_safe
 
     else
-
 
       result = []
 

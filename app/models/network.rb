@@ -42,7 +42,7 @@ class Network < ActiveRecord::Base
   end
 
   def self.best_default_domain
-    Setting.first_or_create.default_domain || EnginesDomain.engines_domains.first
+    Setting.first_or_create.default_domain || EnginesDomain.all_domain_names.first
   end
 
   def self.best_http_protocol protocol

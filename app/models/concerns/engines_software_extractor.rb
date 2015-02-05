@@ -48,7 +48,7 @@ module EnginesSoftwareExtractor
   end
 
   def databases(engine_name)
-    # databases_hash(engine_name).values
+    databases_hash(engine_name) #.values James is passing array instead of hash.
   end
 
   def backup_tasks(engine_name)
