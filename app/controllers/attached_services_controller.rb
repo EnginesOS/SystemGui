@@ -19,10 +19,10 @@ class AttachedServicesController < ApplicationController
       attached_services.build(create_attached_service_attributes)
     if @attached_service.valid?
       result = EnginesAttachedService.attach_service(build_attached_service_attributes)
-      if result == true
-        redirect_to control_panel_path, notice: "Successfully attached #{@attached_service.label} to #{@software.engine_name}."
+      if result.was_success == true
+        redirect_to control_panel_path, notice: "Successfully attached #{@attached_service.title} to #{@software.engine_name}."
       else
-        flash[:alert] = (params.to_s + '<br><br>attach_service ' + build_attached_service_attributes.to_s + '<br><br>' + result.to_s).html_safe
+        flash.now[:alert] = "Failed to attach #{@attached_service.title} to #{@software.engine_name}. #{result.result_mesg}"[0..1000]
         render :new
       end
     else
@@ -56,8 +56,7 @@ private
       parent_engine: @software.engine_name,
       service_type: @attached_service.service_type,
       service_provider: @attached_service.service_provider,
-      title: @attached_service.title,
-    }
+      title: @attached_service.title}
     @attached_service.variables.each do |variable|
       result[variable.name.to_sym] = variable.value
     end
