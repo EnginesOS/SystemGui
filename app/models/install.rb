@@ -49,8 +49,8 @@ private
   def self.new_software_from_gallery_params(gallery_software_params)
     gallery_software = EnginesGallery.software(gallery_software_params)
     repository_url = gallery_software[:repository]
-    repository_software_params = EnginesRepository.software_params repository_url: repository_url
-    software_name = repository_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
+    blueprint_software_params = EnginesRepository.software_params_from_blueprint repository_url: repository_url
+    software_name = blueprint_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
     {
       engine_name: EnginesInstaller.generate_next_unique_engine_name_for(software_name),
       install_attributes: {
@@ -58,23 +58,23 @@ private
         gallery_url: gallery_software_params[:gallery_url],
         gallery_software_id: gallery_software_params[:gallery_software_id],
         default_image_url: gallery_software[:image_url],
-        license_name: repository_software_params['license_name'],
-        license_sourceurl: repository_software_params['license_sourceurl'],
+        license_name: blueprint_software_params['license_name'],
+        license_sourceurl: blueprint_software_params['license_sourceurl'],
         license_terms_and_conditions: false
       },
       display_attributes: {
-        display_name: repository_software_params['name'],
-        display_description: repository_software_params['description']
+        display_name: blueprint_software_params['name'],
+        display_description: blueprint_software_params['description']
       },
-      software_variables_handler_attributes: {variables_attributes: repository_software_params["environment_variables"]},
+      software_variables_handler_attributes: {variables_attributes: blueprint_software_params["environment_variables"]},
       network_attributes: {
         host_name: EnginesInstaller.generate_next_unique_host_name_for(software_name),
         domain_name: Network.best_default_domain,
-        http_protocol: Network.best_http_protocol(repository_software_params['http_protocol'])
+        http_protocol: Network.best_http_protocol(blueprint_software_params['http_protocol'])
       },
       resource_attributes: {
-        required_memory: repository_software_params['requiredmemory'],
-        memory: repository_software_params['recommended_memory'] || repository_software_params['requiredmemory']
+        required_memory: blueprint_software_params['requiredmemory'],
+        memory: blueprint_software_params['recommended_memory'] || blueprint_software_params['requiredmemory']
       }
     }
   end

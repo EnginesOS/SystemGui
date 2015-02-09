@@ -16,7 +16,8 @@ class Service
      shareservice: 'File system sharing',
      couriermail: 'Inbound mail',
      cron: 'Job scheduler',
-     servicemanager: 'Controls services interaction'
+     servicemanager: 'Controls services interaction',
+     awsdb: 'AWS database'
     }[service_name.to_sym]
   end
 

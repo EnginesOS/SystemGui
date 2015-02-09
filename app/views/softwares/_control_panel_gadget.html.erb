@@ -46,7 +46,6 @@
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_software_path(id: engine_name), class: 'trigger-response-modal'  %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy", destroy_container_software_path(id: engine_name), data: { confirm: "Are you sure?", confirmdetail: "This will delete the container." } %></li>
-        <li class="divider"></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
       <% elsif  state == "nocontainer" %>   
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
@@ -81,13 +80,16 @@
         </li>
       <% end %>
       <li class="divider"></li>
+      <li class="disabled"><%= link_to content_tag(:i, "", class: "fa fa-upload") + " Backups", backup_task_path(software.id),  class: "trigger-response-modal" %>
+      </li>
+      <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Attach services", attached_services_path(software_id: software.id),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, engine: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>
       </li>
       <li class="divider"></li>
-       <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + software_fqdn, "http://" + software_fqdn, target: "_blank"%></li>
+       <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + software_fqdn, "http://" + software_fqdn, target: engine_name %></li>
     </ul>
   </div>
 </div>

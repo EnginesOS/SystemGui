@@ -1,7 +1,7 @@
 <div class="software_installation_form">
 <% #= params %>
   <div class="col-sm-12 top-gap">
-    <h3><%= content_tag(:i, "", class: "fa fa-plus-square") %> Install <%= @software.display.display_name %></h3>
+    <h3><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install <%= @software.display.display_name %></h3>
   </div>
 
   <div class="col-sm-12">
@@ -13,10 +13,13 @@
       <%= @software.display.display_description %>
     </div>
 
-    <div class="col-sm-4 top-gap clearfix">
-      <div class="btn-group pull-right">
+    <div class="col-sm-4 clearfix">
+      <div class="btn-group top-gap pull-right">
         <button type="button" class="btn btn-default btn-lg" id="new_software_form_show_advanced_fields_button">
-          <%= content_tag(:i, '', class: 'fa fa-code') %> Advanced install
+          <%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced install
+        </button>
+        <button class="btn btn-lg btn-default" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#blueprint">
+          { } Blueprint
         </button>
       </div>
     </div>
@@ -48,6 +51,20 @@
       <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..."} %>
 
     <% end %>
+
+    <div class="col-sm-8 col-sm-offset-2 collapse" id="blueprint">
+      <div class="panel panel-primary top-gap">
+        <div class="panel-heading">
+          <h4>Blueprint</h4>
+        </div>
+
+        <div class="panel-body">
+          <% blueprint = EnginesRepository.blueprint_from_repository repository_url: @software.install.repository_url %>
+          <%= (ap blueprint, plain: true, index: false).html_safe %>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>

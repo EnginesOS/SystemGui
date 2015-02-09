@@ -1,11 +1,11 @@
 module EnginesRepository
 
-  def self.repository repository_params
+  def self.blueprint_from_repository repository_params
     load_blueprint repository_params[:repository_url]
   end
 
-  def self.software_params repository_params
-    repository(repository_params)[:software]
+  def self.software_params_from_blueprint repository_params
+    blueprint_from_repository(repository_params)[:software]
   end
 
 private

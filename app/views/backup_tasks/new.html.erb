@@ -1,4 +1,4 @@
-<div class="col-sm-12 top-gap backup-tasks">
+<div class="col-sm-12">
 
   <h2><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task</h2>
   <h3><%= @backup_task.engine_name %></h3>
@@ -7,29 +7,24 @@
 
   <%= form_for @backup_task do |f| %>
 
-    <%= f.input :source_name, as: :hidden %>
-    <%= f.input :backup_type, as: :hidden %>
-    <%= f.input :engine_name, as: :hidden %>
+    <%= render partial: 'shared/form/hidden_field', locals: {name: :source_name, f: f} %>
+    <%= render partial: 'shared/form/hidden_field', locals: {name: :backup_type, f: f} %>
+    <%= render partial: 'shared/form/hidden_field', locals: {name: :engine_name, f: f} %>
 
-    <%= render partial: 'shared/form/field', locals: {field_name: :backup_name, f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :backup_name, f: f} %>
 
-    <fieldset>
+    <div class="col-sm-12">
       <legend>Destination</legend>
-        <%= render partial: 'shared/form/field', locals: {field_name: :folder, f: f} %>
-        <%= render partial: 'shared/form/select', locals: {field_name: :protocol, select_collection: ["ftp", "s3", "smbfs", "nfs", "local"], f: f} %>
-      <div id="backup-task-external-destination-details">
-        <%= render partial: 'shared/form/field', locals: {field_name: :address, f: f} %>
-        <%= render partial: 'shared/form/field', locals: {field_name: :username, f: f} %>
-        <%= render partial: 'shared/form/field', locals: {field_name: :password, f: f} %>
-      </div>
-    </fieldset>
-
-    <div class="actions top-gap">
-      <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), backup_tasks_path, class: "btn btn-lg btn-warning trigger-response-modal") %>
-      <%= button_tag(type: "submit", class: "btn btn-lg btn-primary trigger-response-modal pull-right") do %>
-        <%= content_tag(:i, "", class: "fa fa-check") + " Save" %>
-      <% end %>
     </div>
+
+    <%= render partial: 'shared/form/text_field', locals: {name: :folder, f: f} %>
+    <%= render partial: 'shared/form/radio_buttons', locals: {name: :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"], f: f, class_id: "backup_task_protocol"} %>
+    <div id="backup-task-external-destination-details">
+      <%= render partial: 'shared/form/text_field', locals: {name: :address, f: f} %>
+      <%= render partial: 'shared/form/text_field', locals: {name: :username, f: f} %>
+      <%= render partial: 'shared/form/text_field', locals: {name: :password, f: f} %>
+    </div>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: backup_tasks_path, submit_label: "Save"} %>
 
   <% end %>
 
