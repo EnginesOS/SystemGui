@@ -4,9 +4,9 @@ module EnginesRepository
     load_blueprint repository_params[:repository_url]
   end
 
-  def self.software_params_from_blueprint repository_params
-    blueprint_from_repository(repository_params)[:software]
-  end
+  # def self.software_params_from_blueprint repository_params
+  #   blueprint_from_repository(repository_params)[:software]
+  # end
 
 private
 

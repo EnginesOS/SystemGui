@@ -9,7 +9,8 @@ class Install < ActiveRecord::Base
     :license_sourceurl,
     :gallery_url,
     :gallery_software_id,
-    :license_terms_and_conditions)
+    :license_terms_and_conditions,
+    :blueprint)
 
   belongs_to :software
 
@@ -49,7 +50,8 @@ private
   def self.new_software_from_gallery_params(gallery_software_params)
     gallery_software = EnginesGallery.software(gallery_software_params)
     repository_url = gallery_software[:repository]
-    blueprint_software_params = EnginesRepository.software_params_from_blueprint repository_url: repository_url
+    blueprint = EnginesRepository.blueprint_from_repository repository_url: repository_url
+    blueprint_software_params = blueprint[:software]
     software_name = blueprint_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
     {
       engine_name: EnginesInstaller.generate_next_unique_engine_name_for(software_name),
@@ -60,7 +62,8 @@ private
         default_image_url: gallery_software[:image_url],
         license_name: blueprint_software_params['license_name'],
         license_sourceurl: blueprint_software_params['license_sourceurl'],
-        license_terms_and_conditions: false
+        license_terms_and_conditions: false,
+        blueprint: blueprint
       },
       display_attributes: {
         display_name: blueprint_software_params['name'],
