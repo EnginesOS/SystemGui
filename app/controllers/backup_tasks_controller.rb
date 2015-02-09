@@ -21,7 +21,7 @@ class BackupTasksController < ApplicationController
     if result.was_success == true
       flash[:notice] = result.result_mesg[0..250]
     else
-      flash[:error] = result.result_mesg[0..250]
+      flash[:error] = "Failed to create backup task. " + result.result_mesg[0..250]
     end
     redirect_to backup_tasks_path 
   end

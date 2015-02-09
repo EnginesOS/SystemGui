@@ -10,9 +10,8 @@
     <% end %>
   </div>
 
-  <div class="col-sm-12">
-
-    <% @galleries.each do |gallery| %>
+  <% @galleries.each do |gallery| %>
+    <div class="col-sm-12">
       <h3>
         <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.name %>
       </h3>
@@ -38,7 +37,7 @@
                     <img src=<%= image_url%> class="engine-install-icon">
                   </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-6">
                   <div class="engine-install-text">
                     <% if name.present? %>
                       <span class="engine-install-name"><%= name %><br></span>
@@ -46,20 +45,19 @@
                     <% if description.present? %>
                       <%=description%><br>
                     <% end %>
-                    <% if home_page.present? %>
-                      <a href=<%=home_page%>><i class="fa fa-globe"></i> website</a><br>
-                    <% end %>
-                    <a href=<%= install_url %> class="btn btn-default engine-install-button trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>">Install</a>
                   </div>
+                </div>
+                <div class="col-md-3">
+                  <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a><br>
+                  <% if home_page.present? %>
+                    <a class="btn btn-lg" href="<%=home_page%>" title="<%=home_page%>"><i class="fa fa-globe"></i> website</a>
+                  <% end %>
                 </div>
               </div>
             <%end%>
           <%end%>
-
-
         </div>
       </div>
-    <%end%>
-  </div>
-
+    </div>
+  <%end%>
 </div>

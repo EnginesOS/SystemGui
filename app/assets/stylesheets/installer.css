@@ -7,6 +7,7 @@
 .installer .engine-install-row {
   min-height: 120px;
   padding-top: 10px;
+  padding-bottom: 10px;
   border-top: 1px solid #ddd;
 }
 
@@ -22,10 +23,10 @@
   border-radius: 5px;
 }
 
-.installer .engine-install-button {
+/*.installer .engine-install-button {
   margin-top: 10px;
   margin-bottom: 10px;
-}
+}*/
 
 .installer .engine-install-name {
   font-size: 1.2em;
