@@ -43,7 +43,7 @@ class Domain < ActiveRecord::Base
       internal_only: internal_only,
       self_hosted: self_hosted)
     if result.was_success == false
-      errors.add(:base, result.result_mesg)
+      errors.add(:base, "Unable to create domain. " + result.result_mesg)
       return false
     else
       return true

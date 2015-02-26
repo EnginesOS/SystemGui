@@ -8,10 +8,10 @@
 
   <% if @domains.present? %>
       <% @domains.each do |domain| %>
-          <%= render partial: "show", locals: { domain: domain } %>
+        <%= render partial: "show", locals: { domain: domain } %>
       <% end %>
   <% else %>
-      <p class='top-gap'>No hosted domains.</p>
+    <p class='top-gap'>No hosted domains.</p>
   <% end %>
 
 </div>

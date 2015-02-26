@@ -16,47 +16,49 @@
         <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.name %>
       </h3>
       <div class="top-gap">
-          <% softwares = gallery.search_software_titles(params["search"]) %>
+        <% softwares = gallery.search_software_titles(params["search"]) %>
 
-          <% if softwares.present? %>
-            <% softwares.sort_by{|b| b["full_name"] }.each do |software|  %>
+        <% if softwares.present? %>
+          <% softwares.sort_by{|b| b["full_title"] }.each do |software|  %>
+            <% software_id = software["id"]
+              name = software["name_from_repository"]
+              home_page =  software["website_from_repository"]
+              image_url =  software["icon_url_from_repository"]
+              if image_url.blank?
+                image_url = "assets/_placeholder_for_missing_engine.jpg" 
+              end
+              description = software["description_from_repository"]
+            %>       
+            <% install_url = new_install_path(software: {gallery_url: gallery.url, gallery_software_id: software_id}) %>
+            <div class="col-md-12 engine-install-row">
+              <div class="col-md-3">
+                <div class="engine-install-icon-container">
+                  <img src=<%= image_url%> class="engine-install-icon">
+                </div>
+              </div>
+              <div class="col-md-6">
 
-              <% software_id = software["id"]
-                name = software["full_name"]
-                home_page =  software["home_page"]
-                image_url =  software["image_url"]
-                if image_url.blank?
-                  image_url = "assets/_placeholder_for_missing_engine.jpg" 
-                end
-                description = software["description"]
-              %>       
-              <% install_url = new_install_path(software: {gallery_url: gallery.url, gallery_software_id: software_id}) %>
-              <div class="col-md-12 engine-install-row">
-                <div class="col-md-3">
-                  <div class="engine-install-icon-container">
-                    <img src=<%= image_url%> class="engine-install-icon">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="engine-install-text">
-                    <% if name.present? %>
-                      <span class="engine-install-name"><%= name %><br></span>
-                    <% end %>
-                    <% if description.present? %>
-                      <%=description%><br>
-                    <% end %>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a><br>
-                  <% if home_page.present? %>
-                    <a class="btn btn-lg" href="<%=home_page%>" title="<%=home_page%>"><i class="fa fa-globe"></i> website</a>
+<%= software.class %>
+<%= software.inspect %>
+
+                <div class="engine-install-text">
+                  <% if name.present? %>
+                    <span class="engine-install-name"><%= name %><br></span>
+                  <% end %>
+                  <% if description.present? %>
+                    <%=description%><br>
                   <% end %>
                 </div>
               </div>
-            <%end%>
+              <div class="col-md-3">
+                <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a><br>
+                <% if home_page.present? %>
+                  <a class="btn btn-lg" href="<%=home_page%>" title="<%=home_page%>"><i class="fa fa-globe"></i> website</a>
+                <% end %>
+              </div>
+            </div>
           <%end%>
-        </div>
+        <%end%>
       </div>
     </div>
   <%end%>

@@ -17,6 +17,9 @@ class Install < ActiveRecord::Base
   validate :license_terms_and_conditions_accepted_validation
 
   def self.new_software_from_gallery(gallery_params)
+
+
+
     Software.new(new_software_from_gallery_params(gallery_params))
   end
 
@@ -49,34 +52,86 @@ private
  
   def self.new_software_from_gallery_params(gallery_software_params)
     gallery_software = EnginesGallery.software(gallery_software_params)
-    repository_url = gallery_software[:repository]
+
+p :gallery_software
+p gallery_software
+p :gallery_software_params
+p gallery_software_params
+
+
+    repository_url = gallery_software[:repository_url]
     blueprint = EnginesRepository.blueprint_from_repository repository_url: repository_url
     blueprint_software_params = blueprint[:software]
     software_name = blueprint_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
+
+p :blueprint_software_params
+p blueprint_software_params
+
+
+
+p :engine_name
+p EnginesInstaller.generate_next_unique_engine_name_for(software_name)
+p :repository_url
+p repository_url
+p :gallery_url
+p gallery_software_params[:gallery_url]
+p :gallery_software_id
+p gallery_software_params[:gallery_software_id]
+p :default_image_url
+p gallery_software[:icon_url_from_repository]
+p :license_name
+p blueprint_software_params['license_name']
+p :license_sourceurl
+p blueprint_software_params['license_sourceurl']
+p :license_terms_and_conditions
+p false
+p :blueprint
+p blueprint
+p :display_name
+p blueprint_software_params['name']
+p :display_description
+p blueprint_software_params['description']
+p :variables_attributes
+p blueprint_software_params["environment_variables"]
+p :host_name
+p EnginesInstaller.generate_next_unique_host_name_for(software_name)
+p :domain_name
+p Network.best_default_domain
+p :http_protocol
+p Network.best_http_protocol(blueprint_software_params['http_protocol'])
+p :required_memory
+p blueprint_software_params['requiredmemory']
+p :memory
+p blueprint_software_params['recommended_memory'] || blueprint_software_params['requiredmemory']
+
+
+
+
+
     {
       engine_name: EnginesInstaller.generate_next_unique_engine_name_for(software_name),
       install_attributes: {
         repository_url: repository_url,
         gallery_url: gallery_software_params[:gallery_url],
         gallery_software_id: gallery_software_params[:gallery_software_id],
-        default_image_url: gallery_software[:image_url],
+        default_image_url: gallery_software[:icon_url_from_repository],
         license_name: blueprint_software_params['license_name'],
         license_sourceurl: blueprint_software_params['license_sourceurl'],
         license_terms_and_conditions: false,
         blueprint: blueprint
       },
       display_attributes: {
-        display_name: blueprint_software_params['name'],
+        display_name: blueprint_software_params['short_title'],
         display_description: blueprint_software_params['description']
       },
-      software_variables_handler_attributes: {variables_attributes: blueprint_software_params["environment_variables"]},
+      software_variables_handler_attributes: {variables_attributes: blueprint_software_params["variables"]},
       network_attributes: {
         host_name: EnginesInstaller.generate_next_unique_host_name_for(software_name),
         domain_name: Network.best_default_domain,
         http_protocol: Network.best_http_protocol(blueprint_software_params['http_protocol'])
       },
       resource_attributes: {
-        required_memory: blueprint_software_params['requiredmemory'],
+        required_memory: blueprint_software_params['required_memory'],
         memory: blueprint_software_params['recommended_memory'] || blueprint_software_params['requiredmemory']
       }
     }

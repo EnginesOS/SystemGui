@@ -21,13 +21,11 @@ class Variable < ActiveRecord::Base
 
   belongs_to :variable_consumer, polymorphic: true
 
-  # domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
-  # validates :value, format: { with: domain_name_regex, :multiline => true  }
-
   validate :regex_validation
   validate :value_confirmation_validation
   validate :value_present_validation
-  # validate :a_validation
+
+private
 
   def regex_validation
     if (regex_validator.present? && !Regexp.new(regex_validator.to_s).match(value.to_s))
