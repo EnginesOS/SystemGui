@@ -7,7 +7,6 @@ class InstallsController < ApplicationController
   end
 
   def new
-    EnginesMaintenance.db_maintenance
     @software = Install.new_software_from_gallery(new_software_from_gallery_params)
   end
 

@@ -5,6 +5,7 @@ class DomainsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    EnginesMaintenance.domains_maintenance
     @domains = Domain.all.sort_by{|domain| domain.domain_name}
   end
 

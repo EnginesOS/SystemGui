@@ -10,7 +10,7 @@ class PagesController < ApplicationController
   end      
 
   def desktop
-    # EnginesMaintenance.db_maintenance
+    EnginesMaintenance.softwares_maintenance
     @settings = Setting.first_or_create
     @softwares = Software.user_visible_applications.sort_by(&:engine_name)
     # flash[:alert] = "fake alert"
@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   end
 
   def control_panel
-    EnginesMaintenance.db_maintenance
+    EnginesMaintenance.softwares_maintenance
     @softwares = Software.all.sort_by(&:engine_name)
     @service_names = EnginesService.all_service_names.sort
   end

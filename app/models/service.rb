@@ -9,15 +9,18 @@ class Service
      mongo_server: 'Mongo NoSQL database',
      mysql_server: 'MySQL database',
      nginx: 'Web router',
-     cAdvisor: 'Activitiy logger',
+     cAdvisor: 'Activitiy monitor',
      pgsql_server: 'Postgres database',
      smtp: 'Outbound mail',
      volmanager: 'File system manager',
-     shareservice: 'File system sharing',
-     couriermail: 'Inbound mail',
+     shareservice: 'File system sharing manager',
+     couriermail: 'Inbound mail service',
      cron: 'Job scheduler',
-     servicemanager: 'Controls services interaction',
-     awsdb: 'AWS database'
+     servicemanager: 'Services interaction manager',
+     awsdb: 'AWS database',
+     email: 'e-mail server',
+     imap: 'IMAP interface',
+     syslog: 'System logging'
     }[service_name.to_sym]
   end
 
