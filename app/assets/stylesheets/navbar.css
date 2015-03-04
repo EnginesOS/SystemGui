@@ -15,32 +15,9 @@
   font-size: inherit;
 }
 
-
-
-
-/*.nav_bar_launcher_icon {
-  height: 20px;
-  margin-top: -3px;
-}
-*/
 .navbar-buffer {
   margin-top: 50px;
 }
-
-
-/*.navbar {
-  font-size: 18px;
-}*/
-
-/*.navbar > .container-fluid .navbar-brand {
-  margin-left: 0px;
-}*/
-
-
-
-/*.navbar .dropdown-menu {
-  font-size: inherit;
-}*/
 
 .navbar-default .navbar-nav > li > a.dropdown-toggle {
   background-color: #f8f8f8;
@@ -49,4 +26,3 @@
 .navbar-default .navbar-nav > li > a.dropdown-toggle:hover {
   background-color: #f8f8f8;
 }
-
