@@ -5,13 +5,13 @@ $(document).ready(function(){
           $(this).addClass("form-control");
       });
       $(".devise-view input[name='commit']").each( function(){
-          $(this).addClass("btn btn-primary top-gap");
+          $(this).addClass("btn btn-primary btn-lg top-gap trigger-response-modal");
       });
       $(".devise-view label").each( function(){
           $(this).parent().addClass("top-gap");
       });
       $(".devise-view a").each( function(){
-          $(this).addClass("btn btn-default btn-sm top-gap");
+          $(this).addClass("btn btn-default btn-sm top-gap trigger-response-modal");
       });
       $()
 

@@ -2,43 +2,39 @@
   margin: 0px;
   border: none;
   border-radius: 0px;
-  font-size: 1.2em;
 }
-
-/*.alert button {
-  font-size: 2em;
-  margin-top: -5px;
-}*/
 
 .top-gap {
   margin-top: 15px;
 }
 
-
-
-
 body {
   background-color: transparent;
+  font-size: 18px;
 }
 
-
+.show label,
+th
+ {
+  padding-top: 2px;
+  font-size: 14px;
+  color: #999;
+}
 
 hr {
   margin: 2px;
 }
-
-
-/*#content {
-  background-color: transparent;
-}
-
-.container {
-  background-color: transparent;
-}*/
 
 #footer {
   height: 300px;
 }
 
 
+.no-text-wrap {
+  overflow:hidden;
+  white-space:nowrap;
+}
 
+.btn-xlg {
+  font-size: 30px;
+}

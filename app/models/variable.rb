@@ -6,7 +6,7 @@ class Variable < ActiveRecord::Base
     :value_confirmation,
     :label,
     :comment,
-    :type,
+    :field_type,
     :regex_validator,
     :regex_invalid_message,
     :mandatory,
