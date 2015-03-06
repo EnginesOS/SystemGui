@@ -4,10 +4,10 @@
   <div class="col-sm-6">
     <table>
       <tr><td><label>Name</label></td><td><%= @engine_name %></td></tr> 
-      <tr><td><label>Hostname</label></td><td><a href=http://<%= EnginesSoftware.fqdn(@engine_name) %>><%= EnginesSoftware.fqdn(@engine_name) %></a></td></tr> 
+      <tr><td><label>Host FQDN</label></td><td><a href=http://<%= EnginesSoftware.fqdn(@engine_name) %>><%= EnginesSoftware.fqdn(@engine_name) %></a></td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%= EnginesSoftware.default_startup_state(@engine_name) %></td></tr> 
-      <tr><td><label>Memory required</label></td><td><%= EnginesSoftware.memory(@engine_name) %> MB</td></tr>
+      <tr><td><label>Memory</label></td><td><%= EnginesSoftware.memory(@engine_name) %> MB</td></tr>
       <tr><td><label>Monitored</label></td><td><%= EnginesSoftware.monitored(@engine_name) %></td></tr>
       <tr><td><label>Framework</label></td><td><%= EnginesSoftware.framework(@engine_name) %>/<%= EnginesSoftware.runtime(@engine_name) %></td></tr>
       <tr><td><label>Image</label></td><td><%= EnginesSoftware.image(@engine_name) %></td></tr>

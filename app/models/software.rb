@@ -20,4 +20,16 @@ class Software < ActiveRecord::Base
     all.select { |software| EnginesSoftware.default_startup_state(software.engine_name) == 'running' }
   end
 
+  def backup_tasks
+    @backup_tasks ||= EnginesSoftware.backup_tasks engine_name
+  end
+
+  def volumes
+    @volumes ||= EnginesSoftware.volumes engine_name
+  end
+
+  def databases
+    @databases ||= EnginesSoftware.databases engine_name
+  end
+
 end

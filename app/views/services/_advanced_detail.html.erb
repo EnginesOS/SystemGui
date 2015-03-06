@@ -4,10 +4,10 @@
   <div class="col-sm-6">
     <table>
       <tr><td><label>Service name</label></td><td><%= @service_name %></td></tr> 
-      <tr><td><label>Host name</label></td><td><a href=http://<%= EnginesService.fqdn @service_name %>><%= EnginesService.fqdn @service_name %></a></td></tr> 
+      <tr><td><label>Host FQDN</label></td><td><a href=http://<%= EnginesService.fqdn @service_name %>><%= EnginesService.fqdn @service_name %></a></td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%= EnginesService.default_startup_state @service_name %></td></tr> 
-      <tr><td><label>Memory required</label></td><td><%= EnginesService.memory @service_name %> MB</td></tr>
+      <tr><td><label>Memory</label></td><td><%= EnginesService.memory @service_name %> MB</td></tr>
       <tr><td><label>Monitored</label></td><td><%= EnginesService.monitored @service_name %></td></tr>
       <tr><td><label>Framework</label></td><td><%= EnginesService.framework @service_name %>/<%= EnginesService.runtime @service_name %></td></tr>
       <tr><td><label>Image</label></td><td><%= EnginesService.image @service_name %> </td></tr>

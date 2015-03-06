@@ -52,7 +52,8 @@ Rails.application.routes.draw do
         :register_website,
         :deregister_website,
         :register_dns,
-        :deregister_dns)
+        :deregister_dns,
+        :manager)
     end
   end
 

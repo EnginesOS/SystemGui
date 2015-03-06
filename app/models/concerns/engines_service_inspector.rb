@@ -18,6 +18,7 @@ module EnginesServiceInspector
     volumes_hash: 'volumes',
     consumers: 'consumers',
     databases: 'databases',
+    # management_url: 'management_url'
     stats: 'stats',
     ps_container: 'ps_container',
     logs_container: 'logs_container'
@@ -31,6 +32,10 @@ module EnginesServiceInspector
         result.send(instruction)
       end
     end
+  end
+
+  def management_url service_name
+    "servicemanager"
   end
 
 end

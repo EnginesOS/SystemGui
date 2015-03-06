@@ -26,10 +26,13 @@ class BackupTask
   end
 
   def backup_type_in_words
-    case backup_type
-    when 'fs'; 'files'
-    when 'db'; 'database'
-    else 'unknown backup type'
+    case backup_type.to_s
+    when 'fs'
+      'files'
+    when 'db'
+      'database'
+    else
+      'unknown backup type'
     end
   end
 

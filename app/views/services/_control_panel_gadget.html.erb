@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="modal_<%= service_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal advanced_detail" id="modal_<%= service_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -55,7 +55,7 @@
         <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced</h4>
       </div>
       <div class="modal-body" id="modal_<%= service_name %>_body">
-        <div class="loading-spinner">
+        <div class="loading_spinner">
           <%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> 
         </div>
       </div>
@@ -65,7 +65,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 
      
 
