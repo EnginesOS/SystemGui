@@ -12,7 +12,7 @@
           <%if error.class == Array %>
             <%= error.join(' ') %>
           <% else %>
-            <%= error %>
+            <%= [attribute.to_s.humanize, error].join(' ') %>
           <% end %>
         </li>
       <% end %>

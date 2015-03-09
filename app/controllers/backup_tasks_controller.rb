@@ -2,7 +2,7 @@ class BackupTasksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    EnginesMaintenance.db_maintenance
+    # EnginesMaintenance.db_maintenance
     @backup_tasks = BackupTask.all
     @softwares = Software.all
   end

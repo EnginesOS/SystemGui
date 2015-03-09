@@ -25,11 +25,12 @@
           <% end %>
         <% end %>
       </div>
-    <% end %>
-    <% if hint.present? %>
-      <div class='form-field-hint'>
-        <%= hint %>
-      </div>
+    <% else %>
+      <% if hint.present? %>
+        <div class='form-field-hint'>
+          <%= hint %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

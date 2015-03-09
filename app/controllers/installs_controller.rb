@@ -17,11 +17,6 @@ class InstallsController < ApplicationController
 
   def create_attach_icon
     url = @software.install.default_image_url
-
-p "::::::::::::"
-p "image url " + url.to_s
-
-
     file = EnginesUtilities.icon_from_url url
     if file == nil
       flash[:alert] = "The icon image could not be loaded for #{@software.engine_name}. "
@@ -59,6 +54,11 @@ p "image url " + url.to_s
     end
   end
 
+  def blueprint
+    @blueprint = blueprint_params
+    render layout: 'empty_navbar'
+  end
+
 private
 
   def new_software_from_gallery_params
@@ -67,6 +67,10 @@ private
 
   def new_software_install_params
     params.require(:software).permit!
+  end
+
+  def blueprint_params
+    params.require(:blueprint)
   end
 
   # def set_software

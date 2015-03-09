@@ -1,0 +1,7 @@
+<div class="col-sm-12 top-gap">
+
+  <h2><%= content_tag(:i, "", class: "fa fa-file-text") %> Blueprint</h2>
+
+  <%= (ap JSON.parse(@blueprint), plain: true, index: false).html_safe %>
+
+</div>

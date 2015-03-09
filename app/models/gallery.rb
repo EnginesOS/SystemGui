@@ -4,6 +4,8 @@ class Gallery < ActiveRecord::Base
 
   def softwares
     @softwares ||= EnginesGallery.softwares gallery_url: url
+  rescue
+    @softwares = []
   end
 
   def search_software_titles search_string

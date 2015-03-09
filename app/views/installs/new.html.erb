@@ -1,7 +1,7 @@
 <div class="software_installation_form">
 <% #= params %>
   <div class="col-sm-12 top-gap">
-    <h3><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install <%= @software.display.display_name %></h3>
+    <h2><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install <%= @software.display.display_name %></h2>
   </div>
 
   <div class="col-sm-12">
@@ -15,9 +15,9 @@
 
     <div class="col-sm-4 clearfix">
       <div class="btn-group-vertical top-gap pull-right">
-        <button class="btn btn-lg btn-default" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordion" href="#blueprint">
+        <a class="btn btn-default btn-lg" href="<%= blueprint_installs_path(blueprint: @software.install.blueprint) %>" target="engines_software_blueprint">
           { } Blueprint
-        </button>
+        </a>
         <button type="button" class="btn btn-default btn-lg" id="new_software_form_show_advanced_fields_button">
           <%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced install
         </button>
@@ -26,18 +26,6 @@
   </div>    
 
   <div class="col-sm-12 top-gap">
-
-    <div class="col-sm-8 col-sm-offset-2 collapse" id="blueprint">
-      <div class="panel panel-primary top-gap">
-        <div class="panel-heading">
-          <h4>Blueprint</h4>
-        </div>
-
-        <div class="panel-body">
-          <%= (ap @software.install.blueprint, plain: true, index: false).html_safe %>
-        </div>
-      </div>
-    </div>
 
     <%= form_for @software, url: installs_path do |f| %>
 
@@ -53,7 +41,7 @@
 <% end %>
 
 
-      <div class="advanced_fields">
+      <div class="advanced_fields" style="<%= 'display: none;' if f.object.errors.blank? %>">
         <%= render partial: 'softwares/form_fields', locals: {f: f} %>
         <%= render partial: 'displays/form_fields', locals: {f: f} %>
         <%= render partial: 'networks/form_fields', locals: {f: f} %>
