@@ -12,9 +12,9 @@
 
   <% @galleries.each do |gallery| %>
     <div class="col-sm-12">
-      <h3>
+      <h2>
         <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.name %>
-      </h3>
+      </h2>
       <div class="top-gap">
         <% softwares = gallery.search_software_titles(params["search"]) %>
 

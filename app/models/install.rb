@@ -118,7 +118,7 @@ p blueprint_software_params['recommended_memory'] || blueprint_software_params['
         license_name: blueprint_software_params['license_name'],
         license_sourceurl: blueprint_software_params['license_sourceurl'],
         license_terms_and_conditions: false,
-        blueprint: blueprint
+        blueprint: blueprint.to_json.to_s
       },
       display_attributes: {
         display_name: blueprint_software_params['short_title'],

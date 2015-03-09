@@ -5,12 +5,6 @@ module EnginesGallery
   end
 
   def self.software(params)
-
-p "+++++++++++++++++++++++++++"
-p params
-
-
-
     load_gallery_software params[:gallery_url], params[:gallery_software_id]
   end
 
