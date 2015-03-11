@@ -6,6 +6,7 @@ class Install < ActiveRecord::Base
     :langauge_name,
     :swframework_name,
     :license_name,
+    :license_label,
     :license_sourceurl,
     :gallery_url,
     :gallery_software_id,
@@ -53,10 +54,6 @@ private
   def self.new_software_from_gallery_params(gallery_software_params)
     gallery_software = EnginesGallery.software(gallery_software_params)
 
-p :gallery_software
-p gallery_software
-p :gallery_software_params
-p gallery_software_params
 
 
     repository_url = gallery_software[:repository_url]
@@ -64,48 +61,14 @@ p gallery_software_params
     blueprint_software_params = blueprint[:software]
     software_name = blueprint_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
 
-p :blueprint_software_params
-p blueprint_software_params
 
 
 
-p :engine_name
-p EnginesInstaller.generate_next_unique_engine_name_for(software_name)
-p :repository_url
-p repository_url
-p :gallery_url
-p gallery_software_params[:gallery_url]
-p :gallery_software_id
-p gallery_software_params[:gallery_software_id]
-p :default_image_url
-p gallery_software[:icon_url_from_repository]
-p :license_name
-p blueprint_software_params['license_name']
-p :license_sourceurl
-p blueprint_software_params['license_sourceurl']
-p :license_terms_and_conditions
-p false
-p :blueprint
-p blueprint
-p :display_name
-p blueprint_software_params['name']
-p :display_description
-p blueprint_software_params['description']
-p :variables_attributes
-p blueprint_software_params["environment_variables"]
-p :host_name
-p EnginesInstaller.generate_next_unique_host_name_for(software_name)
-p :domain_name
-p Network.best_default_domain
-p :http_protocol
-p Network.best_http_protocol(blueprint_software_params['http_protocol'])
-p :required_memory
-p blueprint_software_params['requiredmemory']
-p :memory
-p blueprint_software_params['recommended_memory'] || blueprint_software_params['requiredmemory']
-
-
-
+icon_url = 
+                (gallery_software[:icon_url_from_gallery] if gallery_software[:icon_url_from_gallery].present?) ||
+                (gallery_software[:icon_url_from_blueprint] if gallery_software[:icon_url_from_blueprint].present?) ||
+                (gallery_software[:icon_url_from_repository] if gallery_software[:icon_url_from_repository].present?) ||
+                "_placeholder_for_missing_engine.jpg"
 
 
     {
@@ -114,8 +77,9 @@ p blueprint_software_params['recommended_memory'] || blueprint_software_params['
         repository_url: repository_url,
         gallery_url: gallery_software_params[:gallery_url],
         gallery_software_id: gallery_software_params[:gallery_software_id],
-        default_image_url: gallery_software[:icon_url_from_repository],
+        default_image_url: icon_url,
         license_name: blueprint_software_params['license_name'],
+        license_label: blueprint_software_params['license_label'],
         license_sourceurl: blueprint_software_params['license_sourceurl'],
         license_terms_and_conditions: false,
         blueprint: blueprint.to_json.to_s

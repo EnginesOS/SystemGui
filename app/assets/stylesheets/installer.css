@@ -37,6 +37,11 @@
   word-wrap: break-word;
 }
 
+.installer .engine-install-text small p {
+  margin-bottom: 0px;
+  color: #666;
+}
+
 #new_app_install_form_advanced_fields{
   display: none;
 }

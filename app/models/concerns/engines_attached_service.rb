@@ -5,7 +5,7 @@ module EnginesAttachedService
   def self.service_detail_for(params)
     result = engines_api.software_service_definition(
       service_provider: params[:service_provider],
-      service_type: params[:service_type])
+      type_path: params[:type_path])
   end
 
   def self.attach_service params

@@ -19,37 +19,54 @@
         <% softwares = gallery.search_software_titles(params["search"]) %>
 
         <% if softwares.present? %>
-          <% softwares.sort_by{|b| b["full_title"] }.each do |software|  %>
+          <% softwares.sort_by{|b| b["title"] }.each do |software|  %>
             <% software_id = software["id"]
-              name = software["name_from_repository"]
-              home_page =  software["website_from_repository"]
-              image_url =  software["icon_url_from_repository"]
-              if image_url.blank?
-                image_url = "assets/_placeholder_for_missing_engine.jpg" 
-              end
-              description = software["description_from_repository"]
+              gallery_title = software["title"]
+              gallery_detail = software["detail"]
+              blueprint_full_title = software["full_title_from_blueprint"]
+              blueprint_description = software["description_from_blueprint"]
+              home_page = software["website_from_blueprint"]
+              image_url = 
+                (software["icon_url_from_gallery"] if software["icon_url_from_gallery"].present?) ||
+                (software["icon_url_from_blueprint"] if software["icon_url_from_blueprint"].present?) ||
+                (software["icon_url_from_repository"] if software["icon_url_from_repository"].present?) ||
+                "assets/_placeholder_for_missing_engine.jpg"
             %>       
             <% install_url = new_install_path(software: {gallery_url: gallery.url, gallery_software_id: software_id}) %>
+
             <div class="col-md-12 engine-install-row">
               <div class="col-md-3">
                 <div class="engine-install-icon-container">
-                  <img src=<%= image_url%> class="engine-install-icon">
+                  <img src=<%= image_url %> class="engine-install-icon">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="engine-install-text">
-                  <% if name.present? %>
-                    <span class="engine-install-name"><%= name %><br></span>
+                  <% if gallery_title.present? %>
+                    <span class="engine-install-name"><%= gallery_title %><br></span>
                   <% end %>
-                  <% if description.present? %>
-                    <%=description%><br>
+                  <% if gallery_detail.present? %>
+                    <%= gallery_detail %><br>
                   <% end %>
+                  <small>
+                    <% if blueprint_full_title.present? %>
+                      <p>
+                        <i>Title:</i> <%= blueprint_full_title %>
+                      </p>
+                    <% end %>
+                    <% if blueprint_description.present? %>
+                      <p>
+                        <i>Description:</i> <%= blueprint_description %>
+                      </p>
+                    <% end %>
+                  </small>
                 </div>
+
               </div>
               <div class="col-md-3">
-                <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal" data-toggle="tooltip" title="Click to install <%= name %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a><br>
+                <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal" data-toggle="tooltip" title="Click to install <%= gallery_title %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a><br>
                 <% if home_page.present? %>
-                  <a class="btn btn-lg" href="<%=home_page%>" title="<%=home_page%>"><i class="fa fa-globe"></i> website</a>
+                  <a class="btn btn-lg" href="<%= home_page %>" title="<%= home_page %>"><i class="fa fa-globe"></i> website</a>
                 <% end %>
               </div>
             </div>
