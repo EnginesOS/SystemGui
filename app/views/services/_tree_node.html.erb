@@ -1,0 +1,21 @@
+<% if node.present? %>
+  <ul>
+    <%#= node.name %>
+    <%#= node.content %>
+    <% node.children do |child_node| 
+         has_children = child_node.children.present? %>
+      <li>
+        <span class="btn btn-lg btn-default"><i class="fa <%= has_children ? 'fa-plus-circle' : 'fa-circle' %>"></i> <%= child_node.name %></span>
+        <% content = child_node.content %>
+        <% if content.class == Hash %>
+          <%= (ap JSON.parse(content.to_json), plain: true, index: false).html_safe %>
+        <% else %>
+          <pre class="well"><%= content %></pre>
+        <% end %>
+        <% if has_children %>
+          <%= render 'tree_node', node: child_node %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

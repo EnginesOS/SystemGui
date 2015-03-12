@@ -15,13 +15,20 @@
   </div>
 
   <div class='row'>
-    <div class="col-sm-12">
+    <div class="col-sm-6">
       <h2><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h2>
     </div>
+    <div class="col-sm-6">
+      <%= link_to (content_tag(:i, nil,class: "fa fa-tree") + " Services trees"), services_trees_path, class: 'trigger-response-modal btn btn-lg btn-default pull-right top-gap' %>
+    </div>
+
+  </div>
+  <div class='row'>
 
     <% @service_names.each do |service_name| %>
       <%= render partial: "services/control_panel_gadget", locals: {service_name: service_name} %>
     <% end %>
+
   </div>
 
 </div>

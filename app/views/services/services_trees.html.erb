@@ -1,0 +1,11 @@
+<h2><%= content_tag(:i, "", class: "fa fa-tree") %> Services trees</h2>
+
+<h3><%= content_tag(:i, "", class: "fa fa-caret-right") %> By service providers</h3>
+<div class="tree">
+  <%= render 'tree_node', node: @services_tree_by_provider %>
+</div>
+
+<h3><%= content_tag(:i, "", class: "fa fa-caret-right") %> By engines</h3>
+<div class="tree">
+  <%= render 'tree_node', node: @services_tree_by_engine %>
+</div>
