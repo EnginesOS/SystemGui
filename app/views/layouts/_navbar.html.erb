@@ -16,6 +16,9 @@
     when
       params[:controller] == 'pages' && params[:action] == 'help'
         :help
+    # when
+    #   params[:controller] == 'services'
+    #     :services
     else
       :control_panel
     end

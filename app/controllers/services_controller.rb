@@ -9,5 +9,10 @@ class ServicesController < ApplicationController
     render partial: "advanced_detail"
   end
 
+  def services_trees
+    @services_tree_by_provider = EnginesServiceConsumerManager.services_tree_by_provider
+    @services_tree_by_engine = EnginesServiceConsumerManager.services_tree_by_engine
+  end
+
 end
 
