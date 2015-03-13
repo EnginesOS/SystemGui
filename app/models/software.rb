@@ -1,5 +1,7 @@
 class Software < ActiveRecord::Base
 
+  attr_accessor :delete_extra_shit
+
   has_one :software_variables_handler, dependent: :destroy
   has_one :attached_services_handler, dependent: :destroy
   has_one :display, dependent: :destroy

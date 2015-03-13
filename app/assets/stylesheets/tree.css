@@ -44,5 +44,22 @@
     border:0;
 }
 .tree li:last-child::before {
-    height:42px
+    height:42px;
+}
+
+.tree .btn-lg-placeholder {
+    font-size: 18px;
+    padding: 10px 16px;
+    line-height: 1.33;
+    display: inline-block;
+    margin-bottom: 0px;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: default;
+    background-image: none;
+    border: none;
+    color: #333;
+    background-color: transparent;
 }

@@ -5,12 +5,12 @@
     <% node.children do |child_node| 
          has_children = child_node.children.present? %>
       <li style="<%= top_level ? '' : 'display: none;' %>">
-        <span class="btn btn-lg <%= has_children ? 'btn-default' : '' %>"><%= (content_tag(:i, nil, class: 'fa fa-caret-right') + ' ') if has_children %><%= child_node.name %></span>
+        <span class="<%= has_children ? 'btn btn-lg btn-default' : 'btn-lg-placeholder' %>"><%= (content_tag(:i, nil, class: 'fa fa-caret-right') + ' ') if has_children %><%= child_node.name %></span>
         <% content = child_node.content %>
         <% if content.class == Hash %>
           <%= (ap JSON.parse(content.to_json), plain: true, index: false).html_safe %>
         <% else %>
-          <pre class="well"><%= content %></pre>
+          <div style="height: 20px;">&nbsp</div> <!-- <pre class="well"><%= content %></pre> -->
         <% end %>
         <% if has_children %>
           <%= render 'tree_node', node: child_node, top_level: false %>
