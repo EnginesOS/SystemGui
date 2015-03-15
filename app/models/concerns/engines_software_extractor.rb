@@ -43,6 +43,10 @@ module EnginesSoftwareExtractor
     volumes_hash(engine_name).values
   end
 
+  def persistant_services(engine_name)
+    engines_api.get_engine_persistant_services({engine_name: engine_name}).values
+  end
+
   def consumers(engine_name)
     consumers_hash(engine_name).values
   end

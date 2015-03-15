@@ -35,6 +35,10 @@
       <% link_body = (content_tag(:i, '', class: 'fa fa-picture-o') + ' Wallpaper'.html_safe) + "<br>".html_safe + detail.html_safe  %>
       <%= link_to link_body, settings_edit_wallpaper_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 
+      <%# detail = (('<span class="settings_btn_detail">Allow installation of container images from DockerHub</span>'.html_safe) if @settings.install_from_docker_hub.true?) || '' %>
+      <%# link_body = (image_tag('docker_icon', height: '20') + ' DockerHub'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+      <%#= link_to link_body, docker_hub_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+
     </div>
   </div>
 </span>

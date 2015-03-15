@@ -1,11 +1,26 @@
 <h2><%= content_tag(:i, "", class: "fa fa-tree") %> Services trees</h2>
 
-<h3><%= content_tag(:i, "", class: "fa fa-caret-right") %> By service providers</h3>
-<div class="tree">
-  <%= render 'tree_node', node: @services_tree_by_provider %>
-</div>
+<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
-<h3><%= content_tag(:i, "", class: "fa fa-caret-right") %> By engines</h3>
-<div class="tree">
-  <%= render 'tree_node', node: @services_tree_by_engine %>
+<div role="tabpanel">
+
+  <ul class="nav nav-tabs top-gap">
+    <li role="presentation" class="active"><a href="#services_tree_by_service_providers"data-toggle="tab">By service providers</a></li>
+    <li role="presentation"><a href="#services_tree_by_engines" data-toggle="tab">By engines</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="services_tree_by_service_providers">
+      <div class="tree">
+        <%= render 'tree_node', node: @services_tree_by_provider %>
+      </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="services_tree_by_engines">
+      <div class="tree">
+        <%= render 'tree_node', node: @services_tree_by_engine %>
+      </div>
+    </div>
+  </div>
+
 </div>

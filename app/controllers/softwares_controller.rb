@@ -8,6 +8,10 @@ class SoftwaresController < ApplicationController
     @softwares = Software.all
   end
 
+  def uninstall
+    @software = Software.find(params[:id])
+  end
+
   def destroy_all_records
     Software.delete_all
     redirect_to softwares_path 
