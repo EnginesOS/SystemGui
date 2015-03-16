@@ -11,6 +11,10 @@ class SoftwaresController < ApplicationController
   def uninstall
     @software = Software.find(params[:id])
   end
+  
+  def uninstall_engine
+    render text: params
+  end
 
   def destroy_all_records
     Software.delete_all

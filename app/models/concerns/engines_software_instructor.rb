@@ -22,8 +22,12 @@ module EnginesSoftwareInstructor
     memory_statistics: 'get_engine_memory_statistics'
   }.
   each do |method, instruction|
-    define_method(method) do |engine_name, *options|
+    define_method(method) do |engine_name, options={}|
       if options.present?
+        
+p :options
+p options        
+        
         engines_api.send(instruction, engine_name, options )
       else
         engines_api.send(instruction, engine_name )

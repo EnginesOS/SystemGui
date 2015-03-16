@@ -5,6 +5,7 @@ module EnginesMaintenanceDomains
     remove_orphaned_domains
     create_missing_domains
     remove_duplicate_domains if Domain.count != EnginesDomain.count
+    check_default_domain
   end
 
 private
@@ -41,6 +42,17 @@ private
       internal_only = EnginesDomain.domain_names_hash[domain_name][:internal_only]
       self_hosted = EnginesDomain.domain_names_hash[domain_name][:self_hosted]
       domain = Domain.create(domain_name: domain_name, internal_only: internal_only, self_hosted: self_hosted )
+    end
+  end
+
+  def check_default_domain
+    if Setting.first.blank?
+      Setting.create!
+    end
+    if Setting.first.default_domain.blank? && Domain.first.present?
+      settings = Setting.first
+      settings.default_domain = Domain.first.domain_name
+      settings.save
     end
   end
 

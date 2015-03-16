@@ -67,10 +67,15 @@
        <%end%>
     </table></pre>
 
-    <label>Last error</label>
-    <pre><table><tr><td><%= EnginesSoftware.last_error(@engine_name) %></td></tr></table></pre>
+	<label>Last error</label>
+	<% last_error = EnginesSoftware.last_error(@engine_name) %>
+	<% if last_error.present? %>
+		<pre><% last_error %></pre>		
+    <% else %>
+ 		<pre>None</pre>
+  	<% end %>
   
-    <label>Environment</label>
+    <label>Variables</label>
     <% software_variables = EnginesSoftware.software_variables(@engine_name) %>
       <% if software_variables.present? %>
       <pre><table>
