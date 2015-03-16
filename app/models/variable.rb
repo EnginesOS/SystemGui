@@ -16,7 +16,7 @@ class Variable < ActiveRecord::Base
     :tooltip,
     :hint,
     :placeholder,
-    :collection
+    :select_collection
   )
 
   belongs_to :variable_consumer, polymorphic: true
@@ -40,7 +40,7 @@ private
   end
 
   def value_confirmation_validation
-    if (type == "password_with_confirmation" && value != value_confirmation)
+    if (field_type == "password_with_confirmation" && value != value_confirmation)
       errors.add(name, ["Passwords", "must match"])
     end
   end
