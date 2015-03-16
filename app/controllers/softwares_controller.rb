@@ -19,7 +19,7 @@ class SoftwaresController < ApplicationController
 
   def advanced_detail
     @engine_name = params[:id]
-    render partial: "advanced_detail"
+    render partial: 'advanced_detail'
   end
 
 end

@@ -6,7 +6,7 @@
 
   <div class="col-sm-12">
     <div class="col-sm-2 top-gap">
-      <%= render partial: 'shared/form/image', locals: {url: @software.install.default_image_url} %>
+      <%= render 'shared/form/image', url: @software.install.default_image_url %>
     </div>
 
     <div class="col-sm-6 top-gap">
@@ -29,30 +29,30 @@
 
     <%= form_for @software, url: installs_path do |f| %>
 
-      <%= render partial: 'shared/form/errors', locals: {f: f} %>
+      <%= render 'shared/form/errors', f: f %>
 
 <% if false %>
       <div class="new_software_form_default_details">
         <div class="col-sm-12">
           <legend>URL</legend>
         </div>
-        <%= render partial: 'shared/form/text', locals: {text: (f.object.network.host_name.to_s + '.' + f.object.network.domain_name.to_s)} %>
+        <%= render 'shared/form/text', text: (f.object.network.host_name.to_s + '.' + f.object.network.domain_name.to_s) %>
       </div>
 <% end %>
 
 
       <div class="advanced_fields" style="<%= 'display: none;' if f.object.errors.blank? %>">
-        <%= render partial: 'softwares/form_fields', locals: {f: f} %>
-        <%= render partial: 'displays/form_fields', locals: {f: f} %>
-        <%= render partial: 'networks/form_fields', locals: {f: f} %>
-        <%= render partial: 'resources/form_fields', locals: {f: f} %>
+        <%= render 'softwares/form_fields', f: f %>
+        <%= render 'displays/form_fields', f: f %>
+        <%= render 'networks/form_fields', f: f %>
+        <%= render 'resources/form_fields', f: f %>
       </div>
 
-      <%= render partial: 'software_variables/form_fields', locals: {f: f} %>
+      <%= render 'software_variables/form_fields', f: f %>
 
-      <%= render partial: 'form_fields', locals: {f: f} %>
+      <%= render 'form_fields', f: f %>
 
-      <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..."} %>
+      <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..." %>
 
     <% end %>
 
