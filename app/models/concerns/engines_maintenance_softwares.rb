@@ -20,7 +20,7 @@ private
     grouped_softwares.each do |softwares|
       softwares = softwares[1]
       softwares.shift
-      softwares.each{|software| software.destroy}
+      softwares.each{|dupe_software| dupe_software.destroy}
     end
   end
 

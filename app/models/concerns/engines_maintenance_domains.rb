@@ -20,7 +20,7 @@ private
     grouped_domains.each do |domains|
       domains = domains[1]
       domains.shift
-      domains.each{|domain| domain.destroy}
+      domains.each{|dupe_domain| dupe_domain.destroy}
     end
   end
 
