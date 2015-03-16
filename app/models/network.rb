@@ -66,7 +66,7 @@ private
   end
 
   def fqdn_is_unique?
-    if EnginesInstaller.fqdn_is_unique? (host_name + '.' + domain_name)
+    if EnginesInstaller.fqdn_is_unique?(host_name + '.' + domain_name)
       true
     else
       errors.add(:base, 'The combination of host name plus domain name must be unique.')

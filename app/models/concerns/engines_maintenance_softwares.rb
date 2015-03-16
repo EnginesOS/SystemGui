@@ -5,6 +5,7 @@ module EnginesMaintenanceSoftwares
     remove_orphaned_softwares
     create_missing_softwares
     remove_duplicate_softwares if Software.count != EnginesSoftware.count
+    add_missing_icons
   end
 
 private
@@ -20,7 +21,7 @@ private
     grouped_softwares.each do |softwares|
       softwares = softwares[1]
       softwares.shift
-      softwares.each{|software| software.destroy}
+      softwares.each{|dupe_software| dupe_software.destroy}
     end
   end
 
@@ -44,9 +45,17 @@ p missing_softwares
 
     missing_softwares.each do |software_name|
       software = Software.create(engine_name: software_name, display_attributes: (Display.engine_display_properties_from_api(software_name)) )
-      # url = Display.engine_icon_url_from_api(software_name)
-      # software.display.icon = EnginesUtilities.icon_from_url(url)
       software.save
+    end
+  end
+
+  def add_missing_icons
+    Software.all.each do |software|
+      if software.display.icon.blank?
+        url = Display.engine_icon_url_from_api(software.engine_name)
+        software.display.icon = EnginesUtilities.icon_from_url(url)
+        software.save
+      end
     end
   end
 

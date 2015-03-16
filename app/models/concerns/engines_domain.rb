@@ -18,8 +18,8 @@ module EnginesDomain
   end
 
   def self.destroy params
-    engines_api.remove_domain (
-      { domain_name: params[:domain_name] } )
+    engines_api.remove_domain(
+    {domain_name: params[:domain_name]} )
   end
 
   def self.create_ssl_certificate params

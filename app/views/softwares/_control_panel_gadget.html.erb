@@ -83,7 +83,7 @@
       <li class="disabled"><%= link_to content_tag(:i, "", class: "fa fa-upload") + " Backups", backup_task_path(software.id),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Attach services", attached_services_path(software_id: software.id),  class: "trigger-response-modal" %>
+      <li class="disabled"><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Attach services", attached_services_path(software_id: software.id),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, engine: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>
