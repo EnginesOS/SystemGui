@@ -5,12 +5,12 @@ class PagesController < ApplicationController
     if EnginesFirstRun.required?
       redirect_to(first_run_path)
     else
-      redirect_to(control_panel_path)
+      redirect_to(desktop_path)
     end
   end      
 
   def desktop
-    # EnginesMaintenance.softwares_maintenance
+    EnginesMaintenance.full_maintenance
     @settings = Setting.first_or_create
     @softwares = Software.user_visible_applications.sort_by(&:engine_name)
     # flash[:alert] = "fake alert"

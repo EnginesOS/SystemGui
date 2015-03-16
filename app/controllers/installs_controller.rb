@@ -12,22 +12,6 @@ class InstallsController < ApplicationController
 
   def create
     @software = Software.new(new_software_install_params)
-    create_attach_icon
-  end
-
-  def create_attach_icon
-    url = @software.install.default_image_url
-    file = EnginesUtilities.icon_from_url url
-    if file == nil
-      flash[:alert] = "The icon image could not be loaded for #{@software.engine_name}. "
-    else
-      @software.display.icon = file
-    end
-    create_validate_software
-  end
-
-  def create_validate_software
-    # @software.update new_software_install_params
     if @software.valid?
       create_engine_build
     else
@@ -38,7 +22,6 @@ class InstallsController < ApplicationController
   def create_engine_build
     build_response = EnginesInstaller.build_engine(Install.engine_build_params(@software))
     if build_response.instance_of?(ManagedEngine)
-      # @software.
       @software.save
       redirect_to control_panel_path, notice: "Software installation was successful for #{@software.engine_name}."
     elsif build_response.instance_of?(EnginesOSapiResult)

@@ -2,10 +2,13 @@
      top_level = true if top_level.nil?
  %>
   <ul>
-    <% node.children do |child_node| 
+    <% node.children.sort_by(&:name).each do |child_node| 
          has_children = child_node.children.present? %>
       <li style="<%= top_level ? '' : 'display: none;' %>">
-        <span class="<%= has_children ? 'btn btn-lg btn-default' : 'btn-lg-placeholder' %>"><%= (content_tag(:i, nil, class: 'fa fa-caret-right') + ' ') if has_children %><%= child_node.name %></span>
+        <span class="<%= has_children ? 'btn btn-lg btn-default' : 'btn-lg-placeholder' %>">
+        	<%= (content_tag(:i, nil, class: 'fa fa-caret-right') + ' ') if has_children %>
+        	<%= child_node.name %>
+        </span>
         <% content = child_node.content %>
         <% if content.class == Hash %>
           <%= (ap JSON.parse(content.to_json), plain: true, index: false).html_safe %>

@@ -78,16 +78,7 @@
     <label>Variables</label>
     <% software_variables = EnginesSoftware.software_variables(@engine_name) %>
       <% if software_variables.present? %>
-      <pre><table>
-        <th>Name</th>
-        <th>Value</th>
-        <% software_variables.each do |v|%>
-          <tr>
-            <td><%= v[:name] %></td>
-            <td><%= v[:value] %></td>
-          </tr>
-        <%end%>
-      </table></pre>
+      <pre><% software_variables.each do |v|%><%= v['name'] %>: <%= v['value'] %><%end%></pre>
     <% else %>
       <pre>None</pre>
     <% end %>
