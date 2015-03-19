@@ -48,8 +48,10 @@ private
     Software.all.each do |software|
       if software.display.icon.blank?
         url = Display.engine_icon_url_from_api(software.engine_name)
-        software.display.icon = EnginesUtilities.icon_from_url(url)
-        software.save
+        if url.present?
+          software.display.icon = EnginesUtilities.icon_from_url(url)
+          software.save
+        end
       end
     end
   end
