@@ -26,10 +26,11 @@ class Display < ActiveRecord::Base
   end
 
   def self.engine_icon_url_from_api engine_name
-    if engines_software_details.kind_of?(EnginesOSapiResult)
+    software_details = EnginesSoftware.blueprint_software_details(engine_name)
+    if software_details.kind_of?(EnginesOSapiResult)
       nil
     else
-      EnginesSoftware.blueprint_software_details(engine_name)['icon_url']
+      software_details['icon_url']
     end
   end
 
