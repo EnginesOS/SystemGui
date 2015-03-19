@@ -1,8 +1,7 @@
-.home-view .dropdown {
+/*.home-view .dropdown {
   text-align: center;
   width: 100%;
-}
-
+}*/
 /*.home-view .dropdown button {
   background-color: transparent;
   border: none;
@@ -10,7 +9,7 @@
   text-align: center;
 }*/
 
-.home-view .dropdown-holder {
+/*.home-view .dropdown-holder {
   width: 240px;
   padding: 5px;
   margin-left: -5px;
@@ -18,14 +17,12 @@
   background-color: rgba(200,200,200,0.9);
   border-radius: 4px;
   text-align: center;
-}
+}*/
 
 .home-view ul.dropdown-menu {
-  width: 100%;
-  background-color: transparent;
-  border-radius: 0px;
+  background-color: #fff;
+  font-size: 24px;
   border: none;
-  box-shadow: none;
   text-align: center;
 }
 

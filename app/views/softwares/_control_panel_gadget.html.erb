@@ -6,9 +6,11 @@
     end
     indicator_class = "indicator_" + state
     engine_state = "engine_" + state
-    default_name = EnginesSoftware.blueprint_software_name engine_name
-    if default_name.kind_of?(EnginesOSapiResult)
+    blueprint = EnginesSoftware.blueprint_software_details engine_name
+    if blueprint.kind_of?(EnginesOSapiResult)
       default_name = "?"
+    else
+	  default_name = blueprint['short_title'] || blueprint['full_title'] || blueprint['name']
     end
     software_fqdn = EnginesSoftware.fqdn engine_name
     if software_fqdn.kind_of?(EnginesOSapiResult)
@@ -24,11 +26,12 @@
         </div>
       <% end %>
       <div class="text_holder">
-        <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= label_tag('', engine_name) %><br>
+        <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= content_tag(:strong, engine_name) %><br>
         <%= content_tag(:i, "", class: "fa fa-globe") + ' ' + software_fqdn %><br>
-        <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + default_name %><br>
         <% if software.display.display_name.present? && software.display.display_name != default_name %>
           <%= content_tag(:i, '', class: 'fa fa-edit') + ' ' + software.display.display_name %><br>
+        <% else %>
+          <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + default_name %><br>
         <% end %>
       </div>
     </button>

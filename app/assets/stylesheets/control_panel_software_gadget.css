@@ -49,7 +49,7 @@
   margin-right: 5px;
   white-space: normal;
   word-wrap: break-word;
-  border-radius: 0px;
+  /*border-radius: 0px;*/
   display: table;
 }
 
@@ -96,5 +96,5 @@
 }
 
 .engine-gadget-dropdown-menu {
-  border-radius: 0px;
+  /*border-radius: 0px;*/
 }
