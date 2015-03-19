@@ -7,6 +7,7 @@ class DomainsController < ApplicationController
   def index
     EnginesMaintenance.domains_maintenance
     @domains = Domain.all.sort_by{|domain| domain.domain_name}
+    @settings = Setting.first_or_create
   end
 
   def new

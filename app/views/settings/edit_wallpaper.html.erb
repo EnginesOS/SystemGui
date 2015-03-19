@@ -6,6 +6,6 @@
     <%= render partial: 'shared/form/image_field', locals: {name: :wallpaper, label: false, tooltip: "Change wallpaper.", f: f} %>
     <legend>Background</legend>
     <%= render partial: 'shared/form/text_field', locals: {name: :background_color, label: 'Color', f: f} %>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: settings_path} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
   <% end %>
 </div>

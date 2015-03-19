@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :installs do
     collection do
       get :blueprint
+      get :progress
     end
   end
 
@@ -72,7 +73,7 @@ Rails.application.routes.draw do
         :new,
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
-        :uninstall,
+        :uninstall, 
         :build, :show, :recreate, :monitor, :demonitor,
         :advanced_detail,
         :register_website, :deregister_website,

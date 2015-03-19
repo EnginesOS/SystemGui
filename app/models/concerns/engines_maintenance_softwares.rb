@@ -38,11 +38,6 @@ private
     software_engines = EnginesSoftware.all_engine_names
     softwares = Software.all.map(&:engine_name)
     missing_softwares = software_engines - softwares
-
-p :missing_softwares
-p missing_softwares
-
-
     missing_softwares.each do |software_name|
       software = Software.create(engine_name: software_name, display_attributes: (Display.engine_display_properties_from_api(software_name)) )
       software.save

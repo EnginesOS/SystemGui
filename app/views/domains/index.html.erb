@@ -2,7 +2,7 @@
   <h2><i class="fa fa-globe"></i> Domains</h2>
 
   <div class="btn-group">
-    <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', settings_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+    <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
     <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_domain_path, class: "btn btn-primary btn-lg trigger-response-modal" %>
   </div>
 
@@ -16,3 +16,13 @@
 
 </div>
 
+<div class="col-sm-12 top-gap">
+  <% detail = '<span class="settings_btn_detail">'.html_safe + @settings.default_domain.to_s + '</span>'.html_safe %>
+  <% link_body = (content_tag(:i, '', class: 'fa fa-bolt') + ' Default domain'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+  <%= link_to link_body, settings_edit_default_domain_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+</div>
+<div class="col-sm-12 top-gap">
+  <% detail = '<span class="settings_btn_detail">'.html_safe + @settings.default_site.to_s + '</span>'.html_safe %>
+  <% link_body = (content_tag(:i, '', class: 'fa fa-home') + ' Default website'.html_safe) + "<br>".html_safe + detail.html_safe  %>
+  <%= link_to link_body, settings_edit_default_website_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+</div>

@@ -5,7 +5,7 @@ module EnginesService
   extend EnginesServiceExtractor
   extend EnginesServiceInspector
   extend EnginesServiceInstructor
-  extend EnginesServiceConsumerManager
+  # extend EnginesServiceConsumerManager
   # extend EnginesServiceUpdater
 
 end
