@@ -22,12 +22,12 @@ $(document).ready(function(){
 
   function set_external_destination_details(radio_button) {
     if ((radio_button.checked == true) && (radio_button.id != 'backup_task_protocol_local')) {
-      $("#backup-task-external-destination-details").show()
+      $("#backup-task-external-destination-details").show();
     } else {
-      $("#backup-task-external-destination-details").hide()
+      $("#backup-task-external-destination-details").hide();
     };
   };
 
-})
+});
 
 

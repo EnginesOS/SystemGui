@@ -5,9 +5,7 @@ module EnginesMaintenance
 
   def self.full_maintenance
     softwares_maintenance
-p :finished_softwares_maintenance    
     domains_maintenance
-p :finished_domains_maintenance
   end
 
 end

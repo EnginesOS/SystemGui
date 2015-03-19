@@ -3,22 +3,22 @@
     when
       params[:controller] == 'installs'
         :installer
-    when
-      params[:controller] == 'users',
-      params[:controller] == 'backup_tasks',
-      params[:controller] == 'galleries',
-      params[:controller] == 'domains',
-      params[:controller] == 'settings'
-        :settings
-    when
-      params[:controller] == 'pages' && params[:action] == 'system'
-        :system
-    when
-      params[:controller] == 'pages' && params[:action] == 'help'
-        :help
     # when
-    #   params[:controller] == 'services'
-    #     :services
+      # params[:controller] == 'users',
+      # params[:controller] == 'backup_tasks',
+      # params[:controller] == 'galleries',
+      # params[:controller] == 'domains',
+      # params[:controller] == 'settings'
+        # :settings
+    # when
+      # params[:controller] == 'pages' && params[:action] == 'system'
+        # :system
+    # when
+      # params[:controller] == 'pages' && params[:action] == 'help'
+        # :help
+    # # when
+    # #   params[:controller] == 'services'
+    # #     :services
     else
       :control_panel
     end
@@ -39,26 +39,25 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="main-navbar-collapse">
       <ul class="nav navbar-nav">
+        <li>
+          <%= link_to content_tag(:i, "", class: "fa fa-desktop"), desktop_path, title: 'Desktop', class: 'trigger-response-modal' %>
+        </li>
         <li class="<%= 'active' if active_menu_item == :control_panel %>">
           <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path, class: 'trigger-response-modal' %>
         </li>
         <li class="<%= 'active' if active_menu_item == :installer %>">
           <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Installer", installer_path, class: 'trigger-response-modal' %>
         </li>
-        <li class="<%= 'active' if active_menu_item == :settings %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Settings", settings_path, class: 'trigger-response-modal' %>
-        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="<%= 'active' if active_menu_item == :system %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System", system_path, class: 'trigger-response-modal' %>
-        </li>
-        <li class="<%= 'active' if active_menu_item == :help %>">
-          <%= link_to content_tag(:i, "", class: "fa fa-question") + " Help", help_path, class: 'trigger-response-modal' %>
-        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-user") %> <%= current_user.email %><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
+        	<li>
+			  <% link_body = (content_tag(:i, '', class: 'fa fa-cog') + ' Manage admin'.html_safe) %>
+			  <%= link_to link_body, users_path, class: 'btn-lg trigger-response-modal' %>
+	        </li>
+            <li class="divider"></li>
             <li><%= link_to (content_tag(:i, "", class: "fa fa-sign-out") + " Sign out"), destroy_user_session_path, class: 'trigger-response-modal', :method => :delete %></li>
           </ul>
         </li>

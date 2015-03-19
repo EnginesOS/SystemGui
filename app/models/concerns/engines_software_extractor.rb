@@ -19,24 +19,7 @@ module EnginesSoftwareExtractor
   end
 
   def software_variables(engine_name)
-    blueprint_environment_variables = blueprint_software_details(engine_name)['environment_variables']
-    environments(engine_name).map(&:attributes).each do |environment_variable|
-      next if environment_variable.nil?
-      blueprint_environment_variable = blueprint_environment_variables.find do |ev|
-        next if ev.nil?
-        ev["name"].gsub(' ', '_') == environment_variable[:name]
-      end
-      next if blueprint_environment_variable.nil?
-      environment_variable[:label] = blueprint_environment_variable["label"]
-      environment_variable[:comment] = blueprint_environment_variable["comment"] 
-      environment_variable[:type] = blueprint_environment_variable["type"] 
-      environment_variable[:regex_validator] = blueprint_environment_variable["regex_validator"] 
-      environment_variable[:mandatory] = blueprint_environment_variable["mandatory"] 
-      environment_variable[:collection] = blueprint_environment_variable["collection"] 
-      environment_variable[:ask_at_build_time] = blueprint_environment_variable["ask_at_build_time"] 
-      environment_variable[:build_time_only] = blueprint_environment_variable["build_time_only"] 
-      environment_variable[:immutable] = blueprint_environment_variable["immutable"] 
-    end
+    blueprint_software_details(engine_name)['variables']
   end
 
   def volumes(engine_name)

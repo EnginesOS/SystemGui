@@ -7,33 +7,22 @@
         </div>
       </a>
     </div>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="home_menu">
-    <div class="dropdown-holder">
-      <li>
-        <div class="btn-group">
-          <a href=<%= control_panel_path %> class="btn btn-default btn-launcher trigger-response-modal">
-            <div class= "launcher_icon_and_label_holder">
-              <i class="fa fa-gears fa-launcher"></i>
-              <div class="launcher-label">
-                Control Panel
-              </div>
-            </div>
-          </a>
-        </div>
-      </li>
-      <li>
-        <div class="btn-group">
-          <a href=<%= destroy_user_session_path %> data-method="delete" class="btn btn-default btn-launcher trigger-response-modal" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
-            <div class= "launcher_icon_and_label_holder">
-              <i class="fa fa-sign-out fa-launcher"></i>
-              <div class="launcher-label">
-                Sign out<br>
-                <%= current_user.username %>
-              </div>
-            </div>
-          </a>
-        </div>
-      </li>
+    <ul class="dropdown-menu">
+		  <li>
+		      <a href=<%= control_panel_path %> class="trigger-response-modal">
+		          <i class="fa fa-gears"></i> Control panel
+		      </a>
+		  </li>
+		  <li>
+		      <a href=<%= installer_path %> class="trigger-response-modal">
+		          <i class="fa fa-plus"></i> Installer
+		      </a>
+		  </li>
+		  <li>
+		      <a href=<%= destroy_user_session_path %> data-method="delete" class="trigger-response-modal" data-toggle="tooltip" title="Sign out <%= current_user.username %>">
+		          <i class="fa fa-sign-out"></i> Sign out  <%= current_user.username %>
+		      </a>
+		  </li>
     </ul>
   </div>
 </div>

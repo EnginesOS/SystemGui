@@ -11,9 +11,9 @@ class SettingsController < ApplicationController
 
   def update
     if (@settings.update(settings_params) && @settings.update_engines(settings_params))
-      redirect_to settings_path, notice: 'Settings were successfully saved.'
+      redirect_to control_panel_path, notice: 'Settings were successfully saved.'
     else
-      redirect_to settings_path, alert: 'Settings were not saved.'
+      redirect_to control_panel_path, alert: 'Settings were not saved.'
     end
   end
 

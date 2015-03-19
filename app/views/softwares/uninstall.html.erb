@@ -4,12 +4,12 @@
   <%#= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
 
-  <%= form_for @software, url: delete_image_software_path(id: @software.id) do |f| %>
+  <%= form_for @software, url: delete_image_software_path(id: @software.engine_name) do |f| %>
     <div class="col-sm-12">
-      <p>Yo is gunna see this app fly.</p>
-      <legend>Delete extra shit is for legends!!!!</legend>
+      <p></p>
+      <legend>Application data</legend>
     </div>
-    <%= render 'shared/form/checkbox', name: :delete_extra_shit, f: f %>
+    <%= render 'shared/form/checkbox', name: :remove_all_application_data, label: 'Remove all data', f: f %>
 
     <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: control_panel_path, submit_label: 'Uninstall' %>
   <% end %>

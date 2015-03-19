@@ -23,11 +23,12 @@ Rails.application.routes.draw do
   # get "engine_install", to: "installs#engine_install", as: :engine_install
   get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
   patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
-  get "servies/services_trees", to: "services#services_trees", as: :services_trees
+  get "services/services_trees", to: "services#services_trees", as: :services_trees
 
   resources :installs do
     collection do
       get :blueprint
+      get :progress
     end
   end
 
@@ -72,7 +73,7 @@ Rails.application.routes.draw do
         :new,
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
-        :uninstall,
+        :uninstall, 
         :build, :show, :recreate, :monitor, :demonitor,
         :advanced_detail,
         :register_website, :deregister_website,

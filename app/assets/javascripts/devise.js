@@ -13,7 +13,6 @@ $(document).ready(function(){
       $(".devise-view a").each( function(){
           $(this).addClass("btn btn-default btn-sm top-gap trigger-response-modal");
       });
-      $()
 
     };
 });
