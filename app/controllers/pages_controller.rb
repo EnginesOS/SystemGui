@@ -20,6 +20,10 @@ class PagesController < ApplicationController
 
   def control_panel
     EnginesMaintenance.full_maintenance
+    # render text: (EnginesSoftware.all_host_names.to_s + EnginesSoftware.blueprint_software_details("enginesfrontaccounting3").to_s)
+    # # engines_api.list_apps
+# #     
+# #     
     @softwares = Software.all.sort_by(&:engine_name)
     @service_names = EnginesService.all_service_names.sort
   end
