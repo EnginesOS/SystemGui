@@ -72,11 +72,12 @@
     <pre><table><tr><td><%= EnginesService.last_error @service_name %></td></tr></table></pre>
   
     <label>Environment</label>
-    <% if EnginesService.environments(@service_name) && EnginesService.environments(@service_name).length > 0 %>
+    <% environments = EnginesService.environments(@service_name) %>
+    <% if environments.present? && environments.length > 0 %>
       <pre><table>
         <th>Name</th>
         <th>Value</th>
-        <% EnginesService.environments(@service_name).each do |v|%>
+        <% environments.each do |v|%>
           <% if v.present? %>
             <tr>
               <td><%= v.name %></td>
