@@ -2,11 +2,10 @@ module EnginesSoftwareCollector
 
   def all_engine_names
     engines = engines_api.list_apps
-      if engines.kind_of?(EnginesOSapiResult)
-        []
-      else
-        engines
-      end
+    if engines.kind_of?(EnginesOSapiResult)
+      []
+    else
+      engines
     end
   end
 
