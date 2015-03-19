@@ -7,6 +7,7 @@
   <ul class="nav nav-tabs top-gap">
     <li role="presentation" class="active"><a href="#services_tree_by_engines" data-toggle="tab">By engines</a></li>
     <li role="presentation"><a href="#services_tree_by_service_providers"data-toggle="tab">By service providers</a></li>
+    <li role="presentation"><a href="#services_tree_of_orphaned_services"data-toggle="tab">Orphaned services</a></li>
   </ul>
 
   <div class="tab-content">
@@ -18,6 +19,11 @@
     <div role="tabpanel" class="tab-pane" id="services_tree_by_service_providers">
       <div class="tree">
         <%= render 'tree_node', node: @services_tree_by_provider %>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="services_tree_of_orphaned_services">
+      <div class="tree">
+        <%= render 'tree_node', node: @services_tree_of_orphaned_services %>
       </div>
     </div>
   </div>

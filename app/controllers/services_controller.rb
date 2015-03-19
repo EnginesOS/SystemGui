@@ -12,6 +12,7 @@ class ServicesController < ApplicationController
   def services_trees
     @services_tree_by_provider = EnginesService.services_tree_by_provider
     @services_tree_by_engine = EnginesService.services_tree_by_engine
+    @services_tree_of_orphaned_services = EnginesService.services_tree_of_orphaned_services
   end
 
 end

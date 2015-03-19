@@ -22,4 +22,8 @@ module EnginesServiceCollector
     engines_api.get_managed_engine_tree
   end
 
+  def services_tree_of_orphaned_services
+    engines_api.get_orphaned_services_tree
+  end
+
 end
