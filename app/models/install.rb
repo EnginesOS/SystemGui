@@ -38,7 +38,8 @@ class Install < ActiveRecord::Base
       http_protocol: software.network.http_protocol,
       memory: software.resource.memory,
       software_environment_variables: (software_variables_params(software.software_variables_handler)),
-      repository_url: software.install.repository_url
+      repository_url: software.install.repository_url,
+      title: software.display.display_name
     }
   end
 

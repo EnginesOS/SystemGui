@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 gem 'devise'
 
-# gem 'file-tail'
+gem 'file-tail'
 
 gem 'vmstat'
 gem 'therubyracer'

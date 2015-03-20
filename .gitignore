@@ -3,4 +3,8 @@ tmp
 log
 bundle
 db/development.sqlite3
+db/production.sqlite3
 Gemfile.lock
+public/assets
+public/system
+config/puma.rb

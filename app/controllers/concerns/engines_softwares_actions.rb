@@ -45,6 +45,11 @@ module EnginesSoftwaresActions
     set_flash_messages_and_redirect
   end
 
+  def reinstall
+    @result = EnginesSoftware.reinstall_software params[:id]
+    set_flash_messages_and_redirect
+  end
+
   def monitor
     @result = EnginesSoftware.monitor params[:id]
     set_flash_messages_and_redirect

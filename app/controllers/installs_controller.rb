@@ -21,7 +21,7 @@ class InstallsController < ApplicationController
 
   def create
     @software = Software.new(new_software_install_params)
-    if @software.valid?
+    if @software.save
       create_engine_build
     else
       render :new
@@ -29,16 +29,11 @@ class InstallsController < ApplicationController
   end
 
   def create_engine_build
-    build_response = EnginesInstaller.build_engine(Install.engine_build_params(@software))
-    if build_response.instance_of?(ManagedEngine)
-      @software.save
-      flash[:notice] = "Software installation was successful for #{@software.engine_name}."
-    elsif build_response.instance_of?(EnginesOSapiResult)
-      flash[:alert] = "Software installation was not successful for #{@software.engine_name.to_s}. (" + build_response.result_mesg.to_s[0..1000] + ')'
-    else
-      flash[:alert] = "Unexpected response from software installation process for #{@software.engine_name}."
+    engine_installation_params = Install.engine_build_params(@software)
+    Thread.new do
+      build_response = EnginesInstaller.build_engine(engine_installation_params)
     end
-    redirect_to installer_path
+    redirect_to installing_installs_path(engine_installation_params)
   end
 
   def blueprint
@@ -48,15 +43,40 @@ class InstallsController < ApplicationController
 
   def progress
     response.headers['Content-Type'] = 'text/event-stream'
-    10.times {
-      response.stream.write "hello world\n"
-      sleep 1
-    }
+    filename = '/home/engines/deployment/deployed/build.out'
+    File.open(filename) do |file|
+      file.extend(File::Tail)
+      file.interval = 10
+      file.backward(10000)
+      file.tail do |line|
+        # line = line [1..-2]
+        @last_line = line;
+        p line
+        send_event line
+        break if line.start_with?("Applying Volume settings and Log Permissions")
+      end
+    end
+    # if @last_line.start_with?("Applying Volume settings and Log Permissions") 
+      # flash[:notice] = "Software installation was successful."
+    # elsif @last_line.start_with?("ERROR")
+      # flash[:alert] = "Software installation was not successful"
+    # else
+      # flash[:alert] = "Unexpected response from software installation process"
+    # end
+
   ensure
+    send_event "All done. Redirecting page..."
     response.stream.close
   end
 
 private
+
+  def send_event message
+       unless message.blank?
+            response.stream.write "event: message\n"
+            response.stream.write "data: #{message}\n"
+       end
+  end
 
   def new_software_from_gallery_params
     params.require(:software).permit(:gallery_url, :gallery_software_id)

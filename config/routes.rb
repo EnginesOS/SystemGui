@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get "control_panel", to: "pages#control_panel"
   get "help", to: "pages#help"
   get "system", to: "pages#system"
-  # get "install_progress/:line", to: "softwares#install_progress"
+  # get "install_progress", to: "installs#progress"
   # get "settings", to: "settings#index"
   get "settings/edit_default_domain", to: "settings#edit_default_domain"
   get "settings/edit_default_website", to: "settings#edit_default_website"
@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     collection do
       get :blueprint
       get :progress
+      get :installing
     end
   end
 
@@ -73,7 +74,7 @@ Rails.application.routes.draw do
         :new,
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
-        :uninstall, 
+        :uninstall, :reinstall,
         :build, :show, :recreate, :monitor, :demonitor,
         :advanced_detail,
         :register_website, :deregister_website,
