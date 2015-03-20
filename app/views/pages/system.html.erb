@@ -1,11 +1,10 @@
-<span class='system'>
-
-  <div class="col-sm-12">
-    <h3><%= content_tag(:i, "", class: "fa fa-tachometer") %> System monitor</h3>
+<div class="col-sm-12 top-gap backup-tasks">
+  <h2><%= content_tag(:i, "", class: "fa fa-tachometer") %> System monitor</h2>
+  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
     <%#= "#{@system_info[:old][:cpu].length} CPUs" %>
 
-    <div class='well'>
+    <div class='well top-gap'>
       <label>CPU usage</label>
       <table class="table">
         <tr>
@@ -86,4 +85,4 @@
 
   <%#= (ap @system_info, {html: true, plain: true}).html_safe %>
 
-</span>
+

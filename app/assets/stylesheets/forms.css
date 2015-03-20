@@ -49,27 +49,12 @@ input[type="checkbox"] {
   padding: 10px 16px;
 }
 
-.form-image-control {
+.form-icon {
+  max-height: 96px;
+  max-width: 96px;
+  border: none;
   margin-bottom: 10px;
   margin-right: 10px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  height: 84px;
-  width: 84px;
-  display: inline-table;
-}
-
-.form-image-centering {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-}
-
-.form-engine-icon {
-  max-height: 64px;
-  max-width: 64px;
-  border-radius: 5px;
 }
 
 .field_with_errors label {

@@ -40,19 +40,20 @@
       <li><div class="dropdown-title" %><%=engine_name %></div></li>
       <% if state == "running" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop container", stop_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause container", pause_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
       <% elsif state == "paused" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause container", unpause_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
       <% elsif state == "stopped" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_software_path(id: engine_name), class: 'trigger-response-modal'  %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy", destroy_container_software_path(id: engine_name), data: { confirm: "Are you sure?", confirmdetail: "This will delete the container." } %></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start container", start_software_path(id: engine_name), class: 'trigger-response-modal'  %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy container", destroy_container_software_path(id: engine_name), data: { confirm: "Are you sure?", confirmdetail: "This will delete the container." } %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate container", recreate_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", reinstall_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
       <% elsif  state == "nocontainer" %>   
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
-        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create", create_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", create_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", uninstall_software_path(id: software.id) %></li> 
       <% else %>
          <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
@@ -86,7 +87,7 @@
       <li class="disabled"><%= link_to content_tag(:i, "", class: "fa fa-upload") + " Backups", backup_task_path(software.id),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
-      <li class="disabled"><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Attach services", attached_services_path(software_id: software.id),  class: "trigger-response-modal" %>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-share-alt") + " Attach services", attached_services_path(software_id: software.id),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: "#modal_" + engine_name, engine: engine_name, controller: "softwares" }, role: "button", class: "advanced_menu_item" %>

@@ -47,6 +47,10 @@
 }
 
 
+#installing_progress {
+  height: 500px;
+}
+
 
 /*.galleries .gallery_title {
   font-size: 2em;

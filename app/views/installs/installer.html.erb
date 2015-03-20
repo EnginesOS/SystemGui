@@ -1,4 +1,4 @@
-<div class="installer">
+<div class="installer row">
 
   <div class="col-sm-8 col-md-6 top-gap">
     <%= form_tag installer_path, method: 'get' do %>
@@ -78,6 +78,8 @@
               </div>
             </div>
           <%end%>
+        <% else %>
+          None
         <%end%>
       </div>
     </div>
