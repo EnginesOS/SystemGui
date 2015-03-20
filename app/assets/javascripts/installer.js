@@ -15,9 +15,7 @@ $(document).ready(function(){
 			$("#installing_progress").html(new_line + '<br>' + $("#installing_progress").html());
 		});
 		evtSource.addEventListener("error", function(e) {
-			setTimeout(function(){ 
-				window.location.href="/control_panel";
-		 	}, 1000); 
+			window.location.href="/control_panel";
 		}, false);
    };
 

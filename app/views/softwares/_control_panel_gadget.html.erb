@@ -55,6 +55,7 @@
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", create_container_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", uninstall_software_path(id: software.id) %></li> 
+        <li><%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", reinstall_software_path(id: engine_name), class: 'trigger-response-modal' %></li>
       <% else %>
          <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
       <%  end %>

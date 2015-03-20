@@ -65,6 +65,7 @@ class InstallsController < ApplicationController
     # end
 
   ensure
+    send_event "All done. Redirecting page..."
     response.stream.close
   end
 
