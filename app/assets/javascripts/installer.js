@@ -11,8 +11,7 @@ $(document).ready(function(){
 		$("#installing_progress").html('Installing...<br>');
 		var evtSource = new EventSource("/installs/progress");
 		evtSource.addEventListener("message", function(e) {
-			line_data = e.data;
-			new_line = line_data.substr(1,line_data.length -4);
+			new_line = e.data;
 			$("#installing_progress").html(new_line + '<br>' + $("#installing_progress").html());
 		});
 		evtSource.addEventListener("error", function(e) {

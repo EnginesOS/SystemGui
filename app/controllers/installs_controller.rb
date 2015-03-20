@@ -48,7 +48,13 @@ class InstallsController < ApplicationController
       file.extend(File::Tail)
       file.interval = 10
       file.backward(10000)
-      file.tail { |line| @last_line = line; p line; send_event line; break if line.start_with?("Applying Volume settings and Log Permissions") }
+      file.tail do |line|
+        # line = line [1..-2]
+        @last_line = line;
+        p line
+        send_event line
+        break if line.start_with?("Applying Volume settings and Log Permissions")
+      end
     end
     # if @last_line.start_with?("Applying Volume settings and Log Permissions") 
       # flash[:notice] = "Software installation was successful."
@@ -67,7 +73,7 @@ private
   def send_event message
        unless message.blank?
             response.stream.write "event: message\n"
-            response.stream.write "data: #{message.to_json}\n\n"
+            response.stream.write "data: #{message}\n"
        end
   end
 
