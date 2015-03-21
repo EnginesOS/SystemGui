@@ -31,7 +31,7 @@ class InstallsController < ApplicationController
   def create_engine_build
     engine_installation_params = Install.engine_build_params(@software)
     Thread.new do
-      build_response = EnginesInstaller.build_engine(engine_installation_params)
+      # build_response = EnginesInstaller.build_engine(engine_installation_params)
     end
     redirect_to installing_installs_path(engine_installation_params)
   end
@@ -43,19 +43,16 @@ class InstallsController < ApplicationController
 
   def progress
     response.headers['Content-Type'] = 'text/event-stream'
-    filename = '/home/engines/deployment/deployed/build.out'
-    File.open(filename) do |file|
-      file.extend(File::Tail)
-      file.interval = 10
-      file.backward(10000)
-      file.tail do |line|
-        # line = line [1..-2]
-        @last_line = line;
+    File.open('/home/engines/deployment/deployed/build.out') do |f|
+      f.extend(File::Tail)
+      f.interval = 10
+      f.backward(10000)
+      f.tail do |line|
         p line
         send_event line
-        break if line.start_with?("Applying Volume settings and Log Permissions")
+        break if line.start_with?("Build Finished")
       end
-    end
+    end.close
     # if @last_line.start_with?("Applying Volume settings and Log Permissions") 
       # flash[:notice] = "Software installation was successful."
     # elsif @last_line.start_with?("ERROR")
@@ -64,8 +61,9 @@ class InstallsController < ApplicationController
       # flash[:alert] = "Unexpected response from software installation process"
     # end
 
+    send_event "All done. Redirect page..."
+    sleep(3)
   ensure
-    send_event "All done. Redirecting page..."
     response.stream.close
   end
 
