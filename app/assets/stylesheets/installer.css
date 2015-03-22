@@ -46,8 +46,7 @@
   display: none;
 }
 
-
-#installing_progress {
+#installation_status pre {
   height: 500px;
 }
 

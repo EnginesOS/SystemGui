@@ -7,23 +7,49 @@ $(document).ready(function(){
       $(".advanced_fields").toggle();
     });
 
-    if ($("#installing_progress").length > 0){
-		$("#installing_progress").html('Installing...<br>');
-		var evtSource = new EventSource("/installs/progress");
-		var last_line = '';
-		var second_last_line = '';
-		evtSource.addEventListener("message", function(e) {
-			new_line = e.data;
-			second_last_line = last_line;
-			last_line = new_line;
-			$("#installing_progress").html(new_line + '<br>' + $("#installing_progress").html());
-		});
-		evtSource.addEventListener("error", function(e) {
-
-alert(second_last_line);
-
-			window.location.href="/control_panel";
-		}, false);
+    if ($("#installation_status").length > 0){
+    	if ($("#installation_progress").html() == '') {
+			$("#installation_progress").html('Starting installation.');
+			$("#installation_report").html('Waiting for installation to complete.');
+			var engine_name = $("#installation_status").data("enginename");
+			var evtSource = new EventSource("/installs/progress/" + engine_name);
+			var last_line_in_build_progress_log = '';
+			var second_last_line_in_build_progress_log = '';
+			
+			var progress_listener = function(e) {
+				new_line = e.data;
+				second_last_line_in_build_progress_log = last_line_in_build_progress_log;
+				last_line_in_build_progress_log = new_line;
+				$("#installation_progress").html(new_line + '<br>' + $("#installation_progress").html());
+			};
+			
+			var report_listener = function(e) {
+				new_line = e.data;
+				if ($("#installation_report").html() == "Waiting for installation to complete.") {
+					$("#installation_report").html('');
+					};
+				$("#installation_report").html($("#installation_report").html() + new_line + '<br>');
+					// evtSource.stop();
+			};
+			
+			var complete_listener = function(e) {
+				if (e.data == 'installation_complete') {
+    		    	// evtSource.removeEventListener("installation_report", report_listener, false);
+					// alert(second_last_line_in_build_progress_log);
+					evtSource.close();
+					$("#installation_done_button").slideDown();
+					$("#installation_report_tab_button").click();
+				};
+			};
+			
+			evtSource.addEventListener("installation_report", report_listener, false);
+			evtSource.addEventListener("installation_progress", progress_listener);
+	    	evtSource.addEventListener("message", complete_listener);
+	
+			evtSource.addEventListener("error", function(e) {
+				evtSource.close();
+			});
+		};
    };
 
 });

@@ -29,12 +29,17 @@ module EnginesInstaller
     unique_host_name_candidate
   end
 
-  def self.engine_name_is_unique? engine_name
+  def self.engine_name_is_unique?(engine_name)
     EnginesSoftware.all_engine_names.exclude?(engine_name)
   end
 
-  def self.fqdn_is_unique? fqdn
+  def self.fqdn_is_unique?(fqdn)
     EnginesSoftware.all_fqdns.exclude?(fqdn)
+  end
+  
+  def self.installation_report(engine_name)
+    # engines_api.get_build_report engine_name
+    ["The #{engine_name} installation", "completed and it was awesome."]
   end
 
   # def self.software_variable_passwords_not_confimed?(params)
