@@ -31,6 +31,9 @@ private
           end
 
           attached_services_detail.each do |attached_service|
+p :attached_service
+p attached_service
+            
             name = attached_service[:name]
             result << {
               description: service_detail[:description],

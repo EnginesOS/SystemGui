@@ -30,9 +30,10 @@ class InstallsController < ApplicationController
 
   def create_engine_build
     engine_installation_params = Install.engine_build_params(@software)
-    Thread.new do
-      build_response = EnginesInstaller.build_engine(engine_installation_params)
-    end
+    build_thread_object_id = Thread.new do
+      EnginesInstaller.build_engine(engine_installation_params)
+    end.object_id
+    engine_installation_params[:build_thread_object_id] = build_thread_object_id
     redirect_to installing_installs_path(engine_installation_params)
   end
 
@@ -43,19 +44,20 @@ class InstallsController < ApplicationController
 
   def progress
     response.headers['Content-Type'] = 'text/event-stream'
-    filename = '/home/engines/deployment/deployed/build.out'
-    File.open(filename) do |file|
-      file.extend(File::Tail)
-      file.interval = 10
-      file.backward(10000)
-      file.tail do |line|
-        # line = line [1..-2]
-        @last_line = line;
+    send_event :installation_progress, "Starting build...\n"
+    File.open('/home/engines/deployment/deployed/build.out') do |f|
+      f.extend(File::Tail)
+      f.interval = 10
+      f.backward(10000)
+      f.tail do |line|
         p line
-        send_event line
-        break if line.start_with?("Applying Volume settings and Log Permissions")
+        send_event :installation_progress, line
+        break if line.start_with?("Build Finished")
       end
-    end
+     end
+    
+   
+    
     # if @last_line.start_with?("Applying Volume settings and Log Permissions") 
       # flash[:notice] = "Software installation was successful."
     # elsif @last_line.start_with?("ERROR")
@@ -64,18 +66,29 @@ class InstallsController < ApplicationController
       # flash[:alert] = "Unexpected response from software installation process"
     # end
 
+    # send_event "All done. Redirect page..."
+
+    EnginesInstaller.installation_report(params[:engine_name]).each do |line|
+      p line
+      send_event :installation_report, line
+    end
+
+    send_event :message, "installation_complete"
+
   ensure
-    send_event "All done. Redirecting page..."
     response.stream.close
+  end
+
+  def cancel_installation
+    render text: params  
+    # Thread.kill(params[:build_thread_object_id])
   end
 
 private
 
-  def send_event message
-       unless message.blank?
-            response.stream.write "event: message\n"
-            response.stream.write "data: #{message}\n"
-       end
+  def send_event(event, data='a')
+       response.stream.write "event: #{event}\n"
+       response.stream.write "data: #{data}\n\n"
   end
 
   def new_software_from_gallery_params
