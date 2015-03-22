@@ -36,13 +36,21 @@ $(document).ready(function(){
 				if (e.data == 'installation_complete') {
     		    	// evtSource.removeEventListener("installation_report", report_listener, false);
 					// alert(second_last_line_in_build_progress_log);
+					var build_result = second_last_line_in_build_progress_log;
 					evtSource.close();
 					$("#installation_done_button").slideDown();
 					$("#installation_report_tab_button").click();
+					$("#installation_result_notifier").slideDown();
+					if ((/^ERROR/).test(build_result)) {
+						$("#installation_result_notifier").addClass("alert-danger");
+					} else {
+						$("#installation_result_notifier").addClass("alert-success");
+					};
+					$("#installation_result_notifier_message").html(build_result);
 				};
 			};
 			
-			evtSource.addEventListener("installation_report", report_listener, false);
+			evtSource.addEventListener("installation_report", report_listener);
 			evtSource.addEventListener("installation_progress", progress_listener);
 	    	evtSource.addEventListener("message", complete_listener);
 	
