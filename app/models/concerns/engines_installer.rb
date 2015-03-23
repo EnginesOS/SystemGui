@@ -37,9 +37,8 @@ module EnginesInstaller
     EnginesSoftware.all_fqdns.exclude?(fqdn)
   end
   
-  def self.installation_report(engine_name)
-    # engines_api.get_build_report engine_name
-    ["The #{engine_name} installation", "completed and it was awesome."]
+  def self.installation_report_lines(engine_name)
+    engines_api.get_engine_build_report(engine_name).split("\n")
   end
 
   # def self.software_variable_passwords_not_confimed?(params)
