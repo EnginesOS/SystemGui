@@ -7,39 +7,8 @@
     <div class="backup-panel">
       <h3><%= software.engine_name %></h3>
 
-      <%  volumes_backup_tasks = software.backup_tasks.select { |backup_task| backup_task[:backup_type] == 'fs'}
-          databases_backup_tasks = software.backup_tasks.select { |backup_task| backup_task[:backup_type] == 'db'}
-
-          software.volumes.each do |volume| %>
-
-            <div>
-              <% volume_name = volume.name %>
-              <h4><i class="fa fa-hdd-o"></i> <%= volume_name %> files</h4>
-              <% volume_backup_tasks = volumes_backup_tasks.select { |volume_backup_task| volume_backup_task.sourceName == volume_name} %>
-              <% volume_backup_tasks.each.map(&:name).each do |backup_task_name| %>
-                <div>
-                  <%= link_to content_tag(:i, "", class: "fa fa-trash"), backup_task_path(backup_task_name), method: :delete, class: "btn btn-default btn-sm backup-task-action-button trigger-response-modal" %>
-                  <%= backup_task_name %>
-                </div>
-              <% end %>
-              <%= link_to content_tag(:i, "", class: "fa fa-plus"), new_backup_task_path(backup_task: {source_name: volume_name, engine_name: engine_name, backup_type: "fs"}), class: "btn btn-primary btn-sm backup-task-action-button trigger-response-modal" %><br>
-            </div>
-          <% end %>
-
-      <% software.databases.each do |database| %>
-        <div>
-          <% database_name = database.name %>
-          <h4><i class="fa fa-hdd-o"></i> <%= database_name %> database</h4>
-          <% database_backup_tasks = databases_backup_tasks.select { |database_backup_task| database_backup_task.sourceName == database_name} %>
-          <% database_backup_tasks.each.map(&:name).each do |backup_task_name| %>
-            <div>
-              <%= link_to content_tag(:i, "", class: "fa fa-trash"), backup_task_path(backup_task_name), method: :delete, class: "btn btn-default btn-sm backup-task-action-button trigger-response-modal" %>
-              <%= backup_task_name %>
-            </div>
-          <% end %>
-          <%= link_to content_tag(:i, "", class: "fa fa-plus"), new_backup_task_path(backup_task: {source_name: database_name, engine_name: engine_name, backup_type: "db"}), class: "btn btn-primary btn-sm backup-task-action-button trigger-response-modal" %><br>
-        </div>
-      <% end %>
+<%= EnginesBackupTask.all %>
+<%= EnginesSoftware.persistant_services(software.engine_name) %>
 
     </div>
   <% end %>

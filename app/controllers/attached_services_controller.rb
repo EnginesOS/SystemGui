@@ -4,6 +4,7 @@ class AttachedServicesController < ApplicationController
   
   def index
     @software = Software.find(params[:software_id])
+    # render text: EnginesSoftware.attached_services(@software.engine_name)
     @software.build_attached_services_handler.load_attached_services
   end
 

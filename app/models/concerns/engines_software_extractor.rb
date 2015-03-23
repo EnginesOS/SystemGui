@@ -27,15 +27,11 @@ module EnginesSoftwareExtractor
   end
 
   def persistant_services(engine_name)
-    engines_api.get_engine_persistant_services({engine_name: engine_name}).values
+    engines_api.get_engine_persistant_services({engine_name: engine_name})
   end
 
   def consumers(engine_name)
     consumers_hash(engine_name).values
-  end
-
-  def databases(engine_name)
-    databases_hash(engine_name) #.values James is passing array instead of hash.
   end
 
   def backup_tasks(engine_name)

@@ -19,33 +19,30 @@ private
   def attached_services_params_from_api
 
     result = []
-    EnginesSoftware.attached_services(software.engine_name).each do |attached_service_type, attached_service_type_detail|
-      attached_service_type_detail.each do |attached_service_provider_detail|
-        attached_service_provider_detail.each do |attached_service_provider, attached_services_detail|
+    EnginesSoftware.attached_services(software.engine_name).each do |attached_service|
 
-          service_detail = EnginesAttachedService.service_detail_for(
-            service_provider: attached_service_provider,
-            service_type: attached_service_type)
-          if service_detail.kind_of?(EnginesOSapiResult)
-            service_detail = {title: "Title error", description: "Could not load service detail."}
-          end
-
-          attached_services_detail.each do |attached_service|
 p :attached_service
 p attached_service
-            
-            name = attached_service[:name]
-            result << {
-              description: service_detail[:description],
-              title: service_detail[:title],
-              name: name,
-              service_type: attached_service_type,
-              service_provider: attached_service_provider
-            }
-          end
-        end
+
+      service_detail = EnginesAttachedService.service_detail_for(
+        publisher_namespace: attached_service[:publisher_namespace],
+        type_path: attached_service[:type_path])
+      if service_detail.kind_of?(EnginesOSapiResult)
+        service_detail = {title: "Title error", description: "Could not load service detail."}
       end
+
+p :service_detail
+p service_detail
+            
+      result << {
+        description: service_detail[:description],
+        title: service_detail[:title],
+        service_handle: attached_service[:service_handle],
+        type_path: attached_service[:type_path],
+        publisher_namespace: attached_service[:publisher_namespace]
+      }
     end
+
     result
 
   end

@@ -2,10 +2,10 @@ class AttachedService < ActiveRecord::Base
 
   attr_accessor(
     :title,
-    :name,
+    :service_handle,
     :description,
-    :service_type,
-    :service_provider)
+    :type_path,
+    :publisher_namespace)
 
   belongs_to :attached_services_handler
   has_many :variables, as: :variable_consumer, dependent: :destroy

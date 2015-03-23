@@ -23,8 +23,7 @@ module EnginesSoftwareInspector
     logs_container: 'logs_container',
     environments: 'environments',
     volumes_hash: 'volumes',
-    consumers_hash: 'consumers',
-    databases_hash: 'databases'
+    consumers_hash: 'consumers'
   }.
   each do |method, instruction|
     define_method(method) do |engine_name| 

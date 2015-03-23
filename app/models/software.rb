@@ -30,8 +30,8 @@ class Software < ActiveRecord::Base
     @volumes ||= EnginesSoftware.volumes engine_name
   end
 
-  def databases
-    @databases ||= EnginesSoftware.databases engine_name
+  def persistant_services
+    @persistant_services ||= EnginesSoftware.persistant_services engine_name
   end
 
 end
