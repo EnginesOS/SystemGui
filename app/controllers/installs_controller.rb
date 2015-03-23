@@ -68,7 +68,7 @@ class InstallsController < ApplicationController
 
     # send_event "All done. Redirect page..."
 
-    EnginesInstaller.installation_report(params[:engine_name]).each do |line|
+    EnginesInstaller.installation_report_lines(params[:engine_name]).each do |line|
       p line
       send_event :installation_report, line
     end
