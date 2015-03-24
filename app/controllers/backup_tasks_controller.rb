@@ -3,8 +3,14 @@ class BackupTasksController < ApplicationController
 
   def index
     # EnginesMaintenance.db_maintenance
-    @backup_tasks = BackupTask.all
+    # @backup_tasks = BackupTask.all
+#     
+    # @software.build_attached_services_handler
+    
     @softwares = Software.all
+    
+    
+    
   end
 
   def new

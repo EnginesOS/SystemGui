@@ -50,7 +50,7 @@ class InstallsController < ApplicationController
       f.interval = 10
       f.backward(10000)
       f.tail do |line|
-        p line
+        # p line
         send_event :installation_progress, line
         break if line.start_with?("Build Finished")
       end
@@ -69,7 +69,7 @@ class InstallsController < ApplicationController
     # send_event "All done. Redirect page..."
 
     EnginesInstaller.installation_report_lines(params[:engine_name]).each do |line|
-      p line
+      # p line
       send_event :installation_report, line
     end
 
