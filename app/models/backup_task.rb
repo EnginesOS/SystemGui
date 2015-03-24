@@ -14,17 +14,17 @@ class BackupTask
     :password)
 
   def initialize params
-    type_path: @type_path,
-      publisher_namespace: @publisher_namespace,
-      service_handle:
-    
+#    type_path: @type_path,
+#      publisher_namespace: @publisher_namespace,
+#      service_handle:
+#    
     @source_name = params[:source_name]
     @backup_type = params[:backup_type]
     @engine_name = params[:engine_name]
     @backup_name = params[:backup_name] || default_backup_name  
-    @protocol = params[:protocal] || "ftp"
-    @address = params[:address]
-    @folder = params[:folder] || params[:engine_name]
+   @protocol = params[:protocal] || "ftp"
+   @address = params[:address]
+   @folder = params[:folder] || params[:engine_name]
     @username = params[:username]
     @password = params[:password]
   end
