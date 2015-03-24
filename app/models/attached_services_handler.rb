@@ -6,7 +6,6 @@ class AttachedServicesHandler < ActiveRecord::Base
   accepts_nested_attributes_for :attached_services
 
   def load_attached_services
-    # attached_services.delete_all
     attached_services.build(attached_services_params_from_api)
   end
 
@@ -25,6 +24,28 @@ class AttachedServicesHandler < ActiveRecord::Base
   def attached_services_from_api
     @attached_services_from_api ||= EnginesSoftware.attached_services(software.engine_name)
   end
+
+  def service_detail(type_path, publisher_namespace)
+    
+p 'service_detail' 
+p publisher_namespace
+p type_path
+    
+    
+    EnginesAttachedService.service_detail_for(type_path, publisher_namespace)
+   
+    
+  end
+
+
+  # def service_detail(type_path, publisher_namespace)
+    # available_services.find do |service|
+      # service[:type_path] == type_path &&
+      # service[:publisher_namespace] == publisher_namespace
+    # end
+  # end
+
+
 
   # def volumes
     # @volumes ||= EnginesSoftware.volumes software.engine_name
@@ -46,9 +67,7 @@ private
 p :attached_service
 p attached_service
 
-      service_detail = EnginesAttachedService.service_detail_for(
-        publisher_namespace: attached_service[:publisher_namespace],
-        type_path: attached_service[:type_path])
+      service_detail = EnginesAttachedService.service_detail_for(attached_service[:type_path], attached_service[:publisher_namespace])
       if service_detail.kind_of?(EnginesOSapiResult)
         service_detail = {title: "Title error", description: "Could not load service detail."}
       end

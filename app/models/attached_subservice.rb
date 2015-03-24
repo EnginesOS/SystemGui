@@ -1,8 +1,11 @@
 class AttachedSubservice < ActiveRecord::Base
 
   attr_accessor(
-    :service_type,
-    :title)
+    :type_path,
+    :publisher_namespace,
+    :title,
+    :description
+    )
 
   belongs_to :attached_service
   has_many :variables, as: :variable_consumer, dependent: :destroy

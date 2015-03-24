@@ -15,22 +15,19 @@
 			<% @software.attached_services_handler.available_services.each do |available_service| %>
 			<li>
 				<%= link_to(
-						available_service[:title],
-						new_attached_service_path(
-							software_id: @software.id,
-							attached_service: {
-								# title: available_service[:title],
-								# description: available_service[:description],
-								type_path: available_service[:type_path],
-								publisher_namespace: available_service[:publisher_namespace],
-								# variables_attributes: (available_service[:setup_params] || {} ).values
-							}
-						),
-						class: "btn-lg trigger-response-modal")
-				%>
-
-				
-
+				available_service[:title],
+				new_attached_service_path(
+				software_id: @software.id,
+				attached_service: {
+				# title: available_service[:title],
+				# description: available_service[:description],
+				type_path: available_service[:type_path],
+				publisher_namespace: available_service[:publisher_namespace],
+				# variables_attributes: (available_service[:setup_params] || {} ).values
+				}
+				),
+				class: "btn-lg trigger-response-modal")
+%>
 
 			</li>
 			<% end %>
@@ -56,7 +53,7 @@
 			<% if attached_service.persistant %>
 			<div class="panel-body">
 
-<% available_subservices = @software.attached_services_handler.available_subservices(attached_service.type_path) %>
+				<% available_subservices = @software.attached_services_handler.available_subservices(attached_service.type_path) %>
 
 				<% if available_subservices.present? %>
 
@@ -74,14 +71,15 @@
 							available_subservice[:title],
 							new_attached_subservice_path(
 								software_id: @software.id,
-								attached_subservice_attributes: {
-									parent_service_handle: attached_service.service_handle,
+								parent_service_handle: attached_service.service_handle,
+								parent_title: attached_service.title,
+								attached_subservice: {
 									type_path: available_subservice[:type_path],
 									publisher_namespace: available_subservice[:publisher_namespace]
 								}
 							),
 							class: "btn-lg trigger-response-modal") %>
-							<%= available_subservice %>
+							
 						</li>
 						<% end %>
 
@@ -91,10 +89,6 @@
 				<% else %>
 				There are no subservices available for this service.
 				<% end %>
-				
-				
-
-
 
 				<% attached_service.attached_subservices.each do |attached_subservice| %>
 				<%= attached_subservice[:title] %>
@@ -102,58 +96,57 @@
 				<br>
 				<% end %>
 
-				
 			</div>
 			<% end %>
 		</div>
-	<% end %>
+		<% end %>
 
-	<div class="panel panel-warning top-gap">
-		<div class="panel-heading" style="cursor: pointer;" role="button" data-toggle="collapse" data-parent="#accordion" href="#debug">
-			<h4>Hashes</h4>
-		</div>
-
-		<div class="panel-body collapse" id="debug">
-			<h3>Attached services</h3>
-			<%= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe %>
-			<h3>Available services</h3>
-			<%= (ap EnginesSoftware.available_services(@software.engine_name), plain: true, index: false).html_safe %>
-		</div>
-	</div>
-
-</div>
-
-<% if false %>
-
-<%#= EnginesSoftware.available_services_hash('phpmyadmin') %>
-<div class="panel-body" id="<%= service_panel_id %>">
-	<%= available_subservices = @software.attached_services_handler.available_subservices(attached_service.type_path) %>
-
-	<% subservice_panel_id = "collapsing-panel-available-subservices-" + attached_service.type_path.to_s + "-" + attached_service.service_handle.to_s %>
-	<button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#<%= subservice_panel_id %>">
-		<%= content_tag(:i, "", class: "fa fa-plus") + " Add subservice" %>
-	</button>
-	<div class="collapse" id="<%= subservice_panel_id %>">
-		<div class="well well-sm top-gap">
-			<% if available_subservices.present? %>
-			<% available_subservices.each do |available_subservice| %>
-			<div class="btn-group">
-				<%= link_to(
-				content_tag(:i, "", class: "fa fa-plus-circle") + ' ' + available_subservice.to_s,
-				# new_attached_subservice_path(
-				# software_id: @software.id,
-				# parent_service_handle: attached_service.service_handle,
-				# type_path: available_subservice[:type_path],
-				# publisher_namespace: available_subservice[:publisher_namespace]),
-				class: "btn btn-default btn-lg trigger-response-modal") %>
+		<div class="panel panel-warning top-gap">
+			<div class="panel-heading" style="cursor: pointer;" role="button" data-toggle="collapse" data-parent="#accordion" href="#debug">
+				<h4>Hashes</h4>
 			</div>
-			<% end %>
-			<% else %>
-			There are no subservices available for this service.
-			<% end %>
+
+			<div class="panel-body collapse" id="debug">
+				<h3>Attached services</h3>
+				<%= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe %>
+				<h3>Available services</h3>
+				<%= (ap EnginesSoftware.available_services(@software.engine_name), plain: true, index: false).html_safe %>
+			</div>
+		</div>
+
+	</div>
+
+	<% if false %>
+
+	<%#= EnginesSoftware.available_services_hash('phpmyadmin') %>
+	<div class="panel-body" id="<%= service_panel_id %>">
+		<%= available_subservices = @software.attached_services_handler.available_subservices(attached_service.type_path) %>
+
+		<% subservice_panel_id = "collapsing-panel-available-subservices-" + attached_service.type_path.to_s + "-" + attached_service.service_handle.to_s %>
+		<button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#<%= subservice_panel_id %>">
+			<%= content_tag(:i, "", class: "fa fa-plus") + " Add subservice" %>
+		</button>
+		<div class="collapse" id="<%= subservice_panel_id %>">
+			<div class="well well-sm top-gap">
+				<% if available_subservices.present? %>
+				<% available_subservices.each do |available_subservice| %>
+				<div class="btn-group">
+					<%= link_to(
+					content_tag(:i, "", class: "fa fa-plus-circle") + ' ' + available_subservice.to_s,
+					# new_attached_subservice_path(
+					# software_id: @software.id,
+					# parent_service_handle: attached_service.service_handle,
+					# type_path: available_subservice[:type_path],
+					# publisher_namespace: available_subservice[:publisher_namespace]),
+					class: "btn btn-default btn-lg trigger-response-modal") %>
+				</div>
+				<% end %>
+				<% else %>
+				There are no subservices available for this service.
+				<% end %>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 <% end %>
