@@ -14,6 +14,7 @@ class BackupTasksController < ApplicationController
   end
 
   def new
+    render text: backup_task_params
     @backup_task = BackupTask.new backup_task_params
   end  
 
@@ -23,13 +24,14 @@ class BackupTasksController < ApplicationController
   end
 
   def create
-    result = BackupTask.new(backup_task_params).save
-    if result.was_success == true
-      flash[:notice] = result.result_mesg[0..250]
-    else
-      flash[:error] = "Failed to create backup task. " + result.result_mesg[0..250]
-    end
-    redirect_to backup_tasks_path 
+    render text: params
+    # result = BackupTask.new(backup_task_params).save
+    # if result.was_success == true
+      # flash[:notice] = result.result_mesg[0..250]
+    # else
+      # flash[:error] = "Failed to create backup task. " + result.result_mesg[0..250]
+    # end
+    # redirect_to backup_tasks_path 
   end
 
   private

@@ -26,17 +26,8 @@ class AttachedServicesHandler < ActiveRecord::Base
   end
 
   def service_detail(type_path, publisher_namespace)
-    
-p 'service_detail' 
-p publisher_namespace
-p type_path
-    
-    
     EnginesAttachedService.service_detail_for(type_path, publisher_namespace)
-   
-    
   end
-
 
   # def service_detail(type_path, publisher_namespace)
     # available_services.find do |service|
@@ -51,30 +42,19 @@ p type_path
     # @volumes ||= EnginesSoftware.volumes software.engine_name
   # end
 
-  # def persistant_services
-    # @persistant_services ||= EnginesSoftware.persistant_services software.engine_name
-  # end
+
 
 
 
 private
 
   def attached_services_params_from_api
-
     result = []
     attached_services_from_api.each do |attached_service|
-
-p :attached_service
-p attached_service
-
       service_detail = EnginesAttachedService.service_detail_for(attached_service[:type_path], attached_service[:publisher_namespace])
       if service_detail.kind_of?(EnginesOSapiResult)
         service_detail = {title: "Title error", description: "Could not load service detail."}
       end
-
-p :service_detail
-p service_detail
-            
       result << {
         description: service_detail[:description],
         title: service_detail[:title],
@@ -85,9 +65,7 @@ p service_detail
         attached_subservices_attributes: [{title: "hi"}]
       }
     end
-
     result
-
   end
 
 
