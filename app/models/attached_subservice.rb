@@ -1,4 +1,4 @@
-class AttachedSubservicesHandler < ActiveRecord::Base
+class AttachedSubservice < ActiveRecord::Base
 
   attr_accessor(
     :service_type,

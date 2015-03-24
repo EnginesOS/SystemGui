@@ -5,7 +5,8 @@ class AttachedService < ActiveRecord::Base
     :service_handle,
     :description,
     :type_path,
-    :publisher_namespace)
+    :publisher_namespace,
+    :persistant)
 
   belongs_to :attached_services_handler
   has_many :variables, as: :variable_consumer, dependent: :destroy
@@ -13,10 +14,6 @@ class AttachedService < ActiveRecord::Base
 
   accepts_nested_attributes_for :variables
   accepts_nested_attributes_for :attached_subservices
-
-  def available_subservices
-    EnginesSoftware.available_services(service_type, software.engine_name)
-  end
 
   # def reload_from_api(service_type, service_provider)
     

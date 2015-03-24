@@ -22,11 +22,11 @@ hint = f.object.hint
 tooltip = f.object.tooltip
 value = f.object.value
 collection = f.object.select_collection
-mandatory = f.object.mandatory
+mandatory = f.object.mandatory.to_s
 placeholder = f.object.placeholder
 errors = f.object.errors[name]
 
-advanced_fields_class = "advanced_fields" if mandatory != true %>
+advanced_fields_class = "advanced_fields" if mandatory != 'true' %>
 
 <div class="<%= advanced_fields_class %>" style="<%= 'display: none;' if advanced_fields_class.present? %>">
   <div class="col-sm-12">

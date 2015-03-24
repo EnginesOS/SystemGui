@@ -5,20 +5,20 @@ class Variable < ActiveRecord::Base
     :value,
     :value_confirmation,
     :label,
-    :comment,
     :field_type,
+    :select_collection,
+    :tooltip,
+    :hint,
+    :placeholder,
+    :comment,
     :regex_validator,
     :regex_invalid_message,
     :mandatory,
     :ask_at_build_time,
     :build_time_only,
-    :immutable,
-    :tooltip,
-    :hint,
-    :placeholder,
-    :select_collection
+    :immutable
   )
-
+  
   belongs_to :variable_consumer, polymorphic: true
 
   validate :regex_validation
@@ -34,7 +34,7 @@ private
   end
 
   def value_present_validation
-    if (mandatory == true && value.blank?)
+    if (mandatory.to_s == "true" && value.blank?)
       errors.add(name, [label, "must not be blank"])
     end
   end
