@@ -14,6 +14,10 @@ class BackupTask
     :password)
 
   def initialize params
+    type_path: @type_path,
+      publisher_namespace: @publisher_namespace,
+      service_handle:
+    
     @source_name = params[:source_name]
     @backup_type = params[:backup_type]
     @engine_name = params[:engine_name]
@@ -64,7 +68,9 @@ private
   def engines_backup_task_params
     {
       backup_name: @backup_name,
-      backup_type: @backup_type,
+      type_path: @backup_type,
+      publisher_namespace: @publisher_namespace,
+      service_handle: @service_handle,
       engine_name: @engine_name,
       source_name: @source_name,
       destination_hash: {
