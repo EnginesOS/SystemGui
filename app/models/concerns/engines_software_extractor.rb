@@ -40,9 +40,9 @@ module EnginesSoftwareExtractor
     engines_api.list_attached_services_for('ManagedEngine', engine_name)
   end
 
-  # def persistant_attached_services(engine_name)
-    # engines_api.get_engine_persistant_services({engine_name: engine_name})
-  # end
+  def persistant_attached_services(engine_name)
+    engines_api.get_engine_persistant_services({engine_name: engine_name})
+  end
 
   def attached_subservices(service_class, service_name)
     engines_api.list_attached_services_for(service_class, service_name)

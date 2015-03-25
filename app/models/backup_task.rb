@@ -4,7 +4,7 @@ class BackupTask
 
   attr_accessor(
     :source_name,
-    :backup_type,
+    :type_path,
     :engine_name,
     :backup_name,
     :protocol,
@@ -18,27 +18,31 @@ class BackupTask
 #      publisher_namespace: @publisher_namespace,
 #      service_handle:
 #    
+
+p :backup_params
+p params
+
     @source_name = params[:source_name]
-    @backup_type = params[:backup_type]
+    @type_path = params[:type_path]
     @engine_name = params[:engine_name]
     @backup_name = params[:backup_name] || default_backup_name  
-   @protocol = params[:protocal] || "ftp"
-   @address = params[:address]
-   @folder = params[:folder] || params[:engine_name]
+    @protocol = params[:protocal] || "ftp"
+    @address = params[:address]
+    @folder = params[:folder] || params[:engine_name]
     @username = params[:username]
     @password = params[:password]
   end
 
-  def backup_type_in_words
-    case backup_type.to_s
-    when 'fs'
-      'files'
-    when 'db'
-      'database'
-    else
-      'unknown backup type'
-    end
-  end
+  # def backup_type_in_words
+    # case backup_type.to_s
+    # when 'fs'
+      # 'files'
+    # when 'db'
+      # 'database'
+    # else
+      # 'unknown backup type'
+    # end
+  # end
 
   def count
     EnginesBackupTask.count
@@ -63,6 +67,19 @@ class BackupTask
     end
   end    
 
+  def self.backupable_services(engine_name)
+    if @backupable_services.nil?
+      @backupable_services = EnginesSoftware.persistant_attached_services(engine_name).map do |backupable_service|
+        service_detail = EnginesAttachedService.service_detail_for(backupable_service[:type_path], backupable_service[:publisher_namespace])
+        backupable_service[:title] = service_detail[:title]
+        backupable_service[:description] = service_detail[:description]
+        backupable_service
+      end
+    end
+    @backupable_services
+  end
+
+
 private
 
   def engines_backup_task_params
@@ -86,5 +103,5 @@ private
   def default_backup_name
     ([*('A'..'Z'),*('0'..'9')]-%w(0 1 I O)).sample(8).join
   end
-
+  
 end
