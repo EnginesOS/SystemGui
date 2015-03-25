@@ -118,8 +118,7 @@ private
     result = []
     software_variables_handler.variables.each do |variable|
       result << {
-       name: variable.name,
-       value: variable.value
+       variable.name => variable.value
       }
     end
     result
