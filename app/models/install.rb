@@ -115,11 +115,9 @@ private
 
   def self.software_variables_params software_variables_handler
     return nil if software_variables_handler.nil?
-    result = []
+    result = {}
     software_variables_handler.variables.each do |variable|
-      result << {
-       variable.name => variable.value
-      }
+      result[variable.name] = variable.value
     end
     result
   end
