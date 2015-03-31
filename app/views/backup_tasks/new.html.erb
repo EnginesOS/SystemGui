@@ -1,31 +1,25 @@
 <div class="col-sm-12">
 
-  <h2><%= content_tag(:i, "", class: "fa fa-upload") %> New Backup Task</h2>
-  <h3><%= @backup_task.engine_name %></h3>
-<%= @backup_task.backup_type %>
-  <h4><%= "Source: " + @backup_task.source_name + "(" + @backup_task.backup_type_in_words.to_s + ")" %></h4>
+  <h2><%= content_tag(:i, "", class: "fa fa-upload") %> New backup for <%= @backup_task.service_handle %></h2>
+  <%= @backup_task.publisher_namespace %>/<%= @backup_task.type_path %><br>
+  <%= @backup_task.variables.count %>
 
-  <%= form_for @backup_task do |f| %>
+  <%= form_for @backup_task, url: backup_tasks_path(software_id: @software.id) do |f| %>
 
-    <%= render partial: 'shared/form/hidden_field', locals: {name: :source_name, f: f} %>
-    <%= render partial: 'shared/form/hidden_field', locals: {name: :backup_type, f: f} %>
-    <%= render partial: 'shared/form/hidden_field', locals: {name: :engine_name, f: f} %>
+    <%= f.hidden_field :type_path %>
+    <%= f.hidden_field :publisher_namespace %>
+    <%= f.hidden_field :service_handle %>
 
-    <%= render partial: 'shared/form/text_field', locals: {name: :backup_name, f: f} %>
+	<div class="btn-group-vertical top-gap pull-right">
+		<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
+			<%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced
+		</button>
+	</div>
 
-    <div class="col-sm-12">
-      <legend>Destination</legend>
-    </div>
-
-    <%= render partial: 'shared/form/text_field', locals: {name: :folder, f: f} %>
-    <%= render partial: 'shared/form/radio_buttons', locals: {name: :protocol, collection: ["ftp", "s3", "smbfs", "nfs", "local"], f: f, class_id: "backup_task_protocol"} %>
-    <div id="backup-task-external-destination-details">
-      <%= render partial: 'shared/form/text_field', locals: {name: :address, f: f} %>
-      <%= render partial: 'shared/form/text_field', locals: {name: :username, f: f} %>
-      <%= render partial: 'shared/form/text_field', locals: {name: :password, f: f} %>
-    </div>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: backup_tasks_path, submit_label: "Save"} %>
+    <%= render partial: 'shared/form/errors', locals: {f: f, label: 'Backup'} %>
+    <%= render partial: 'variables/form_fields', locals: {f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: backup_task_path(id: @software.id)} %>
 
   <% end %>
-
+  
 </div>

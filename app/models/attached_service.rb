@@ -6,7 +6,8 @@ class AttachedService < ActiveRecord::Base
     :description,
     :type_path,
     :publisher_namespace,
-    :persistant)
+    :persistant,
+    :create_type)
 
   belongs_to :attached_services_handler
   has_many :variables, as: :variable_consumer, dependent: :destroy

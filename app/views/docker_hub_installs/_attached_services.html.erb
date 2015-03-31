@@ -1,0 +1,11 @@
+<%= f.fields_for :attached_services_handler do |ff| %>
+	<%= ff.fields_for :attached_services do |fff| %>
+
+		<%= render 'attached_service_fields', f: fff %>
+
+	<% end %>
+
+<% end %>
+
+<%= render 'new_attached_service_button', f: f %>
+

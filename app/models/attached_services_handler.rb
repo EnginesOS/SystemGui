@@ -8,9 +8,20 @@ class AttachedServicesHandler < ActiveRecord::Base
   def load_attached_services
     attached_services.build(attached_services_params_from_api)
   end
+  
+  def load_attached_services_details
+    attached_services.each do |attached_service|
+      service_detail = EnginesAttachedService.service_detail_for(attached_service.type_path, attached_service.publisher_namespace)
+      if service_detail.kind_of?(EnginesOSapiResult)
+        service_detail = {title: "Error", description: "Could not load service detail."}
+      end
+      attached_service.title = service_detail[:title]
+      attached_service.description = service_detail[:description]
+    end
+  end
 
   def available_services_hash
-    @available_services_hash ||= EnginesSoftware.available_services(software.engine_name)
+    @available_services_hash ||= EnginesAttachedService.available_services(software.engine_name)
   end
 
   def available_services
@@ -28,6 +39,11 @@ class AttachedServicesHandler < ActiveRecord::Base
   def service_detail(type_path, publisher_namespace)
     EnginesAttachedService.service_detail_for(type_path, publisher_namespace)
   end
+
+  def docker_hub_install_available_services
+    EnginesAttachedService.docker_hub_install_available_services[:services]
+  end
+  
 
   # def service_detail(type_path, publisher_namespace)
     # available_services.find do |service|
@@ -53,7 +69,7 @@ private
     attached_services_from_api.each do |attached_service|
       service_detail = EnginesAttachedService.service_detail_for(attached_service[:type_path], attached_service[:publisher_namespace])
       if service_detail.kind_of?(EnginesOSapiResult)
-        service_detail = {title: "Title error", description: "Could not load service detail."}
+        service_detail = {title: "Error", description: "Could not load service detail."}
       end
       result << {
         description: service_detail[:description],

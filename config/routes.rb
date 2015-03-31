@@ -26,6 +26,11 @@ Rails.application.routes.draw do
   get "services/services_trees", to: "services#services_trees", as: :services_trees
   get "installs/progress/:engine_name", to: "installs#progress", as: :installation_progress
   get "installs/cancel", to: "installs#cancel_installation", as: :cancel_installation
+  get "installs/docker_hub_install", to: "docker_hub_installs#new", as: :new_docker_hub_install
+  post "installs/docker_hub_install", to: "docker_hub_installs#create", as: :create_docker_hub_install
+  get "installs/blueprint_install", to: "blueprint_installs#new", as: :new_blueprint_install
+  post "installs/blueprint_install", to: "blueprint_installs#create", as: :create_blueprint_install
+  get "/installs/docker_hub_install_attach_service", to: "docker_hub_installs#new_attached_service", as: :docker_hub_install_attach_service
 
   resources :installs do
     collection do

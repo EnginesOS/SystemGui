@@ -1,12 +1,12 @@
-// $(document).ready(function() {
-//   $('#attached_services_service_setup_parameters_for_ftp').hide();
-//   $('#attached_services_select_service_input_for_volumes').selectize({
-//       onChange: function(value) {
-//         if (value == "ftp") {
-//           $('#attached_services_service_setup_parameters_for_ftp').show();
-//         } else {
-//           $('#attached_services_service_setup_parameters_for_ftp').hide();
-//         };
-//       }
-//     });
-// });
+$(document).ready(function() {
+  $(".installer_confirgure_attached_service_button").click(function() {
+  	$(this).parent().prev().slideDown();
+  	$(this).parent().prev().prev().fadeOut(250);
+  	$(this).fadeOut(250);
+  });
+
+  $(".installer_attach_service_create_type_radios").click(function() {
+  	alert('hi');
+  });
+  
+});

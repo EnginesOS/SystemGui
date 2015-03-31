@@ -22,14 +22,14 @@ module EnginesSoftwareExtractor
     blueprint_software_details(engine_name)['variables']
   end
 
-  def volumes(engine_name)
-    volumes_hash(engine_name).values
-  end
+  # def volumes(engine_name)
+    # volumes_hash(engine_name).values
+  # end
 
 
-  def consumers(engine_name)
-    consumers_hash(engine_name).values
-  end
+  # def consumers(engine_name)
+    # consumers_hash(engine_name).values
+  # end
 
   # def backup_tasks(engine_name)
     # EnginesBackupTask.all #.select { |backup_task| backup_task.present? }
@@ -41,16 +41,11 @@ module EnginesSoftwareExtractor
   end
 
   def persistant_attached_services(engine_name)
-    engines_api.get_engine_persistant_services({engine_name: engine_name})
+    engines_api.get_engine_persistant_services(engine_name: engine_name)
   end
 
-  def attached_subservices(service_class, service_name)
-    engines_api.list_attached_services_for(service_class, service_name)
-  end
 
-  def available_services(engine_name)
-    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))
-  end
+
 
 
 # 

@@ -8,8 +8,10 @@
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
-    <%= f.label name, class: 'control-label' do %>
-      <%= label %>
+    <% if label.present? %>
+	    <%= f.label name, class: 'control-label' do %>
+	      <%= label %>
+	    <% end %>
     <% end %>
     <%= comment %>
     <%= f.country_code_select name, collection, {include_blank: placeholder}, {title: tooltip, class: 'form-control input-lg'} %>

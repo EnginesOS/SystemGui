@@ -1,0 +1,40 @@
+<div class="col-sm-12">
+
+	<div class="panel panel-default top-gap">
+
+		<div class="panel-heading">
+			<%= f.object.title %>
+			<small>
+				<br>
+				<%= f.object.description %>
+				<br>
+			</small>
+		</div>
+
+		<div class="panel-body">
+
+			<div>
+				<%= "Create a new attached service." if f.object.create_type.to_s == "new" %>
+			</div>
+			<div style="display: none;">
+				<% select_collection = [
+						[:new, "Create a new attached service."],
+						[:active, "Use an existing active attached service."],
+						[:orphaned, "Use an orphaned attached service."]	]
+				%>
+				<%= render 'shared/form/radio_buttons', f: f, name: :create_type, label: false, field_class: :installer_attach_service_create_type_radios,
+						select_collection: select_collection, value_method: :first, text_method: :last, default_value: :new %>
+			</div>
+			<div class="col-sm-12 clearfix">
+				<%= link_to content_tag(:i, nil, class:"fa fa-wrench") + " Change", "javascript:;",
+				class: "btn btn-default btn-lg pull-right installer_confirgure_attached_service_button",
+				data: { typepath: f.object.type_path, publishernamespace: f.object.publisher_namespace } %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%= f.hidden_field :type_path %>
+<%= f.hidden_field :publisher_namespace %>
+<%= f.hidden_field :title %>
+<%= f.hidden_field :description %>

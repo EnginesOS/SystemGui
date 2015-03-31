@@ -1,8 +1,8 @@
 module EnginesServiceExtractor
 
-  def volumes(service_name)
-    volumes_hash(service_name).values
-  end
+  # def volumes(service_name)
+    # volumes_hash(service_name).values
+  # end
 
   # def consumers(service_name)
   #   consumers_hash(service_name).values
