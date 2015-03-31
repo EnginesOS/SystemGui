@@ -1,24 +1,28 @@
 <%  label = label.nil? ? name.to_s.humanize.capitalize : label
     tooltip ||= nil
-    value ||= f.object.send(name); value = nil if value.blank?
+    default_value ||= nil
+    value ||= f.object.send(name); value = default_value if value.blank?
+	select_collection ||= []
+	value_method ||= :to_s
+	text_method ||= :to_s
     hint ||= nil
     placeholder ||= nil
     comment ||= nil
     errors ||= f.object.errors[name]
-    errors_class = "field_with_errors" if errors.present? %>
+    errors_class = "field_with_errors" if errors.present?
+    field_class ||= nil  %>
 
 <div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
-  <div class="form-group">
 
-    <% if label != false %>
-      <%= f.label name, class: 'control-label' do %>
-        <%= label %>
-      <% end %>
+    <% if label.present? %>
+	    <%= f.label name, class: 'control-label' do %>
+	      <%= label %>
+	    <% end %>
     <% end %>
     <%= comment %>
-    <div class="form-group ">
-      <%= f.collection_radio_buttons name, collection, :to_s, :to_s, {}, {title: tooltip} do |radio|
-           radio.label(class: "form-text-lg", :"data-value" => radio.value) { radio.radio_button + ' ' + radio.text } + '<br>'.html_safe
+    <div class="form-group <%= field_class %>">
+      <%= f.collection_radio_buttons name, select_collection, value_method, text_method, {checked: value}, {title: tooltip} do |radio|
+           radio.label(class: "form-text-lg", "data-value" => radio.value) { radio.radio_button + ' ' + radio.text } + '<br>'.html_safe
          end %>
       <% if errors.present? %>
         <div class='form-field-errors'>
@@ -37,7 +41,7 @@
         </div>
       <% end %>
     </div>
-  </div>
+
 </div>
 
 

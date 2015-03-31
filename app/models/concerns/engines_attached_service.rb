@@ -7,7 +7,7 @@ module EnginesAttachedService
 p 'service_detail_for' 
 p publisher_namespace
 p type_path
-    
+ 
     engines_api.software_service_definition(
       publisher_namespace: publisher_namespace,
       type_path: type_path)
@@ -27,6 +27,19 @@ p type_path
   
   def self.detach_subservice params
     engines_api.detach_subservice params
+  end
+
+  def self.attached_subservices(service_class, service_name)
+    engines_api.list_attached_services_for(service_class, service_name)
+  end
+
+  def self.available_services(engine_name)
+    engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))
+  end
+
+  def self.docker_hub_install_available_services
+    # engines_api.list_avail_services_for_type('ManagedEngine')
+    engines_api.list_avail_services_for(EnginesSoftware.engines_software('phpmyadmin'))
   end
 
 end

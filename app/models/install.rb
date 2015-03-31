@@ -22,7 +22,16 @@ class Install < ActiveRecord::Base
     if new_software_params.nil?
       nil
     else
-      Software.new(new_software_params)
+      Software.new(new_software_params) do |software|
+        software.attached_services_handler.load_attached_services_details
+      end
+    end
+  end
+
+  def self.new_software_for_create(new_software_install_params)
+    Software.new(new_software_install_params) do |software|
+      software.install.load_blueprint
+      software.attached_services_handler.load_attached_services_details
     end
   end
 
@@ -42,6 +51,10 @@ class Install < ActiveRecord::Base
       title: software.display.display_name
     }
   end
+  
+  def load_blueprint
+    @blueprint ||= (EnginesRepository.blueprint_from_repository repository_url: repository_url).to_json.to_s
+  end
 
 private
 
@@ -50,9 +63,6 @@ private
       errors.add(:license_terms_and_conditions, ["License", "must be accepted"])
     end
   end
-
-
-
  
   def self.new_software_from_gallery_params(gallery_software_params)
     gallery_software = EnginesGallery.software(gallery_software_params)
@@ -63,6 +73,7 @@ private
   
       repository_url = gallery_software[:repository_url]
       blueprint = EnginesRepository.blueprint_from_repository repository_url: repository_url
+
       blueprint_software_params = blueprint[:software]
       software_name = blueprint_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
   
@@ -98,6 +109,15 @@ private
         resource_attributes: {
           required_memory: blueprint_software_params['required_memory'],
           memory: blueprint_software_params['recommended_memory'] || blueprint_software_params['requiredmemory']
+        },
+        attached_services_handler_attributes: {attached_services_attributes:
+          blueprint_software_params["service_configurations"].map do |attached_service|
+            {
+              publisher_namespace: attached_service["publisher_namespace"],
+              type_path: attached_service["type_path"],
+              create_type: :new
+            }
+          end
         }
       }
 

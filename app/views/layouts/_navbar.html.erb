@@ -1,7 +1,13 @@
 <%
+
+p :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+p params[:controller]
+
+
   active_menu_item = case
     when
-      params[:controller] == 'installs'
+      params[:controller] == 'installs',
+      params[:controller] == 'docker_hub_installs'
         :installer
     # when
       # params[:controller] == 'users',

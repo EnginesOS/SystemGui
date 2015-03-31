@@ -8,5 +8,5 @@
   <div class="col-sm-12">
     <legend>HTTP protocol</legend>
   </div>
-  <%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false, collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: ff} %>
+  <%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false, select_collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: ff} %>
 <% end %>

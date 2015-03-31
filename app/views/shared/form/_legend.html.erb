@@ -1,5 +1,6 @@
-<%  text ||= nil %>
+<%  text ||= nil
+    html_class ||= nil %>
 
-<div class="col-sm-12">
+<div class="col-sm-12 <%= html_class %>">
   <legend><%= text %></legend>
 </div>

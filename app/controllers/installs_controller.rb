@@ -20,7 +20,7 @@ class InstallsController < ApplicationController
   end
 
   def create
-    @software = Software.new(new_software_install_params)
+    @software = Install.new_software_for_create(new_software_install_params)
     if @software.save
       create_engine_build
     else
@@ -73,16 +73,15 @@ class InstallsController < ApplicationController
       send_event :installation_report, line
     end
 
-    send_event :message, "installation_complete"
-
   ensure
+    send_event :message, "close"
     response.stream.close
   end
 
-  def cancel_installation
-    render text: params  
-    # Thread.kill(params[:build_thread_object_id])
-  end
+  # def cancel_installation
+    # render text: params  
+    # # Thread.kill(params[:build_thread_object_id])
+  # end
 
 private
 

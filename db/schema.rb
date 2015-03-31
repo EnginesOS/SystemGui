@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312234446) do
+ActiveRecord::Schema.define(version: 20150330025628) do
 
   create_table "attached_services", force: true do |t|
     t.integer "attached_services_handler_id"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 20150312234446) do
     t.integer "attached_service_id"
   end
 
+  create_table "backup_tasks", force: true do |t|
+    t.integer "backup_tasks_handler_id"
+  end
+
+  create_table "backup_tasks_handlers", force: true do |t|
+    t.integer "software_id"
+  end
+
   create_table "displays", force: true do |t|
     t.integer "software_id"
     t.string  "display_name"
@@ -35,10 +43,18 @@ ActiveRecord::Schema.define(version: 20150312234446) do
     t.string  "icon_updated_at"
   end
 
+  create_table "docker_hub_installs", force: true do |t|
+    t.integer "software_id"
+  end
+
   create_table "domains", force: true do |t|
     t.string  "domain_name"
     t.boolean "internal_only"
     t.boolean "self_hosted"
+  end
+
+  create_table "eports", force: true do |t|
+    t.integer "software_id"
   end
 
   create_table "galleries", force: true do |t|

@@ -1,0 +1,13 @@
+<div class="col-sm-12">
+	<legend>
+		Attached services
+	</legend>
+</div>
+
+<%= f.fields_for :attached_services_handler do |ff| %>
+
+<%= ff.fields_for :attached_services do |fff| %>
+<%= render 'attached_service', f: fff %>
+<% end %>
+
+<% end %>

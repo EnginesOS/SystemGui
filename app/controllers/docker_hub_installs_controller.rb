@@ -1,0 +1,128 @@
+class DockerHubInstallsController < ApplicationController
+
+  include ActionController::Live
+
+  before_action :authenticate_user!
+
+  def new
+    @software = DockerHubInstall.new_software
+  end
+
+  def new_attached_service
+    
+    params[:form_data]
+    
+    render text: "<p>#{params}</p>"
+
+
+    # @software = DockerHubInstall.new_software_for_attached_service
+    # @software.attached_services_handler.attached_services.build(new_attached_service_attributes)
+    # render partial: 'new_attached_service'
+  end
+
+  def create
+    @software = Software.new(software_install_params)
+    attached_services_handler = @software.attached_services_handler || @software.build_attached_services_handler
+    if @software.docker_hub_install.new_attached_service_publisher_namespace.present?
+      attached_services_handler.attached_services.build(new_attached_service_attributes)
+      @software.docker_hub_install.new_attached_service_publisher_namespace = nil
+      @software.docker_hub_install.new_attached_service_type_path = nil
+      @software.docker_hub_install.scroll_form_to = "#docker_hub_install_new_attach_services_button"
+      render :new
+    elsif @software.docker_hub_install.new_eport.present?
+      @software.eports.build
+      @software.docker_hub_install.new_eport = nil
+      @software.docker_hub_install.scroll_form_to = "#docker_hub_install_new_eport_button"
+      render :new
+    else
+      if @software.valid?
+        create_engine_build
+      else
+        @software.docker_hub_install.new_eport = nil
+        @software.docker_hub_install.new_attached_service_publisher_namespace = nil
+        @software.docker_hub_install.new_attached_service_type_path = nil
+        @software.docker_hub_install.scroll_form_to = nil
+        render :new
+      end
+    end
+  end
+
+  def create_engine_build
+    # render text: engine_installation_params #DockerHubInstall.engine_build_params(@software)
+    
+    # engine_installation_params = DockerHubInstall.engine_build_params(@software)
+    build_thread_object_id = Thread.new do
+      EnginesInstaller.build_engine(engine_installation_params)
+    end.object_id
+    engine_installation_params[:build_thread_object_id] = build_thread_object_id
+    redirect_to installing_installs_path(engine_installation_params)
+  end
+
+  # def progress
+    # EnginesInstallActions.send_progress(params[:engine_name])
+  # end
+
+private
+
+  def software_install_params
+    @software_install_params ||= params.require(:software).permit!
+  end
+  
+  def new_attached_service_attributes
+    type_path = @software.docker_hub_install.new_attached_service_type_path
+    publisher_namespace = @software.docker_hub_install.new_attached_service_publisher_namespace
+    # service_detail = @software.build_attached_services_handler.service_detail(params[:new_attached_service_type_path], params[:new_attached_service_publisher_namespace])
+    attached_service_service_detail = @software.attached_services_handler.service_detail type_path, publisher_namespace
+    {
+      type_path: type_path,
+      publisher_namespace: publisher_namespace,
+      title: attached_service_service_detail[:title],
+      description: attached_service_service_detail[:description],
+      variables_attributes: (attached_service_service_detail[:setup_params].values if attached_service_service_detail[:setup_params].present?)
+    }
+  end
+  
+  def engine_installation_params
+    {
+      engine_name: software_install_params[:engine_name],
+      memory: software_install_params[:resource_attributes][:memory],
+      docker_image: software_install_params[:docker_hub_install_attributes][:docker_image],
+      host_name: software_install_params[:docker_hub_install_attributes][:host_name],
+      web_port: software_install_params[:docker_hub_install_attributes][:web_port],
+      user_id: software_install_params[:docker_hub_install_attributes][:user_id],
+      attached_services: engine_installation_attached_services_params,
+      eports: engine_installation_eports_params
+    }
+  end
+  
+  def engine_installation_attached_services_params
+    if software_install_params[:attached_services_handler_attributes].present?
+      software_install_params[:attached_services_handler_attributes][:attached_services_attributes].values.map do |attached_service|
+        result = {
+          type_path: attached_service[:type_path],
+          publisher_namespace: attached_service[:publisher_namespace]
+        }
+        attached_service[:variables_attributes].values.each do |variable|
+          result[variable[:name]] = variable[:value]
+        end
+        result
+      end
+    end
+  end
+
+  def engine_installation_eports_params
+    if software_install_params[:eports_attributes].present?
+      software_install_params[:eports_attributes].values.map do |eport|
+        {
+          name: eport[:name],
+          internal_port: eport[:internal_port],
+          external_port: eport[:external_port],
+          protocol: eport[:protocol]
+        }
+      end
+    end
+  end
+
+
+end
+
