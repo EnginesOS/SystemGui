@@ -112,12 +112,14 @@ private
         },
         attached_services_handler_attributes: {attached_services_attributes:
           blueprint_software_params["service_configurations"].map do |attached_service|
-            {
-              publisher_namespace: attached_service["publisher_namespace"],
-              type_path: attached_service["type_path"],
-              create_type: :new
-            }
-          end
+            if EnginesAttachedService.service_is_persistant(attached_service["type_path"], attached_service["publisher_namespace"])
+              {
+                publisher_namespace: attached_service["publisher_namespace"],
+                type_path: attached_service["type_path"],
+                create_type: :new
+              }
+            end
+          end.compact
         }
       }
 

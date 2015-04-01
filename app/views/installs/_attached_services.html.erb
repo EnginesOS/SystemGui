@@ -1,8 +1,10 @@
+<% if @attached_services_handler.attached_services.present? %>
 <div class="col-sm-12">
 	<legend>
 		Attached services
 	</legend>
 </div>
+<% end %>
 
 <%= f.fields_for :attached_services_handler do |ff| %>
 

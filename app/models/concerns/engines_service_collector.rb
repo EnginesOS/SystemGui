@@ -2,6 +2,8 @@ module EnginesServiceCollector
 
   # extend EnginesApi
 
+p :loadenginesservicescollectoraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
   def all_service_names
     engines_api.list_services
   end

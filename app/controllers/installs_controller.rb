@@ -11,6 +11,7 @@ class InstallsController < ApplicationController
 
   def new
     @software = Install.new_software_from_gallery(new_software_from_gallery_params)
+    @attached_services_handler = @software.attached_services_handler
     if @software.nil?
       flash[:alert] = "Unable to load blueprint."
       redirect_to installer_path
@@ -21,6 +22,7 @@ class InstallsController < ApplicationController
 
   def create
     @software = Install.new_software_for_create(new_software_install_params)
+    @attached_services_handler = @software.attached_services_handler
     if @software.save
       create_engine_build
     else

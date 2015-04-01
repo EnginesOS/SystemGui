@@ -12,29 +12,75 @@
 		</div>
 
 		<div class="panel-body">
+			<% select_collection = [
+						[:new, "Create a new attached service"],
+						[:active, "Use an active attached service"],
+						[:orphaned, "Use an orphaned attached service"]	]
+			%>
+			<div class="attached_service_select">
+				<div class="col-sm-8 col-sm-offset-2 attached_service_text">
+					<% if f.object.create_type.to_s == "new" %>
+						<%= select_collection[0][1] %>
+					<% elsif f.object.create_type.to_s == "active" %>
+						<%= select_collection[1][1] %><br>
+						<%= f.object.service_handle %>
+					<% else f.object.create_type.to_s == "orphaned" %>
+						<%= select_collection[2][1] %><br>
+						<%= f.object.service_handle %>
+					<% end %>
+				</div>
+				<div class="col-sm-12 clearfix">
+					<%= link_to content_tag(:i, nil, class:"fa fa-wrench") + " Change", "javascript:;",
+					class: "btn btn-default btn-lg pull-right installer_configure_attached_service_button" %>
+				</div>
+			</div>
 
-			<div>
-				<%= "Create a new attached service." if f.object.create_type.to_s == "new" %>
+			<div class="attached_service_select_create_type" style="display: none;">
+				<div class="col-sm-12">
+					<%= render 'shared/form/radio_buttons', f: f, name: :wizard_create_type, value: f.object.create_type, label: false,
+							select_collection: select_collection, value_method: :first, text_method: :last, default_value: :new %>
+				</div>
+				<div class="col-sm-12 clearfix">
+					<%= link_to content_tag(:i, nil, class:"fa fa-arrow-circle-right") + " Next", "javascript:;",
+						class: "btn btn-default btn-lg pull-right attached_service_select_create_type_button" %>
+				</div>
 			</div>
-			<div style="display: none;">
-				<% select_collection = [
-						[:new, "Create a new attached service."],
-						[:active, "Use an existing active attached service."],
-						[:orphaned, "Use an orphaned attached service."]	]
-				%>
-				<%= render 'shared/form/radio_buttons', f: f, name: :create_type, label: false, field_class: :installer_attach_service_create_type_radios,
-						select_collection: select_collection, value_method: :first, text_method: :last, default_value: :new %>
+
+			<div class="attached_service_active_configure" style="display: none;">
+				<div class="col-sm-12">
+					<%= render 'shared/form/select', f: f, name: :wizard_active_service_handle, label: "Use active attached service",
+							select_collection: @attached_services_handler.attachable_active_attached_services(f.object.type_path),
+							select_class: "attached_service_active_configure_select" %>
+				</div>
+				<div class="col-sm-12 clearfix">
+					<%= link_to content_tag(:i, nil, class:"fa fa-arrow-circle-right") + " Next", "javascript:;",
+						class: "btn btn-default btn-lg pull-right attached_service_active_configure_button" %>
+				</div>
 			</div>
-			<div class="col-sm-12 clearfix">
-				<%= link_to content_tag(:i, nil, class:"fa fa-wrench") + " Change", "javascript:;",
-				class: "btn btn-default btn-lg pull-right installer_confirgure_attached_service_button",
-				data: { typepath: f.object.type_path, publishernamespace: f.object.publisher_namespace } %>
+
+			<div class="attached_service_orphan_configure" style="display: none;">
+				<div class="col-sm-12">
+					<%= render 'shared/form/select', f: f, name: :wizard_orphan_parent_name, label: "Use orphaned attached service",
+					select_collection: @attached_services_handler.attachable_orphaned_attached_services(f.object.type_path),
+							select_class: "attached_service_orphan_configure_select" %> 
+				</div>
+				<div class="col-sm-12 clearfix">
+					<%= link_to content_tag(:i, nil, class:"fa fa-arrow-circle-right") + " Next", "javascript:;",
+						class: "btn btn-default btn-lg pull-right attached_service_orphan_configure_button" %>
+				</div>
 			</div>
+			
+			<%= f.hidden_field :type_path %>
+			<%= f.hidden_field :publisher_namespace %>
+			<%= f.hidden_field :title %>
+			<%= f.hidden_field :description %>
+			<%= f.hidden_field :create_type, id: "create_type_input" %>
+			<%= f.hidden_field :service_handle, id: "service_handle_input" %>
+			<%= f.hidden_field :orphan_parent_name, id: "orphan_parent_name_input" %>
+
 		</div>
 	</div>
 </div>
 
-<%= f.hidden_field :type_path %>
-<%= f.hidden_field :publisher_namespace %>
-<%= f.hidden_field :title %>
-<%= f.hidden_field :description %>
+
+

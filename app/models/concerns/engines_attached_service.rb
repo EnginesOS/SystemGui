@@ -41,5 +41,12 @@ p type_path
     # engines_api.list_avail_services_for_type('ManagedEngine')
     engines_api.list_avail_services_for(EnginesSoftware.engines_software('phpmyadmin'))
   end
+  
+  def self.service_is_persistant(type_path, publisher_namespace)
+    true
+     # || SoftwareServiceDefinition.is_persistant?(
+      # publisher_namespace: publisher_namespace,
+      # type_path: type_path)
+  end
 
 end

@@ -7,7 +7,11 @@ class AttachedService < ActiveRecord::Base
     :type_path,
     :publisher_namespace,
     :persistant,
-    :create_type)
+    :create_type,
+    :orphan_parent_name,
+    :wizard_create_type,
+    :wizard_orphan_parent_name,
+    :wizard_active_service_handle)
 
   belongs_to :attached_services_handler
   has_many :variables, as: :variable_consumer, dependent: :destroy
