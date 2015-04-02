@@ -4,6 +4,12 @@
 		<h2><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install <%= @software.display.display_name %></h2>
 	</div>
 
+	<%= form_for @software, url: installs_path do |f| %>
+
+	<div class="col-sm-12">
+		<%= render 'shared/form/errors', f: f %>
+	</div>
+
 	<div class="col-sm-12">
 		<div class="col-sm-2 top-gap">
 			<%= render 'shared/form/image', url: @software.install.default_image_url %>
@@ -14,22 +20,18 @@
 		</div>
 
 		<div class="col-sm-4 clearfix">
-			<div class="btn-group-vertical top-gap pull-right">
-				<a class="btn btn-default btn-lg" data-toggle="modal" data-target="#blueprint_modal"> <i class="fa fa-file-text"></i> Blueprint </a>
-
+			<div class="top-gap pull-right">
 				<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
 					<%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced
 				</button>
+				<div class="pull-right advanced_fields">
+					<a class="btn btn-default btn-lg" data-toggle="modal" data-target="#blueprint_modal"> <i class="fa fa-file-text"></i> Blueprint </a>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-sm-12 top-gap">
-
-		<%= form_for @software, url: installs_path do |f| %>
-
-		<%= render 'shared/form/errors', f: f %>
-
+	<div class="col-sm-12">
 		<% if false %>
 		<div class="new_software_form_default_details">
 			<div class="col-sm-12">
@@ -41,9 +43,9 @@
 		</div>
 		<% end %>
 
-		<div class="advanced_fields" style="<%= 'display: none;' if f.object.errors.blank? %>">
+		<div class="advanced_fields">
 			<%= render 'softwares/form_fields', f: f %>
-			<%= render 'displays/form_fields', f: f %>
+			<!-- < %= render 'displays/form_fields', f: f %> -->
 			<%= render 'networks/form_fields', f: f %>
 			<%= render 'resources/form_fields', f: f %>
 			<%= render 'attached_services', f: f %>
@@ -53,9 +55,13 @@
 		<%= render 'form_fields', f: f %>
 		<%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..." %>
 
+		<%= f.fields_for :display do |ff| %>
+		<%= ff.hidden_field :display_name %>
 		<% end %>
 
 	</div>
+
+	<% end %>
 
 </div>
 

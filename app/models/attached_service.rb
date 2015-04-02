@@ -8,7 +8,7 @@ class AttachedService < ActiveRecord::Base
     :publisher_namespace,
     :persistant,
     :create_type,
-    :orphan_parent_name,
+    :parent_engine_name,
     :wizard_create_type,
     :wizard_orphan_parent_name,
     :wizard_active_service_handle)
@@ -20,9 +20,19 @@ class AttachedService < ActiveRecord::Base
   accepts_nested_attributes_for :variables
   accepts_nested_attributes_for :attached_subservices
 
-  # def reload_from_api(service_type, service_provider)
-    
-  # end
+
+  def attachable_active_attached_services
+    EnginesAttachedService.active_attached_services(type_path, publisher_namespace)
+  rescue
+    ["needs", "a method", "to call"]
+  end
+
+  def attachable_orphaned_attached_services
+    EnginesAttachedService.orphaned_services(type_path, publisher_namespace)
+  rescue
+    ["also needs", "a method", "to call"]
+  end
+
 
 end
 

@@ -44,13 +44,6 @@ class AttachedServicesHandler < ActiveRecord::Base
     EnginesAttachedService.docker_hub_install_available_services[:services]
   end
 
-  def attachable_active_attached_services(type_path) 
-    ["needs", "a method", "to call"]
-  end
-
-  def attachable_orphaned_attached_services(type_path) 
-    ["also needs", "a method", "to call"]
-  end
 
   # def service_detail(type_path, publisher_namespace)
     # available_services.find do |service|

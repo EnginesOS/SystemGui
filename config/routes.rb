@@ -78,17 +78,16 @@ Rails.application.routes.draw do
     end
     member do
       get(
-        :new,
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
-        :uninstall, :reinstall,
-        :build, :show, :recreate, :monitor, :demonitor,
+        :uninstall, :reinstall, :delete_image,
+        :build, :recreate, :monitor, :demonitor,
         :advanced_detail,
         :register_website, :deregister_website,
         :register_dns, :deregister_dns)
     end
     member do
-      patch(:delete_image)
+      patch(:uninstall_engine)
     end
   end
 

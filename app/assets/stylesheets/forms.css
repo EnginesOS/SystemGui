@@ -57,6 +57,10 @@ input[type="checkbox"] {
   margin-right: 10px;
 }
 
+.form-image {
+  max-width: 300px;
+};
+
 .field_with_errors label {
   color: #F00;
 }

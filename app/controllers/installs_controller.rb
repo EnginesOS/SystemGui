@@ -21,9 +21,11 @@ class InstallsController < ApplicationController
   end
 
   def create
+    # render text: params
     @software = Install.new_software_for_create(new_software_install_params)
     @attached_services_handler = @software.attached_services_handler
-    if @software.save
+    @install = @software.install
+    if @software.valid?
       create_engine_build
     else
       render :new
@@ -31,7 +33,9 @@ class InstallsController < ApplicationController
   end
 
   def create_engine_build
-    engine_installation_params = Install.engine_build_params(@software)
+    # render text: @software.engine_build_params
+    engine_installation_params = @software.engine_build_params
+    # render text: (engine_installation_params.to_s + "<br><br>" + new_software_install_params.to_s).html_safe
     build_thread_object_id = Thread.new do
       EnginesInstaller.build_engine(engine_installation_params)
     end.object_id

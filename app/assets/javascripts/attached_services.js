@@ -1,33 +1,101 @@
 $(document).ready(function() {
-  $(".installer_configure_attached_service_button").click(function() {
-  	$(this).parent().parent().hide();
-  	$(this).parent().parent().siblings(".attached_service_select_create_type").slideDown();
-  });
-  
-  $(".attached_service_select_create_type_button").click(function() {
-  	if ($(this).parent().prev().find("input:checked").val() == "active") {
-	  	$(this).parent().parent().siblings(".attached_service_active_configure").slideDown();
-  	} else if ($(this).parent().prev().find("input:checked").val() == "orphaned") {
-	  	$(this).parent().parent().siblings(".attached_service_orphan_configure").slideDown();
-  	} else {
-	  	$(this).parent().parent().siblings(".attached_service_select").slideDown();
-  	};
-  	$(this).parent().parent().fadeOut(250);
-  });
 
-  $(".attached_service_active_configure_button").click(function() {
-  	$("#create_type_input").val("active");
-  	$("#service_handle_input").val($(this).parent().parent().find(".attached_service_active_configure_select").val());
- 	$(this).parent().parent().siblings(".attached_service_select").slideDown();
-  	$(this).parent().parent().fadeOut(250);
-  });
-  
-  $(".attached_service_orphan_configure_button").click(function() {
-  	$("#create_type_input").val("orphaned");
-  	$("#orphan_parent_name_input").val($(this).parent().parent().find(".attached_service_orphan_configure_select").val());
-  	$(this).parent().parent().siblings(".attached_service_select").find(".attached_service_text").html($(this).parent().parent().find(".attached_service_orphan_configure_select").val());
- 	$(this).parent().parent().siblings(".attached_service_select").slideDown();
-  	$(this).parent().parent().fadeOut(250);
-  });
-  
+	$(".attached_service_text").each(function() {
+		set_display_text($(this));
+	});
+	
+	function set_display_text(text_holder) {
+		var create_type = text_holder.parents(".panel-body").find(".create_type_input").val();
+		var display_text = "";
+		if (create_type == "active") {
+			var active_attached_service = text_holder.parents(".panel-body").find(".service_handle_input").val();
+			var display_text = "<label>Use existing active attached service</label><br>" + active_attached_service;
+		} else if (create_type == "orphaned") {
+			var orphaned_attached_service = text_holder.parents(".panel-body").find(".orphan_parent_name_input").val();
+			var display_text = "<label>Use existing orphaned attached service</label><br>" + orphaned_attached_service;
+		} else {
+			display_text = "<label>Create new attached service</label>";
+		};
+		text_holder.html(display_text);
+	};
+	
+	$(".installer_configure_attached_service_button").click(function() {
+		var attach_service_panel = $(this).parents(".panel-body");
+		var radios = attach_service_panel.find(".attached_service_select_create_type_radios");
+		var create_type = $(this).parents(".panel-body").find(".create_type_input").val();
+		if (create_type == "active") {
+			radios.find('input[value="active"]').prop("checked", true);
+			var service_handle = $(this).parents(".panel-body").find(".service_handle_input").val();
+			attach_service_panel.find(".attached_service_active_configure_select").val(service_handle);
+			attach_service_panel.find(".attached_service_orphan_configure_select").val("");
+		} else if (create_type == "orphaned") {
+			radios.find('input[value="orphaned"]').prop("checked", true);
+			attach_service_panel.find(".attached_service_active_configure_select").val("");
+			var parent_engine_name = $(this).parents(".panel-body").find(".orphan_parent_name_input").val();
+			attach_service_panel.find(".attached_service_orphan_configure_select").val(parent_engine_name);
+		} else {
+			radios.find('input[value="new"]').prop("checked", true);
+			attach_service_panel.find(".attached_service_active_configure_select").val("");
+			attach_service_panel.find(".attached_service_orphan_configure_select").val("");
+		};
+		$(this).parents(".panel-body").find(".attached_service_select").slideUp();
+		$(this).parents(".panel-body").find(".attached_service_select_create_type").slideDown();
+		var create_type = $("#create_type_input").val();
+		if (create_type == "active") {
+			$(this).parents(".panel-body").find(".attached_service_active_configure").slideDown();
+		} else if (create_type == "orphaned") {
+			$(this).parents(".panel-body").find(".attached_service_orphan_configure").slideDown();
+		};
+		$(this).parents(".panel-body").find(".attached_service_cancel").slideDown();
+	});
+
+	$(".attached_service_select_create_type_radios").change(function() {
+		if ($(this).find("input:checked").val() == "active") {
+			$(this).parents(".panel-body").find(".attached_service_orphan_configure").hide();
+			$(this).parents(".panel-body").find(".attached_service_active_configure").show();
+		} else if ($(this).find("input:checked").val() == "orphaned") {
+			$(this).parents(".panel-body").find(".attached_service_active_configure").hide();
+			$(this).parents(".panel-body").find(".attached_service_orphan_configure").show();
+		} else {
+			var display_text = "<label>Create new attached service</label>";
+			$("#create_type_input").val("new");
+			$(this).parents(".panel-body").find(".attached_service_select").find(".attached_service_text").html(display_text);
+			reset_wizard(this);
+		};
+		// $(this).parents(".panel-body").find(".attached_service_select_create_type").slideUp();
+	});
+
+	$(".attached_service_active_configure_select").change(function() {
+		var active_attached_service = $(this).val();
+		var display_text = "<label>Use existing active attached service</label><br>" + active_attached_service;
+		$(this).parents(".panel-body").find(".create_type_input").val("active");
+		$(this).parents(".panel-body").find(".service_handle_input").val(active_attached_service);
+		$(this).parents(".panel-body").find(".orphan_parent_name_input").val("");
+		$(this).parents(".panel-body").find(".attached_service_select").find(".attached_service_text").html(display_text);
+		reset_wizard(this);
+	});
+
+	$(".attached_service_orphan_configure_select").change(function() {
+		var orphaned_attached_service = $(this).val();
+		var display_text = "<label>Use existing orphaned attached service</label><br>" + orphaned_attached_service;
+		$(this).parents(".panel-body").find(".create_type_input").val("orphaned");
+		$(this).parents(".panel-body").find(".orphan_parent_name_input").val(orphaned_attached_service);
+		$(this).parents(".panel-body").find(".service_handle_input").val("");
+		$(this).parents(".panel-body").find(".attached_service_select").find(".attached_service_text").html(display_text);
+		reset_wizard(this);
+	});
+
+	$(".attached_service_cancel_button").click(function() {
+		reset_wizard(this);
+	});
+	
+	function reset_wizard(link) {
+		var attach_service_panel = $(link).parents(".panel-body");
+		attach_service_panel.find(".attached_service_select").slideDown();
+		attach_service_panel.find(".attached_service_select_create_type").slideUp();
+		attach_service_panel.find(".attached_service_cancel").slideUp();
+		attach_service_panel.find(".attached_service_active_configure").slideUp();
+		attach_service_panel.find(".attached_service_orphan_configure").slideUp();
+	};
+
 });

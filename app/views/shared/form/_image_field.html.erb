@@ -10,7 +10,8 @@
     <% if f.object.send(name).present? %>
       <div class='form-image-control'>
         <div class='form-image-centering'>
-          <%= image_tag(f.object.send(name).url, class: 'form-engine-icon') %> <%= f.check_box('delete_' + name.to_s) %> <%= label_tag :delete %>
+          <%= image_tag(f.object.send(name).url, class: 'form-image') %><br>
+          <%= f.check_box('delete_' + name.to_s) %> <%= label_tag :delete %>
         </div>
       </div>
     <% end %>
