@@ -4,7 +4,7 @@
   <%#= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
 
-  <%= form_for @software, url: delete_image_software_path(id: @software.engine_name) do |f| %>
+  <%= form_for @software, url: uninstall_engine_software_path(@software) do |f| %>
     <div class="col-sm-12">
       <p></p>
       <legend>Application data</legend>

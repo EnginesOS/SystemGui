@@ -9,7 +9,7 @@
 	<div>
 		<% @software.attached_services_handler.attached_services.each do |attached_service| %>
 
-		<div class="panel panel-info top-gap">
+		<div class="panel panel-default top-gap">
 
 			<div class="panel-heading">
 				<%= attached_service.title %>
@@ -30,7 +30,7 @@
 
 				<div class="dropdown pull-right">
 
-					<button class="btn btn-lg btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+					<button class="btn btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 						<%= content_tag(:i, "", class: "fa fa-plus-circle") + " Attach subservice" %>
 						<span class="caret"></span>
 					</button>

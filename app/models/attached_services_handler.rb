@@ -43,7 +43,7 @@ class AttachedServicesHandler < ActiveRecord::Base
   def docker_hub_install_available_services
     EnginesAttachedService.docker_hub_install_available_services[:services]
   end
-  
+
 
   # def service_detail(type_path, publisher_namespace)
     # available_services.find do |service|

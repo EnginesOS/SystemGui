@@ -7,12 +7,12 @@ $.rails.allowAction = function(link) {
 };
 
 $.rails.confirmed = function(link) {
-	link.removeAttr('data-confirm');
-	link.removeAttr('data-confirmdetail');
-	link.trigger('click.rails');
-	// if (link.attr('data-method') != 'delete') {
-		// return window.location.replace("" + link.context.href + "");
-	// };
+	link.removeAttr("data-confirm");
+	link.removeAttr("data-confirmdetail");
+	link.trigger("click.rails");
+	if (link.attr('data-method') != 'delete') {
+		return window.location.replace(link.context.href);
+	};
 };
 
 $.rails.showConfirmDialog = function(link) {

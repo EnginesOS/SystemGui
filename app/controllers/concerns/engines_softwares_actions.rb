@@ -21,12 +21,13 @@ module EnginesSoftwaresActions
   end
    
   def destroy_container
+    p :destroy_container
     @result = EnginesSoftware.destroy_container params[:id]
     set_flash_messages_and_redirect
   end 
   
   def delete_image
-    @result = EnginesSoftware.delete_image params[:id], remove_all_application_data: (params[:software][:remove_all_application_data] == '1')
+    @result = EnginesSoftware.delete_image params[:id], remove_all_application_data: (params[:remove_all_application_data] == '1')
     set_flash_messages_and_redirect
   end
   

@@ -3,7 +3,7 @@ $(document).ready(function(){
     	if ($("#installation_progress").html() == '') {
 			$("#installation_progress").html('Starting installation.');
 			var asciiart = "  ______                   _                      \n |  ____|                 (_)                     \n | |__     _ __     __ _   _   _ __     ___   ___ \n |  __|   | '_ \\   / _` | | | | '_ \\   / _ \\ / __|\n | |____  | | | | | (_| | | | | | | | |  __/ \\__ \\\n |______| |_| |_|  \\__, | |_| |_| |_|  \\___| |___/\n                    __/ |                         \n                   |___/\n\n";
-			$("#installation_report").html(asciiart + 'Waiting for installation to complete.');
+			$("#installation_report").html(asciiart + '       Waiting for installation to complete.');
 			var engine_name = $("#installation_status").data("enginename");
 			var evtSource = new EventSource("/installs/progress/" + engine_name);
 			var last_line_in_build_progress_log = '';

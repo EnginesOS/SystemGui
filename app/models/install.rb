@@ -35,23 +35,6 @@ class Install < ActiveRecord::Base
     end
   end
 
-  # def self.new_software_from_params(software_install_params)
-  #   Software.new(new_software_params(software_install_params))
-  # end
-
-  def self.engine_build_params(software)
-    {
-      engine_name: software.engine_name,
-      host_name: software.network.host_name,
-      domain_name: software.network.domain_name,
-      http_protocol: software.network.http_protocol,
-      memory: software.resource.memory,
-      software_environment_variables: (software_variables_params(software.software_variables_handler)),
-      repository_url: software.install.repository_url,
-      title: software.display.display_name
-    }
-  end
-  
   def load_blueprint
     @blueprint ||= (EnginesRepository.blueprint_from_repository repository_url: repository_url).to_json.to_s
   end
@@ -112,37 +95,19 @@ private
         },
         attached_services_handler_attributes: {attached_services_attributes:
           blueprint_software_params["service_configurations"].map do |attached_service|
-            {
-              publisher_namespace: attached_service["publisher_namespace"],
-              type_path: attached_service["type_path"],
-              create_type: :new
-            }
-          end
+            if EnginesAttachedService.service_is_persistant(attached_service["type_path"], attached_service["publisher_namespace"])
+              {
+                publisher_namespace: attached_service["publisher_namespace"],
+                type_path: attached_service["type_path"],
+                create_type: :new
+              }
+            end
+          end.compact
         }
       }
 
     end
 
   end
-
-  # def self.new_software_params(software_install_params)
-  #   gallery_software_params = new_software_from_gallery_params(
-  #     gallery_url: software_install_params["install_attributes"]["gallery_url"], 
-  #     gallery_software_id: software_install_params["install_attributes"]["gallery_software_id"])
-  #   gallery_software_params[:software_variables_handler_attributes][:variables_attributes]
-  #   @software.install.update_install(software_install_params)
-  # end
-
-  def self.software_variables_params software_variables_handler
-    return nil if software_variables_handler.nil?
-    result = {}
-    software_variables_handler.variables.each do |variable|
-      result[variable.name] = variable.value
-    end
-    result
-  end
-
-
-
 
 end

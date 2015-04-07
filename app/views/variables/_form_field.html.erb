@@ -28,7 +28,7 @@ errors = f.object.errors[name]
 
 advanced_fields_class = "advanced_fields" if mandatory != 'true' %>
 
-<div class="<%= advanced_fields_class %>" style="<%= 'display: none;' if advanced_fields_class.present? %>">
+<div class="<%= advanced_fields_class %>">
   <div class="col-sm-12">
     <legend><%= label %></legend>
   </div>

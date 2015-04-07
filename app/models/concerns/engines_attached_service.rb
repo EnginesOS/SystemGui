@@ -1,16 +1,15 @@
 module EnginesAttachedService
 
   extend EnginesApi
-
   def self.service_detail_for(type_path, publisher_namespace)
-    
-p 'service_detail_for' 
-p publisher_namespace
-p type_path
- 
+
+    p 'service_detail_for'
+    p publisher_namespace
+    p type_path
+
     engines_api.software_service_definition(
-      publisher_namespace: publisher_namespace,
-      type_path: type_path)
+    publisher_namespace: publisher_namespace,
+    type_path: type_path)
   end
 
   def self.attach_service params
@@ -24,7 +23,7 @@ p type_path
   def self.attach_subservice params
     engines_api.attach_subservice params
   end
-  
+
   def self.detach_subservice params
     engines_api.detach_subservice params
   end
@@ -40,6 +39,21 @@ p type_path
   def self.docker_hub_install_available_services
     # engines_api.list_avail_services_for_type('ManagedEngine')
     engines_api.list_avail_services_for(EnginesSoftware.engines_software('phpmyadmin'))
+  end
+
+  def self.service_is_persistant(type_path, publisher_namespace)
+    true
+  # || SoftwareServiceDefinition.is_persistant?(
+  # publisher_namespace: publisher_namespace,
+  # type_path: type_path)
+  end
+
+  def self.orphaned_services(type_path, publisher_namespace)
+    engines_api.get_orphaned_services(type_path: type_path, publisher_namespace: publisher_namespace)
+  end
+
+  def self.active_attached_services(type_path, publisher_namespace)
+    engines_api.get_active_attached_services(type_path: type_path, publisher_namespace: publisher_namespace)
   end
 
 end
