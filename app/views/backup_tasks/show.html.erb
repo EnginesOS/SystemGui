@@ -4,7 +4,7 @@
 
 	<div>
 		<%  @software.backup_tasks_handler.backupable_services.each do |backupable_service| %>
-		<div class="panel panel-info top-gap">
+		<div class="panel panel-default top-gap">
 			<div class="panel-heading">
 
 				<%= backupable_service[:title] %>
@@ -22,7 +22,7 @@
 
 				<%= link_to content_tag(:i, "", class: "fa fa-plus-circle") + ' New backup',
 				new_backup_task_path(software_id: @software.id, backup_task: backupable_service),
-				class: "btn btn-lg btn-primary backup-task-action-button trigger-response-modal pull-right" %>
+				class: "btn btn-lg btn-default backup-task-action-button trigger-response-modal pull-right" %>
 			</div>
 		</div>
 		<% end %>

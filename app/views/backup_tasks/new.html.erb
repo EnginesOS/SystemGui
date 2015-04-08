@@ -2,7 +2,7 @@
 
   <h2><%= content_tag(:i, "", class: "fa fa-upload") %> New backup for <%= @backup_task.service_handle %></h2>
   <%= @backup_task.publisher_namespace %>/<%= @backup_task.type_path %><br>
-  <%= @backup_task.variables.count %>
+
 
   <%= form_for @backup_task, url: backup_tasks_path(software_id: @software.id) do |f| %>
 

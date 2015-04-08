@@ -37,7 +37,12 @@ class AttachedServicesHandler < ActiveRecord::Base
   end
 
   def service_detail(type_path, publisher_namespace)
-    EnginesAttachedService.service_detail_for(type_path, publisher_namespace)
+    result = EnginesAttachedService.service_detail_for(type_path, publisher_namespace)
+    if result.kind_of?(EnginesOSapiResult)
+      {}
+    else
+      result
+    end
   end
 
   def docker_hub_install_available_services

@@ -1,6 +1,6 @@
  <div class="btn-group-lg dropdown pull-right top-gap">
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-    <i class="fa fa-wrench"></i> <span class="caret"></span>
+    <i class="fa fa-wrench"></i>&nbsp<span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
 
@@ -8,28 +8,22 @@
 			  <% link_body = (content_tag(:i, '', class: 'fa fa-upload') + ' Backups'.html_safe) %>
 			  <%= link_to link_body, backup_tasks_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
-        	<li>
-			  <% link_body = (content_tag(:i, '', class: 'fa fa-th') + ' Galleries'.html_safe) %>
-			  <%= link_to link_body, galleries_path, class: 'btn-lg trigger-response-modal' %>
+	        <li>
+              <%= link_to (content_tag(:i, nil,class: "fa fa-tree") + " Services tree"), services_trees_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
+            <li class="divider"></li>
         	<li>
 			  <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) %>
 			  <%= link_to link_body, domains_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
-            <li class="divider"></li>
       	    <li>
 			  <a href=<%= settings_edit_wallpaper_path %> class="btn-lg trigger-response-modal">
-			    <i class="fa fa-picture-o"></i> Desktop wallpaper
+			    <i class="fa fa-picture-o"></i> Desktop
 			  </a>
 			</li>
-            <li class="divider"></li>
 	        <li>
-	          <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System monitor", system_path, class: 'btn-lg trigger-response-modal' %>
+	          <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System", system_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
-	        <li>
-              <%= link_to (content_tag(:i, nil,class: "fa fa-tree") + " Services tree"), services_trees_path, class: 'btn-lg trigger-response-modal' %>
-	        </li>
-
 
   </ul>
 </div>

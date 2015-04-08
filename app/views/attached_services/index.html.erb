@@ -21,8 +21,10 @@
 				</small>
 			</div>
 
-			<% if attached_service.persistant %>
 			<div class="panel-body">
+
+				<%= attached_service.variables.to_json %>
+				<% if attached_service.persistant %>
 
 				<% available_subservices = @software.attached_services_handler.available_subservices(attached_service.type_path) %>
 
@@ -41,18 +43,18 @@
 							<%= link_to(
 							available_subservice[:title],
 							new_attached_subservice_path(
-								software_id: @software.id,
-								parent_service_handle: attached_service.service_handle,
-								parent_title: attached_service.title,
-								attached_subservice: {
-									type_path: available_subservice[:type_path],
-									publisher_namespace: available_subservice[:publisher_namespace]
-								}
+							software_id: @software.id,
+							parent_service_handle: attached_service.service_handle,
+							parent_title: attached_service.title,
+							attached_subservice: {
+							type_path: available_subservice[:type_path],
+							publisher_namespace: available_subservice[:publisher_namespace]
+							}
 							),
 							class: "btn-lg trigger-response-modal") %>
-							
+
 						</li>
-						<% end %>
+					<% end %>
 
 					</ul>
 				</div>
@@ -67,14 +69,41 @@
 				<br>
 				<% end %>
 
+				<% else %>
+
+				<div class="dropdown pull-right">
+
+					<button class="btn btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+						<%= content_tag(:i, "", class: "fa fa-crosshairs") + " Actions" %>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+
+					<% [:remove, :register, :deregister, :reregister].each do |service_action| %>
+						<li>
+							<%= link_to(
+							service_action.to_s.titleize,
+							registration_attached_service_path(
+							id: @software.id,
+							service_action: service_action,
+							type_path: attached_service.type_path,
+							publisher_namespace: attached_service.publisher_namespace,
+							parent_engine_name: attached_service.parent_engine_name,
+							service_handle: attached_service.service_handle
+							),
+							class: "btn-lg trigger-response-modal") %>
+						</li>
+					<% end %>
+
+					</ul>
+				</div>
+
+				<% end %>
 			</div>
-			<% end %>
 		</div>
 		<% end %>
 
-
-
-<% if false %>
+		<% if false %>
 		<div class="panel panel-warning top-gap">
 			<div class="panel-heading" style="cursor: pointer;" role="button" data-toggle="collapse" data-parent="#accordion" href="#debug">
 				<h4>Hashes</h4>
@@ -82,13 +111,14 @@
 
 			<div class="panel-body collapse" id="debug">
 				<h3>Attached services</h3>
-				<%#= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe %>
+				<% #= (ap EnginesSoftware.attached_services(@software.engine_name), plain: true, index: false).html_safe
+%>
 				<h3>Available services</h3>
-				<%#= (ap EnginesSoftware.available_services(@software.engine_name), plain: true, index: false).html_safe %>
+				<% #= (ap EnginesSoftware.available_services(@software.engine_name), plain: true, index: false).html_safe
+%>
 			</div>
 		</div>
-<% end %>
-
+		<% end %>
 
 	</div>
 

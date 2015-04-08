@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330025628) do
+ActiveRecord::Schema.define(version: 20150407033932) do
 
   create_table "attached_services", force: true do |t|
     t.integer "attached_services_handler_id"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150330025628) do
     t.datetime "wallpaper_updated_at"
     t.string   "background_color"
     t.boolean  "install_from_docker_hub"
+    t.string   "icon_text_color"
   end
 
   create_table "software_variables_handlers", force: true do |t|

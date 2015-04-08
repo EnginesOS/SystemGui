@@ -9,12 +9,12 @@ $(document).ready(function() {
 		var display_text = "";
 		if (create_type == "active") {
 			var active_attached_service = text_holder.parents(".panel-body").find(".service_handle_input").val();
-			var display_text = "<label>Use existing active attached service</label><br>" + active_attached_service;
+			var display_text = "Use existing active attached service<br>" + active_attached_service;
 		} else if (create_type == "orphaned") {
 			var orphaned_attached_service = text_holder.parents(".panel-body").find(".orphan_parent_name_input").val();
-			var display_text = "<label>Use existing orphaned attached service</label><br>" + orphaned_attached_service;
+			var display_text = "Use existing orphaned attached service<br>" + orphaned_attached_service;
 		} else {
-			display_text = "<label>Create new attached service</label>";
+			display_text = "Create new attached service";
 		};
 		text_holder.html(display_text);
 	};
@@ -57,7 +57,7 @@ $(document).ready(function() {
 			$(this).parents(".panel-body").find(".attached_service_active_configure").hide();
 			$(this).parents(".panel-body").find(".attached_service_orphan_configure").show();
 		} else {
-			var display_text = "<label>Create new attached service</label>";
+			var display_text = "Create new attached service";
 			$("#create_type_input").val("new");
 			$(this).parents(".panel-body").find(".attached_service_select").find(".attached_service_text").html(display_text);
 			reset_wizard(this);
@@ -67,7 +67,7 @@ $(document).ready(function() {
 
 	$(".attached_service_active_configure_select").change(function() {
 		var active_attached_service = $(this).val();
-		var display_text = "<label>Use existing active attached service</label><br>" + active_attached_service;
+		var display_text = "Use existing active attached service<br>" + active_attached_service;
 		$(this).parents(".panel-body").find(".create_type_input").val("active");
 		$(this).parents(".panel-body").find(".service_handle_input").val(active_attached_service);
 		$(this).parents(".panel-body").find(".orphan_parent_name_input").val("");
@@ -77,7 +77,7 @@ $(document).ready(function() {
 
 	$(".attached_service_orphan_configure_select").change(function() {
 		var orphaned_attached_service = $(this).val();
-		var display_text = "<label>Use existing orphaned attached service</label><br>" + orphaned_attached_service;
+		var display_text = "Use existing orphaned attached service<br>" + orphaned_attached_service;
 		$(this).parents(".panel-body").find(".create_type_input").val("orphaned");
 		$(this).parents(".panel-body").find(".orphan_parent_name_input").val(orphaned_attached_service);
 		$(this).parents(".panel-body").find(".service_handle_input").val("");
