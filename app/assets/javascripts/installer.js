@@ -1,4 +1,14 @@
 $(document).ready(function(){
+	
+	if ($(".gallery_software_holder").length > 0) {
+		$.each($(".gallery_software_holder"), function(index, gallery) {
+				$.get("installs/gallery_software", {gallery_id: $(gallery).data('galleryid'), search: $(gallery).data('search')}, function(data){
+					$(gallery).html(data);
+				});
+			});
+	};
+	
+	
     if ($("#installation_status").length > 0){
     	if ($("#installation_progress").html() == '') {
 			$("#installation_progress").html('Starting installation.');
@@ -14,19 +24,21 @@ $(document).ready(function(){
 				new_line = e.data;
 				second_last_line_in_build_progress_log = last_line_in_build_progress_log;
 				last_line_in_build_progress_log = new_line;
-				$("#installation_progress").html(new_line + '<br>' + $("#installation_progress").html());
+				$("#installation_progress").prepend(new_line + '<br>');
 			};
-			
+
 			var report_listener = function(e) {
 				new_line = e.data;
-				if ($("#installation_report").html() == "Waiting for installation to complete.") {
+				if ($("#installation_report").html().includes("Waiting for installation to complete.")) {
 					$("#installation_report").html('');
 					};
-				$("#installation_report").html($("#installation_report").html() + new_line + '<br>');
-					// evtSource.stop();
+				$("#installation_report").append(new_line + '<br>');
 			};
 			
 			var complete_listener = function(e) {
+				if ($("#installation_report").html().includes("Waiting for installation to complete.")) {
+					$("#installation_report").html('Build failed.');
+					};
 				if (e.data == 'close') {
     		    	// evtSource.removeEventListener("installation_report", report_listener, false);
 					// alert(second_last_line_in_build_progress_log);

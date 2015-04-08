@@ -59,7 +59,7 @@ input[type="checkbox"] {
 
 .form-image {
   max-width: 300px;
-};
+}
 
 .field_with_errors label {
   color: #F00;
@@ -77,7 +77,16 @@ input[type="checkbox"] {
 .form-text-lg {
   font-size: 18px;
   font-weight: normal;
-};
+}
+
+.color_field{
+	width: 50px;
+}
+
+.color_field .form-control.input-lg{
+	padding: 3px;
+}
+
 
 
 /*.radio_button_collection_item{

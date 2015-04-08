@@ -1,35 +1,33 @@
-<div class='control_panel'>
+<div class='row'>
+	<div class="col-sm-6">
+		<h2><%= content_tag(:i, "", class: "fa fa-tablet") %> Software</h2>
+	</div>
+	<div class="col-sm-6">
+		<%= render 'control_panel_actions' %>
+	</div>
+</div>
 
-  <div class='row'>
-    <div class="col-sm-6">
-      <h2><%= content_tag(:i, "", class: "fa fa-tablet") %> Software</h2>
-    </div>
-    <div class="col-sm-6">
-      <%= render 'control_panel_actions' %>
-    </div>
-  </div>
+<div class='row'>
+	<% if @softwares.present? %>
+	<% @softwares.each do |software| %>
+	<%= render partial: "softwares/control_panel_gadget", locals: {software: software} %>
+	<% end %>
+	<% else %>
+	<div class="col-sm-12">
+		No software installed.
+	</div>
+	<% end %>
+</div>
 
-  <div class='row'>
-    <% if @softwares.present? %>
-        <% @softwares.each do |software| %>
-            <%= render partial: "softwares/control_panel_gadget", locals: {software: software} %>
-        <% end %>
-    <% else %>
-        <div class="col-sm-12">No software installed.</div>
-    <% end %>
-  </div>
+<div class='row'>
+	<div class="col-sm-12">
+		<h2><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h2>
+	</div>
+</div>
 
-  <div class='row'>
-    <div class="col-sm-12">
-      <h2><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h2>
-    </div>
-  </div>
-
-  <div class='row'>
-    <% @service_names.each do |service_name| %>
-      <%= render partial: "services/control_panel_gadget", locals: {service_name: service_name} %>
-    <% end %>
-  </div>
-
+<div class='row'>
+	<% @service_names.each do |service_name| %>
+	<%= render partial: "services/control_panel_gadget", locals: {service_name: service_name} %>
+	<% end %>
 </div>
 

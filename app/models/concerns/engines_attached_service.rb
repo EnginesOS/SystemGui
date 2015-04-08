@@ -36,6 +36,10 @@ module EnginesAttachedService
     engines_api.list_avail_services_for(EnginesSoftware.engines_software(engine_name))
   end
 
+  def self.delete_orphaned_service(params)
+    engines_api.delete_orphaned_service params
+  end
+
   def self.docker_hub_install_available_services
     # engines_api.list_avail_services_for_type('ManagedEngine')
     engines_api.list_avail_services_for(EnginesSoftware.engines_software('phpmyadmin'))

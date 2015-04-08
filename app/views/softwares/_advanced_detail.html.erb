@@ -1,40 +1,19 @@
 <%  state = EnginesSoftware.state @engine_name %>
 
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-12">
     <table>
       <tr><td><label>Name</label></td><td><%= @engine_name %></td></tr> 
       <tr><td><label>Host FQDN</label></td><td><a href=http://<%= EnginesSoftware.fqdn(@engine_name) %>><%= EnginesSoftware.fqdn(@engine_name) %></a></td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%= EnginesSoftware.default_startup_state(@engine_name) %></td></tr> 
       <tr><td><label>Memory</label></td><td><%= EnginesSoftware.memory(@engine_name) %> MB</td></tr>
-      <tr><td><label>Monitored</label></td><td><%= EnginesSoftware.monitored(@engine_name) %></td></tr>
       <tr><td><label>Framework</label></td><td><%= EnginesSoftware.framework(@engine_name) %>/<%= EnginesSoftware.runtime(@engine_name) %></td></tr>
       <tr><td><label>Image</label></td><td><%= EnginesSoftware.image(@engine_name) %></td></tr>
       <tr><td><label>Blue print source</label></td><td><%= EnginesSoftware.repo(@engine_name) %></td></tr>
     </table>
   </div>
 
-  <div class="col-sm-6">
-    <div class="top-gap">
-      <label>Router registration</label>
-      <div class="btn-toolbar">
-        <div class="btn-group"> 
-          <%= link_to 'Register', register_website_software_path(id: @engine_name), class: "btn btn-default" %>
-          <%= link_to 'Deregister', deregister_website_software_path(id: @engine_name), class: "btn btn-default" %>
-        </div>
-      </div>
-    </div>
-    <div class="top-gap">
-      <label>DNS registration</label>
-      <div class="btn-toolbar">
-        <div class="btn-group"> 
-          <%= link_to 'Register', register_dns_software_path(id: @engine_name), class: "btn btn-default" %> 
-          <%= link_to 'Deregister', deregister_dns_software_path(id: @engine_name), class: "btn btn-default" %>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div class="row">

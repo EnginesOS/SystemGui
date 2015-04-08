@@ -1,8 +1,10 @@
 class DomainsController < ApplicationController
 
+  before_action :authenticate_user!
+
   include EnginesDomainsActions
 
-  before_action :authenticate_user!
+  before_action :set_settings, only: [:edit_default_domain, :edit_default_website, :update_network_settings]
 
   def index
     EnginesMaintenance.domains_maintenance
@@ -25,11 +27,20 @@ class DomainsController < ApplicationController
     redirect_to domains_path
   end
 
+  def update_network_settings
+    if (@settings.update(settings_params) && @settings.update_engines(settings_params))
+      redirect_to domains_path, notice: 'Network settings were successfully saved.'
+    else
+      redirect_to domains_path, alert: 'Network settings were not saved.'
+    end
+  end
+
+
   def create
     @domain = Domain.new(domain_params)
     result = @domain.api_create
     if result == true
-      redirect_to domains_path, notice: 'Successfully created self-hosted domain.'
+      redirect_to domains_path, notice: 'Successfully created domain.'
     else
       render :new
     end
@@ -51,8 +62,16 @@ class DomainsController < ApplicationController
 
 private
 
+  def set_settings
+    @settings = Setting.first_or_create
+  end
+
   def domain_params
     params.require(:domain).permit!
   end
 
+  def settings_params
+    params.require(:setting).permit!
+  end
+  
 end

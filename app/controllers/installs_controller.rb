@@ -9,6 +9,13 @@ class InstallsController < ApplicationController
     @galleries = Gallery.all
   end
 
+  def gallery_software
+    @gallery = Gallery.find(params[:gallery_id])
+    @softwares = @gallery.search_software_titles(params[:search]).sort_by{|b| b["title"] }
+    render partial: 'gallery_software'    
+  end
+
+
   def new
     @software = Install.new_software_from_gallery(new_software_from_gallery_params)
     @attached_services_handler = @software.attached_services_handler
@@ -49,6 +56,8 @@ class InstallsController < ApplicationController
   end
 
   def progress
+    error = false
+    previous_line = ''
     response.headers['Content-Type'] = 'text/event-stream'
     send_event :installation_progress, "Starting build...\n"
     File.open('/home/engines/deployment/deployed/build.out') do |f|
@@ -56,29 +65,19 @@ class InstallsController < ApplicationController
       f.interval = 10
       f.backward(10000)
       f.tail do |line|
-        # p line
         send_event :installation_progress, line
-        break if line.start_with?("Build Finished")
+        if line.start_with?("Build Finished")
+          error = true if previous_line.start_with?("ERROR")
+          break 
+        end
+        previous_line = line
       end
-     end
-    
-   
-    
-    # if @last_line.start_with?("Applying Volume settings and Log Permissions") 
-      # flash[:notice] = "Software installation was successful."
-    # elsif @last_line.start_with?("ERROR")
-      # flash[:alert] = "Software installation was not successful"
-    # else
-      # flash[:alert] = "Unexpected response from software installation process"
-    # end
-
-    # send_event "All done. Redirect page..."
-
-    EnginesInstaller.installation_report_lines(params[:engine_name]).each do |line|
-      # p line
-      send_event :installation_report, line
     end
-
+    unless error
+      EnginesInstaller.installation_report_lines(params[:engine_name]).each do |line|
+        send_event :installation_report, line
+      end
+    end
   ensure
     send_event :message, "close"
     response.stream.close
@@ -91,7 +90,7 @@ class InstallsController < ApplicationController
 
 private
 
-  def send_event(event, data='a')
+  def send_event(event, data='')
        response.stream.write "event: #{event}\n"
        response.stream.write "data: #{data}\n\n"
   end
@@ -107,9 +106,5 @@ private
   def blueprint_params
     params.require(:blueprint)
   end
-
-  # def set_software
-  #   @software = Software.find params[:id]
-  # end
 
 end

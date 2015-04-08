@@ -15,14 +15,16 @@ Rails.application.routes.draw do
   get "system", to: "pages#system"
   # get "install_progress", to: "installs#progress"
   # get "settings", to: "settings#index"
-  get "settings/edit_default_domain", to: "settings#edit_default_domain"
-  get "settings/edit_default_website", to: "settings#edit_default_website"
+  get "domains/edit_default_domain", to: "domains#edit_default_domain"
+  get "domains/edit_default_website", to: "domains#edit_default_website"
+  patch "domains/update_network_settings", to: "domains#update_network_settings"
   get "settings/edit_mail", to: "settings#edit_mail"
   get "settings/edit_wallpaper", to: "settings#edit_wallpaper"
   get "installer", to: "installs#installer"
   # get "engine_install", to: "installs#engine_install", as: :engine_install
   get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
   patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
+  get "installs/gallery_software", to: "installs#gallery_software"
   get "services/services_trees", to: "services#services_trees", as: :services_trees
   get "installs/progress/:engine_name", to: "installs#progress", as: :installation_progress
   get "installs/cancel", to: "installs#cancel_installation", as: :cancel_installation
@@ -31,6 +33,8 @@ Rails.application.routes.draw do
   get "installs/blueprint_install", to: "blueprint_installs#new", as: :new_blueprint_install
   post "installs/blueprint_install", to: "blueprint_installs#create", as: :create_blueprint_install
   get "/installs/docker_hub_install_attach_service", to: "docker_hub_installs#new_attached_service", as: :docker_hub_install_attach_service
+  get "/services/delete_orphaned_attached_service", to: "services#delete_orphaned_attached_service", as: :delete_orphaned_attached_service
+  get "/services/delete_all_orphaned_attached_services", to: "services#delete_all_orphaned_attached_services", as: :delete_all_orphaned_attached_services
 
   resources :installs do
     collection do
@@ -49,7 +53,11 @@ Rails.application.routes.draw do
   resources :resources
   resources :software_variables
   resources :displays
-  resources :attached_services
+  resources :attached_services do
+    member do 
+      get(:registration)
+    end
+  end
   resources :attached_subservices
 
   resources :services do
@@ -64,10 +72,6 @@ Rails.application.routes.draw do
         :show,
         :recreate,
         :create_container,
-        :register_website,
-        :deregister_website,
-        :register_dns,
-        :deregister_dns,
         :manager)
     end
   end
@@ -81,10 +85,7 @@ Rails.application.routes.draw do
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
         :uninstall, :reinstall, :delete_image,
-        :build, :recreate, :monitor, :demonitor,
-        :advanced_detail,
-        :register_website, :deregister_website,
-        :register_dns, :deregister_dns)
+        :build, :recreate, :advanced_detail)
     end
     member do
       patch(:uninstall_engine)

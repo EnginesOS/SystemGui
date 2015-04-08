@@ -28,6 +28,10 @@ class AttachedServicesController < ApplicationController
     end
   end
 
+  def registration
+    render text: params
+  end
+
 private
 
   def new_attached_service_attributes
