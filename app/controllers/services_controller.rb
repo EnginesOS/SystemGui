@@ -23,7 +23,7 @@ class ServicesController < ApplicationController
     else
       flash[:alert] = "Unable to delete " + title + ". " + result.result_mesg
     end
-    redirect_to :services_trees
+    redirect_to services_registry_path
   end
 
 end
