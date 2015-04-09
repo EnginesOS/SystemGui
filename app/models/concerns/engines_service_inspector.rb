@@ -16,7 +16,7 @@ module EnginesServiceInspector
     last_result: 'last_result',
     environments: 'environments',
     volumes_hash: 'volumes',
-    consumers: 'consumers',
+    consumers: 'registered_consumers',
     databases: 'databases',
     # management_url: 'management_url'
     stats: 'stats',

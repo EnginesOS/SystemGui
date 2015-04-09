@@ -4,6 +4,7 @@ $(document).ready(function(){
 		$.each($(".gallery_software_holder"), function(index, gallery) {
 				$.get("installs/gallery_software", {gallery_id: $(gallery).data('galleryid'), search: $(gallery).data('search')}, function(data){
 					$(gallery).html(data);
+					bind_button_events();
 				});
 			});
 	};

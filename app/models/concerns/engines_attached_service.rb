@@ -2,11 +2,6 @@ module EnginesAttachedService
 
   extend EnginesApi
   def self.service_detail_for(type_path, publisher_namespace)
-
-    p 'service_detail_for'
-    p publisher_namespace
-    p type_path
-
     engines_api.software_service_definition(
     publisher_namespace: publisher_namespace,
     type_path: type_path)

@@ -21,7 +21,6 @@ module EnginesSoftwaresActions
   end
    
   def destroy_container
-    p :destroy_container
     @result = EnginesSoftware.destroy_container params[:id]
     set_flash_messages_and_redirect
   end 
