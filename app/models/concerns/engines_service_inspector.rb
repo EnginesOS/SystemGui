@@ -5,7 +5,6 @@ module EnginesServiceInspector
     fqdn: 'fqdn',
     default_startup_state: 'setState',
     memory: 'memory',
-    monitored: 'monitored',
     framework: 'framework',
     runtime: 'runtime',
     image: 'image',
@@ -17,8 +16,7 @@ module EnginesServiceInspector
     environments: 'environments',
     volumes_hash: 'volumes',
     consumers: 'registered_consumers',
-    databases: 'databases',
-    # management_url: 'management_url'
+    # management_url: 'management_url',
     stats: 'stats',
     ps_container: 'ps_container',
     logs_container: 'logs_container'

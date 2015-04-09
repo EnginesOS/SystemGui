@@ -23,7 +23,7 @@
 
 			<div class="panel-body">
 
-				<%= attached_service.variables.to_json %>
+				<%#= attached_service.variables.to_json %>
 				<% if attached_service.persistant %>
 
 				<% available_subservices = @software.attached_services_handler.available_subservices(attached_service.type_path) %>
@@ -83,13 +83,15 @@
 						<li>
 							<%= link_to(
 							service_action.to_s.titleize,
-							registration_attached_service_path(
-							id: @software.id,
+							registration_attached_services_path(
+							software_id: @software.id,
 							service_action: service_action,
-							type_path: attached_service.type_path,
-							publisher_namespace: attached_service.publisher_namespace,
-							parent_engine_name: attached_service.parent_engine_name,
-							service_handle: attached_service.service_handle
+							service: {
+										type_path: attached_service.type_path,
+										publisher_namespace: attached_service.publisher_namespace,
+										parent_engine: @software.engine_name,
+										service_handle: attached_service.service_handle
+										}
 							),
 							class: "btn-lg trigger-response-modal") %>
 						</li>

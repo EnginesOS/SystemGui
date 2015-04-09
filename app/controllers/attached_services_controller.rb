@@ -18,7 +18,7 @@ class AttachedServicesController < ApplicationController
     @attached_service = @software.build_attached_services_handler.attached_services.build(attached_service_attributes)
     if @attached_service.valid?
       result = EnginesAttachedService.attach_service(build_attached_service_attributes)
-      if result.was_success == true
+      if result.was_success
         redirect_to attached_services_path(software_id: @software.id), notice: "Successfully attached #{@attached_service.title} to #{@software.engine_name}."
       else
         redirect_to attached_services_path(software_id: @software.id), alert: "Failed to attach #{@attached_service.title} to #{@software.engine_name}. #{result.result_mesg}"[0..1000]
@@ -29,7 +29,22 @@ class AttachedServicesController < ApplicationController
   end
 
   def registration
-    render text: params
+    service_params = params.require(:service).permit(:publisher_namespace, :service_handle, :type_path, :parent_engine)
+    result = case params[:service_action]
+    when "remove"
+      EnginesAttachedService.detach_service service_params
+    when "register"
+      EnginesAttachedService.register_service service_params
+    when "deregister"
+      EnginesAttachedService.deregister_service service_params
+    when "reregister"
+      EnginesAttachedService.reregister_service service_params
+    end
+    if result.was_success
+      redirect_to attached_services_path(software_id: params[:software_id]), notice: "Success. #{result.result_mesg}"[0..1000]
+    else
+      redirect_to attached_services_path(software_id: params[:software_id]), alert: "Failed. #{result.result_mesg}"[0..1000]
+    end
   end
 
 private

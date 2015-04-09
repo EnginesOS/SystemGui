@@ -23,6 +23,18 @@ module EnginesAttachedService
     engines_api.detach_subservice params
   end
 
+  def self.register_service params
+    engines_api.register_service params
+  end
+
+  def self.deregister_service params
+    engines_api.deregister_service params
+  end
+
+  def self.reregister_service params
+    engines_api.reregister_service params
+  end
+
   def self.attached_subservices(service_class, service_name)
     engines_api.list_attached_services_for(service_class, service_name)
   end

@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   resources :software_variables
   resources :displays
   resources :attached_services do
-    member do 
+    collection do 
       get(:registration)
     end
   end
