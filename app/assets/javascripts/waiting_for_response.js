@@ -1,7 +1,11 @@
-$(document).ready(function(){
+
+
+
 
 	function bind_button_events() {
+
 	  $(".trigger-response-modal").click(function(){
+
 	    $('#waiting-for-response-modal').modal('show');
 	  });
 	
@@ -41,6 +45,8 @@ $(document).ready(function(){
 	  };
 	
 	};
+
+$(document).ready(function(){
 
   bind_button_events();
   bind_form_button_events();

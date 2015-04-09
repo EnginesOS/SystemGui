@@ -1,39 +1,17 @@
 <%  state = EnginesService.state @service_name %>
 
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-12">
     <table>
       <tr><td><label>Service name</label></td><td><%= @service_name %></td></tr> 
       <tr><td><label>Host FQDN</label></td><td><a href=http://<%= EnginesService.fqdn @service_name %>><%= EnginesService.fqdn @service_name %></a></td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%= EnginesService.default_startup_state @service_name %></td></tr> 
       <tr><td><label>Memory</label></td><td><%= EnginesService.memory @service_name %> MB</td></tr>
-      <tr><td><label>Monitored</label></td><td><%= EnginesService.monitored @service_name %></td></tr>
       <tr><td><label>Framework</label></td><td><%= EnginesService.framework @service_name %>/<%= EnginesService.runtime @service_name %></td></tr>
       <tr><td><label>Image</label></td><td><%= EnginesService.image @service_name %> </td></tr>
       <tr><td><label>Blue print source</label></td><td><%= EnginesService.repo @service_name %> </td></tr>
     </table>
-  </div>
-
-  <div class="col-sm-6">
-    <div class="top-gap">
-      <label>Router registration</label>
-      <div class="btn-toolbar">
-        <div class="btn-group"> 
-          <%= link_to 'Register', register_website_service_path(@service_name), class: "btn btn-default" %>
-          <%= link_to 'Deregister', deregister_website_service_path(@service_name), class: "btn btn-default" %>
-        </div>
-      </div>
-    </div>
-    <div class="top-gap">
-      <label>DNS registration</label>
-      <div class="btn-toolbar">
-        <div class="btn-group"> 
-          <%= link_to 'Register', register_dns_service_path(@service_name), class: "btn btn-default" %> 
-          <%= link_to 'Deregister', deregister_dns_service_path(@service_name), class: "btn btn-default" %>
-        </div>
-      </div>
-    </div>
   </div>
 
 </div>
@@ -109,17 +87,6 @@
       <pre><table>
         <% EnginesService.consumers(@service_name).each do |cons|%>
            <tr><td><%= cons %></td></tr>
-        <% end %>
-      </table></pre>
-    <% else %>
-      <pre>None</pre>
-    <% end %>  
-
-    <label>Database</label>
-    <% if EnginesService.databases(@service_name) && EnginesService.databases(@service_name).length > 0 %>
-      <pre><table>
-        <% EnginesService.databases(@service_name).each do |db|%>
-           <tr><td><%= db %></td></tr>
         <% end %>
       </table></pre>
     <% else %>

@@ -1,11 +1,11 @@
 module EnginesServiceExtractor
 
-  # def volumes(service_name)
-    # volumes_hash(service_name).values
-  # end
+  def volumes(service_name)
+    volumes_hash(service_name).values
+  end
 
-  # def consumers(service_name)
-  #   consumers_hash(service_name).values
+  # def registered_engines(service_name)
+    # engines_api.registered_engines service_name
   # end
 
   # def databases(service_name)
