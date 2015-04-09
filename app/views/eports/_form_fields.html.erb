@@ -14,7 +14,7 @@
 					<%= render 'shared/form/hidden_field', name: :_destroy, f: ff %>
 					<%= link_to content_tag(:i, nil, class:"fa fa-trash"), "javascript:;", onclick: "javascript: remove_fields(this); ",
 					class: "btn btn-default btn-lg pull-right",
-					data: { confirm: "Are you sure?", confirmdetail: "Remove eport.", holderclass: "eport_fields" } %>
+					data: { confirm: "Confirm", confirmdetail: "Are you sure that you want to remove eport?", holderclass: "eport_fields" } %>
 				</div>
 			</div>
 		</div>

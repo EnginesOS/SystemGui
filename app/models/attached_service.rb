@@ -8,7 +8,7 @@ class AttachedService < ActiveRecord::Base
     :publisher_namespace,
     :persistant,
     :create_type,
-    :parent_engine_name,
+    :parent_engine,
     :wizard_create_type,
     :wizard_orphan_parent_name,
     :wizard_active_service_handle)
@@ -22,17 +22,24 @@ class AttachedService < ActiveRecord::Base
 
 
   def attachable_active_attached_services
-    EnginesAttachedService.active_attached_services(type_path, publisher_namespace)
-  rescue
-    ["needs", "a method", "to call"]
+    EnginesAttachedService.active_attached_services(type_path, publisher_namespace).map do |service|
+      if service[:parent_engine] == service[:service_handle]
+        service[:parent_engine]
+      else
+        "#{service[:parent_engine]}(#{service[:service_handle]})"
+      end
+    end
   end
 
   def attachable_orphaned_attached_services
-    EnginesAttachedService.orphaned_services(type_path, publisher_namespace)
-  rescue
-    ["also needs", "a method", "to call"]
+    EnginesAttachedService.orphaned_services(type_path, publisher_namespace).map do |service|
+      if service[:parent_engine] == service[:service_handle]
+        service[:parent_engine]
+      else
+        "#{service[:parent_engine]}(#{service[:service_handle]})"
+      end
+    end
   end
-
 
 end
 

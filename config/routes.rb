@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
   patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
   get "installs/gallery_software", to: "installs#gallery_software"
-  get "services/services_trees", to: "services#services_trees", as: :services_trees
+  get "services/registry", to: "services#registry"
   get "installs/progress/:engine_name", to: "installs#progress", as: :installation_progress
   get "installs/cancel", to: "installs#cancel_installation", as: :cancel_installation
   get "installs/docker_hub_install", to: "docker_hub_installs#new", as: :new_docker_hub_install
