@@ -9,7 +9,7 @@ class ServicesController < ApplicationController
     render partial: "advanced_detail"
   end
 
-  def services_trees
+  def registry
     @services_tree_by_provider = EnginesService.services_tree_by_provider
     @services_tree_by_engine = EnginesService.services_tree_by_engine
     @services_tree_of_orphaned_services = EnginesService.services_tree_of_orphaned_services

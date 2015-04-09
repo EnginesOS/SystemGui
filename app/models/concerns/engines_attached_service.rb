@@ -64,7 +64,7 @@ module EnginesAttachedService
   end
 
   def self.active_attached_services(type_path, publisher_namespace)
-    engines_api.get_active_attached_services(type_path: type_path, publisher_namespace: publisher_namespace)
+    engines_api.get_registered_against_service(type_path: type_path, publisher_namespace: publisher_namespace)
   end
 
 end

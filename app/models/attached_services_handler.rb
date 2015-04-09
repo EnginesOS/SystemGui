@@ -17,6 +17,8 @@ class AttachedServicesHandler < ActiveRecord::Base
       end
       attached_service.title = service_detail[:title]
       attached_service.description = service_detail[:description]
+      attached_service.parent_engine = service_detail[:parent_engine]
+      attached_service.service_handle = service_detail[:service_handle]
     end
   end
 
