@@ -5,6 +5,10 @@ module EnginesInstaller
   def self.build_engine (engine_build_params)
     engines_api.build_engine engine_build_params
   end
+  
+  def self.build_engine_from_docker_image (engine_build_params)
+    engines_api.build_engine_from_docker_image engine_build_params
+  end
 
   def self.generate_next_unique_engine_name_for(engine_name)
     existing_engine_names = EnginesSoftware.all_engine_names

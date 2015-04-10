@@ -4,7 +4,7 @@
     <%= f.fields_for :software_variables_handler do |ff| %>
       <%= render partial: 'shared/form/errors', locals: {f: ff, label: 'software variables'} %>
     <% end %>
-    <% if @software.software_variables_handler.present? && @software.software_variables_handler.variables.present? %>
+    <% if @software.software_variables_handler.present? && @software.software_variables_handler.variables.count > 0 %>
       <%= render partial: 'software_variables/form_fields', locals: {f: f} %>
     <% else %>
       <div class="col-sm-8 col-sm-offset-2">

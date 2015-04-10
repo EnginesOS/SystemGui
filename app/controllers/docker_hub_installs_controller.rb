@@ -41,9 +41,9 @@ class DockerHubInstallsController < ApplicationController
       render :new
     else
       if @software.valid?
-    render text: engine_installation_params
+    # render text: engine_installation_params
 
-        # create_engine_build
+        create_engine_build
       else
         @software.docker_hub_install.new_eport = nil
         @software.docker_hub_install.new_attached_service_publisher_namespace = nil
@@ -55,19 +55,13 @@ class DockerHubInstallsController < ApplicationController
   end
 
   def create_engine_build
-    # render text: engine_installation_params #DockerHubInstall.engine_build_params(@software)
-    
-    engine_installation_params = DockerHubInstall.engine_build_params(@software)
-    build_thread_object_id = Thread.new do
+    Thread.new do
       EnginesInstaller.build_engine_from_docker_image(engine_installation_params)
     end.object_id
-    engine_installation_params[:build_thread_object_id] = build_thread_object_id
-    redirect_to installing_installs_path(engine_installation_params)
+    redirect_to installing_installs_path(
+      title: software_install_params[:docker_hub_install_attributes][:docker_image], 
+      engine_name: software_install_params[:engine_name])
   end
-
-  # def progress
-    # EnginesInstallActions.send_progress(params[:engine_name])
-  # end
 
 private
 
@@ -94,7 +88,8 @@ private
       engine_name: software_install_params[:engine_name],
       memory: software_install_params[:resource_attributes][:memory],
       docker_image: software_install_params[:docker_hub_install_attributes][:docker_image],
-      user_id: software_install_params[:docker_hub_install_attributes][:user_id],
+      run_as_user: software_install_params[:docker_hub_install_attributes][:run_as_user],
+      run_command: software_install_params[:docker_hub_install_attributes][:run_command],
       environment_variables: engine_installation_environment_variables,
       attached_services: engine_installation_attached_services_params,
       eports: engine_installation_eports_params
