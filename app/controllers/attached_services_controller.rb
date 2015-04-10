@@ -58,7 +58,7 @@ private
       publisher_namespace: publisher_namespace,
       title: attached_service_service_detail[:title],
       description: attached_service_service_detail[:description],
-      variables_attributes: (attached_service_service_detail[:setup_params].values if attached_service_service_detail[:setup_params].present?)
+      variables_attributes: (attached_service_service_detail[:consumer_params].values if attached_service_service_detail[:consumer_params].present?)
     }
   end
 

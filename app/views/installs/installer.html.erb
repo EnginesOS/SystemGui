@@ -1,30 +1,40 @@
 <div class="installer row">
 
-	<div class="col-sm-8 col-md-6 top-gap">
-		<%= form_tag installer_path, method: 'get' do %>
-		<div class="input-group input-group-lg">
-			<div class="input-group-addon">
-				<i class=" fa fa-search"></i>
-			</div>
-			<%= text_field_tag :search, params[:search], placeholder: "Search", class: 'form-control', autofocus: true %>
-			<a href="<%= installer_path %>" class="input-group-addon btn search-clear-button"><i class=" fa fa-eraser"></i> Clear</a>
-		</div>
-		<% end %>
-	</div>
-
-	<div class="col-sm-4 col-md-6">
-		<%= render 'installer_actions' %>
-	</div>
-
-	<% @galleries.each do |gallery| %>
-
 	<div class="col-sm-12">
-		<h2> <%= content_tag(:i, "", class: "fa fa-th-list") %> <%= gallery.name %> </h2>
-		<div class="gallery_software_holder top-gap", data-galleryid="<%= gallery.id %>", data-search="<%= params[:search] %>">
-			<div class="text-center">
-				<%= content_tag(:i, nil, class: "fa fa-spinner fa-spin text-center") + " Loading..."%>
-			</div>
+		<div class="col-sm-8 col-md-6">
+			<h2> <%= content_tag(:i, "", class: "fa fa-plus") %> Installer</h2>
+		</div>
+	
+		<div class="col-sm-4 col-md-6">
+			<%= render 'installer_actions' %>
 		</div>
 	</div>
-	<%end%>
+
+</div>
+<div class="installer row">
+	<div class="col-sm-12">
+		<div class="col-sm-8 col-md-6 top-gap">
+			<%= form_tag installer_path, method: 'get' do %>
+			<div class="input-group input-group-lg">
+				<div class="input-group-addon">
+					<i class=" fa fa-search"></i>
+				</div>
+				<%= text_field_tag :search, params[:search], placeholder: "Search", class: 'form-control', autofocus: true %>
+				<a href="<%= installer_path %>" class="input-group-addon btn search-clear-button"><i class=" fa fa-eraser"></i> Clear</a>
+			</div>
+			<% end %>
+		</div>
+	
+		<% @galleries.each do |gallery| %>
+	
+		<div class="col-sm-12">
+			<h3><%= gallery.name %> </h3>
+			<div class="gallery_software_holder top-gap", data-galleryid="<%= gallery.id %>", data-search="<%= params[:search] %>">
+				<div class="text-center">
+					<%= content_tag(:i, nil, class: "fa fa-spinner fa-spin text-center") + " Loading..."%>
+				</div>
+			</div>
+		</div>
+		<%end%>
+	</div>
 </div>

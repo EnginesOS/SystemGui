@@ -63,14 +63,16 @@ private
           publisher_namespace: attached_service.publisher_namespace,
           type_path: attached_service.type_path
         }
-      if attached_service.create_type.to_sym == :new
+      if attached_service.create_type.blank? || attached_service.create_type.to_sym == :new
         result[:create_type] = "new"
       elsif attached_service.create_type.to_sym == :active
         result[:create_type] = "active"
         result[:service_handle] = attached_service.service_handle
+        result[:parent_engine] = attached_service.parent_engine
       elsif attached_service.create_type.to_sym == :orphaned
         result[:create_type] = "orphaned"
-        result[:parent_engine_name] = attached_service.parent_engine_name
+        result[:service_handle] = attached_service.service_handle
+        result[:parent_engine] = attached_service.parent_engine
       end
       result
     end

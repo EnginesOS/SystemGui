@@ -8,17 +8,17 @@ class DockerHubInstallsController < ApplicationController
     @software = DockerHubInstall.new_software
   end
 
-  def new_attached_service
-    
-    params[:form_data]
-    
-    render text: "<p>#{params}</p>"
-
-
-    # @software = DockerHubInstall.new_software_for_attached_service
-    # @software.attached_services_handler.attached_services.build(new_attached_service_attributes)
-    # render partial: 'new_attached_service'
-  end
+  # def new_attached_service
+#     
+    # params[:form_data]
+#     
+    # render text: "<p>#{params}</p>"
+# 
+# 
+    # # @software = DockerHubInstall.new_software_for_attached_service
+    # # @software.attached_services_handler.attached_services.build(new_attached_service_attributes)
+    # # render partial: 'new_attached_service'
+  # end
 
   def create
     @software = Software.new(software_install_params)
@@ -34,9 +34,16 @@ class DockerHubInstallsController < ApplicationController
       @software.docker_hub_install.new_eport = nil
       @software.docker_hub_install.scroll_form_to = "#docker_hub_install_new_eport_button"
       render :new
+    elsif @software.docker_hub_install.new_environment_variable.present?
+      @software.docker_hub_install.variables.build
+      @software.docker_hub_install.new_environment_variable = nil
+      @software.docker_hub_install.scroll_form_to = "#docker_hub_install_new_environment_variable_button"
+      render :new
     else
       if @software.valid?
-        create_engine_build
+    render text: engine_installation_params
+
+        # create_engine_build
       else
         @software.docker_hub_install.new_eport = nil
         @software.docker_hub_install.new_attached_service_publisher_namespace = nil
@@ -50,9 +57,9 @@ class DockerHubInstallsController < ApplicationController
   def create_engine_build
     # render text: engine_installation_params #DockerHubInstall.engine_build_params(@software)
     
-    # engine_installation_params = DockerHubInstall.engine_build_params(@software)
+    engine_installation_params = DockerHubInstall.engine_build_params(@software)
     build_thread_object_id = Thread.new do
-      EnginesInstaller.build_engine(engine_installation_params)
+      EnginesInstaller.build_engine_from_docker_image(engine_installation_params)
     end.object_id
     engine_installation_params[:build_thread_object_id] = build_thread_object_id
     redirect_to installing_installs_path(engine_installation_params)
@@ -78,7 +85,7 @@ private
       publisher_namespace: publisher_namespace,
       title: attached_service_service_detail[:title],
       description: attached_service_service_detail[:description],
-      variables_attributes: (attached_service_service_detail[:setup_params].values if attached_service_service_detail[:setup_params].present?)
+      variables_attributes: (attached_service_service_detail[:consumer_params].values if attached_service_service_detail[:consumer_params].present?)
     }
   end
   
@@ -87,9 +94,8 @@ private
       engine_name: software_install_params[:engine_name],
       memory: software_install_params[:resource_attributes][:memory],
       docker_image: software_install_params[:docker_hub_install_attributes][:docker_image],
-      host_name: software_install_params[:docker_hub_install_attributes][:host_name],
-      web_port: software_install_params[:docker_hub_install_attributes][:web_port],
       user_id: software_install_params[:docker_hub_install_attributes][:user_id],
+      environment_variables: engine_installation_environment_variables,
       attached_services: engine_installation_attached_services_params,
       eports: engine_installation_eports_params
     }
@@ -107,19 +113,48 @@ private
         end
         result
       end
+    else
+      []
     end
   end
 
+  def engine_installation_environment_variables
+    if software_install_params[:docker_hub_install_attributes].present? && software_install_params[:docker_hub_install_attributes][:variables_attributes]
+      software_install_params[:docker_hub_install_attributes][:variables_attributes].values.map do |environment_variable|
+        if environment_variable[:name].blank? || environment_variable[:value].blank? || environment_variable[:_destroy] == "1"
+          {}
+        else
+          {
+            environment_variable[:name] => environment_variable[:value]
+          }
+        end
+      end.inject(:merge)
+    else
+      {}
+    end
+  end
+
+
   def engine_installation_eports_params
     if software_install_params[:eports_attributes].present?
-      software_install_params[:eports_attributes].values.map do |eport|
-        {
-          name: eport[:name],
-          internal_port: eport[:internal_port],
-          external_port: eport[:external_port],
-          protocol: eport[:protocol]
-        }
-      end
+      software_install_params[:eports_attributes].map do |key, eport|
+        if (eport[:name].blank? ||
+            eport[:internal_port].blank? ||
+            eport[:external_port].blank? ||
+            eport[:protocol].blank? ||
+            eport[:_destroy] == "1" )
+          nil
+        else
+          {
+            name: eport[:name],
+            internal_port: eport[:internal_port],
+            external_port: eport[:external_port],
+            protocol: eport[:protocol]
+          }
+        end
+      end.compact
+    else
+      []
     end
   end
 

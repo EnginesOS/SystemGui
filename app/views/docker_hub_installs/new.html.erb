@@ -4,10 +4,11 @@
 
 	<%= form_for @software, url: create_docker_hub_install_path do |f| %>
 		<%= render 'shared/form/errors', f: f %>
+		<%= render 'form_fields_1', f: f %>
 		<%= render 'softwares/form_fields', f: f %>
-		<%= render 'displays/form_fields', f: f %>
+		<%#= render 'networks/form_fields', f: f %>
 		<%= render 'resources/form_fields', f: f %>
-		<%= render 'form_fields', f: f %>
+		<%= render 'form_fields_2', f: f %>
 		<%= render 'eports/form_fields', f: f %>
 		<%= render 'shared/form/legend', html_class: "top-gap" %>
 		<%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..." %>

@@ -10,8 +10,8 @@ class AttachedService < ActiveRecord::Base
     :create_type,
     :parent_engine,
     :wizard_create_type,
-    :wizard_orphan_parent_name,
-    :wizard_active_service_handle)
+    :wizard_orphan_service,
+    :wizard_active_service)
 
   belongs_to :attached_services_handler
   has_many :variables, as: :variable_consumer, dependent: :destroy
@@ -26,7 +26,7 @@ class AttachedService < ActiveRecord::Base
       if service[:parent_engine] == service[:service_handle]
         service[:parent_engine]
       else
-        "#{service[:parent_engine]}(#{service[:service_handle]})"
+        "#{service[:parent_engine]} - #{service[:service_handle]}"
       end
     end
   end
@@ -36,7 +36,7 @@ class AttachedService < ActiveRecord::Base
       if service[:parent_engine] == service[:service_handle]
         service[:parent_engine]
       else
-        "#{service[:parent_engine]}(#{service[:service_handle]})"
+        "#{service[:parent_engine]} - #{service[:service_handle]}"
       end
     end
   end

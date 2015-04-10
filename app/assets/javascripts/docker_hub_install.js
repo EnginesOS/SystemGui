@@ -12,16 +12,14 @@ $(document).ready(function() {
 	});
 
 	$("#docker_hub_install_new_eport_button").click(function() {
-
 		$("#software_docker_hub_install_attributes_new_eport").val("1");
 		$("#new_software").submit();
-
 	});
 
-	// $(".remove_eport_fields_button").click(function() {
-		// $(this).prev().val("1");
-		// $(this).parentsUntil(".eport_fields").hide();
-	// });
+	$("#docker_hub_install_new_environment_variable_button").click(function() {
+		$("#software_docker_hub_install_attributes_new_environment_variable").val("1");
+		$("#new_software").submit();
+	});
 
 	var scroll_form_to = ($("#software_docker_hub_install_attributes_scroll_form_to").val() || "");
 	if (scroll_form_to != "") {

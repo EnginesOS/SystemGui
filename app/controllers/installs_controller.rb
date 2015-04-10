@@ -28,7 +28,9 @@ class InstallsController < ApplicationController
   end
 
   def create
+    # render text: new_software_install_params
     # render text: params
+
     @software = Install.new_software_for_create(new_software_install_params)
     @attached_services_handler = @software.attached_services_handler
     @install = @software.install
