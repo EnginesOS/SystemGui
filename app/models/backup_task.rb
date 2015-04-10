@@ -12,7 +12,7 @@ class BackupTask < ActiveRecord::Base
 
   def load_variables
     backup_service_definition = EnginesBackupTask.backup_service_definition type_path, publisher_namespace
-    variables_attributes = backup_service_definition[:setup_params].values
+    variables_attributes = backup_service_definition[:consumer_params].values
     self.variables.build(variables_attributes)
   end
 
