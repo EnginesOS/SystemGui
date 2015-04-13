@@ -16,6 +16,7 @@ class SoftwaresController < ApplicationController
     # render text: params
     engine_name = Software.find(params[:id]).engine_name
     remove_all_application_data = (params[:software][:remove_all_application_data] == "1")
+    # render text: remove_all_application_data
     redirect_to delete_image_software_path(id: engine_name, remove_all_application_data: remove_all_application_data)
     #render text: uninstall_software_params
     
