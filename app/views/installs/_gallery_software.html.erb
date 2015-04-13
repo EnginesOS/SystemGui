@@ -1,0 +1,73 @@
+<% if @softwares.present? %>
+<% @softwares.each do |software|  %>
+<% software_id = software["id"]
+  gallery_title = software["title"]
+  gallery_detail = software["detail"]
+  blueprint_full_title = software["full_title_from_blueprint"]
+  blueprint_description = software["description_from_blueprint"]
+  home_page = software["website_from_blueprint"]
+  image_url =
+  if software["icon_url_from_gallery"].present?
+    software["icon_url_from_gallery"]
+  else
+    software["icon_url_from_blueprint"]
+  end
+
+%>
+<% install_url = new_install_path(software: {gallery_url: @gallery.url, gallery_software_id: software_id}) %>
+
+<div class="col-md-12 engine-install-row">
+	<div class="col-md-3">
+		<div class="engine-install-icon-container">
+
+<%
+	begin
+        res = false
+        url = URI.parse(image_url)
+        req = Net::HTTP.new(url.host, url.port)
+        res = req.request_head(url.path).class
+    rescue
+	ensure
+    	image_url = "assets/_placeholder_for_missing_engine.jpg" if res != Net::HTTPOK
+    end
+%>
+
+			<img src="<%= image_url %>" class="engine-install-icon">
+		</div>
+	</div>
+	<div class="col-md-6">
+
+		<div class="engine-install-text">
+			<% if gallery_title.present? %>
+			<span class="engine-install-name"><%= gallery_title %>
+				<br>
+			</span>
+			<% end %>
+			<% if gallery_detail.present? %>
+			<%= gallery_detail %>
+			<br>
+			<% end %>
+			<small> <% if blueprint_full_title.present? %>
+				<p>
+					<i>Title:</i> <%= blueprint_full_title %>
+				</p> <% end %>
+				<% if blueprint_description.present? %>
+				<p>
+					<i>Description:</i> <%= blueprint_description %>
+				</p> <% end %> </small>
+		</div>
+
+	</div>
+	<div class="col-md-3">
+		<a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal" data-toggle="tooltip" title="Click to install <%= gallery_title %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a>
+		<br>
+		<% if home_page.present? %>
+		<a class="btn btn-lg" href="<%= home_page %>" title="<%= home_page %>"><i class="fa fa-globe"></i> website</a>
+		<% end %>
+	</div>
+</div>
+<%end%>
+<% else %>
+None
+<%end%>
+

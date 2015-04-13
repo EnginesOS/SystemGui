@@ -1,4 +1,4 @@
-<%  label ||= name.to_s.humanize.capitalize
+<%  label = label.nil? ? name.to_s.humanize.capitalize : label
     tooltip ||= nil
     value = value.nil? ? f.object.send(name) : value
     value = nil if value.blank? #placeholder is visible to user only when value is nil
@@ -10,8 +10,10 @@
 
 <div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
   <div class="form-group">
-    <%= f.label name, class: 'control-label' do %>
-      <%= label %>
+    <% if label.present? %>
+	    <%= f.label name, class: 'control-label' do %>
+	      <%= label %>
+	    <% end %>
     <% end %>
     <%= comment %>
     <%= f.text_field name, value: value, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>

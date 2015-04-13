@@ -4,10 +4,17 @@
 
   <%= form_for @attached_service, url: attached_services_path(software_id: @software.id) do |f| %>
 
-    <%= f.hidden_field :service_type %>
-    <%= f.hidden_field :service_provider %>
+    <%= f.hidden_field :type_path %>
+    <%= f.hidden_field :publisher_namespace %>
     <%= f.hidden_field :title %>
+    <%= f.hidden_field :description %>
     <% #= f.hidden_field :software_id, value: @software.id %>
+
+	<div class="btn-group-vertical top-gap pull-right">
+		<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
+			<%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced
+		</button>
+	</div>
 
     <%= render partial: 'shared/form/errors', locals: {f: f, label: @attached_service.title} %>
     <%= render partial: 'variables/form_fields', locals: {f: f} %>

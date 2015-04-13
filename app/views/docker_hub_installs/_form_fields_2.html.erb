@@ -1,0 +1,12 @@
+<%= f.fields_for :docker_hub_install do |ff| %>
+
+	<%= render 'shared/form/legend', text: 'Deploy' %>
+	<%= render 'shared/form/radio_buttons', f: ff, name: :type, select_collection: ['Software', 'Service'] %>
+	<%= render 'shared/form/text_field', f: ff, name: :user_id %>
+	<%= render 'environment_variables', f: ff %>
+
+<% end %>
+
+<%= render 'shared/form/legend', text: 'Attach services' %>
+<%= render 'attached_services', f: f %>
+

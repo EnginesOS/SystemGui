@@ -23,22 +23,15 @@ class Network < ActiveRecord::Base
   end
 
   def save_to_api
-    return false if !save
-
     result = EnginesSoftware.update_host_name(params_for_api_update)
     if result.was_success == false
-      errors.add(:base, result.result_mesg)
-      return false
+      return result
     end
-
     result = EnginesSoftware.update_domain_name(params_for_api_update)
     if result.was_success == false
-      errors.add(:base, result.result_mesg)
-      return false
-    else
-      return true
+      return result
     end
-
+    return true
   end
 
   def self.best_default_domain
@@ -69,7 +62,7 @@ private
     if EnginesInstaller.fqdn_is_unique?(host_name + '.' + domain_name)
       true
     else
-      errors.add(:base, 'The combination of host name plus domain name must be unique.')
+      errors.add(:host_name, 'plus domain name must be unique')
     end
   end
 

@@ -1,5 +1,6 @@
-<% label ||= false %>
-<% link_text ||= url %>
+<% label ||= false 
+	link_text ||= url
+	target ||= "_blank" %>
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
@@ -8,6 +9,6 @@
         <%= label_text %>
       <% end %>
     <% end %>
-    <%= link_to link_text, url, target: "_blank" %> 
+    <%= link_to link_text, url, target: target %> 
   </div>
 </div>

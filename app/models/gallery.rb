@@ -12,7 +12,7 @@ class Gallery < ActiveRecord::Base
     if search_string.blank?
       softwares
     else
-      softwares.select{|software| software['full_name'].downcase.include? search_string.downcase }
+      softwares.select{|software| software['title'].to_s.downcase.include? search_string.to_s.downcase }
     end
   end
 

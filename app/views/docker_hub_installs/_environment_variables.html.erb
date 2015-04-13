@@ -1,0 +1,7 @@
+<%= render 'shared/form/legend', text: 'Environment variables' %>
+
+<%= f.fields_for :variables do |ff| %>
+	<%= render 'environment_variable_fields', f: ff %>
+<% end %>
+
+<%= render 'new_environment_variable_button', f: f %>

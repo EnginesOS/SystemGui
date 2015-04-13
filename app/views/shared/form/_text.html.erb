@@ -2,10 +2,10 @@
 
 <div class="col-sm-8 col-sm-offset-2">
   <div class="form-group">
-    <% if label != false %>
-      <%= f.label '', '', class: 'control-label' do %>
-        <%= label %>
-      <% end %>
+    <% if label.present? %>
+	    <%= f.label name, class: 'control-label' do %>
+	      <%= label %>
+	    <% end %>
     <% end %>
     <div class="form-text-lg"><%= text %></div> 
   </div>

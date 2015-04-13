@@ -9,8 +9,16 @@ class InstallsController < ApplicationController
     @galleries = Gallery.all
   end
 
+  def gallery_software
+    @gallery = Gallery.find(params[:gallery_id])
+    @softwares = @gallery.search_software_titles(params[:search]).sort_by{|b| b["title"] }
+    render partial: 'gallery_software'    
+  end
+
+
   def new
     @software = Install.new_software_from_gallery(new_software_from_gallery_params)
+    @attached_services_handler = @software.attached_services_handler
     if @software.nil?
       flash[:alert] = "Unable to load blueprint."
       redirect_to installer_path
@@ -20,8 +28,13 @@ class InstallsController < ApplicationController
   end
 
   def create
-    @software = Software.new(new_software_install_params)
-    if @software.save
+    # render text: new_software_install_params
+    # render text: params
+
+    @software = Install.new_software_for_create(new_software_install_params)
+    @attached_services_handler = @software.attached_services_handler
+    @install = @software.install
+    if @software.valid?
       create_engine_build
     else
       render :new
@@ -29,10 +42,13 @@ class InstallsController < ApplicationController
   end
 
   def create_engine_build
-    engine_installation_params = Install.engine_build_params(@software)
-    Thread.new do
-      build_response = EnginesInstaller.build_engine(engine_installation_params)
-    end
+    # render text: @software.engine_build_params
+    engine_installation_params = @software.engine_build_params
+    # render text: (engine_installation_params.to_s + "<br><br>" + new_software_install_params.to_s).html_safe
+    build_thread_object_id = Thread.new do
+      EnginesInstaller.build_engine(engine_installation_params)
+    end.object_id
+    engine_installation_params[:build_thread_object_id] = build_thread_object_id
     redirect_to installing_installs_path(engine_installation_params)
   end
 
@@ -42,40 +58,43 @@ class InstallsController < ApplicationController
   end
 
   def progress
+    error = false
+    previous_line = ''
     response.headers['Content-Type'] = 'text/event-stream'
-    filename = '/home/engines/deployment/deployed/build.out'
-    File.open(filename) do |file|
-      file.extend(File::Tail)
-      file.interval = 10
-      file.backward(10000)
-      file.tail do |line|
-        # line = line [1..-2]
-        @last_line = line;
-        p line
-        send_event line
-        break if line.start_with?("Applying Volume settings and Log Permissions")
+    send_event :installation_progress, "Starting build...\n"
+    File.open('/home/engines/deployment/deployed/build.out') do |f|
+      f.extend(File::Tail)
+      f.interval = 10
+      f.backward(10000)
+      f.tail do |line|
+        send_event :installation_progress, line
+        if line.start_with?("Build Finished")
+          error = true if previous_line.start_with?("ERROR")
+          break 
+        end
+        previous_line = line
       end
     end
-    # if @last_line.start_with?("Applying Volume settings and Log Permissions") 
-      # flash[:notice] = "Software installation was successful."
-    # elsif @last_line.start_with?("ERROR")
-      # flash[:alert] = "Software installation was not successful"
-    # else
-      # flash[:alert] = "Unexpected response from software installation process"
-    # end
-
+    unless error
+      EnginesInstaller.installation_report_lines(params[:engine_name]).each do |line|
+        send_event :installation_report, line
+      end
+    end
   ensure
-    send_event "All done. Redirecting page..."
+    send_event :message, "close"
     response.stream.close
   end
 
+  # def cancel_installation
+    # render text: params  
+    # # Thread.kill(params[:build_thread_object_id])
+  # end
+
 private
 
-  def send_event message
-       unless message.blank?
-            response.stream.write "event: message\n"
-            response.stream.write "data: #{message}\n"
-       end
+  def send_event(event, data='')
+       response.stream.write "event: #{event}\n"
+       response.stream.write "data: #{data}\n\n"
   end
 
   def new_software_from_gallery_params
@@ -89,9 +108,5 @@ private
   def blueprint_params
     params.require(:blueprint)
   end
-
-  # def set_software
-  #   @software = Software.find params[:id]
-  # end
 
 end

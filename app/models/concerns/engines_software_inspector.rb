@@ -3,6 +3,8 @@ module EnginesSoftwareInspector
   {
     state: 'read_state',
     is_active: 'is_active',
+    is_running: 'is_running',
+    is_error: 'is_error',
     host_name: 'hostName',
     http_protocol: 'http_protocol',
     domain_name: 'domainName',
@@ -23,8 +25,7 @@ module EnginesSoftwareInspector
     logs_container: 'logs_container',
     environments: 'environments',
     volumes_hash: 'volumes',
-    consumers_hash: 'consumers',
-    databases_hash: 'databases'
+    consumers_hash: 'consumers'
   }.
   each do |method, instruction|
     define_method(method) do |engine_name| 

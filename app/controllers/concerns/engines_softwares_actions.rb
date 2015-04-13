@@ -26,7 +26,7 @@ module EnginesSoftwaresActions
   end 
   
   def delete_image
-    @result = EnginesSoftware.delete_image params[:id], remove_all_application_data: (params[:software][:remove_all_application_data] == '1')
+    @result = EnginesSoftware.delete_image params[:id], remove_all_application_data: (params[:remove_all_application_data] == '1')
     set_flash_messages_and_redirect
   end
   
@@ -92,7 +92,7 @@ private
       flash[:notice] = message
     else
       if @result.result_mesg.blank?
-        message = 'Unknown error. (No message in API result object.)'
+        message = 'Failed with unknown error. (No message in API result object.)'
       else
         message = @result.result_mesg[0..250]
       end
@@ -100,6 +100,5 @@ private
     end
     redirect_to control_panel_path
   end
-
 
 end

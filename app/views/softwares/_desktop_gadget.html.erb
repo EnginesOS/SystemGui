@@ -4,7 +4,7 @@
       <% if software.display.icon.exists? %>
         <%= image_tag(software.display.icon.url, class: "launcher-icon") %>
       <% end %>
-      <div class="launcher-label">
+      <div class="launcher-label" style="color: <%= @settings.icon_text_color %>;">
         <%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if EnginesSoftware.state(software.engine_name) != "running" %>
         <%= software.display.display_name %>
       </div>

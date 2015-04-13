@@ -1,80 +1,83 @@
 <div class="software_installation_form">
-<% #= params %>
-  <div class="col-sm-12 top-gap">
-    <h2><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install <%= @software.display.display_name %></h2>
-  </div>
+	<% #= params %>
+	<div class="col-sm-12">
+		<h2><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install <%= @software.display.display_name %></h2>
+	</div>
 
-  <div class="col-sm-12">
-    <div class="col-sm-2 top-gap">
-      <%= render 'shared/form/image', url: @software.install.default_image_url %>
-    </div>
+	<%= form_for @software, url: installs_path do |f| %>
 
-    <div class="col-sm-6 top-gap">
-      <%= @software.display.display_description %>
-    </div>
+	<div class="col-sm-12">
+		<%= render 'shared/form/errors', f: f %>
+	</div>
 
-    <div class="col-sm-4 clearfix">
-      <div class="btn-group-vertical top-gap pull-right">
-        <a class="btn btn-default btn-lg" data-toggle="modal" data-target="#blueprintModal">
-          <i class="fa fa-file-text"></i> Blueprint
-        </a>
-        
-        
-        
-        
-        <button type="button" class="btn btn-default btn-lg" id="new_software_form_show_advanced_fields_button">
-          <%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced install
-        </button>
-      </div>
-    </div>
-  </div>    
+	<div class="col-sm-12">
+		<div class="col-sm-2 top-gap">
+			<%= render 'shared/form/image', url: @software.install.default_image_url %>
+		</div>
 
-  <div class="col-sm-12 top-gap">
+		<div class="col-sm-6 top-gap">
+			<%= @software.display.display_description %>
+		</div>
 
-    <%= form_for @software, url: installs_path do |f| %>
+		<div class="col-sm-4 clearfix">
+			<div class="top-gap pull-right">
+				<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
+					<%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced
+				</button>
+				<div class="pull-right advanced_fields">
+					<a class="btn btn-default btn-lg" data-toggle="modal" data-target="#blueprint_modal"> <i class="fa fa-file-text"></i> Blueprint </a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-      <%= render 'shared/form/errors', f: f %>
+	<div class="col-sm-12">
+		<% if false %>
+		<div class="new_software_form_default_details">
+			<div class="col-sm-12">
+				<legend>
+					URL
+				</legend>
+			</div>
+			<%= render 'shared/form/text', text: (f.object.network.host_name.to_s + '.' + f.object.network.domain_name.to_s) %>
+		</div>
+		<% end %>
 
-<% if false %>
-      <div class="new_software_form_default_details">
-        <div class="col-sm-12">
-          <legend>URL</legend>
-        </div>
-        <%= render 'shared/form/text', text: (f.object.network.host_name.to_s + '.' + f.object.network.domain_name.to_s) %>
-      </div>
-<% end %>
+		<div class="advanced_fields">
+			<%= render 'softwares/form_fields', f: f %>
+			<!-- < %= render 'displays/form_fields', f: f %> -->
+			<%= render 'networks/form_fields', f: f %>
+			<%= render 'resources/form_fields', f: f %>
+			<%= render 'attached_services', f: f %>
+		</div>
 
+		<%= render 'software_variables/form_fields', f: f %>
+		<%= render 'form_fields', f: f %>
+		<%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..." %>
 
-      <div class="advanced_fields" style="<%= 'display: none;' if f.object.errors.blank? %>">
-        <%= render 'softwares/form_fields', f: f %>
-        <%= render 'displays/form_fields', f: f %>
-        <%= render 'networks/form_fields', f: f %>
-        <%= render 'resources/form_fields', f: f %>
-      </div>
+		<%= f.fields_for :display do |ff| %>
+		<%= ff.hidden_field :display_name %>
+		<% end %>
 
-      <%= render 'software_variables/form_fields', f: f %>
+	</div>
 
-      <%= render 'form_fields', f: f %>
-
-      <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..." %>
-
-    <% end %>
-
-  </div>
+	<% end %>
 
 </div>
 
-<div class="modal fade advanced_detail" id="blueprintModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><i class="fa fa-file-text"></i> Blueprint for <%= @software.display.display_name %></h4>
-      </div>
-      <div class="modal-body">
-      	<%= (ap JSON.parse(@software.install.blueprint), plain: true, index: false).html_safe %>
-      </div>
-    </div>
-  </div>
+<div class="modal fade advanced_detail" id="blueprint_modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title"><i class="fa fa-file-text"></i> Blueprint for <%= @software.display.display_name %></h4>
+			</div>
+			<div class="modal-body">
+				<%= (ap JSON.parse(@software.install.blueprint), plain: true, index: false).html_safe %>
+			</div>
+		</div>
+	</div>
 </div>
 

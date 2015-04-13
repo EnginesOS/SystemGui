@@ -2,10 +2,16 @@ class AttachedService < ActiveRecord::Base
 
   attr_accessor(
     :title,
-    :name,
+    :service_handle,
     :description,
-    :service_type,
-    :service_provider)
+    :type_path,
+    :publisher_namespace,
+    :persistant,
+    :create_type,
+    :parent_engine,
+    :wizard_create_type,
+    :wizard_orphan_service,
+    :wizard_active_service)
 
   belongs_to :attached_services_handler
   has_many :variables, as: :variable_consumer, dependent: :destroy
@@ -14,13 +20,26 @@ class AttachedService < ActiveRecord::Base
   accepts_nested_attributes_for :variables
   accepts_nested_attributes_for :attached_subservices
 
-  def available_subservices
-    EnginesSoftware.available_services(service_type, software.engine_name)
+
+  def attachable_active_attached_services
+    EnginesAttachedService.active_attached_services(type_path, publisher_namespace).map do |service|
+      if service[:parent_engine] == service[:service_handle]
+        service[:parent_engine]
+      else
+        "#{service[:parent_engine]} - #{service[:service_handle]}"
+      end
+    end
   end
 
-  # def reload_from_api(service_type, service_provider)
-    
-  # end
+  def attachable_orphaned_attached_services
+    EnginesAttachedService.orphaned_services(type_path, publisher_namespace).map do |service|
+      if service[:parent_engine] == service[:service_handle]
+        service[:parent_engine]
+      else
+        "#{service[:parent_engine]} - #{service[:service_handle]}"
+      end
+    end
+  end
 
 end
 

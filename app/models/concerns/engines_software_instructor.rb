@@ -13,12 +13,6 @@ module EnginesSoftwareInstructor
     restart: 'restartEngine',  
     create_container: 'createEngine',
     recreate: 'recreateEngine',
-    monitor: 'monitorEngine',  
-    demonitor: 'demonitorEngine',  
-    register_website: 'registerEngineWebSite',  
-    deregister_website: 'deregisterEngineWebSite',  
-    register_dns: 'registerEngineDNS',  
-    deregister_dns: 'deregisterEngineDNS',
     network_metrics: 'get_container_network_metrics',
     memory_statistics: 'get_engine_memory_statistics'
   }.
