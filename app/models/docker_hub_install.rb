@@ -8,11 +8,9 @@ class DockerHubInstall < ActiveRecord::Base
   accepts_nested_attributes_for :variables, :allow_destroy => true
   
   attr_accessor(
-    :memory,
     :docker_image,
     :type,
-    :user_id,
-    :self_start,
+    :run_as_user,
     :run_command,
     :new_attached_service_publisher_namespace,
     :new_attached_service_type_path,
@@ -20,6 +18,8 @@ class DockerHubInstall < ActiveRecord::Base
     :new_eport,
     :scroll_form_to,
     )
+
+  validate :docker_image_validation
 
   def self.new_software
     Software.new do |software|
@@ -32,5 +32,14 @@ class DockerHubInstall < ActiveRecord::Base
       software.network.http_protocol = "HTTPS and HTTP"
     end
   end
+  
+private
+
+  def docker_image_validation
+    if docker_image.blank?
+      errors.add(:docker_image, ["Docker image source", "is required"])
+    end
+  end
+
   
 end

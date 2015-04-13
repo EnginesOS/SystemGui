@@ -1,9 +1,9 @@
 <div class="col-md-12">
-	<h2><%= image_tag('docker_icon.png', height: '30') %> <%= params[:title] %> Install from Docker Hub</h2>
+	<h2><%= image_tag('docker_icon.png', height: '30') %> <%= params[:title] %> Install from Docker image</h2>
 </div>
 
 	<%= form_for @software, url: create_docker_hub_install_path do |f| %>
-		<%= render 'shared/form/errors', f: f %>
+		<%= render 'shared/form/errors', f: f, verb: :installed %>
 		<%= render 'form_fields_1', f: f %>
 		<%= render 'softwares/form_fields', f: f %>
 		<%#= render 'networks/form_fields', f: f %>

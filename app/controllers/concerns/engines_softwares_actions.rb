@@ -26,7 +26,7 @@ module EnginesSoftwaresActions
   end 
   
   def delete_image
-    @result = EnginesSoftware.delete_image params[:id], remove_all_application_data: (params[:remove_all_application_data] == '1')
+    @result = EnginesSoftware.delete_image params[:id], remove_all_application_data: params[:remove_all_application_data]
     set_flash_messages_and_redirect
   end
   
