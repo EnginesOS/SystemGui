@@ -6,7 +6,7 @@
 <%= ff.hidden_field :new_environment_variable %>
 <%= ff.hidden_field :new_eport %>
 
-<%= render 'shared/form/legend', text: 'Source' %>
-<%= render 'shared/form/text_field', f: ff, name: :docker_image, label: 'Docker Hub image' %>
+<%= render 'shared/form/legend', text: 'Image' %>
+<%= render 'shared/form/text_field', f: ff, name: :docker_image, label: 'Source' %>
 
 <% end %>

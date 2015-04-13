@@ -1,6 +1,6 @@
 <div class="col-md-12">
 
-  <h2><i class="fa fa-arrow-circle-right"></i> <%= params[:title] %> installation</h2>
+  <h2><i class="fa fa-arrow-circle-right"></i> Installation of <%= params[:title] %></h2>
 
   <%= link_to content_tag(:i, "", class: "fa fa-check") + ' Done', control_panel_path, 
   		class: "btn btn-primary btn-lg trigger-response-modal", id: "installation_done_button", style: "display: none;" %>
@@ -9,8 +9,12 @@
 	  } , class: 'btn btn-lg btn-danger', id: "installation_cancel_button", style: "display: none;" %>
 
   <p class="top-gap">
-    Engine: <%= params[:engine_name] %><br>
-    Host: <%= params[:host_name] %>.<%= params[:domain_name] %><br>
+  	<% if params[:engine_name].present? %>
+	    Engine: <%= params[:engine_name] %><br>
+	<% end %>
+  	<% if params[:host_name].present? && params[:domain_name].present? %>
+	    Host: <%= params[:host_name] %>.<%= params[:domain_name] %><br>
+	<% end %>
   </p>
 
 	<%= content_tag :div, class: 'top-gap', id: "installation_status", data: { returnurl: '/control_panel', enginename: params[:engine_name] } do %>

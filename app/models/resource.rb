@@ -17,6 +17,8 @@ private
   def sufficient_memory
     if memory.to_i < required_memory.to_i
       errors.add(:memory, "can't be less than #{required_memory}.")
+    elsif memory.blank?
+      errors.add(:memory, ["Memory", "is required"])
     end
   end
 
