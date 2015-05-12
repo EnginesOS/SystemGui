@@ -1,0 +1,30 @@
+<div class="col-md-12">
+
+	<h2><i class="fa fa-arrow-circle-right"></i> Installing <%= @application_installation_progress.title %></h2>
+	
+	<%= link_to content_tag(:i, "", class: "fa fa-check") + ' Done', control_panel_path, 
+	  		class: "btn btn-primary btn-lg trigger-response-modal", id: "installation_done_button", style: "display: none;" %>
+	<%= link_to content_tag(:i, "", class: "fa fa-times") + ' Cancel installation', "cancel_installation_path(build_thread_id: params[:build_thread_object_id])", data: { 
+		  confirm: "Are you sure?", confirmdetail: "Are you sure that you want to cancel the #{params[:title]} installation?"
+		  } , class: 'btn btn-lg btn-danger', id: "installation_cancel_button", style: "display: none;" %>
+	
+	<p class="top-gap">
+		Engine: <%= @application_installation_progress.application_name %><br>
+	    Host: <%= @application_installation_progress.host_name %>.<%= @application_installation_progress.domain_name %>
+	</p>
+
+	<%= content_tag :div, class: 'top-gap', id: "installation_status", data: { 
+				returnurl: '/control_panel',
+				progresspath: progress_application_installation_path(application_name: @application_installation_progress.application_name)
+			} do %>
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li class="active"><a href="#installation_progress_tab" data-toggle="tab">Log</a></li>
+	    <li><a href="#installation_report_tab" data-toggle="tab" id="installation_report_tab_button">Report</a></li>
+	  </ul>
+	  <div class="tab-content">
+	    <div class="tab-pane active" id="installation_progress_tab"><pre id="installation_progress" class="top-gap"></pre></div>
+	    <div class="tab-pane" id="installation_report_tab"><pre id="installation_report" class="top-gap"></pre></div>
+	  </div>
+	<% end %>
+</div>
+

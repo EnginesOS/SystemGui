@@ -1,0 +1,19 @@
+<div class='row'>
+
+	<div class="col-sm-12">
+		<h2><i class="fa fa-globe"></i> Domain certificate for <%= @domain_certificate.domain_name %></h2>
+	</div>
+
+	<div class="col-sm-12">
+
+		<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', domains_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+		<%= link_to content_tag(:i, "", class: "fa fa-pencil") + " Create", new_domain_certificate_path(domain_name: @domain_certificate.domain_key), class: "btn btn-lg btn-primary trigger-response-modal" %>
+
+		<div class="well top-gap">
+			certificate details
+		</div>
+
+
+	</div>
+
+</div>

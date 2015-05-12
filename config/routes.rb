@@ -1,65 +1,60 @@
 Rails.application.routes.draw do
 
   devise_for :users, :skip => :registrations
-
   mount RailsAdmin::Engine => '/admin', as: :rails_admin
+  root to: "welcome#start"
 
-  root to: redirect("/start")
+  # get "help", to: "pages#help"
+  # get "system/update", to: "system#system_update"
+  # get "settings/edit_mail", to: "settings#edit_mail"
+  # get "installs/cancel", to: "installs#cancel_installation", as: :cancel_installation
+  # get "installs/docker_hub_install", to: "docker_hub_installs#new", as: :new_docker_hub_install
+  # post "installs/docker_hub_install", to: "docker_hub_installs#create", as: :create_docker_hub_install
+  # get "/installs/docker_hub_install_attach_service", to: "docker_hub_installs#new_attached_service", as: :docker_hub_install_attach_service
+  # get "/services/delete_orphaned_attached_service", to: "services#delete_orphaned_attached_service", as: :delete_orphaned_attached_service
+  # get "/services/delete_all_orphaned_attached_services", to: "services#delete_all_orphaned_attached_services", as: :delete_all_orphaned_attached_services
 
-  get "first_run", to: "first_runs#first_run"
-  post "first_runs", to: "first_runs#submit_first_run"
-  get "start", to: "pages#start"
-  get "desktop", to: "pages#desktop"
-  get "control_panel", to: "pages#control_panel"
-  get "help", to: "pages#help"
-  get "system", to: "pages#system"
-  # get "install_progress", to: "installs#progress"
-  # get "settings", to: "settings#index"
-  get "domains/edit_default_domain", to: "domains#edit_default_domain"
-  get "domains/edit_default_website", to: "domains#edit_default_website"
-  patch "domains/update_network_settings", to: "domains#update_network_settings"
-  get "settings/edit_mail", to: "settings#edit_mail"
-  get "settings/edit_wallpaper", to: "settings#edit_wallpaper"
-  get "installer", to: "installs#installer"
-  # get "engine_install", to: "installs#engine_install", as: :engine_install
-  get "domains/:id/new_ssl_certificate", to: "domains#new_ssl_certificate", as: :new_domain_ssl_certificate
-  patch "domains/:id/create_ssl_certificate", to: "domains#create_ssl_certificate", as: :create_domain_ssl_certificate
-  get "installs/gallery_software", to: "installs#gallery_software"
-  get "services/registry", to: "services#registry"
-  get "installs/progress/:engine_name", to: "installs#progress", as: :installation_progress
-  get "installs/cancel", to: "installs#cancel_installation", as: :cancel_installation
-  get "installs/docker_hub_install", to: "docker_hub_installs#new", as: :new_docker_hub_install
-  post "installs/docker_hub_install", to: "docker_hub_installs#create", as: :create_docker_hub_install
-  get "installs/blueprint_install", to: "blueprint_installs#new", as: :new_blueprint_install
-  post "installs/blueprint_install", to: "blueprint_installs#create", as: :create_blueprint_install
-  get "/installs/docker_hub_install_attach_service", to: "docker_hub_installs#new_attached_service", as: :docker_hub_install_attach_service
-  get "/services/delete_orphaned_attached_service", to: "services#delete_orphaned_attached_service", as: :delete_orphaned_attached_service
-  get "/services/delete_all_orphaned_attached_services", to: "services#delete_all_orphaned_attached_services", as: :delete_all_orphaned_attached_services
-
-  resources :installs do
-    collection do
-      get :blueprint
-      # get :progress
-      get :installing
-    end
-  end
-
-  resources :settings
-  resources :galleries
+  resource :first_run
+  resource :desktop
+  resource :control_panel
+  resource :installer
+  resource :services_registry
+  resource :system
+  resource :user
   resources :backup_tasks
-  resources :users
-  resources :domains
-  resources :networks
-  resources :resources
-  resources :software_variables
-  resources :displays
-  resources :attached_services do
-    collection do 
-      get(:registration)
+  resource :domain
+  resources :domains, only: [:index]
+  resource :domain_certificate
+  resource :domain_settings
+  resource :desktop_settings
+  resources :galleries
+  resource :gallery_software
+  resource :gallery_settings
+  resource :network_properties
+  resource :resources_properties
+  resource :variables_properties
+  resource :display_properties
+  resource :application_report
+  resource :services_properties
+  resource :application_service
+  resource :application_subservice
+  resource :application_uninstall
+  resources :applications do
+    member do
+      get(
+        :start, :stop, :pause, :unpause, :restart,
+        :create_container, :destroy_container,
+        :reinstall, :delete_image,
+        :build, :recreate, :advanced_detail)
     end
   end
-  resources :attached_subservices
+  resource :application_installation do
+    get(:installing, :progress)
+  end
+  resource :docker_hub_installation
 
+  resource :service_report
+  resource :service_configuration
   resources :services do
     member do
       get(
@@ -75,21 +70,5 @@ Rails.application.routes.draw do
         :manager)
     end
   end
-
-  resources :softwares do
-    collection do
-      get :destroy_all_records
-    end
-    member do
-      get(
-        :start, :stop, :pause, :unpause, :restart,
-        :create_container, :destroy_container,
-        :uninstall, :reinstall, :delete_image,
-        :build, :recreate, :advanced_detail)
-    end
-    member do
-      patch(:uninstall_engine)
-    end
-  end
-
+  
 end

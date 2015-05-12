@@ -1,0 +1,32 @@
+<div class="col-sm-12">
+
+	<h2 class=''><%= content_tag(:i, "", class: "fa fa-wrench") + " Configure " + @service.label %></h2>
+
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+	<div class="top-gap">
+
+		<% @service.configurators.each do |configurator| %>
+	
+		<div class="panel panel-default">
+			<div class="panel-heading">
+	  			<%= configurator[:label] %><br>
+	  			<small><%= configurator[:description] %></small>
+			</div>
+			<div class="panel-body">
+				<small>
+					<% configurator[:params].values.each do |configuration| %>
+	  				<label><%= configuration[:label] %>:</label> <%= configuration[:value] %><br>
+	  			<% end %>
+	  			</small>
+	  			<%= link_to content_tag(:i, "", class: "fa fa-edit") + ' Edit',
+	  					edit_service_configuration_path(service_name: @service.container_name, configurator_name: configurator[:name]),
+	  					class: "btn btn-default btn-lg trigger-response-modal pull-right" %>
+			</div>
+		</div>
+	
+		<% end %>
+		
+	</div>
+
+</div>

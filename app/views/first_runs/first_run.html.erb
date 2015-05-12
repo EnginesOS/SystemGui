@@ -26,10 +26,6 @@
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"]} %>
     <div class="col-sm-12">
-      <legend>SSH</legend>
-    </div>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :ssh_password, f: f, placeholder: ["Enter", "Re-enter"], label: "SSH password"} %>
-    <div class="col-sm-12">
       <legend>MySQL</legend>
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "MySQL password"} %>

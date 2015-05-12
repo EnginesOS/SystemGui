@@ -1,30 +1,54 @@
 class ServicesController < ApplicationController
 
-  include EnginesServicesActions
+  include EnginesServicesSystemActions
 
   before_action :authenticate_user!
+  before_action :set_service
 
-  def advanced_detail
-    @service_name = params[:id]
-    render partial: "advanced_detail"
+private
+
+  def set_service
+    @service = Service.new(container_name: service_name)
   end
 
-  def registry
-    @services_tree_by_provider = EnginesService.services_tree_by_provider
-    @services_tree_by_engine = EnginesService.services_tree_by_engine
-    @services_tree_of_orphaned_services = EnginesService.services_tree_of_orphaned_services
-  end
-
-  def delete_orphaned_attached_service
-    title = params[:service][:service_container_name].to_s + " on " + params[:service][:parent_engine].to_s
-    result = EnginesAttachedService.delete_orphaned_service(params[:service])
-    if result.was_success
-      flash[:notice] = "Deleted " + title
-    else
-      flash[:alert] = "Unable to delete " + title + ". " + result.result_mesg
-    end
-    redirect_to services_registry_path
+  def service_name
+    params[:id]
   end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # def advanced_detail
+    # @service_name = params[:id]
+    # render partial: "advanced_detail"
+  # end
+# 
+# 
+# 
+  # def delete_orphaned_attached_service
+    # title = params[:service][:service_container_name].to_s + " on " + params[:service][:parent_engine].to_s
+    # result = EnginesAttachedService.delete_orphaned_service(params[:service])
+    # if result.was_success
+      # flash[:notice] = "Deleted " + title
+    # else
+      # flash[:alert] = "Unable to delete " + title + ". " + result.result_mesg
+    # end
+    # redirect_to services_registry_path
+  # end
+
+# end
 

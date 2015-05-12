@@ -1,0 +1,15 @@
+<%= f.fields_for :application do |ff| %>
+	<legend>Engine</legend>
+	<%= render partial: 'shared/form/text_field', locals: {name: :container_name, label: 'Name', tooltip: "Give the software installation a unique name.", f: ff, hint: "maximum length is 16 characters"} %>
+	<%= ff.fields_for :network_properties do |fff| %>
+		<%= render 'network_properties/form_fields', f: fff %>
+	<% end %>
+	<%= ff.fields_for :resources_properties do |fff| %>
+		<%= render 'resources_properties/form_fields', f: fff %>
+	<% end %>
+	<%= render 'variables/form_fields', f: ff %>
+	<legend>Services</legend>
+	<%= ff.fields_for :application_services do |fff| %>
+		<%= render 'application_service', f: fff %>
+	<% end %>
+<% end %>
