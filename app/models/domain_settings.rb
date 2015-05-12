@@ -4,7 +4,7 @@ class DomainSettings < ActiveRecord::Base
 
   attr_accessor :default_domain, :default_site
 
-  validate :default_domain, :default_site, presence: true
+  validates :default_domain, :default_site, presence: true
 
   def self.load
     new(
