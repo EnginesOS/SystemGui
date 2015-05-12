@@ -1,6 +1,7 @@
 class Gallery < ActiveRecord::Base
 
-  validate :url, :name, presence: true
+  validate :url, presence: true
+  validate :name, presence: true
 
   # def self.all
     # super.sort_by{|d| d.name}
