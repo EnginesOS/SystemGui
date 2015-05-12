@@ -1,0 +1,8 @@
+<% if @applications.present? %>
+    <% @applications.each do |application| %>
+        <%= render partial: "application", locals: {application: application} %>
+    <% end %>
+<% else %>
+    <p class="top-gap">Welcome to Engines. No applications are installed and running.<br>
+      Click on the button above.</p>
+<% end %>

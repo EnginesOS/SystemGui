@@ -24,6 +24,11 @@ class Variable < ActiveRecord::Base
   validate :regex_validation
   validate :value_confirmation_validation
   validate :value_present_validation
+  # validate :test_vali
+# 
+  # def test_vali
+    # errors.add(name, [label, "oops"])
+  # end
 
 private
 

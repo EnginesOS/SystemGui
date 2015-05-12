@@ -1,0 +1,17 @@
+<div class="col-sm-12">
+
+	<h2 class=''><i class='fa fa-share-alt'></i> Attached services for <%= @services_properties.application_name %></h2>
+
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+	<%= render 'new_attached_service_button' %>
+
+	<div>
+		
+		<% @services_properties.application_services.each do |application_service| %>
+			<%= render "application_service", application_service: application_service %>
+		<% end %>
+
+	</div>
+
+</div>

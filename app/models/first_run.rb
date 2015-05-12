@@ -1,9 +1,12 @@
 class FirstRun
 
+  include Engines::FirstRun
   include ActiveModel::Model
   include ActiveModel::Validations
-  # include ActiveModel::Conversion
-  # extend ActiveModel::Naming
+
+  extend Engines::Api
+
+
 
   attr_accessor(
     :admin_password,
@@ -30,10 +33,23 @@ class FirstRun
   validate :password_present_and_length_validation
   validate :admin_password_different_to_ssh_password_validation
 
+
+    def self.required?
+      engines_api.first_run_required?
+    end
+  
+    def self.submit(params)
+      engines_api.set_first_run_parameters params
+    end
+
+
+
+
+
   def password_confirmation_validation
     password_types.each do |password_name|
       if send("#{password_name.downcase}_password") != send("#{password_name.downcase}_password_confirmation")
-        errors.add(:ssh_password, ["#{password_name} passwords", "do not match"])
+        errors.add("#{password_name.downcase}_password", ["#{password_name} passwords", "do not match"])
       end
     end
   end
@@ -60,6 +76,5 @@ private
   def password_types
     ["Admin", "SSH", "MySQL", "PSQL"]
   end
-
 
 end

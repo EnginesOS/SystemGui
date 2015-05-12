@@ -1,0 +1,108 @@
+<%  application_name = application.container_name
+    engine_active = application.active?
+    state = application.state
+    if state.kind_of?(EnginesOSapiResult)
+      state = "state_error"
+    end
+    indicator_class = "indicator_" + state
+    engine_state = "engine_" + state
+    blueprint = application.blueprint_software_details
+    if blueprint.kind_of?(EnginesOSapiResult)
+      default_name = "?"
+    else
+	  default_name = blueprint['short_title'] || blueprint['full_title'] || blueprint['name']
+    end
+
+%>
+
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+  <div class="engine-gadget btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
+        <div class="icon_holder">
+          <%= image_tag(application.display_properties.icon_url, class: "engine_icon") %>
+        </div>
+      <div class="text_holder">
+        <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= content_tag(:strong, application_name) %><br>
+        <%= content_tag(:i, "", class: "fa fa-globe") + ' ' + application.fqdn %><br>
+        <%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.display_properties.title %><br>
+      </div>
+    </button>
+
+    <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
+      <li><div class="dropdown-title" %><%=application_name %></div></li>
+      <% if state == "running" %>
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop container", stop_application_path(application_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause container", pause_application_path(application_name), class: 'trigger-response-modal' %></li>
+      <% elsif state == "paused" %>
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause container", unpause_application_path(application_name), class: 'trigger-response-modal' %></li>
+      <% elsif state == "stopped" %>
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start container", start_application_path(application_name), class: 'trigger-response-modal'  %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy container", destroy_container_application_path(application_name), data: { confirm: "Are you sure?", confirmdetail: "This will delete the container." } %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate container", recreate_application_path(application_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", reinstall_application_path(application_name), class: 'trigger-response-modal' %></li>
+      <% elsif  state == "nocontainer" %>   
+        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", create_container_application_path(application_name), class: 'trigger-response-modal' %></li>
+        <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name) %></li> 
+        <li><%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", reinstall_application_path(application_name), class: 'trigger-response-modal' %></li>
+      <% else %>
+         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
+      <%  end %>
+      <li class="divider"></li>
+      <li>
+        <%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Display properties", edit_display_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+      </li>
+      <li>
+        <%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_network_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+      </li>
+      <% if engine_active == true %>
+        <li class="disabled">
+          <%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources", "#" %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources", edit_resources_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+        </li>
+      <% end %>
+      <% if engine_active == true %>
+        <li class="disabled">
+          <%= link_to content_tag(:i, "", class: "fa fa-question") + " Application variables", "#" %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to content_tag(:i, "", class: "fa fa-question") + " Application variables", edit_variables_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+        </li>
+      <% end %>
+      <li class="divider"></li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-link") + " Attached services", services_properties_path(application_name: application_name),  class: "trigger-response-modal" %>
+      </li>
+      <li class="divider"></li>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: ("#modal_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>
+      </li>
+      <li class="divider"></li>
+       <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + application.fqdn, "http://" + application.fqdn, target: application_name %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal advanced_detail" id="modal_<%= application_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced</h4>
+      </div>
+      <div class="modal-body" id="modal_<%= application_name %>_body">
+        <div class="loading_spinner">
+          <%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

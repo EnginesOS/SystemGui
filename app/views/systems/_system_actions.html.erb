@@ -1,0 +1,14 @@
+ <div class="btn-group-lg dropdown pull-right top-gap">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <i class="fa fa-crosshairs"></i>&nbsp<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+
+        	<li>
+			  <% link_body = (content_tag(:i, '', class: 'fa fa-refresh') + ' System update'.html_safe) %>
+			  <%= link_to link_body, system_path, method: :patch, class: 'btn-lg trigger-response-modal' %>
+	        </li>
+
+  </ul>
+</div>
+

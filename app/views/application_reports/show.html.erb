@@ -1,0 +1,125 @@
+<%  state = @application.state %>
+
+<div class="row">
+  <div class="col-sm-12">
+    <table>
+      <tr><td><label>Name</label></td><td><%= @application.container_name %></td></tr> 
+      <tr><td><label>Host FQDN</label></td><td><a href=http://<%= @application.fqdn %>><%= @application.fqdn %></a></td></tr> 
+      <tr><td><label>Current state</label></td><td><%= state %></td></tr>
+      <tr><td><label>Default state</label></td><td><%= @application.default_startup_state %></td></tr> 
+      <tr><td><label>Memory</label></td><td><%= @application.memory %> MB</td></tr>
+      <tr><td><label>Framework</label></td><td><%= @application.framework %>/<%= @application.runtime %></td></tr>
+      <tr><td><label>Image</label></td><td><%= @application.image %></td></tr>
+      <tr><td><label>Blue print source</label></td><td><%= @application.repo %></td></tr>
+    </table>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12 top-gap">
+
+    <label>Network activity</label>
+    <pre><table>
+      <tr><td><label>In</label></td><td><%= @application.network_metrics[:in].to_s + " bytes" %></td></tr>
+      <tr><td><label>Out</label></td><td><%= @application.network_metrics[:out].to_s + " bytes" %></td></tr>
+    </table></pre>
+
+    <label>Memory usage</label>
+    <pre><table>
+      <tr><td><label>Current</label></td><td><%= @application.memory_statistics[:current].to_s %></td></tr>
+      <tr><td><label>Maximum</label></td><td><%= @application.memory_statistics[:maximum].to_s %></td></tr>
+      <tr><td><label>Limit</label></td><td><%= @application.memory_statistics[:limit].to_s %></td></tr>
+    </table></pre>
+
+    <label>Ports</label>
+    <pre><table>
+      <tr><td>Web port: <%= @application.port || "n/a" %></td></tr>
+      <tr><td colspan=2>This port is internal to docker environ webport is always 443 and 80 externally</td></tr>
+       <% if @application.eports && @application.eports.length >0 %>
+         <tr><td colspan=2>Open Ports, Public ports are represented as internal:external port</td></tr>
+         <% @application.eports.each do |port| %>
+           <% if port != nil %>
+             <tr><td><%= port.name%></td><td><%= port.port.to_s %>:<%= port.external.to_s %> <%= port.publicFacing%></td></tr>
+           <%end%>
+         <%end%>
+       <%end%>
+    </table></pre>
+
+	<label>Last error</label>
+	<% last_error = @application.last_error %>
+	<% if last_error.present? %>
+		<pre><% last_error %></pre>		
+    <% else %>
+ 		<pre>None</pre>
+  	<% end %>
+  
+    <label>Variables</label>
+    <% software_variables = @application.build_variables_properties.variables %>
+      <% if software_variables.present? %>
+      <pre><% software_variables.each do |v|%><%= v.name %>: <%= v.value %><%end%></pre>
+    <% else %>
+      <pre>None</pre>
+    <% end %>
+
+    <label>Services</label>
+    <% services = @application.build_services_properties.application_services %>
+    <% if services.present? %>
+        <% services.each do |service|%>
+            <%= (ap service.to_json, plain: true, index: false).html_safe %>
+        <% end %>
+    <% else %>
+      <pre>None</pre>
+    <% end %>  
+
+     <label>Statistics</label>  
+    <% if state != "nocontainer" 
+      stats = @application.stats
+      if stats != nil  %>
+        <pre><table>
+          <tr><td>State: <%= stats.state  %></tr></td>
+          <tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
+          <tr><td>
+            <% if state == "stopped" %>
+              Stopped: <%=stats.stopped_ts %>
+            <% else %>
+              Started: <%=stats.started_ts %>
+            <%end%>
+          </tr></td>
+          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></tr></td>
+          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
+        </table></pre>
+      <%end%>
+    <% else %>
+      <pre>None</pre>
+     <% end %>
+  
+     <label>Processes</label>
+     <% processes = @application.ps_container %>
+     <% if processes.present? %>
+       <pre><table>
+         <% processes.each_line do |line | 
+           vals = line.split %>
+           <tr>
+             <% vals.each do |v| %>  
+               <td><%= v %></td>
+             <% end %>
+           </tr>    
+         <% end %>
+       </table></pre>
+     <% else %>
+      <pre>None</pre>
+     <% end %>
+
+    <label>Logs</label>
+     <% logs = @application.logs_container %>
+    <% if logs.present? %>
+      <pre>
+      	<%= logs %>
+	  </pre>
+    <% else %>
+      <pre>None</pre>
+     <% end %>
+
+  </div>
+</div>
