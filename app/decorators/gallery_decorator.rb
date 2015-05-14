@@ -16,3 +16,5 @@ class GalleryDecorator < Draper::Decorator
   
 
 end
+
+

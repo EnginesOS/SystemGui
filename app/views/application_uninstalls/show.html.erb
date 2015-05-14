@@ -12,7 +12,7 @@
       <p></p>
       <legend>Application data</legend>
     </div>
-    <%= render 'shared/form/checkbox', name: :remove_all_data, label: 'Remove', f: f, hint: "select to permanantly delete all application data" %>
+    <%= render 'shared/form/checkbox', name: :remove_all_data, label: 'Remove data', f: f, hint: "select to permanantly delete all application data" %>
 
     <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: control_panel_path, submit_label: 'Uninstall' %>
   <% end %>

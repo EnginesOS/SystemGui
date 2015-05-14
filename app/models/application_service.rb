@@ -24,7 +24,6 @@ def load
   load_variables
 end
 
-
 def load_variables
   variable_definitions.each do |variable_definition|
     variables.build(variable_definition)
@@ -34,9 +33,6 @@ end
 def create
   valid? && create_attached_service
 end
-
-
-
 
 def create_attached_service
   engines_api.attach_service(to_json).was_success
@@ -79,7 +75,11 @@ def to_json
   end
 
   def attached_services_hash
-    engines_api.list_attached_services_for('ManagedEngine', container_name)
+    @attached_services_hash ||= engines_api.list_attached_services_for('ManagedEngine', container_name)
+  end
+  
+  def attached_service_hash
+    @attached_service_hash ||= attached_services_hash.select{ |service| service[:publisher_namespace] == publisher_namespace && service[:type_path] == type_path }
   end
 
   def available_subservices

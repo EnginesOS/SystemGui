@@ -11,7 +11,7 @@ delete = false if delete.nil?
 		<% content = child_node.content %>
 		<% if delete && !has_children  %>
 			<%= link_to (content_tag(:i, nil, class: "fa fa-trash") + ' Delete'),
-			delete_orphaned_attached_service_path(service: (content if content.class == Hash)),
+			orphaned_application_service_path(service: (content if content.class == Hash)), method: :delete,
 			class: 'btn btn-default btn-lg pull-right',
 			data: { confirm: "Confirm", confirmdetail: "Are you sure that you want to delete this orphaned attached service?" } %>
 		<% end %>

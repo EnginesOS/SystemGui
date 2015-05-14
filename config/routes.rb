@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   resource :application_report
   resource :services_properties
   resource :application_service
+  resource :orphaned_application_service
   resource :application_subservice
   resource :application_uninstall
   resources :applications do
