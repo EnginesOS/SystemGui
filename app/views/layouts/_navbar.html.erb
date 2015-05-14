@@ -27,7 +27,7 @@
     <div class="collapse navbar-collapse" id="main-navbar-collapse">
       <ul class="nav navbar-nav">
         <li>
-          <%= link_to content_tag(:i, "", class: "fa fa-desktop"), desktop_path, title: 'Desktop', class: 'trigger-response-modal' %>
+          <%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Desktop", desktop_path, title: 'Desktop', class: 'trigger-response-modal' %>
         </li>
         <li class="<%= 'active' if active_menu_item == :control_panel %>">
           <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path, class: 'trigger-response-modal' %>

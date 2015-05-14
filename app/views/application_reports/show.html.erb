@@ -66,7 +66,7 @@
     <% services = @application.build_services_properties.application_services %>
     <% if services.present? %>
         <% services.each do |service|%>
-            <%= (ap service.to_json, plain: true, index: false).html_safe %>
+            <%= (ap service.attached_service_hash, plain: true, index: false).html_safe %>
         <% end %>
     <% else %>
       <pre>None</pre>

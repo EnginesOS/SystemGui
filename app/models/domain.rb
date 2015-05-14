@@ -27,32 +27,29 @@ class Domain < ActiveRecord::Base
     self.class.engines_api.remove_domain(domain_name: domain_name)
   end
 
+  # def key
+    # domain_name.gsub('.', '%') if !new_record?
+  # end
+#  
+  # def self.domain_name_to_key(domain_name)
+    # domain_name.gsub('.', '%')
+  # end
+#  
+  # def self.key_to_domain_name(key)
+    # key.gsub('%', '.')
+  # end
+  
+  def new_record? 
+    !domain_name.present?
+  end
+  
+  def create
+    valid? && create_domain
+  end
 
-    def key
-      domain_name.gsub('.', '%') if !new_record?
-    end
- 
-    def self.domain_name_to_key(domain_name)
-      domain_name.gsub('.', '%')
-    end
- 
-   
-    
-    def self.key_to_domain_name(key)
-      key.gsub('%', '.')
-    end
-    
-    def new_record? 
-      !domain_name.present?
-    end
-    
-    def create
-      valid? && create_domain
-    end
-
-    def update
-      valid? && update_domain
-    end
+  def update
+    valid? && update_domain
+  end
 
   def create_domain
     self.class.engines_api.add_domain(
@@ -60,10 +57,6 @@ class Domain < ActiveRecord::Base
       internal_only: internal_only == "1",
       self_hosted: self_hosted == "1").was_success
   end
-
-  # def destroy!
-    # self.class.engines_api.remove_domain(domain_name: domain_name)
-  # end
 
   def update_domain
     self.class.engines_api.update_domain(

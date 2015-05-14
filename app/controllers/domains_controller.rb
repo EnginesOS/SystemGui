@@ -17,11 +17,9 @@ class DomainsController < ApplicationController
 
   def new
     @domain = Domain.new
-    # render text: @domain.new_record?
   end
 
   def edit
-    # render text: @domain.original_domain_name
     @domain = Domain.load domain_name
   end
 
@@ -52,36 +50,14 @@ class DomainsController < ApplicationController
     end
   end
 
-# private
+private
 
-  # def set_domain
-    # @domain = Domain.new key: params[:id]
-  # end
-# 
-  # # def new_domain
-    # # @domain = Domain.new
-  # # end
-# 
-# 
-  # # def set_settings
-    # # @settings = Setting.first_or_create
-  # # end
-# 
   def domain_params
     @domain_params ||= params.require(:domain).permit!
   end
   
   def domain_name
-    Domain.key_to_domain_name(params[:domain_name])
+    params[:domain_name]
   end
-  
-#   
-  # def domain_key
-    # Domain.key_from_domain_name params[:domain][:domain_name]
-  # end
-
-  # def settings_params
-    # params.require(:setting).permit!
-  # end
   
 end

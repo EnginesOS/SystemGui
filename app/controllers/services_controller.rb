@@ -5,6 +5,17 @@ class ServicesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_service
 
+  def delete_orphaned_attached_service
+    title = params[:service][:service_container_name].to_s + " on " + params[:service][:parent_engine].to_s
+    result = EnginesAttachedService.delete_orphaned_service(params[:service])
+    if result.was_success
+      flash[:notice] = "Deleted " + title
+    else
+      flash[:alert] = "Unable to delete " + title + ". " + result.result_mesg
+    end
+    redirect_to services_registry_path
+  end
+
 private
 
   def set_service
@@ -19,36 +30,5 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  # def advanced_detail
-    # @service_name = params[:id]
-    # render partial: "advanced_detail"
-  # end
-# 
-# 
-# 
-  # def delete_orphaned_attached_service
-    # title = params[:service][:service_container_name].to_s + " on " + params[:service][:parent_engine].to_s
-    # result = EnginesAttachedService.delete_orphaned_service(params[:service])
-    # if result.was_success
-      # flash[:notice] = "Deleted " + title
-    # else
-      # flash[:alert] = "Unable to delete " + title + ". " + result.result_mesg
-    # end
-    # redirect_to services_registry_path
-  # end
-
-# end
+ 
 
