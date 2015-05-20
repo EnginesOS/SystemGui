@@ -9,7 +9,7 @@ class ApplicationServicesController < ApplicationController
 
   def create
     if @application_service.create
-      redirect_to services_properties_path(application_name: @application_service.application_name), notice: "Successfully created #{@application_service.title} for #{@application_service.application_name}."
+      redirect_to services_properties_path(application_name: @application_service.application_name), notice: "Successfully attached #{@application_service.title} to #{@application_service.application_name}."
     else
       render :new
     end

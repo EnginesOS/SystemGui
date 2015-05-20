@@ -3,6 +3,5 @@
         <%= render partial: "application", locals: {application: application} %>
     <% end %>
 <% else %>
-    <p class="top-gap">Welcome to Engines. No applications are installed and running.<br>
-      Click on the button above.</p>
+    <p class="top-gap" style="color: <%= @desktop_settings.icon_text_color %>;">No applications are running.<br>
 <% end %>

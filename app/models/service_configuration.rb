@@ -24,7 +24,7 @@ class ServiceConfiguration < ActiveRecord::Base
   end
 
   def save
-    update_service_configuration
+    update_service_configuration.was_success
   end
   
   def new_record?
@@ -34,7 +34,7 @@ class ServiceConfiguration < ActiveRecord::Base
 # private
 
   def update_service_configuration
-    engines_api.update_service_configuration engine_name: service_name, configurator_name: configurator_name, params: update_service_configuration_variables_params
+    engines_api.update_service_configuration service_name: service_name, configurator_name: configurator_name, variables: update_service_configuration_variables_params
   end
  
   def update_service_configuration_variables_params
