@@ -67,6 +67,7 @@
 
 .navbar-home {
   background-color: rgba(0,0,0,0);
+  margin-bottom: 0px;
 }
 
 /*.navbar-home .navbar-nav li a {

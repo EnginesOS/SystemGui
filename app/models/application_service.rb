@@ -48,7 +48,7 @@ def to_json
  def varaibles_params
    {}.tap do |result|
      variables.each do |variable|
-       result[variable.name] = variable.value
+       result[variable.name.to_sym] = variable.value
      end
    end
  end

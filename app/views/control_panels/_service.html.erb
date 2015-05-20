@@ -33,7 +33,7 @@
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
   		  <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_service_path(service_name), class: 'trigger-response-modal' %></li>
   		  <li class="divider"></li>
-  		  <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Rebuild", recreate_service_path(service_name), class: 'trigger-response-modal' %> </li>
+  		  <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", recreate_service_path(service_name), class: 'trigger-response-modal' %> </li>
   		<% elsif  service_state == "nocontainer" %>   
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
   			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", create_container_service_path(service_name), class: 'trigger-response-modal' %></li> 
