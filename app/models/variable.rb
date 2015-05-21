@@ -16,7 +16,8 @@ class Variable < ActiveRecord::Base
     :mandatory,
     :ask_at_build_time,
     :build_time_only,
-    :immutable
+    :immutable,
+    :missing_from_definition
   )
   
   belongs_to :variable_consumer, polymorphic: true

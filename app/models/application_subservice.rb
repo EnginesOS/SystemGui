@@ -41,7 +41,7 @@ class ApplicationSubservice < ActiveRecord::Base
     @engines_api_error = ""
     result = engines_api.attach_subservice(to_json)
     if !result.was_success
-      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create attached subservice. No result message given by engines api. Called 'attach_service' with params: #{to_json}")
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create attached subservice. No result message given by engines api. Called 'attach_subservice' with params: #{to_json}")
     end
     result.was_success
   end
