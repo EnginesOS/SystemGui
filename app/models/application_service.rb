@@ -12,7 +12,8 @@ class ApplicationService < ActiveRecord::Base
     :parent_engine,
     :wizard_create_type,
     :wizard_orphan_service,
-    :wizard_active_service
+    :wizard_active_service,
+    :engines_api_error
     )
 
   has_many :variables, as: :variable_consumer, dependent: :destroy
@@ -35,7 +36,11 @@ def create
 end
 
 def create_attached_service
-  engines_api.attach_service(to_json).was_success
+  result = engines_api.attach_service(to_json)
+  if !result.was_success
+    @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{to_json}")
+  end
+  result.was_success
 end
 
 def to_json
