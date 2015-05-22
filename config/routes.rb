@@ -35,8 +35,8 @@ Rails.application.routes.draw do
   resource :variables_properties
   resource :display_properties
   resource :application_report
-  resource :services_properties
-  resource :application_service
+  # resource :services_properties
+  resource :application_services
   resource :orphaned_application_service
   resource :application_subservice
   resource :application_uninstall

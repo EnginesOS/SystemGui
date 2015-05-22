@@ -6,89 +6,129 @@ class ApplicationService < ActiveRecord::Base
     :type_path,
     :publisher_namespace,
     :service_container_name,
-    :parent_application_name,
+    # :parent_application_name,
     :service_handle,
     :create_type,
-    :parent_engine,
+    # :parent_engine,
     :wizard_create_type,
     :wizard_orphan_service,
     :wizard_active_service,
     :engines_api_error
     )
 
+  belongs_to :application
+  has_many :application_subservices, dependent: :destroy
   has_many :variables, as: :variable_consumer, dependent: :destroy
   accepts_nested_attributes_for :variables
-
-belongs_to :application
-
-def load
-  load_variables
-end
-
-def load_variables
-  variable_definitions.each do |variable_definition|
-    variables.build(variable_definition)
-  end
-end
-
-def create
-  valid? && create_attached_service
-end
-
-def create_attached_service
-  result = engines_api.attach_service(to_json)
-  if !result.was_success
-    @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{to_json}")
-  end
-  result.was_success
-end
-
-def to_json
-    {parent_engine: application_name,
-    type_path: type_path,
-    publisher_namespace: publisher_namespace,
-    variables: varaibles_params}
- end 
- 
- def varaibles_params
-   {}.tap do |result|
-     variables.each do |variable|
-       result[variable.name.to_sym] = variable.value
-     end
-   end
- end
-
-
-  def application_name
-    parent_application_name || application.container_name
-  end
-
-
-
-
-
-  def container_name
-    application_name
-  end
-
-  def container
-    @container ||= engines_api.loadManagedEngine application_name
-  end
-
-  def available_services_hash
-    engines_api.list_avail_services_for container
-  end
-
-  def attached_services_hash
-    @attached_services_hash ||= engines_api.list_attached_services_for('ManagedEngine', container_name)
+  
+  # def load
+    # p :application_id
+    # p application_id
+    # load_variable_definitions && load_variable_values
+    # self
+  # end
+  
+  def build_for_show
+    load_subservices
+    load_variables
+    self
   end
   
-  def attached_service_hash
-    @attached_service_hash ||= attached_services_hash.select{ |service| service[:publisher_namespace] == publisher_namespace && service[:type_path] == type_path }
+  def load_variable_definitions
+    variable_definitions.each do |variable_definition|
+      variables.build(variable_definition)
+    end
   end
+   
+  def load_subservices
+    # application.attached_services_hash.each do |subservice_params|
+#       
+    # end
+  end
+   
+   
+  def load_variables
+    load_variable_definitions
+    variables.each do |variable|
+      
+      p :variable_values____________________________________________________________
+      p variable_values
+      p :variable_values____________________________________________________________
+      p variable_values.class
+      p :variable_values____________________________________________________________
+      
+      
+      if variable_values[variable.name.to_sym].present?
+        variable.value = variable_values[variable.name.to_sym]
+      end
+    end
+  end
+  
+  def variable_values
+    p :attached_service_hash
+    p attached_service_hash
+    p :attached_service_hash_______________________________________________________________________
+    attached_service_hash[:variables]
+  end
+  
+  def create
+    valid? && create_attached_service
+  end
+  
+  def create_attached_service
+    result = engines_api.attach_service(to_json)
+    if !result.was_success
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{to_json}")
+    end
+    result.was_success
+  end
+  
+  def to_json
+      {parent_engine: application_name,
+      type_path: type_path,
+      publisher_namespace: publisher_namespace,
+      variables: varaibles_params}
+   end 
+   
+   def varaibles_params
+     {}.tap do |result|
+       variables.each do |variable|
+         result[variable.name.to_sym] = variable.value
+       end
+     end
+   end
+  
 
+  # def application_name
+    # parent_application_name || application.container_name
+  # end
+# 
+# 
+# 
+# 
+# 
+  # def container_name
+    # application_name
+  # end
+# 
+  # def container
+    # @container ||= engines_api.loadManagedEngine application_name
+  # end
+# 
+  # def available_services_hash
+    # engines_api.list_avail_services_for container
+  # end
+# 
+# 
+#   
+  def attached_service_hash
+    @attached_service_hash ||= application.attached_services_hash.
+                                  select{ |service| service[:publisher_namespace] == publisher_namespace && service[:type_path] == type_path }.
+                                  first
+  end
+# 
   def available_subservices
-    available_services_hash[:subservices][type_path]
+    application.available_services_hash[:subservices][type_path]
   end
 
 ######
@@ -118,18 +158,18 @@ def to_json
   end    
 
 
-  def registered_subservices_hash
-    @application.registered_services_hash
-  end
-
-  def registered_subservices
-    []
-    # [].tap do |result|
-      # registered_services_hash.each do |registered_service|
-        # result << Engines::Applications::ServiceRegistration.new(self).build(registered_service)
-      # end
-    # end
-  end
+  # def registered_subservices_hash
+    # @application.registered_services_hash
+  # end
+# 
+  # def registered_subservices
+    # []
+    # # [].tap do |result|
+      # # registered_services_hash.each do |registered_service|
+        # # result << Engines::Applications::ServiceRegistration.new(self).build(registered_service)
+      # # end
+    # # end
+  # end
 
 
 

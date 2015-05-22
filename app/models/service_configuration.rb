@@ -20,10 +20,6 @@ class ServiceConfiguration < ActiveRecord::Base
 
   def load_variable_values
     variables.each do |variable|
-      
-p :variable
-p variable.name.to_sym      
-      
       if variable_values[variable.name.to_sym].present?
         variable.value = variable_values[variable.name.to_sym]
       end

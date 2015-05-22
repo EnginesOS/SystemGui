@@ -13,6 +13,8 @@
     <%= f.hidden_field :application_name %>
     <%= f.hidden_field :parent_service_handle %>
     <%= f.hidden_field :parent_title %>
+    <%= f.hidden_field :parent_publisher_namespace %>
+    <%= f.hidden_field :parent_type_path %>
 
 	<div class="btn-group-vertical top-gap pull-right">
 		<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
@@ -22,7 +24,7 @@
 
     <%= render partial: 'shared/form/errors', locals: {f: f, label: @application_subservice.title} %>
     <%= render partial: 'variables/form_fields', locals: {f: f} %>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: services_properties_path(application_name: @application_subservice.application_name)} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: application_services_path(application_name: @application_subservice.application_name)} %>
 
   <% end %>
 

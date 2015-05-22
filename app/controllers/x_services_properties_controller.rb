@@ -9,7 +9,8 @@ class ServicesPropertiesController < ApplicationController
 private
    
   def set_services_properties
-    @services_properties = Application.find_by(container_name: application_name).build_services_properties
+    @application = Application.find_by(container_name: application_name)
+    @services_properties = @application.services_properties.load
   end
       
   def application_name

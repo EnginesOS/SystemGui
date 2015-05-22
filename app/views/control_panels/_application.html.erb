@@ -77,7 +77,7 @@
         </li>
       <% end %>
       <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-link") + " Attached services", services_properties_path(application_name: application_name),  class: "trigger-response-modal" %>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-link") + " Attached services", application_services_path(application_name: application_name),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: ("#modal_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>

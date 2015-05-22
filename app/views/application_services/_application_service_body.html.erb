@@ -15,8 +15,10 @@
 				available_subservice[:title],
 				new_application_subservice_path(
 					application_subservice: {
-						application_name: application_service.application_name,
+						application_name: application_service.application.container_name,
 						parent_service_handle: application_service.service_handle,
+						parent_publisher_namespace: application_service.publisher_namespace,
+						parent_type_path: application_service.type_path,
 						parent_title: application_service.title,
 						type_path: available_subservice[:type_path],
 						publisher_namespace: available_subservice[:publisher_namespace]
