@@ -125,9 +125,9 @@ module Engines::Service
   # end
   
   def service_configuration_variables_for(configurator_name)
-    p "engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)"
-    p engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
-    {smarthost: "hello", smart_hostname: "holle"}
+
+    engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)[:variables]
+
   end
 
 #instructors  

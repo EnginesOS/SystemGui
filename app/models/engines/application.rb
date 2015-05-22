@@ -16,7 +16,7 @@ module Engines::Application
 
 
   def blueprint_software_details
-      blueprint['software']
+    blueprint['software']
   end
 
   def blueprint_software_name
@@ -83,6 +83,22 @@ module Engines::Application
   def memory_statistics
     engines_api.get_engine_memory_statistics(container_name)
   end
+ 
+ 
+ 
+  def attached_services_hash
+    @attached_services_hash ||= engines_api.list_attached_services_for('ManagedEngine', container_name)
+  end
+ 
+   def available_services_hash
+    @available_services_hash ||= engines_api.list_avail_services_for container
+  end
+
+  def available_services
+    available_services_hash[:services]
+  end
+
+ 
  
  #instructors
       

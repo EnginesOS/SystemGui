@@ -7,6 +7,8 @@ class ApplicationSubservice < ActiveRecord::Base
     :publisher_namespace,
     :application_name,
     :parent_service_handle,
+    :parent_publisher_namespace,
+    :parent_type_path,
     :parent_title,
     :engines_api_error
     )
@@ -49,7 +51,11 @@ class ApplicationSubservice < ActiveRecord::Base
   def to_json
     {parent_engine: application_name,
     type_path: type_path,
-    parent_service_handle: parent_service_handle,
+    parent_service: {
+      service_handle: parent_service_handle,
+      publisher_namespace: parent_publisher_namespace,
+      type_path: parent_type_path
+      },
     publisher_namespace: publisher_namespace,
     variables: varaibles_params}
   end 

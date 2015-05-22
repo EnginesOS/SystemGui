@@ -1,10 +1,15 @@
 class ApplicationServicesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_application_service
+  before_action :set_application
+  before_action :set_application_service, except: :show
+
+  def show
+    @application.load_application_services
+  end
 
   def new
-    @application_service.load_variables
+    @application_service.load_variable_definitions
   end
 
   def create
@@ -18,7 +23,11 @@ class ApplicationServicesController < ApplicationController
 private
 
   def set_application_service
-    @application_service ||= Application.find_by(container_name: application_name).application_services.build(application_service_params)
+    @application_service ||= @application.application_services.build(application_service_params)
+  end
+
+  def set_application
+    @application ||= Application.find_by(container_name: application_name)
   end
 
   def application_name

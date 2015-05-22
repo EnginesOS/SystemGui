@@ -7,7 +7,7 @@ class Application < ActiveRecord::Base
   # after_create :create_display_properties
 
   has_one :variables_properties, dependent: :destroy
-  has_one :services_properties, dependent: :destroy
+  # has_one :services_properties, dependent: :destroy
   has_one :backup_properties, dependent: :destroy
   has_one :display_properties, dependent: :destroy
   has_one :network_properties, dependent: :destroy
@@ -41,9 +41,47 @@ class Application < ActiveRecord::Base
     engines_api.list_apps.sort
   end
 
-  def display_properties
-    super || create_display_properties.set_defaults
+
+
+
+  def load_application_services
+    existing_attached_services.each do |attached_service|
+      application_services.build(attached_service).build_for_show
+    end
+    self
   end
+
+  def existing_attached_services
+    @attached_services ||= attached_services_hash.map do |attached_service_definition|
+      attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name)
+    end
+  end
+
+
+
+  # def variables_properties
+    # super || create_variables_properties
+  # end
+# 
+  # def services_properties
+    # super || create_services_properties
+  # end
+# 
+  # def backup_properties
+    # super || create_backup_properties
+  # end
+# 
+  # def display_properties
+    # super || create_display_properties.set_defaults
+  # end
+# 
+  # def network_properties
+    # super || create_network_properties
+  # end
+# 
+  # def resources_properties
+    # super || create_resources_properties
+  # end
 
 end
 
