@@ -3,8 +3,8 @@
     if service_state.kind_of?(EnginesOSapiResult)
       service_state = "state_error"
     end
-    indicator_class = "indicator_" + service_state
-    background_class = "engine_" + service_state
+    indicator_class = "indicator_" + service.state_indicator
+    background_class = "engine_" + service.state_indicator
     service_fqdn = service.fqdn
     # service_protocol = service.protocol
     if service_fqdn.kind_of?(EnginesOSapiResult)
@@ -15,7 +15,8 @@
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
   <div class="engine-gadget service btn-group">
     <button type="button" class="btn btn-default dropdown-toggle <%= background_class %>" data-toggle="dropdown">
-      <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <label><%= service_name %></label><br>
+      <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= service.state_indicator.humanize %></small>
+      <label><%= service_name %></label><br>
       <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + service.human_name %>
     </button>
     <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
@@ -30,12 +31,22 @@
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
   		  <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_service_path(service_name), class: 'trigger-response-modal' %></li>
   		<% elsif service_state == "stopped" %>
-  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
-  		  <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_service_path(service_name), class: 'trigger-response-modal' %></li>
-  		  <li class="divider"></li>
-  		  <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", recreate_service_path(service_name), class: 'trigger-response-modal' %> </li>
-  		<% elsif  service_state == "nocontainer" %>   
-        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+	  		<% if service.state_indicator == "broken" %>
+	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+	  			<li><div class="dropdown-title"><small><%= service_state.humanize %></small></div></li>
+			<% else %>
+	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
+			<% end %>
+	  	    <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_service_path(service_name), class: 'trigger-response-modal' %></li>
+  		    <li class="divider"></li>
+  		    <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", recreate_service_path(service_name), class: 'trigger-response-modal' %> </li>
+  		<% elsif  service_state == "no_container" %>   
+	  		<% if service.state_indicator == "broken" %>
+	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+	  			<li><div class="dropdown-title"><small><%= service_state.humanize %></small></div></li>
+			<% else %>
+	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+			<% end %>
   			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", create_container_service_path(service_name), class: 'trigger-response-modal' %></li> 
       <% else %>
          <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>

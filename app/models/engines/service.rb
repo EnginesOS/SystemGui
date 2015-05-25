@@ -18,11 +18,25 @@ module Engines::Service
     "#{container_name} - #{human_name}"
   end
 
-#inspectors     
-  
-  def state
-    system_service_object.read_state
+  def state_indicator
+    result = state
+    if result != default_startup_state
+      'broken'
+    else
+      result
+    end
   end
+
+  def state
+    result = system_service_object.read_state
+    if result == 'nocontainer'
+      'no_container'
+    else
+      result
+    end
+  end
+
+#inspectors     
 
   def fqdn
     system_service_object.fqdn
@@ -161,7 +175,7 @@ private
   def titles_hash
     {
      backup: 'Backup manager',
-     auth: 'Authentication',
+     auth: 'Authentication and authorization',
      dns: 'Local DNS server',
      dyndns: 'Dynamic DNS',
      ftp: 'Local FTP server',
@@ -179,8 +193,9 @@ private
      servicemanager: 'Services interaction manager',
      awsdb: 'AWS database',
      email: 'e-mail server',
-     imap: 'IMAP interface',
-     syslog: 'System logging'
+     imap: 'IMAP server',
+     syslog: 'System logging',
+     nfs: 'Network storage'
         }
       end
  

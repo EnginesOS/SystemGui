@@ -38,9 +38,26 @@ module Engines::Application
 
 
 #inspectors       
-      
-        {
-    state: 'read_state',
+     
+     def state_indicator
+       result = state
+       if result != default_startup_state
+         'broken'
+       else
+         result
+       end
+     end
+     
+    def state
+      result = container.read_state
+      if result == 'nocontainer'
+        'no_container'
+      else
+        result
+      end
+    end
+
+  {
     active?: 'is_active',
     is_running: 'is_running',
     is_error: 'is_error',
