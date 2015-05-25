@@ -123,8 +123,7 @@ class ApplicationService < ActiveRecord::Base
 #   
   def attached_service_hash
     @attached_service_hash ||= application.attached_services_hash.
-                                  select{ |service| service[:publisher_namespace] == publisher_namespace && service[:type_path] == type_path }.
-                                  first
+                                  find{ |service| service[:publisher_namespace] == publisher_namespace && service[:type_path] == type_path && service[:service_handle] == service_handle }
   end
 # 
   def available_subservices
@@ -134,6 +133,12 @@ class ApplicationService < ActiveRecord::Base
 ######
 
   def service_detail
+    
+    p :publisher_namespace
+    p publisher_namespace
+    p :type_path
+    p type_path
+    
     @service_detail ||= engines_api.software_service_definition(
                         publisher_namespace: publisher_namespace,
                         type_path: type_path)
