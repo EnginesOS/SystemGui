@@ -129,9 +129,9 @@ p attached_service
     # super || create_backup_properties
   # end
 # 
-  # def display_properties
-    # super || create_display_properties.set_defaults
-  # end
+  def display_properties
+    super || create_display_properties.set_defaults
+  end
 # 
   # def network_properties
     # super || create_network_properties
