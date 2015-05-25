@@ -42,19 +42,77 @@ class Application < ActiveRecord::Base
   end
 
 
-
-
   def load_application_services
     existing_attached_services.each do |attached_service|
-      application_services.build(attached_service).build_for_show
+
+p :attached_service
+p attached_service      
+      
+      
+      application_services.build(attached_service.delete(:subservices)) #.build_for_show
     end
     self
   end
 
   def existing_attached_services
-    @attached_services ||= attached_services_hash.map do |attached_service_definition|
-      attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name)
+    @existing_attached_services ||= application_attached_services
+  end  
+  
+  def application_attached_services
+    parent_services = []
+    child_services = []
+    attached_services_hash.each do |attached_service_definition|
+     p :attached_service_definition 
+     p attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
+      if attached_service_definition[:parent_service].nil?
+        parent_services << attached_service_definition.merge(subservices: [])
+      else
+        child_services << attached_service_definition
+      end
     end
+    
+    p :parent_services
+    p parent_services
+    p :child_services
+    p child_services
+    
+    
+    child_services.each do |child_service|
+
+    p :child_service1
+    p child_service      
+
+
+      child_service_params = {
+        publisher_namespace: child_service[:publisher_namespace],
+        type_path: child_service[:type_path],
+        service_handle: child_service[:service_handle]
+      }
+        
+
+      parent_services = parent_services.map do |parent_service|
+        
+    p :parent_service
+    p parent_service
+    p :child_service
+    p child_service      
+        
+        
+        if parent_service[:publisher_namespace] = child_service[:parent_service][:publisher_namespace] &&
+              parent_service[:type_path] = child_service[:parent_service][:type_path] &&
+              parent_service[:service_handle] = child_service[:parent_service][:service_handle]
+           parent_service[:subservices] << child_service_params
+        end
+        parent_service   
+      end
+    end
+    
+    p :parent_services
+    p parent_services
+    
+    
+    
+    parent_services
   end
 
 

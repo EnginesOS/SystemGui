@@ -1,3 +1,8 @@
+	<%= application_service.attached_service_hash #.each do |attached_subservice|
+	 %>
+
+
+
 <% if application_service.persistant %>
 
 	<% if application_service.available_subservices.present? %>
@@ -36,8 +41,6 @@
 		There are no subservices available for this service.
 	<% end %>
 
-	<%= @application.attached_services_hash #.each do |attached_subservice|
-	 %>
 	
 
 <% else %>
