@@ -63,7 +63,7 @@
     <% end %>
 
     <label>Services</label>
-    <% services = @application.build_services_properties.application_services %>
+    <% services = @application.application_services.build_for_show %>
     <% if services.present? %>
         <% services.each do |service|%>
             <%= (ap service.attached_service_hash, plain: true, index: false).html_safe %>

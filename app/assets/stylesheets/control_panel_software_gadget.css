@@ -10,11 +10,15 @@
   color: #ff7f00;
 }
 
-.indicator_stopped {
+.indicator_broken {
   color: #f00;
 }
 
-.indicator_nocontainer {
+.indicator_stopped {
+  color: #66b;
+}
+
+.indicator_no_container {
   color: #bbb;
 }
 
@@ -30,11 +34,15 @@
   background-color: #fffff9;
 }
 
-.engine_stopped {
+.engine_broken {
   background-color: #fff0f0;
 }
 
-.engine_nocontainer {
+.engine_stopped {
+  background-color: #f0f0ff;
+}
+
+.engine_no_container {
   background-color: #eee;
 }
 

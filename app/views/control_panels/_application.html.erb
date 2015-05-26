@@ -4,15 +4,15 @@
     if state.kind_of?(EnginesOSapiResult)
       state = "state_error"
     end
-    indicator_class = "indicator_" + state
-    engine_state = "engine_" + state
+    state_indicator = application.state_indicator
+    indicator_class = "indicator_" + application.state_indicator
+    engine_state = "engine_" + application.state_indicator
     blueprint = application.blueprint_software_details
     if blueprint.kind_of?(EnginesOSapiResult)
       default_name = "?"
     else
 	  default_name = blueprint['short_title'] || blueprint['full_title'] || blueprint['name']
     end
-
 %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
@@ -22,14 +22,15 @@
           <%= image_tag(application.display_properties.icon_url, class: "engine_icon") %>
         </div>
       <div class="text_holder">
-        <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <%= content_tag(:strong, application_name) %><br>
+        <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= state_indicator.humanize %></small> <br>
+		<%= content_tag(:strong, application_name) %><br>
         <%= content_tag(:i, "", class: "fa fa-globe") + ' ' + application.fqdn %><br>
         <%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.display_properties.title %><br>
       </div>
     </button>
 
     <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
-      <li><div class="dropdown-title" %><%=application_name %></div></li>
+      <li><div class="dropdown-title" %><%= application_name %></div></li>
       <% if state == "running" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop container", stop_application_path(application_name), class: 'trigger-response-modal' %></li>
@@ -38,13 +39,23 @@
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause container", unpause_application_path(application_name), class: 'trigger-response-modal' %></li>
       <% elsif state == "stopped" %>
-        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
+  		<% if state_indicator == "broken" %>
+  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+  			<li><div class="dropdown-title"><small><%= state.humanize %></small></div></li>
+		<% else %>
+  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
+		<% end %>
         <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start container", start_application_path(application_name), class: 'trigger-response-modal'  %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy container", destroy_container_application_path(application_name), data: { confirm: "Are you sure?", confirmdetail: "This will delete the container." } %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate container", recreate_application_path(application_name), class: 'trigger-response-modal' %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", reinstall_application_path(application_name), class: 'trigger-response-modal' %></li>
-      <% elsif  state == "nocontainer" %>   
-        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+      <% elsif  state == "no_container" %>   
+  		<% if state_indicator == "broken" %>
+  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+  			<li><div class="dropdown-title"><small><%= state.humanize %></small></div></li>
+		<% else %>
+            <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+		<% end %>
         <li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", create_container_application_path(application_name), class: 'trigger-response-modal' %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name) %></li> 
         <li><%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", reinstall_application_path(application_name), class: 'trigger-response-modal' %></li>
