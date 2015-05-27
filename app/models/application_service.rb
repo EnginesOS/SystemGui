@@ -19,6 +19,7 @@ class ApplicationService < ActiveRecord::Base
   belongs_to :application
   has_many :application_subservices, dependent: :destroy
   has_many :variables, as: :variable_consumer, dependent: :destroy
+  accepts_nested_attributes_for :application_subservices
   accepts_nested_attributes_for :variables
   
   # def load
@@ -27,6 +28,13 @@ class ApplicationService < ActiveRecord::Base
     # load_variable_definitions && load_variable_values
     # self
   # end
+
+
+
+
+
+
+
   
   def build_for_show
     load_subservices
@@ -84,7 +92,7 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def to_json
-      {parent_engine: application_name,
+      {parent_engine: application.container_name,
       type_path: type_path,
       publisher_namespace: publisher_namespace,
       variables: varaibles_params}
@@ -134,9 +142,9 @@ class ApplicationService < ActiveRecord::Base
 
   def service_detail
     
-    p :publisher_namespace
+    p :pppppppppppppppppppppppppppppppppppppppppppublisher_namespace
     p publisher_namespace
-    p :type_path
+    p :ttttttttttttttttttttttttttttttttttttttttttttype_path
     p type_path
     
     @service_detail ||= engines_api.software_service_definition(

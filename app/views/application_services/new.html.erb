@@ -1,8 +1,8 @@
 <div class="col-sm-12">
 
-  <h2><i class='fa fa-share-alt'></i> Attach <%= @application_service.title %> to <%= @application_service.application_name %></h2>
+  <h2><i class='fa fa-share-alt'></i> Attach <%= @application_service.title %> to <%= @application_service.application.container_name %></h2>
 
-  <%= form_for @application_service, url: application_service_path(application_name: @application_service.application_name) do |f| %>
+  <%= form_for @application_service, url: application_services_path(application_name: @application_service.application.container_name) do |f| %>
 
     <%= f.hidden_field :type_path %>
     <%= f.hidden_field :publisher_namespace %>
@@ -15,7 +15,7 @@
 
     <%= render partial: 'shared/form/errors', locals: {f: f, label: @application_service.title} %>
     <%= render partial: 'variables/form_fields', locals: {f: f} %>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: services_properties_path(application_name: @application_service.application_name)} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: application_services_path(application_name: @application_service.application.container_name)} %>
 
   <% end %>
 
