@@ -35,6 +35,67 @@ module Engines::Application
     # EnginesBackupTask.all #.select { |backup_task| backup_task.present? }
   # end
 
+  def existing_attached_services
+    @existing_attached_services ||= attached_services_with_nested_subservices
+  end  
+  
+  def attached_services_with_nested_subservices
+    parent_services = []
+    child_services = []
+    attached_services_hash.each do |attached_service_definition|
+     p :attached_service_definition 
+     p attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
+      if attached_service_definition[:parent_service].nil?
+        parent_services << attached_service_definition.merge(application_subservices: [])
+      else
+        child_services << attached_service_definition
+      end
+    end
+    
+    p :parent_services
+    p parent_services
+    p :child_services
+    p child_services
+    
+    
+    child_services.each do |child_service|
+      p :child_service1
+      p child_service      
+
+      child_service_params = {
+        publisher_namespace: child_service[:publisher_namespace],
+        type_path: child_service[:type_path],
+        service_handle: child_service[:service_handle]
+      }
+      parent_services = parent_services.map do |parent_service|
+        
+        p :parent_service
+        p parent_service
+        p :child_service
+        p child_service      
+        
+        if parent_service[:publisher_namespace] == child_service[:publisher_namespace] &&
+              parent_service[:type_path] == child_service[:type_path] &&
+              parent_service[:service_handle] == child_service[:service_handle]
+           parent_service[:application_subservices] << child_service_params
+        end
+
+        p :parent_service2
+        p parent_service
+
+        
+        parent_service   
+      end
+
+    end
+    
+    p :parent_services
+    p parent_services
+    
+    
+    
+    parent_services
+  end
 
 
 #inspectors       
