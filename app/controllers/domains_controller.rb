@@ -2,14 +2,17 @@ class DomainsController < ApplicationController
 
   before_action :authenticate_user!
 
-  include EnginesDomainsActions
+  # include EnginesDomainsActions
+# 
+  # before_action :set_settings, only: [:edit_default_domain, :edit_default_website, :update_network_settings]
 
-  before_action :set_settings, only: [:edit_default_domain, :edit_default_website, :update_network_settings]
+  # before_action :set_domain, only: [:edit, :update, :destroy]
+  # before_action :new_domain, only: [:new, :create]
 
   def index
-    EnginesMaintenance.domains_maintenance
-    @domains = Domain.all.sort_by{|domain| domain.domain_name}
-    @settings = Setting.first_or_create
+    # render text: Domain.domain_names_list
+    @domain_settings = DomainSettings.load
+    @domains = Domain.load_all
   end
 
   def new
@@ -17,61 +20,44 @@ class DomainsController < ApplicationController
   end
 
   def edit
-    @domain = Domain.find(params[:id])
+    @domain = Domain.load domain_name
   end
 
   def update
-    @domain = Domain.find(params[:id])
-    @domain.update(domain_params)
-    @domain.api_save
-    redirect_to domains_path
-  end
-
-  def update_network_settings
-    if (@settings.update(settings_params) && @settings.update_engines(settings_params))
-      redirect_to domains_path, notice: 'Network settings were successfully saved.'
+    @domain = Domain.new(domain_params.merge(original_domain_name: domain_name))
+    if @domain.update
+      redirect_to domains_path, notice: "Successfully updated #{domain_name}."
     else
-      redirect_to domains_path, alert: 'Network settings were not saved.'
+      render :new
     end
   end
 
-
   def create
     @domain = Domain.new(domain_params)
-    result = @domain.api_create
-    if result == true
-      redirect_to domains_path, notice: 'Successfully created domain.'
+    if @domain.create
+      redirect_to domains_path, notice: "Successfully created #{domain_name}."
     else
       render :new
     end
   end
 
   def destroy
-    @domain = Domain.find(params[:id])
-    if !@domain.delete
-      redirect_to domains_path, alert: 'Unable to delete domain.'
+    @domain = Domain.load domain_name
+    if @domain.destroy
+      redirect_to domains_path, notice: "Successfully deleted #{domain_name}."
     else
-      result = @domain.api_destroy
-      if result.was_success
-        redirect_to domains_path, notice: 'Successfully deleted domain.'
-      else
-        redirect_to domains_path, alert: ('Unable to delete domain. ' + result.result_mesg.to_s)[0..1000]
-      end
+      redirect_to domains_path, alert: "Unable to delete #{domain_name}."
     end
   end
 
 private
 
-  def set_settings
-    @settings = Setting.first_or_create
-  end
-
   def domain_params
-    params.require(:domain).permit!
+    @domain_params ||= params.require(:domain).permit!
   end
-
-  def settings_params
-    params.require(:setting).permit!
+  
+  def domain_name
+    params[:domain_name]
   end
   
 end

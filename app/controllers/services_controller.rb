@@ -1,19 +1,9 @@
 class ServicesController < ApplicationController
 
-  include EnginesServicesActions
+  include EnginesServicesSystemActions
 
   before_action :authenticate_user!
-
-  def advanced_detail
-    @service_name = params[:id]
-    render partial: "advanced_detail"
-  end
-
-  def registry
-    @services_tree_by_provider = EnginesService.services_tree_by_provider
-    @services_tree_by_engine = EnginesService.services_tree_by_engine
-    @services_tree_of_orphaned_services = EnginesService.services_tree_of_orphaned_services
-  end
+  before_action :set_service
 
   def delete_orphaned_attached_service
     title = params[:service][:service_container_name].to_s + " on " + params[:service][:parent_engine].to_s
@@ -26,5 +16,19 @@ class ServicesController < ApplicationController
     redirect_to services_registry_path
   end
 
+private
+
+  def set_service
+    @service = Service.new(container_name: service_name)
+  end
+
+  def service_name
+    params[:id]
+  end
+
 end
+
+
+
+ 
 

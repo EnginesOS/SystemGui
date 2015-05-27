@@ -1,0 +1,7 @@
+<% if @applications.present? %>
+    <% @applications.each do |application| %>
+        <%= render partial: "application", locals: {application: application} %>
+    <% end %>
+<% else %>
+    <p class="top-gap" style="color: <%= @desktop_settings.icon_text_color %>;">No applications are running.<br>
+<% end %>

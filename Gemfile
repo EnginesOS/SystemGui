@@ -28,6 +28,14 @@ gem 'awesome_print', '~> 1.2.0'
 
 gem 'i18n_country_select'
 
+#presentation logic
+gem 'draper', '~> 1.3'
+
+# gem "activerecord-tableless"
+
+# gem 'virtus'
+
+# gem 'activemodel-associations'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'

@@ -1,6 +1,5 @@
-<%= form_for @domain do |f| %>
+<%= form_for @domain, url: domain_path(domain_name: @domain.domain_name) do |f| %>
   <%= render partial: 'shared/form/errors', locals: {f: f} %>
-  <%= (f.hidden_field :original_domain_name, value: f.object.domain_name) if !f.object.new_record? %>
   <%= render partial: 'shared/form/text_field', locals: {name: :domain_name, label: 'Domain', f: f} %>
   <%= render partial: 'shared/form/checkbox', locals: {name: :internal_only, f: f} %>
   <%= render partial: 'shared/form/checkbox', locals: {name: :self_hosted, label: 'Self-hosted', f: f} %>

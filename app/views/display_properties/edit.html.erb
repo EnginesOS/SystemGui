@@ -1,0 +1,13 @@
+<div class="col-sm-12 top-gap app_installs">
+  <h2 class=''><i class='fa fa-desktop'></i> Edit display properties for <%= @display_properties.application_name %></h2>
+  <%= form_for @display_properties,
+					url: display_properties_path(
+  					application_name: @display_properties.application_name),
+  					method: :patch do |f| %>
+    <%= render partial: 'shared/form/errors', locals: {f: f, label: 'display properties'} %>
+    <%= render partial: 'form_fields', locals: {f: f} %>
+    <%= render partial: 'icon_field', locals: {f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
+  <% end %>
+</div>
+

@@ -1,0 +1,15 @@
+<div class="col-sm-12 top-gap">
+  <h3><i class="fa fa-certificate"></i> SSL certificate for <%= @domain_certificate.domain_name %></h3>
+
+  <%= form_for @domain_certificate, url: domain_certificate_path(domain_name: @domain_certificate.domain_key) do |f| %>
+    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :person_name, f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :organization_name, f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :city, f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :state, f: f} %>
+    <%= render partial: 'shared/form/country_select', locals: {name: :country, f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: domains_path} %>
+  <% end %>
+</div>
+
+

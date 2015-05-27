@@ -1,4 +1,4 @@
-class Eport < ActiveRecord::Base
+class ApplicationEport < ActiveRecord::Base
 
   attr_accessor(
     :name,

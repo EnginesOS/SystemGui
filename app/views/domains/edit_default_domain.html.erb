@@ -1,8 +1,0 @@
-<div class="col-sm-12">
-  <h2><i class="fa fa-bolt"></i> Default domain</h2>
-  <%= form_for @settings, url: domains_update_network_settings_path do |f| %>
-    <%= render partial: 'shared/form/errors', locals: {f: f} %>
-    <%= render partial: 'shared/form/select', locals: {name: :default_domain, label: false, f: f, collection: Domain.all.map(&:domain_name)} %>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: domains_path} %>
-  <% end %>
-</div>

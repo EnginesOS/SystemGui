@@ -16,7 +16,8 @@ class Variable < ActiveRecord::Base
     :mandatory,
     :ask_at_build_time,
     :build_time_only,
-    :immutable
+    :immutable,
+    :missing_from_definition
   )
   
   belongs_to :variable_consumer, polymorphic: true
@@ -24,6 +25,11 @@ class Variable < ActiveRecord::Base
   validate :regex_validation
   validate :value_confirmation_validation
   validate :value_present_validation
+  # validate :test_vali
+# 
+  # def test_vali
+    # errors.add(name, [label, "oops"])
+  # end
 
 private
 

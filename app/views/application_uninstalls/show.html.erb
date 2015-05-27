@@ -1,0 +1,33 @@
+<div class="col-sm-12">
+  <h2><%= content_tag(:i , nil, class: "fa fa-trash") %> Uninstall <%= @application_uninstall.application_name %></h2>
+
+  <%#= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+
+  <%= form_for @application_uninstall, url: application_uninstall_path do |f| %>
+
+    <%= render 'shared/form/hidden_field', name: :application_name, f: f %>
+
+    <div class="col-sm-12">
+      <p></p>
+      <legend>Application data</legend>
+    </div>
+    <%= render 'shared/form/checkbox', name: :remove_all_data, label: 'Remove data', f: f, hint: "select to permanantly delete all application data" %>
+
+    <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: control_panel_path, submit_label: 'Uninstall' %>
+  <% end %>
+
+
+</div>
+
+
+<% if false %>
+
+  <%= render partial: 'shared/form/checkbox', locals: {name: :host_name, tooltip: "Letters, numbers and '.'", f: ff} %>
+  <%= render partial: 'shared/form/select', locals: {name: :domain_name, collection: domains, tooltip: "Letters, numbers and '.'", f: ff} %>
+  <div class="col-sm-12">
+    <legend>HTTP protocol</legend>
+  </div>
+  <%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false, collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: ff} %>
+
+<% end %>

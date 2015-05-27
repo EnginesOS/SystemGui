@@ -1,0 +1,9 @@
+<div class="col-sm-12 top-gap app_installs">
+  <h3 class=''><i class='fa fa-sitemap'></i> Edit network properties for <%= @network_properties.application_name %></h3>
+  <%= form_for @network_properties,	url: network_properties_path(application_name: @network_properties.application_name) do |f| %>
+    <%= render partial: 'shared/form/errors', locals: {f: f, label: 'network properties'} %>
+    <%= render partial: 'form_fields', locals: {f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
+  <% end %>
+</div>
+

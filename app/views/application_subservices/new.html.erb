@@ -1,0 +1,31 @@
+<div class="col-sm-12">
+
+  <h2><i class='fa fa-share-alt'></i> Attach <%= @application_subservice.title %> to <%= @application_subservice.parent_title %> on <%= @application_subservice.application_name %></h2>
+
+  <%= form_for @application_subservice, url: application_subservice_path do |f| %>
+  		<!-- type_path: @application_subservice.type_path,
+		publisher_namespace: @application_subservice.publisher_namespace,
+		application_name: @application_subservice.application_name,
+		parent_service_handle: @application_subservice.parent_service_handle,
+		parent_title: @application_subservice.parent_title )   -->
+    <%= f.hidden_field :type_path %>
+    <%= f.hidden_field :publisher_namespace %>
+    <%= f.hidden_field :application_name %>
+    <%= f.hidden_field :parent_service_handle %>
+    <%= f.hidden_field :parent_title %>
+    <%= f.hidden_field :parent_publisher_namespace %>
+    <%= f.hidden_field :parent_type_path %>
+
+	<div class="btn-group-vertical top-gap pull-right">
+		<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
+			<%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced
+		</button>
+	</div>
+
+    <%= render partial: 'shared/form/errors', locals: {f: f, label: @application_subservice.title} %>
+    <%= render partial: 'variables/form_fields', locals: {f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: application_services_path(application_name: @application_subservice.application_name)} %>
+
+  <% end %>
+
+</div>

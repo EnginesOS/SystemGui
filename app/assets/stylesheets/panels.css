@@ -1,0 +1,8 @@
+.panel.panel-default .panel-heading {
+	background-color: #FFFFFF;
+}
+
+.panel .panel-body label {
+	font-size: 85%;
+	color: #999;
+}
