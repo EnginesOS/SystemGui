@@ -1,4 +1,4 @@
-<%  state = @application.state %>
+<% state = @application.state %>
 
 <div class="row">
   <div class="col-sm-12">
@@ -73,24 +73,26 @@
     <% end %>  
 
      <label>Statistics</label>  
-    <% if state != "nocontainer" 
-      stats = @application.stats
-      if stats != nil  %>
-        <pre><table>
-          <tr><td>State: <%= stats.state  %></tr></td>
-          <tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
-          <tr><td>
-            <% if state == "stopped" %>
-              Stopped: <%=stats.stopped_ts %>
-            <% else %>
-              Started: <%=stats.started_ts %>
-            <%end%>
-          </tr></td>
-          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></tr></td>
-          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
-        </table></pre>
-      <%end%>
-    <% else %>
+    <% if state != "no_container" 
+	       stats = @application.stats 
+	       if stats.present?  %>
+		    <pre><table>
+	          <tr><td>State: <%= stats.state  %></tr></td>
+	          <tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
+	          <tr><td>
+	            <% if state == "stopped" %>
+	              Stopped: <%=stats.stopped_ts %>
+	            <% else %>
+	              Started: <%=stats.started_ts %>
+	            <%end%>
+	          </tr></td>
+	          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></tr></td>
+	          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
+	      </table></pre>
+	     <% else %>
+	      <pre>None</pre>
+	     <% end %>
+     <% else %>
       <pre>None</pre>
      <% end %>
   
