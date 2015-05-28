@@ -3,4 +3,5 @@
 		Icon
 	</legend>
 </div>
-<%= render partial: 'shared/form/image_field', locals: {name: :icon, label: false, tooltip: "Add an icon.", f: f} %>
+<%= render 'shared/form/image_field', name: :icon, label: false, tooltip: "Add an icon.", f: f %>
+<%= render 'shared/form/checkbox', name: :reset_icon, f: f %>

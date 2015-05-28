@@ -3,35 +3,39 @@
    verb ||= :saved %>
 
 
-<% if form_object.respond_to?(:engines_api_error) %>
+<div class="row">
+	
+	<% if form_object.respond_to?(:engines_api_error) %>
+	
+	<% if form_object.engines_api_error.present? %>
+	
+	  <div class="col-sm-8 col-sm-offset-2 top-gap">
+	    <div id="error_explanation" class='well error-well'>
+			<%= form_object.engines_api_error %>
+	    </div>
+	  </div>
+	<% end %>
+	<% end %>
+	
+	
+	<% if form_object.errors.any? %>
+	  <div class="col-sm-8 col-sm-offset-2 top-gap">
+	    <div id="error_explanation" class='well error-well'>
+	      <h4><%= pluralize(form_object.errors.count, "error") %> prohibited the <%= label %> from being <%= verb %>:</h4>
+	
+	      <ul>
+	      <% form_object.errors.each do |attribute, error| %>
+	        <li>
+	          <%if error.class == Array %>
+	            <%= error.join(' ') %>
+	          <% else %>
+	            <%= [attribute.to_s.humanize, error].join(' ') %>
+	          <% end %>
+	        </li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  </div>
+	<% end %>
 
-<% if form_object.engines_api_error.present? %>
-
-  <div class="col-sm-8 col-sm-offset-2 top-gap">
-    <div id="error_explanation" class='well error-well'>
-		<%= form_object.engines_api_error %>
-    </div>
-  </div>
-<% end %>
-<% end %>
-
-
-<% if form_object.errors.any? %>
-  <div class="col-sm-8 col-sm-offset-2 top-gap">
-    <div id="error_explanation" class='well error-well'>
-      <h4><%= pluralize(form_object.errors.count, "error") %> prohibited the <%= label %> from being <%= verb %>:</h4>
-
-      <ul>
-      <% form_object.errors.each do |attribute, error| %>
-        <li>
-          <%if error.class == Array %>
-            <%= error.join(' ') %>
-          <% else %>
-            <%= [attribute.to_s.humanize, error].join(' ') %>
-          <% end %>
-        </li>
-      <% end %>
-      </ul>
-    </div>
-  </div>
-<% end %>
+</div>

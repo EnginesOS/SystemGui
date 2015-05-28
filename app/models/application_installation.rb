@@ -7,7 +7,7 @@ class ApplicationInstallation < ActiveRecord::Base
     :gallery_url,
     :gallery_software_id,
     :license_terms_and_conditions,
-    :advanced_installation
+    :advanced_selected
     )
     
   has_one :application
@@ -71,13 +71,16 @@ class ApplicationInstallation < ActiveRecord::Base
     blueprint_software[:name]
   end
 
-
   def blueprint
-    JSON.parse(software_definition[:blueprint]).symbolize_keys
+    @blueprint ||= Engines::Repository.new(repository_url).blueprint
   end
+
+  # def blueprint_from_gallery
+    # JSON.parse(software_definition[:blueprint]).symbolize_keys
+  # end
   
   def blueprint_software
-    blueprint[:software].symbolize_keys
+    @blueprint_software ||= blueprint[:software].symbolize_keys
   end
 
   def software_definition
@@ -103,6 +106,10 @@ class ApplicationInstallation < ActiveRecord::Base
 
 
   def load_application_params
+    
+p :_______________________________________________blueprint_software_variables
+p blueprint_software[:variables]
+    
     {
       container_name: unique_application_name,
 
@@ -129,9 +136,9 @@ class ApplicationInstallation < ActiveRecord::Base
                   type_path: service_configuration[:type_path]
                 }
       if ApplicationService.new(params).persistant
-        params        
-      end.compact
-    end
+        params              
+      end
+    end.compact
   end
 
 
