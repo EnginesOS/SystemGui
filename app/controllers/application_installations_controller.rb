@@ -7,10 +7,6 @@ class ApplicationInstallationsController < ApplicationController
 
   def new
     @application_installation = ApplicationInstallation.new(software_params).load
-    request.cookies.delete "advanced_selected"
-
-
-
   end
 
   def create
@@ -63,7 +59,7 @@ private
   end
 
   def software_params
-    params.permit(:gallery_url, :gallery_software_id, :title, :application_name, :host_name, :domain_name)
+    params.permit(:repository_url, :title, :application_name, :host_name, :domain_name)
   end
 
   def application_installation_params

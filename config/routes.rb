@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resource :first_run
   resource :desktop
   resource :control_panel
+  resource :control_panel_applications
   resource :installer
   resource :services_registry
   resource :system
@@ -53,7 +54,7 @@ Rails.application.routes.draw do
     get(:installing, :progress)
   end
   resource :docker_hub_installation
-  resource :repository_url_installation
+  resource :repository_url_installations
 
   resource :service_report
   resource :service_configuration

@@ -4,7 +4,7 @@ class Application < ActiveRecord::Base
   extend Engines::Api
 
   # attr_accessor :remove_all_application_data
-  # after_create :create_display_properties
+  # after_create :setup_display_properties
 
   has_one :variables_properties, dependent: :destroy
   # has_one :services_properties, dependent: :destroy
@@ -29,8 +29,17 @@ class Application < ActiveRecord::Base
   
   def self.load_all
     application_container_names_list.map do |container_name|
-      where(container_name: container_name).first_or_create
+      load_by_container_name(container_name)
     end
+  end
+
+  def self.load_by_container_name(container_name)
+    application = where(container_name: container_name).first_or_create
+    application.save
+    if application.display_properties.blank?
+      application.build_display_properties.set_defaults.save
+    end
+    application
   end
   
   def self.desktop_applications
@@ -70,10 +79,10 @@ p attached_service
   # def backup_properties
     # super || create_backup_properties
   # end
-# 
-  def display_properties
-    super || create_display_properties.set_defaults
-  end
+# # 
+  # def loaded_display_properties
+    # display_properties || 
+  # end
 # 
   # def network_properties
     # super || create_network_properties
