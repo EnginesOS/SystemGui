@@ -7,6 +7,10 @@ class ApplicationInstallationsController < ApplicationController
 
   def new
     @application_installation = ApplicationInstallation.new(software_params).load
+    request.cookies.delete "advanced_selected"
+
+
+
   end
 
   def create

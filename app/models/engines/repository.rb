@@ -1,33 +1,37 @@
-module EnginesRepository
+class Engines::Repository
 
-  def self.blueprint_from_repository repository_params
-    load_blueprint repository_params[:repository_url]
+  def initialize(repository_url)
+    @repository_url = repository_url
   end
 
-  # def self.software_params_from_blueprint repository_params
+  def blueprint
+    @blueprint ||= load_blueprint
+  end
+
+  # def software_params_from_blueprint repository_params
   #   blueprint_from_repository(repository_params)[:software]
   # end
 
 private
 
-  def self.load_blueprint repository_url
-    buildname = File.basename(repository_url)
+  def load_blueprint
+    buildname = File.basename(@repository_url)
     segments = buildname.split('.')
     buildname = segments[0]
-    clone_repo(repository_url,buildname)
+    clone_repo buildname
     blueprint_filename =  SysConfig.DeploymentDir + "/" + buildname + "/blueprint.json"
     blueprint_json_str = File.read(blueprint_filename)
     bluePrint = JSON.parse(blueprint_json_str)
     return bluePrint.symbolize_keys!
   end
 
-  def self.clone_repo(repo, buildname)
-    backup_lastbuild repo
-    Git.clone(repo, buildname, path: SysConfig.DeploymentDir)
+  def clone_repo(buildname)
+    backup_lastbuild
+    Git.clone(@repository_url, buildname, path: SysConfig.DeploymentDir)
   end
 
-  def self.backup_lastbuild repo
-    buildname = File.basename(repo)
+  def backup_lastbuild
+    buildname = File.basename(@repository_url)
     segments = buildname.split('.')   
     buildname = segments[0]
     dir = SysConfig.DeploymentDir + "/" + buildname

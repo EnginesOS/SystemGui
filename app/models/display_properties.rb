@@ -2,7 +2,7 @@ class DisplayProperties < ActiveRecord::Base
 
   include Rails.application.routes.url_helpers
 
-  attr_accessor :delete_icon
+  attr_accessor :delete_icon, :reset_icon
   has_attached_file :icon, dependent: :destroy
   validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
   before_validation { icon.clear if delete_icon == '1' }
@@ -33,6 +33,27 @@ class DisplayProperties < ActiveRecord::Base
     self
   end
 
+  def update(params)
+    result = super params
+    
+p :_________________________________________________________reset_icon
+p reset_icon
+
+    
+    
+    if reset_icon
+      reset_icon_to_default
+    end
+    result 
+  end
+
+  def reset_icon_to_default
+    self.icon = file_from_default_icon_url
+    self.reset_icon = false
+    self.save
+    self
+  end
+
   def icon_url_from_blueprint
     application.blueprint_software_details["icon_url"]
   end
@@ -40,7 +61,7 @@ class DisplayProperties < ActiveRecord::Base
 private
 
   def default_icon_url
-    @icon_url ||= ( icon_url_from_blueprint )
+    @icon_url ||= icon_url_from_blueprint
   end
 
   def file_from_default_icon_url

@@ -6,11 +6,21 @@ $(document).ready(function() {
     );
 
     $(".advanced_fields").hide();
-    $(".attach_service_fields .advanced_fields").show();
+    // $(".attach_service_fields .advanced_fields").show();
     $("#show_advanced_fields_button").click(function() {
-      $("#show_advanced_fields_button").hide();
-      $(".new_software_form_default_details").slideUp();
+      $(this).hide();
+      // $(".new_software_form_default_details").slideUp();
       $(".advanced_fields").slideDown();
+
+	  $("#application_installation_advanced_selected").val("1");
+
+
     });
+
+	if ( $("#application_installation_advanced_selected").val() == "1" ) {
+		$("#show_advanced_fields_button").click();
+	};
+
+
 
 });
