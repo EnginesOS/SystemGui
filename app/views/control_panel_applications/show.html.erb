@@ -1,4 +1,5 @@
-<%  application_name = application.container_name
+<%  application = @application
+	application_name = application.container_name
     engine_active = application.active?
     state = application.state
     if state.kind_of?(EnginesOSapiResult)

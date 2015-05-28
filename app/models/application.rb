@@ -29,15 +29,18 @@ class Application < ActiveRecord::Base
   
   def self.load_all
     application_container_names_list.map do |container_name|
-      application = where(container_name: container_name).first_or_create
-      application.save
-      if application.display_properties.blank?
-        application.build_display_properties.set_defaults.save
-      end
-      application
+      load_by_container_name(container_name)
     end
   end
 
+  def self.load_by_container_name(container_name)
+    application = where(container_name: container_name).first_or_create
+    application.save
+    if application.display_properties.blank?
+      application.build_display_properties.set_defaults.save
+    end
+    application
+  end
   
   def self.desktop_applications
     load_all.select { |application| application.show_on_desktop? }    
