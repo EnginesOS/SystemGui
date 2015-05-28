@@ -25,9 +25,9 @@
 
 	<div class="col-sm-12">
 
-		<%= form_for @application_installation, url: application_installation_path do |f| %>
-			<%= f.hidden_field :gallery_url %>
-			<%= f.hidden_field :gallery_software_id %>
+		<%= form_for @application_installation, url: application_installation_path(title: @application_installation.title) do |f| %>
+			<%= f.hidden_field :repository_url %>
+			<%= f.hidden_field :software_title %>
 			<%= f.hidden_field :advanced_selected %>
 
 			<%= render 'shared/form/errors', f: f %>

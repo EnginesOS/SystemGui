@@ -2,6 +2,10 @@ class Engines::Repository
 
   def initialize(repository_url)
     @repository_url = repository_url
+    
+p "@repository_url = "
+p @repository_url  
+    
   end
 
   def blueprint
