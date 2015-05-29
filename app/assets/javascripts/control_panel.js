@@ -1,21 +1,21 @@
 $(document).ready(function(){
 
 
-    function load_control_panel_applications(){
-	    $(".control_panel .application").each ( function(){
+    function load_control_panel_objects(){
+	    $(".control_panel .control_panel_object").each ( function(){
 	    	var applicationName = $(this).attr('id');
-	      	load_control_panel_application($(this));
+	      	load_control_panel_object($(this));
 	    }); 
 	}
     
-    load_control_panel_applications(); 
+    load_control_panel_objects(); 
     setInterval(function(){
-	    load_control_panel_applications(); 
+	    load_control_panel_objects(); 
 	}, 10000);
     
     
     
-    function load_control_panel_application(obj) {
+    function load_control_panel_object(obj) {
 
       var url = obj.attr("data-url");
 
