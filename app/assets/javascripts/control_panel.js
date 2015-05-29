@@ -1,46 +1,15 @@
 $(document).ready(function(){
 
 
-    function load_control_panel_applications(){
-	    $(".control_panel .application").each ( function(){
-	    	var applicationName = $(this).attr('id');
-	      	load_control_panel_application($(this));
-	    }); 
-	}
-    
-    load_control_panel_applications(); 
-    setInterval(function(){
-	    load_control_panel_applications(); 
-	}, 10000);
-    
-    
-    
-    function load_control_panel_application(obj) {
+    $(".advanced_menu_item").click(function () {
 
-      var url = obj.attr("data-url");
-
-	  var exisitng_html = obj.html().replace("btn-group open", "btn-group"); 
-
-      $.ajax({
-          url: url,
-          cache: false,
-          success: function(html){
-          	$("#html_holder").html( html );
-          	html = $("#html_holder").html();
-          	// alert(exisitng_html.length);
-          	// alert(html.length);
-            if ( html != exisitng_html ) {
-            	obj.html( html );
-            };
-          }
-      });
-
-    };
-
-
-
+    	alert('hi');
+    	
+    });
 
     $(".advanced_menu_item").click(function () {
+
+    	
       modal_id = $(this).attr("data-target");
       modal_body_id = modal_id + "_body";
 
@@ -55,6 +24,46 @@ $(document).ready(function(){
       });
 
     });
+
+
+
+    function load_control_panel_objects(){
+	    $(".control_panel .control_panel_object").each ( function(){
+	    	var applicationName = $(this).attr('id');
+	      	load_control_panel_object($(this));
+	    }); 
+	}
+    
+    load_control_panel_objects(); 
+    setInterval(function(){
+	    // load_control_panel_objects(); 
+	}, 60000);
+    
+    
+    
+    function load_control_panel_object(obj) {
+
+      var url = obj.attr("data-url");
+
+	  var last_load = obj.next().html();
+
+      $.ajax({
+          url: url,
+          cache: false,
+          success: function(html){
+          	// html = $("#html_holder").html();
+          	// alert(exisitng_html.length);
+          	// alert(html.length);
+          	obj.next().next().text( html );
+            if ( obj.next().next().text() != obj.next().text() ) {
+	          	obj.next().text( html );
+            	obj.html( html );
+            };
+          }
+      });
+
+    };
+
 
 });
 

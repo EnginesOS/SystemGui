@@ -107,9 +107,18 @@
   /*border-radius: 0px;*/
 }
 
-.application_placeholder {
-	font-size: 0.8em;
+.application .control_panel_object_placeholder{
 	height: 100px;
+	padding-top: 35px;
+}
+
+.service .control_panel_object_placeholder{
+	height: 60px;
+	padding-top: 20px;
+}
+
+.control_panel_object_placeholder {
+	font-size: 0.8em;
 	width: 100%;
 	margin-left: 0px;
 	margin-right: 0px;
@@ -119,7 +128,6 @@
 	word-wrap: break-word;
 	text-align: center;
     vertical-align: middle;
-	padding-top: 35px;
 	color: #333;
   background-color: #fff;
   border: 1px solid #ccc;
