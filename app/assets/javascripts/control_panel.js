@@ -1,19 +1,19 @@
 $(document).ready(function(){
 
 
-    $(".advanced_menu_item").click(function () {
+	function bind_advanced_detail(obj) {
+	    obj.find(".advanced_menu_item").click(function () {
+	    	load_advanced_details_modal($(this));
+	    });
+	};
 
-    	alert('hi');
+    function load_advanced_details_modal(obj) {
+
     	
-    });
-
-    $(".advanced_menu_item").click(function () {
-
-    	
-      modal_id = $(this).attr("data-target");
+      modal_id = obj.attr("data-target");
       modal_body_id = modal_id + "_body";
 
-      url = $(this).attr("data-url");
+      url = obj.attr("data-url");
 
       $.ajax({
           url: url,
@@ -23,7 +23,7 @@ $(document).ready(function(){
           }
       });
 
-    });
+    };
 
 
 
@@ -58,6 +58,7 @@ $(document).ready(function(){
             if ( obj.next().next().text() != obj.next().text() ) {
 	          	obj.next().text( html );
             	obj.html( html );
+            	bind_advanced_detail(obj);
             };
           }
       });
