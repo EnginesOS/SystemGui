@@ -175,7 +175,7 @@ private
   def titles_hash
     {
      backup: 'Backup manager',
-     auth: 'Authentication and authorization',
+     auth: 'Authenticate and authorize',
      dns: 'Local DNS server',
      dyndns: 'Dynamic DNS',
      ftp: 'Local FTP server',
