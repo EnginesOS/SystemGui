@@ -5,8 +5,14 @@ class Service < ActiveRecord::Base
 
   def self.load_all
     service_container_names_list.map do |container_name|
-      where(container_name: container_name).new
+      load_by_container_name(container_name)
     end
+  end
+
+  def self.load_by_container_name(container_name)
+    service = where(container_name: container_name).first_or_create
+    service.save
+    service
   end
 
   def self.service_container_names_list

@@ -1,15 +1,17 @@
 $(document).ready(function(){
 
-    $(".control_panel .application").each ( function(){
-    	var applicationName = $(this).attr('id');
 
-    	
-    	
-    	
-    	
-    	
-      	load_control_panel_application($(this));
-    }); 
+    function load_control_panel_applications(){
+	    $(".control_panel .application").each ( function(){
+	    	var applicationName = $(this).attr('id');
+	      	load_control_panel_application($(this));
+	    }); 
+	}
+    
+    load_control_panel_applications(); 
+    setInterval(function(){
+	    load_control_panel_applications(); 
+	}, 10000);
     
     
     
@@ -17,11 +19,19 @@ $(document).ready(function(){
 
       var url = obj.attr("data-url");
 
+	  var exisitng_html = obj.html().replace("btn-group open", "btn-group"); 
+
       $.ajax({
           url: url,
           cache: false,
           success: function(html){
-            obj.html(html);
+          	$("#html_holder").html( html );
+          	html = $("#html_holder").html();
+          	// alert(exisitng_html.length);
+          	// alert(html.length);
+            if ( html != exisitng_html ) {
+            	obj.html( html );
+            };
           }
       });
 

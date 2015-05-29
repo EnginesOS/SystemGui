@@ -110,12 +110,13 @@ module Engines::Application
      end
      
     def state
-      result = container.read_state
-      if result == 'nocontainer'
-        'no_container'
-      else
-        result
-      end
+      @state ||=  
+        result = container.read_state
+        if result == 'nocontainer'
+          'no_container'
+        else
+          result
+        end
     end
 
   {
