@@ -1,21 +1,47 @@
-<div class="col-sm-8 col-sm-offset-2">
-  <div class="form-group">
-    <% if label != false %>
-      <%  label ||= name.to_s.humanize.capitalize %>
-      <%= f.label name, class: 'control-label' do %>
-        <%= label %>?
-      <% end %>
-    <% end %>
+<%  label = label.nil? ? name.to_s.humanize.capitalize : label
+    tooltip ||= nil
+    hint ||= nil
+    comment ||= nil
+    errors ||= f.object.errors[name]
+    errors_class = "field_with_errors" if errors.present? %>
 
+<div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
+  <div class="form-group">
+    <% if label.present? %>
+	    <%= f.label name, class: 'control-label' do %>
+	      <%= label %>
+	    <% end %>
+    <% end %>
+    <%= comment %>
     <% if f.object.send(name).present? %>
       <div class='form-image-control'>
         <div class='form-image-centering'>
           <%= image_tag(f.object.send(name).url, class: 'form-image') %><br>
-          <%= f.check_box('delete_' + name.to_s) %> <%= label_tag :delete %>
         </div>
       </div>
+      <%= f.check_box('delete_' + name.to_s) %> Delete
     <% end %>
-    <%= f.file_field name, class: 'choose_file_form_control' %>
-
+    <%= f.file_field name, class: 'choose_file_form_control top-gap' %>
+    <% if errors.present? %>
+      <div class='form-field-errors'>
+        <% errors.each do |error| %>
+          <%if error.class == Array %>
+            <%= error[1] %>
+          <% else %>
+            <%= error %>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <% if hint.present? %>
+        <div class='form-field-hint'>
+          <%= hint %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
+
+
+
+

@@ -4,7 +4,7 @@ class Application < ActiveRecord::Base
   extend Engines::Api
 
   # attr_accessor :remove_all_application_data
-  # after_create :create_display_properties
+  # after_create :setup_display_properties
 
   has_one :variables_properties, dependent: :destroy
   # has_one :services_properties, dependent: :destroy
@@ -29,8 +29,17 @@ class Application < ActiveRecord::Base
   
   def self.load_all
     application_container_names_list.map do |container_name|
-      where(container_name: container_name).first_or_create
+      load_by_container_name(container_name)
     end
+  end
+
+  def self.load_by_container_name(container_name)
+    application = where(container_name: container_name).first_or_create
+    application.save
+    if application.display_properties.blank?
+      application.build_display_properties.set_defaults.save
+    end
+    application
   end
   
   def self.desktop_applications
@@ -45,75 +54,17 @@ class Application < ActiveRecord::Base
   def load_application_services
     existing_attached_services.each do |attached_service|
 
-p :attached_service
+attached_service = attached_service.except(:application_subservices)
+
+p :__________________________________________________________________________________________________________________attached_service
 p attached_service      
+
       
-      
-      application_services.build(attached_service.delete(:subservices)) #.build_for_show
+      application_services.build(attached_service) #.build_for_show
     end
     self
   end
 
-  def existing_attached_services
-    @existing_attached_services ||= application_attached_services
-  end  
-  
-  def application_attached_services
-    parent_services = []
-    child_services = []
-    attached_services_hash.each do |attached_service_definition|
-     p :attached_service_definition 
-     p attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
-      if attached_service_definition[:parent_service].nil?
-        parent_services << attached_service_definition.merge(subservices: [])
-      else
-        child_services << attached_service_definition
-      end
-    end
-    
-    p :parent_services
-    p parent_services
-    p :child_services
-    p child_services
-    
-    
-    child_services.each do |child_service|
-
-    p :child_service1
-    p child_service      
-
-
-      child_service_params = {
-        publisher_namespace: child_service[:publisher_namespace],
-        type_path: child_service[:type_path],
-        service_handle: child_service[:service_handle]
-      }
-        
-
-      parent_services = parent_services.map do |parent_service|
-        
-    p :parent_service
-    p parent_service
-    p :child_service
-    p child_service      
-        
-        
-        if parent_service[:publisher_namespace] = child_service[:parent_service][:publisher_namespace] &&
-              parent_service[:type_path] = child_service[:parent_service][:type_path] &&
-              parent_service[:service_handle] = child_service[:parent_service][:service_handle]
-           parent_service[:subservices] << child_service_params
-        end
-        parent_service   
-      end
-    end
-    
-    p :parent_services
-    p parent_services
-    
-    
-    
-    parent_services
-  end
 
 
 
@@ -128,10 +79,10 @@ p attached_service
   # def backup_properties
     # super || create_backup_properties
   # end
-# 
-  def display_properties
-    super || create_display_properties.set_defaults
-  end
+# # 
+  # def loaded_display_properties
+    # display_properties || 
+  # end
 # 
   # def network_properties
     # super || create_network_properties

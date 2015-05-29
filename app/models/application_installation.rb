@@ -4,10 +4,12 @@ class ApplicationInstallation < ActiveRecord::Base
   include Engines::Api
 
   attr_accessor(
-    :gallery_url,
-    :gallery_software_id,
+    # :gallery_url,
+    # :gallery_software_id,
+    :repository_url,
+    :software_title,
     :license_terms_and_conditions,
-    :advanced_installation
+    :advanced_selected
     )
     
   has_one :application
@@ -17,6 +19,7 @@ class ApplicationInstallation < ActiveRecord::Base
 
   def load
     build_application(load_application_params)
+    @software_title = title
     self
   end
   
@@ -30,9 +33,8 @@ class ApplicationInstallation < ActiveRecord::Base
 
   def installing_params
     {
-      gallery_url: gallery_url,
-      gallery_software_id: gallery_software_id,
-      title: title,
+      repository_url: repository_url,
+      title: software_title,
       application_name: application.container_name,
       host_name: application.network_properties.host_name,
       domain_name: application.network_properties.domain_name
@@ -40,15 +42,15 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def icon_url
-    software_definition[:icon_url_from_gallery] || software_definition[:icon_url_from_blueprint]
+    blueprint_software[:icon_url]
   end
 
   def description
-    software_definition[:detail]
+    blueprint_software[:description]
   end
 
   def title
-    software_definition[:title]
+    blueprint_software[:short_title]
   end
 
   def license_label
@@ -59,42 +61,47 @@ class ApplicationInstallation < ActiveRecord::Base
     blueprint_software[:license_sourceurl]
   end
   
-  def repository_url
-    software_definition[:repository_url]
+  def resolved_repository_url
+    p :repository_url
+    p repository_url
+    repository_url # || software_definition[:repository_url]
   end
-  
+
   def browser_target
     license_label.underscore
   end
-  
+
   def default_name
     blueprint_software[:name]
   end
 
-
   def blueprint
-    JSON.parse(software_definition[:blueprint]).symbolize_keys
+    @blueprint ||= Engines::Repository.new(resolved_repository_url).blueprint
   end
+
+  # def blueprint_from_gallery
+    # JSON.parse(software_definition[:blueprint]).symbolize_keys
+  # end
   
   def blueprint_software
-    blueprint[:software].symbolize_keys
+    @blueprint_software ||= blueprint[:software].symbolize_keys
   end
 
-  def software_definition
-    @software_definition ||= (
-      return nil if (gallery_url.blank? || gallery_software_id.blank?)
-      blueprint_uri = URI(gallery_url + "/" +  gallery_software_id)
-      return nil if (blueprint_uri.host.nil? || blueprint_uri.port.nil?)
-      Net::HTTP.start(blueprint_uri.host, blueprint_uri.port) do |http|
-        blueprint_request = Net::HTTP::Get.new blueprint_uri
-        blueprint_response = http.request blueprint_request
-        if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400
-          JSON.parse(blueprint_response.body).symbolize_keys
-        else
-          nil
-        end    
-      end )
-  end
+  # def software_definition
+    # @software_definition ||= (
+      # return nil if (gallery_url.blank? || gallery_software_id.blank?)
+      # blueprint_uri = URI(gallery_url + "/" +  gallery_software_id)
+      # return nil if (blueprint_uri.host.nil? || blueprint_uri.port.nil?)
+      # Net::HTTP.start(blueprint_uri.host, blueprint_uri.port) do |http|
+        # blueprint_request = Net::HTTP::Get.new blueprint_uri
+        # blueprint_response = http.request blueprint_request
+        # if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400
+          # JSON.parse(blueprint_response.body).symbolize_keys
+        # else
+          # nil
+        # end    
+      # end )
+  # end
 
   def default_http_protocol
     blueprint_protocol = blueprint_software[:http_protocol]
@@ -105,7 +112,6 @@ class ApplicationInstallation < ActiveRecord::Base
   def load_application_params
     {
       container_name: unique_application_name,
-
       variables_attributes: blueprint_software[:variables],
       network_properties_attributes: {
         host_name: unique_host_name,
@@ -129,9 +135,9 @@ class ApplicationInstallation < ActiveRecord::Base
                   type_path: service_configuration[:type_path]
                 }
       if ApplicationService.new(params).persistant
-        params        
-      end.compact
-    end
+        params              
+      end
+    end.compact
   end
 
 
@@ -190,7 +196,7 @@ class ApplicationInstallation < ActiveRecord::Base
       memory: application.resources_properties.memory,
       variables: engine_build_variables_params,
       attached_services: engine_build_attached_services_params,
-      repository_url: repository_url
+      repository_url: resolved_repository_url
     }
   end
   

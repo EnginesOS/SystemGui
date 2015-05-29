@@ -1,6 +1,6 @@
 <%  label = label.nil? ? name.to_s.humanize.capitalize : label
     tooltip ||= nil 
-    value = value.nil? ? f.object.send(name) : value
+    value = value.nil? ? f.object.send(name) : value 
     value = [false, 0, nil, "0", "false", "n", "no", "N", "No", "NO"].exclude?(value)
     hint ||= nil
     comment ||= nil

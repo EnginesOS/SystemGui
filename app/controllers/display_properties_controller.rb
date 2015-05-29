@@ -25,7 +25,7 @@ private
   end
 
   def display_properties_params
-    params.require(:display_properties).permit(:title, :detail, :icon)
+    @display_properties_params ||= params.require(:display_properties).permit! #(:title, :detail, :icon)
   end
 
 end

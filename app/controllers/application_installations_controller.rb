@@ -59,7 +59,7 @@ private
   end
 
   def software_params
-    params.permit(:gallery_url, :gallery_software_id, :title, :application_name, :host_name, :domain_name)
+    params.permit(:repository_url, :title, :application_name, :host_name, :domain_name)
   end
 
   def application_installation_params

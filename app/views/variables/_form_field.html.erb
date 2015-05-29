@@ -25,11 +25,16 @@ collection = f.object.select_collection
 mandatory = f.object.mandatory.to_s
 placeholder = f.object.placeholder
 errors = f.object.errors[name]
+field_class = mandatory ? "" : "advanced_fields"
 
 %>
 
-  <% if field_type == 'text_field' || field_type == 'string' %>
+<div class="<%= field_class %>">
+
+  <% if field_type == 'text_field' || field_type == 'string' || field_type == 'text' %>
     <%= render partial: 'shared/form/text_field', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+  <% elsif field_type == 'text_area' %>
+    <%= render partial: 'shared/form/text_area', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
   <% elsif field_type == 'checkbox' %>
     <%= render partial: 'shared/form/checkbox', locals: {name: :value, errors: errors, label: label, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
   <% elsif field_type == 'select_radio' || field_type == 'radio_buttons' %>
@@ -52,3 +57,4 @@ errors = f.object.errors[name]
     </div>
   <% end %>
 
+</div>

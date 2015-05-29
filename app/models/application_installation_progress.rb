@@ -5,16 +5,11 @@ class ApplicationInstallationProgress
   include ActiveModel::Model
 
   attr_accessor(
-    :gallery_url,
-    :gallery_software_id,
+    :repository_url,
     :title,
     :application_name,
     :host_name,
     :domain_name)
-
-
-
-
 
 
   def installation_report_lines

@@ -15,7 +15,7 @@
   end
 
 %>
-<% install_url = new_application_installation_path(gallery_url: @gallery.url, gallery_software_id: software_id) %>
+<% install_url = new_application_installation_path(repository_url: software[:repository_url]) %>
 
 <div class="col-md-12 engine-install-row">
   <div class="col-md-3">

@@ -99,7 +99,7 @@ class ApplicationSubservice < ActiveRecord::Base
 ######
 
   def service_detail
-    @service_detail ||= engines_api.software_service_definition(
+    @service_detail ||= engines_api.templated_software_service_definition(
                         publisher_namespace: publisher_namespace,
                         type_path: type_path)
   end

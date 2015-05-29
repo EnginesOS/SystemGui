@@ -7,20 +7,28 @@
 		</div>
 		<div class="col-sm-8 top-gap">
 			<%= @application_installation.description %>
+
 		</div>
 
-		<div class="col-sm-2 top-gap">
+		<div class="btn-group-vertical top-gap pull-right">
+			<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
+				<%= content_tag(:i, '', class: 'fa fa-terminal') %> Advanced
+			</button>
+		</div>
+		<div class="advanced_fields btn-group-vertical top-gap pull-right">
 	        <a class="btn btn-default btn-lg" data-toggle="modal" data-target="#blueprint_modal">
 	          <i class="fa fa-file-text"></i> Blueprint
 	        </a>
 		</div>
+
 	</div>
 
 	<div class="col-sm-12">
 
-		<%= form_for @application_installation, url: application_installation_path do |f| %>
-			<%= f.hidden_field :gallery_url %>
-			<%= f.hidden_field :gallery_software_id %>
+		<%= form_for @application_installation, url: application_installation_path(title: @application_installation.title) do |f| %>
+			<%= f.hidden_field :repository_url %>
+			<%= f.hidden_field :software_title %>
+			<%= f.hidden_field :advanced_selected %>
 
 			<%= render 'shared/form/errors', f: f %>
 			<%= render 'application_fields', f: f %>

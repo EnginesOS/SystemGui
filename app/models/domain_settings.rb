@@ -29,12 +29,12 @@ class DomainSettings < ActiveRecord::Base
   end
 
   def update_default_domain
-    self.class.engines_default_domain == default_domain ||
+    # self.class.engines_default_domain == default_domain ||
     self.class.engines_api.set_default_domain(default_domain: default_domain).was_success
   end
 
   def update_default_site
-    self.class.engines_default_site == default_site ||
+    # self.class.engines_default_site == default_site ||
     self.class.engines_api.set_default_site(default_site: default_site).was_success
   end
   

@@ -1,33 +1,43 @@
-<div class='row'>
-	<div class="col-sm-6">
-		<h2><%= content_tag(:i, "", class: "fa fa-tablet") %> Applications</h2>
-	</div>
-	<div class="col-sm-6">
-		<%= render 'control_panel_actions' %>
-	</div>
-</div>
-
-<div class='row'>
-	<% if @applications.present? %>
-		<% @applications.each do |application| %>
-		<%= render partial: "application", locals: {application: application} %>
-		<% end %>
-	<% else %>
-		<div class="col-sm-12">
-			No software installed.
+<div class='control_panel'>
+	<div class='row'>
+		<div class="col-sm-6">
+			<h2><%= content_tag(:i, "", class: "fa fa-tablet") %> Applications</h2>
 		</div>
-	<% end %>
-</div>
-
-<div class='row'>
-	<div class="col-sm-12">
-		<h2><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h2>
+		<div class="col-sm-6">
+			<%= render 'control_panel_actions' %>
+		</div>
 	</div>
-</div>
+	
+	<div class='row'>
+		<% if @applications.present? %>
+			<% @applications.each do |application| %>
+				<div class="application", id="<%= application.container_name %>", data-url="<%= control_panel_applications_path(application_name: application.container_name) %>">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+  						<div class="application_placeholder">
+							<%= content_tag(:i, nil, class: "fa fa-spinner fa-spin") + " " + application.container_name %>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		<% else %>
+			<div class="col-sm-12">
+				No software installed.
+			</div>
+		<% end %>
+	</div>
+	
+	<div class='row'>
+		<div class="col-sm-12">
+			<h2><%= content_tag(:i, "", class: "fa fa-hdd-o") %> Services</h2>
+		</div>
+	</div>
+	
+	<div class='row'>
+		<% @services.each do |service| %>
+		<%= render partial: "service", locals: {service: service} %>
+		<% end %>
+	</div>
+</div>	
 
-<div class='row'>
-	<% @services.each do |service| %>
-	<%= render partial: "service", locals: {service: service} %>
-	<% end %>
-</div>
 
+<div id="html_holder" style="display: none;"></div>

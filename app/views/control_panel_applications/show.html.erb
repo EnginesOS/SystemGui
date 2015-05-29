@@ -1,4 +1,5 @@
-<%  application_name = application.container_name
+<%  application = @application
+	application_name = application.container_name
     engine_active = application.active?
     state = application.state
     if state.kind_of?(EnginesOSapiResult)
@@ -19,7 +20,7 @@
   <div class="engine-gadget btn-group">
     <button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
         <div class="icon_holder">
-          <%= image_tag(application.display_properties.icon_url, class: "engine_icon") %>
+          <%= image_tag(application.display_properties.icon_url, class: "engine_icon") -%>
         </div>
       <div class="text_holder">
         <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= state_indicator.humanize %></small> <br>
@@ -30,7 +31,7 @@
     </button>
 
     <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
-      <li><div class="dropdown-title" %><%= application_name %></div></li>
+      <li><div class="dropdown-title"><%= application_name %></div></li>
       <% if state == "running" %>
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop container", stop_application_path(application_name), class: 'trigger-response-modal' %></li>
