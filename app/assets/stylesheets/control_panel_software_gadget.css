@@ -10,7 +10,7 @@
   color: #ff7f00;
 }
 
-.indicator_broken {
+.indicator_error {
   color: #f00;
 }
 
@@ -34,7 +34,7 @@
   background-color: #fffff9;
 }
 
-.engine_broken {
+.engine_error {
   background-color: #fff0f0;
 }
 

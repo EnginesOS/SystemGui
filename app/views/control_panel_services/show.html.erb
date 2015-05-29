@@ -32,8 +32,8 @@
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
   		  <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_service_path(service_name), class: 'trigger-response-modal' %></li>
   		<% elsif service_state == "stopped" %>
-	  		<% if service.state_indicator == "broken" %>
-	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+	  		<% if service.state_indicator == "error" %>
+	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
 	  			<li><div class="dropdown-title"><small><%= service_state.humanize %></small></div></li>
 			<% else %>
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
@@ -42,8 +42,8 @@
   		    <li class="divider"></li>
   		    <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", recreate_service_path(service_name), class: 'trigger-response-modal' %> </li>
   		<% elsif  service_state == "no_container" %>   
-	  		<% if service.state_indicator == "broken" %>
-	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+	  		<% if service.state_indicator == "error" %>
+	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
 	  			<li><div class="dropdown-title"><small><%= service_state.humanize %></small></div></li>
 			<% else %>
 	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>

@@ -35,9 +35,9 @@ $(document).ready(function(){
 	}
     
     load_control_panel_objects(); 
-    setInterval(function(){
-	    // load_control_panel_objects(); 
-	}, 60000);
+    // setInterval(function(){
+	    // // load_control_panel_objects(); 
+	// }, 60000);
     
     
     

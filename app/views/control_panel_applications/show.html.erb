@@ -40,8 +40,8 @@
         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause container", unpause_application_path(application_name), class: 'trigger-response-modal' %></li>
       <% elsif state == "stopped" %>
-  		<% if state_indicator == "broken" %>
-  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+  		<% if state_indicator == "error" %>
+  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
   			<li><div class="dropdown-title"><small><%= state.humanize %></small></div></li>
 		<% else %>
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
@@ -51,8 +51,8 @@
         <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate container", recreate_application_path(application_name), class: 'trigger-response-modal' %></li>
         <li><%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", reinstall_application_path(application_name), class: 'trigger-response-modal' %></li>
       <% elsif  state == "no_container" %>   
-  		<% if state_indicator == "broken" %>
-  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Broken</div></li>
+  		<% if state_indicator == "error" %>
+  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
   			<li><div class="dropdown-title"><small><%= state.humanize %></small></div></li>
 		<% else %>
             <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
@@ -89,7 +89,7 @@
         </li>
       <% end %>
       <li class="divider"></li>
-      <li><%= link_to content_tag(:i, "", class: "fa fa-link") + " Attached services", application_services_path(application_name: application_name),  class: "trigger-response-modal" %>
+      <li><%= link_to content_tag(:i, "", class: "fa fa-arrows-h") + " Registered services", application_services_path(application_name: application_name),  class: "trigger-response-modal" %>
       </li>
       <li class="divider"></li>
       <li><%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: ("#modal_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>
