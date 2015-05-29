@@ -106,3 +106,22 @@
 .engine-gadget-dropdown-menu {
   /*border-radius: 0px;*/
 }
+
+.application_placeholder {
+	font-size: 0.8em;
+	height: 100px;
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	white-space: normal;
+	word-wrap: break-word;
+	text-align: center;
+    vertical-align: middle;
+	padding-top: 35px;
+	color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

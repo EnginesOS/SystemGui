@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resource :desktop
   resource :control_panel
   resource :control_panel_applications
+  resource :control_panel_services
   resource :installer
   resource :services_registry
   resource :system
