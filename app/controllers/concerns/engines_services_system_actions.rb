@@ -54,11 +54,12 @@ private
 
   def set_flash_messages_and_redirect
     if @result.was_success == true
-      flash[:notice] = @result.result_mesg[0..250]
+      flash_message = @result.result_mesg[0..250]
     else
-      flash[:error] = @result.result_mesg[0..250]
+      flash_message = @result.result_mesg[0..250]
     end
-    redirect_to control_panel_path
+    render 'control_panel_services/show', flash_message: flash_message, layout: false    
+    # redirect_to control_panel_path
   end
 
 end

@@ -14,7 +14,7 @@
     </div>
     <%= render 'shared/form/checkbox', name: :remove_all_data, label: 'Remove data', f: f, hint: "select to permanantly delete all application data" %>
 
-    <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: control_panel_path, submit_label: 'Uninstall' %>
+    <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: control_panel_path, submit_label: 'Uninstall', submitted_message: 'Uninstalling...' %>
   <% end %>
 
 
@@ -28,6 +28,6 @@
   <div class="col-sm-12">
     <legend>HTTP protocol</legend>
   </div>
-  <%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false, collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: ff} %>
+  <%= render 'shared/form/radio_buttons', name: :http_protocol, label: false, collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: ff %>
 
 <% end %>

@@ -1,4 +1,5 @@
 <%  service = @service
+	flash_message ||= nil
 	service_state = service.state
 	service_name = service.container_name
     if service_state.kind_of?(EnginesOSapiResult)
@@ -13,6 +14,8 @@
     end    
 %>
 
+<%= content_tag(:div, nil, data: {flashmessage: flash_message})%>
+
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
   <div class="engine-gadget service btn-group">
     <button type="button" class="btn btn-default dropdown-toggle <%= background_class %>" data-toggle="dropdown">
@@ -24,13 +27,13 @@
     	<li><div class="dropdown-title" %><%= service_name %></div></li>
   		<% if service_state == "running"&& service_name != 'mgmt'  #FIXME use flag instead %>
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
-  			<% if service_name != 'mgmt'  #FIXME use flag instead %>
-          <li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", stop_service_path(service_name), class: 'trigger-response-modal' %></li>
-          <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", pause_service_path(service_name), class: 'trigger-response-modal' %></li>
-        <% end %>
+  			<% if service_name != 'mgmt' %>
+				<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_services_path(service_name: service_name) } %></li>
+            	<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "Pausing", url: pause_services_path(service_name: service_name) } %></li>
+        	<% end %>
   		<% elsif service_state == "paused" %>
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
-  		  <li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", unpause_service_path(service_name), class: 'trigger-response-modal' %></li>
+	 		<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "Unpausing", url: unpause_services_path(service_name: service_name) } %></li>
   		<% elsif service_state == "stopped" %>
 	  		<% if service.state_indicator == "error" %>
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
@@ -38,9 +41,9 @@
 			<% else %>
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
 			<% end %>
-	  	    <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", start_service_path(service_name), class: 'trigger-response-modal' %></li>
+	  	    <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "Starting", url: start_services_path(service_name: service_name) } %></li>
   		    <li class="divider"></li>
-  		    <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", recreate_service_path(service_name), class: 'trigger-response-modal' %> </li>
+  		    <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "Rebuilding", url: recreate_services_path(service_name: service_name) } %> </li>
   		<% elsif  service_state == "no_container" %>   
 	  		<% if service.state_indicator == "error" %>
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
@@ -48,7 +51,7 @@
 			<% else %>
 	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
 			<% end %>
-  			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", create_container_service_path(service_name), class: 'trigger-response-modal' %></li> 
+  			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_services_path(service_name: service_name) } %></li> 
       <% else %>
          <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
       <%  end %>
@@ -57,7 +60,7 @@
 
   		<li class="divider"></li>
     	<li>
-			<%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "#", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "advanced_menu_item" %>
+			<%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "advanced_menu_item" %>
   		</li>
   		<li class="divider"></li>
      	<li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + service_fqdn, "http://" + service_fqdn, target: "_blank"%></li>

@@ -109,12 +109,12 @@
 
 .application .control_panel_object_placeholder{
 	height: 100px;
-	padding-top: 35px;
+	padding-top: 30px;
 }
 
 .service .control_panel_object_placeholder{
 	height: 60px;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 .control_panel_object_placeholder {

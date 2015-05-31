@@ -2,7 +2,7 @@
 
 
 
-	function bind_button_events() {
+	function bind_trigger_response_modal_events() {
 
 	  $(".trigger-response-modal").click(function(){
 
@@ -48,7 +48,7 @@
 
 $(document).ready(function(){
 
-  bind_button_events();
+  bind_trigger_response_modal_events();
   bind_form_button_events();
 
 

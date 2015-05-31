@@ -23,8 +23,6 @@ class ApplicationSubservicesController < ApplicationController
     end
   end
 
-
-
 private
 
   def set_application_subservice
