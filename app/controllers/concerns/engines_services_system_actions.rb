@@ -54,11 +54,12 @@ private
 
   def set_flash_messages_and_redirect
     if @result.was_success == true
-      flash_message = @result.result_mesg[0..250]
+      flash_message = @result.result_mesg[0..500] || "Success!"
+      flash_alert_class = :success
     else
-      flash_message = @result.result_mesg[0..250]
+      flash_message = @result.result_mesg[0..500] || "Error. (No message in result object.)"
     end
-    render 'control_panel_services/show', flash_message: flash_message, layout: false    
+    render partial: 'control_panel_services/show', locals: { flash_message: flash_message, flash_alert_class: flash_alert_class }   
     # redirect_to control_panel_path
   end
 
