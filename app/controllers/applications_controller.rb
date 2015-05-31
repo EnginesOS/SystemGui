@@ -17,7 +17,7 @@ private
   end
 
   def application_name
-    params[:id]
+    params[:application_name]
   end
 
 end

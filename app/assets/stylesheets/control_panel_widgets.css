@@ -10,7 +10,7 @@
   color: #ff7f00;
 }
 
-.indicator_broken {
+.indicator_error {
   color: #f00;
 }
 
@@ -34,7 +34,7 @@
   background-color: #fffff9;
 }
 
-.engine_broken {
+.engine_error {
   background-color: #fff0f0;
 }
 
@@ -109,12 +109,12 @@
 
 .application .control_panel_object_placeholder{
 	height: 100px;
-	padding-top: 35px;
+	padding-top: 30px;
 }
 
 .service .control_panel_object_placeholder{
 	height: 60px;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 .control_panel_object_placeholder {

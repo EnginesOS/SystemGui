@@ -23,7 +23,7 @@ private
   end
 
   def service_name
-    params[:id]
+    params[:service_name]
   end
 
 end

@@ -21,7 +21,7 @@ module Engines::Service
   def state_indicator
     result = state
     if result != default_startup_state
-      'broken'
+      'error'
     else
       result
     end

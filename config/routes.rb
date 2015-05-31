@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   resource :application_subservice
   resource :application_uninstall
   resources :applications do
-    member do
+    collection do
       get(
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
@@ -60,7 +60,7 @@ Rails.application.routes.draw do
   resource :service_report
   resource :service_configuration
   resources :services do
-    member do
+    collection do
       get(
         :advanced_detail,
         :pause,

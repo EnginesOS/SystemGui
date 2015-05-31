@@ -100,6 +100,12 @@ class ApplicationSubservice < ActiveRecord::Base
 
   def service_detail
     @service_detail ||= engines_api.templated_software_service_definition(
+                        parent_engine: application_name,
+                        parent_service: {
+                          publisher_namespace: parent_publisher_namespace,
+                          type_path: parent_type_path,
+                          service_handle: parent_service_handle
+                          },
                         publisher_namespace: publisher_namespace,
                         type_path: type_path)
   end

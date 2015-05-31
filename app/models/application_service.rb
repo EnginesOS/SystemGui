@@ -147,9 +147,16 @@ class ApplicationService < ActiveRecord::Base
     p :ttttttttttttttttttttttttttttttttttttttttttttype_path
     p type_path
     
-    @service_detail ||= engines_api.software_service_definition(
-                        publisher_namespace: publisher_namespace,
-                        type_path: type_path)
+    if application.present?
+      @service_detail ||= engines_api.templated_software_service_definition(
+                          parent_engine: application.container_name,
+                          publisher_namespace: publisher_namespace,
+                          type_path: type_path)
+    else
+      @service_detail ||= engines_api.software_service_definition(
+                          publisher_namespace: publisher_namespace,
+                          type_path: type_path)
+    end
   end
 
 #####

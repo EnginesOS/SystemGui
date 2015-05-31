@@ -6,29 +6,35 @@
 
 	<div class="top-gap">
 
-		<% @service.configurators.each do |configurator| %>
-	
-		<div class="panel panel-default">
-			<div class="panel-heading">
-	  			<%= configurator[:label] %><br>
-	  			<small><%= configurator[:description] %></small>
+		<% if @service.configurators.present? %>
+
+			<% @service.configurators.each do |configurator| %>
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+		  			<%= configurator[:label] %><br>
+		  			<small><%= configurator[:description] %></small>
+				</div>
+				<div class="panel-body">
+					<% @service.service_configuration_variables_for(configurator[:name]).each do |variable_name, variable_value| %>
+		  				<% variable_definition = configurator[:params][variable_name]
+							if variable_definition.present? %>
+								<label><%= variable_definition[:label] %></label> <%= variable_value %><br>
+							<% else %>
+				  				<label style="color: #f00;"><%= variable_name.to_s %></label> <%= variable_value %>
+				  				<small style="color: #f00;"><i>This variable is not properly defined.</i></small><br>
+							<% end %>
+		  			<% end %>
+		  			<%= link_to content_tag(:i, "", class: "fa fa-edit") + ' Edit',
+		  					edit_service_configuration_path(service_name: @service.container_name, configurator_name: configurator[:name]),
+		  					class: "btn btn-default btn-lg trigger-response-modal pull-right" %>
+				</div>
 			</div>
-			<div class="panel-body">
-				<% @service.service_configuration_variables_for(configurator[:name]).each do |variable_name, variable_value| %>
-	  				<% variable_definition = configurator[:params][variable_name]
-						if variable_definition.present? %>
-							<label><%= variable_definition[:label] %></label> <%= variable_value %><br>
-						<% else %>
-			  				<label style="color: #f00;"><%= variable_name.to_s %></label> <%= variable_value %>
-			  				<small style="color: #f00;"><i>This variable is not properly defined.</i></small><br>
-						<% end %>
-	  			<% end %>
-	  			<%= link_to content_tag(:i, "", class: "fa fa-edit") + ' Edit',
-	  					edit_service_configuration_path(service_name: @service.container_name, configurator_name: configurator[:name]),
-	  					class: "btn btn-default btn-lg trigger-response-modal pull-right" %>
-			</div>
-		</div>
-	
+		
+			<% end %>
+
+		<% else %>
+			This service does not have settings to configure.
 		<% end %>
 		
 	</div>
