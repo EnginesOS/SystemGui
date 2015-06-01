@@ -48,10 +48,7 @@ class NetworkProperties < ActiveRecord::Base
   end  
 
   def update_network_properties
-    engines_api.set_engine_hostname_properties(container_name: application.container_name, host_name: host_name).was_success &&
-    engines_api.set_engine_network_properties(container_name: application.container_name, domain_name: domain_name).was_success &&
-    engines_api.set_engine_network_properties(container_name: application.container_name, http_protocol: http_protocol).was_success
+    engines_api.set_engine_network_properties(engine_name: application.container_name, domain_name: domain_name, host_name: host_name, http_protocol: http_protocol).was_success
   end
-
 
 end

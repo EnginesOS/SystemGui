@@ -8,5 +8,7 @@
 <div id="flash_message_display_area"></div>
 
 <% flash.each do |name, msg| %>
- <%= content_tag :div, nil, class:"flash_message_data", data: {alertclass: name.to_s == 'notice' ? 'success' : 'danger', messagebody: msg} %>
+  <% if msg.present? %>
+	 <%= content_tag :div, nil, class:"flash_message_data", data: {alertclass: name.to_s == 'notice' ? 'success' : 'danger', messagebody: msg} %>
+  <% end %>
 <% end %>
