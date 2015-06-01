@@ -41,19 +41,18 @@ $(document).ready(function(){
 					$("#installation_report").html('No report');
 					};
 				if (e.data == 'close') {
-    		    	// evtSource.removeEventListener("installation_report", report_listener, false);
-					// alert(second_last_line_in_build_progress_log);
-					var build_result = second_last_line_in_build_progress_log;
+					var flash_message = second_last_line_in_build_progress_log;
 					evtSource.close();
 					$("#installation_done_button").slideDown();
-					$("#installation_result_notifier").slideDown();
-					if ((/^ERROR/).test(build_result)) {
-						$("#installation_result_notifier").addClass("alert-danger");
+					if ((/^ERROR/).test(flash_message)) {
+						var flash_alert_class = 'danger';
 					} else {
-						$("#installation_result_notifier").addClass("alert-success");
-						$("#installation_report_tab_button").click();
+						var flash_alert_class = 'success';
 					};
-					$("#installation_result_notifier_message").html(build_result);
+					var flash_message_data_html = '<div class="flash_message_data" data-messagebody="' + flash_message + '" data-alertclass="' + flash_alert_class + '" >';
+					$("body").append(flash_message_data_html);
+					do_flash_messages();
+					$("#installation_report_tab_button").click();
 				};
 			};
 			

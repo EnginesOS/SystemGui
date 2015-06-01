@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resource :first_run
   resource :desktop
+  resource :desktop_applications
   resource :control_panel
   resource :control_panel_applications
   resource :control_panel_services

@@ -101,9 +101,10 @@ module Engines::Application
     end
 
   {
-    active?: 'is_active',
-    is_running: 'is_running',
-    is_error: 'is_error',
+    active?: 'is_active?',
+    is_running: 'is_running?',
+    is_error: 'is_error?',
+    has_container?: 'has_container?',
     host_name: 'hostName',
     http_protocol: 'http_protocol',
     domain_name: 'domainName',

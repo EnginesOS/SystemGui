@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
   require "awesome_print"
 
   # Overwriting the devise sign_out redirect path method
-  def after_sign_out_path_for(resource_or_scope)
-    new_user_session_path
-  end
+  # def after_sign_out_path_for(resource_or_scope)
+    # new_user_session_path
+  # end
 
 protected
 
@@ -19,5 +19,18 @@ protected
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password, :remember_me) }
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
   end
+
+  def authenticate_user!
+    if user_signed_in?
+      super
+    else
+      redirect_to desktop_path
+    end
+  end
+  
+  def after_sign_in_path_for(resource)
+    control_panel_path
+  end
+
 
 end
