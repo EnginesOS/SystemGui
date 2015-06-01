@@ -30,3 +30,29 @@
 .navbar-default {
 	background-color: #fff;
 }
+
+.user_signed_out {
+	background-color: rgba(255,255,255,0);
+	border-color: rgba(255,255,255,0);
+}
+
+.navbar.user_signed_out li a.dropdown-toggle {
+	background-color: rgba(255,255,255,0);
+	border-color: rgba(255,255,255,0);
+}
+
+.navbar.user_signed_out li a.dropdown-toggle:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.user_signed_out .desktop-signin .dropdown-menu {
+	margin-top: 5px;
+	min-width: 400px;
+	padding: 10px;
+	padding-bottom: 0px;
+	border-radius: 5px;
+}
+
+.signedout-navbar-nav {}
+
+.signedout-navbar-header {}

@@ -1,5 +1,6 @@
 <% application = @application
 flash_message ||= nil
+flash_alert_class ||= :danger
 application_name = application.container_name
 engine_active = application.active?
 state = application.state
@@ -17,7 +18,9 @@ else
 end
 %>
 
-<%= content_tag(:div, nil, data: {flashmessage: flash_message})%>
+<% if flash_message.present? %>
+	<%= content_tag(:div, nil, class: "flash_message_data", data: {messagebody: flash_message, alertclass: flash_alert_class})%>
+<% end %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 	<div class="engine-gadget btn-group">

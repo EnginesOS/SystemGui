@@ -10,6 +10,9 @@ $(document).ready(function() {
 		bind_trigger_response_modal_events();
 	};
 
+
+
+
 	function load_advanced_details_modal(obj) {
 
 		modal_id = obj.attr("data-target");
@@ -46,8 +49,8 @@ $(document).ready(function() {
 			url : url,
 			cache : false,
 			success : function(html) {
-				// obj.next().next().text( html );
 				obj.html(html);
+				do_flash_messages();
 				bind_control_panel_object_events(obj);
 			}
 		});
@@ -66,14 +69,13 @@ $(document).ready(function() {
 		var placeholder = parent_obj.find(".control_panel_object_placeholder");
 		placeholder.prepend(action);
 		
-// alert(url);
 		$.ajax({
 			url : url,
 			cache : false,
 			success : function(html) {
 				parent_obj.html(html);
 				bind_control_panel_object_events(parent_obj);
-				// $('#waiting-for-response-modal').modal('hide');
+				do_flash_messages();
 			}
 		});
 		

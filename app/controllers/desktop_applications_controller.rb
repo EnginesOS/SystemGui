@@ -1,6 +1,5 @@
-class ControlPanelApplicationsController < ApplicationController
+class DesktopApplicationsController < ApplicationController
 
-  before_action :authenticate_user!
 
   def show
     @application = Application.load_by_container_name(application_name)
