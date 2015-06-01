@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :users, :skip => :registrations
-  mount RailsAdmin::Engine => '/admin', as: :rails_admin
+  resource :user_passwords
+  # mount RailsAdmin::Engine => '/admin', as: :rails_admin
   root to: "welcome#start"
 
   # get "help", to: "pages#help"

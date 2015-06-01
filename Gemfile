@@ -23,7 +23,7 @@ gem "paperclip", "~> 4.2"
 # gem "jquery-fileupload-rails"
 gem 'open_uri_redirections'
 
-gem 'rails_admin'
+# gem 'rails_admin'
 gem 'awesome_print', '~> 1.2.0'
 
 gem 'i18n_country_select'
