@@ -50,7 +50,7 @@ Rails.application.routes.draw do
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
         :reinstall, :delete_image,
-        :build, :recreate, :advanced_detail)
+        :build, :recreate, :advanced_detail, :about)
     end
   end
   resource :application_installation do
