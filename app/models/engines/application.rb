@@ -74,16 +74,10 @@ module Engines::Application
 #inspectors       
      
      def state_indicator
-       result = state
-       if result != default_startup_state
-         
-         p :state
-         p result
-         
-         
+       if is_error?
          'error'
        else
-         result
+         state
        end
      end
      
@@ -103,7 +97,7 @@ module Engines::Application
   {
     active?: 'is_active?',
     is_running: 'is_running?',
-    is_error: 'is_error?',
+    is_error?: 'is_error?',
     has_container?: 'has_container?',
     host_name: 'hostName',
     http_protocol: 'http_protocol',
