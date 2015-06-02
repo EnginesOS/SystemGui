@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   resource :variables_properties
   resource :display_properties
   resource :application_report
+  resource :application_about
   # resource :services_properties
   resource :application_services
   resource :orphaned_application_service
@@ -50,7 +51,7 @@ Rails.application.routes.draw do
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
         :reinstall, :delete_image,
-        :build, :recreate, :advanced_detail, :about)
+        :build, :recreate)
     end
   end
   resource :application_installation do
