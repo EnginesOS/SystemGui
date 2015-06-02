@@ -43,7 +43,7 @@ private
   end
 
   def update_memory
-    engines_api.set_engine_runtime_properties container_name: application_name, memory: memory
+    engines_api.set_engine_runtime_properties engine_name: application_name, memory: memory
   end
  
 end
