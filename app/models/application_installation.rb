@@ -72,7 +72,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def default_name
-    blueprint_software[:name]
+    blueprint_software[:name].gsub('-', '').gsub('_', '')
   end
 
   def blueprint
@@ -149,7 +149,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def unique_host_name
-    default_host_name = default_name.gsub('-', '').gsub('_', '')
+    default_host_name = default_name
     unique_host_name_candidate = default_host_name
     index = 2
     while existing_host_names.include? unique_host_name_candidate do

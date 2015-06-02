@@ -4,8 +4,6 @@
 <% software_id = software[:id]
   gallery_title = software[:title]
   gallery_detail = software[:detail]
-  blueprint_full_title = software[:full_title_from_blueprint]
-  blueprint_description = software[:description_from_blueprint]
   home_page = software[:website_from_blueprint]
   image_url =
   if software[:icon_url_from_gallery].present?
@@ -48,14 +46,6 @@
       <%= gallery_detail %>
       <br>
       <% end %>
-      <small> <% if blueprint_full_title.present? %>
-        <p>
-          <i>Title:</i> <%= blueprint_full_title %>
-        </p> <% end %>
-        <% if blueprint_description.present? %>
-        <p>
-          <i>Description:</i> <%= blueprint_description %>
-        </p> <% end %> </small>
     </div>
 
   </div>
