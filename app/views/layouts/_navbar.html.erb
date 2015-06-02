@@ -68,11 +68,11 @@
 							<%= form_for(:user, :url => new_user_session_path) do |f| %>
 								<div class="form-group">
 									<label for="user_username">Username</label>
-									<%= f.text_field :username, class: 'form-control' %>
+									<%= f.text_field :username, value: "admin", class: 'form-control' %>
 								</div>
 								<div class="form-group">
 									<label for="user_username">Password</label>
-									<%= f.password_field :password, class: 'form-control' %>
+									<%= f.password_field :password, value: "EngOS2014", class: 'form-control' %>
 								</div>
 								<div class="form-group">
 									<%= f.check_box(:remember_me) + ' ' + f.label(:remember_me, 'Remember me', class: 'form-text-lg') %>
