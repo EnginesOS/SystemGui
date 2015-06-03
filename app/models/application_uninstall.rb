@@ -6,7 +6,7 @@ class ApplicationUninstall
   attr_accessor :remove_all_data, :application_name
 
   def uninstall
-    result = engines_api.deleteEngineImage( parent_engine: application_name, remove_all_data: ( remove_all_data == '1' ) )
+    result = engines_api.deleteEngineImage( engine_name: application_name, remove_all_data: ( remove_all_data == '1' ) )
     if result.was_success
       @engines_api_error = "result was true."
       true
