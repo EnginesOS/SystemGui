@@ -63,7 +63,7 @@
 
   		<li class="divider"></li>
     	<li>
-			<%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "advanced_menu_item" %>
+			<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "advanced_menu_item" %>
   		</li>
   		<li class="divider"></li>
      	<li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + service_fqdn, "http://" + service_fqdn, target: "_blank"%></li>
@@ -71,12 +71,12 @@
   </div>
 </div>
 
-<div class="modal advanced_detail" id="modal_<%= service_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal application_detail advanced_detail" id="modal_<%= service_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced</h4>
+        <h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-list-alt") %> Advanced</h4>
       </div>
       <div class="modal-body" id="modal_<%= service_name %>_body">
         <div class="loading_spinner">
