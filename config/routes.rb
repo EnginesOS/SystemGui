@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   resource :application_installation do
     get(:installing, :progress)
   end
-  resource :docker_hub_installation
+  resource :docker_hub_installations
   resource :repository_url_installations
 
   resource :service_report

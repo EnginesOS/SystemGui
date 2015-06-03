@@ -23,7 +23,6 @@
 
 	</div>
 
-	<div class="col-sm-12">
 
 		<%= form_for @application_installation, url: application_installation_path(title: @application_installation.title) do |f| %>
 			<%= f.hidden_field :repository_url %>
@@ -34,8 +33,9 @@
 			<%= render 'application_fields', f: f %>
 			<!-- < %= render 'displays/form_fields', f: f %> -->
 			
-			
-		    <legend>License</legend>
+			<div class="row">
+		    	<%= render 'shared/form/legend', text: 'Licence' %>
+			</div>
 			<% license_title = f.object.license_label %>
 			<%= render 'shared/form/link', link_text: f.object.license_label, label_text: false, url: f.object.license_sourceurl, target: f.object.browser_target %>
 			<%= render 'shared/form/checkbox', name: :license_terms_and_conditions, label: 'Accept', f: f %>
@@ -44,7 +44,6 @@
 			<%#= ff.hidden_field :display_name %>
 	 	<% end %>
 
-	</div>
 </div>
 
 <div class="modal fade advanced_detail" id="blueprint_modal">
