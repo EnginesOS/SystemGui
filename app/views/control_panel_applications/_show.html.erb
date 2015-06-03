@@ -165,8 +165,8 @@ end
 			</li>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced details", "#", data: {toggle: "modal", target: ("#modal_advanced_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>
-				<%= link_to content_tag(:i, "", class: "fa fa-info-circle") + " About", "#", data: {toggle: "modal", target: ("#modal_about_" + application_name), url: application_about_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced details", "#", data: {toggle: "modal", target: ("#modal_advanced_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-info-circle") + " About", "#", data: {toggle: "modal", target: ("#modal_about_" + application_name), url: application_about_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
 			</li>
 			<li class="divider"></li>
 			<li>
@@ -183,12 +183,14 @@ end
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 				</button>
-				<h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced details</h4>
+				<h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-list-alt") %> Advanced details for <%= application_name %></h4>
 			</div>
 			<div class="modal-body" id="modal_advanced_<%= application_name %>_body">
+				<div class="modal_body_content"></div>
 				<div class="loading_spinner">
 					<%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %>
 				</div>
+				<div class="modal_body_content"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -206,12 +208,13 @@ end
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 				</button>
-				<h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info-circle") %> About</h4>
+				<h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info-circle") %> About <%= application_name %></h4>
 			</div>
 			<div class="modal-body" id="modal_about_<%= application_name %>_body">
 				<div class="loading_spinner">
 					<%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %>
 				</div>
+				<div class="modal_body_content"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">

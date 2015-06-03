@@ -1,9 +1,12 @@
 <div class="row">
   <div class="col-sm-12">
-    <table>
-      <tr><td><label>Engines name</label></td><td><%= @application.container_name %></td></tr> 
-      <tr><td><label>Host FQDN</label></td><td><a href="" ><%= @application.fqdn %></a></td></tr> 
-      <tr><td><label>About</label></td><td><%= @application.blueprint[:about] %></td></tr> 
-    </table>
+      <%= @application.blueprint_software_details['full_title'] %><br>
+      <small><%= @application.blueprint_software_details['description'] %></small><br><br>
+      <%= @application.blueprint_software_details['about'] %><br>
+      <%= @application.blueprint_software_details['home_page_url'] %><br>
+      <% home_page_url = @application.blueprint_software_details['home_page_url'] %>
+      <%= (link_to (content_tag(:i, nil, class: "fa fa-external-link") + " #{home_page_url}"), home_page_url) if home_page_url %>
+      <% support_page_url = @application.blueprint_software_details['supprt_page_url'] %>
+      <%= (link_to (content_tag(:i, nil, class: "fa fa-support") + " #{supprt_page_url}"), supprt_page_url) if support_page_url %>
   </div>
 </div>

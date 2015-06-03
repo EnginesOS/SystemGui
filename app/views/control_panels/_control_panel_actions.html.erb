@@ -9,17 +9,14 @@
 	        </li>
 	        <li class="divider"></li>
         	<li>
-			  <% link_body = (content_tag(:i, '', class: 'fa fa-upload') + ' Backups'.html_safe) %>
-			  <%= link_to link_body, backup_tasks_path, class: 'btn-lg trigger-response-modal' %>
+			  <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) %>
+			  <%= link_to link_body, domains_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
+	        <li class="divider"></li>
 	        <li>
               <%= link_to (content_tag(:i, nil,class: "fa fa-arrows") + " Services registry"), services_registry_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
             <li class="divider"></li>
-        	<li>
-			  <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) %>
-			  <%= link_to link_body, domains_path, class: 'btn-lg trigger-response-modal' %>
-	        </li>
       	    <li>
 			  <a href=<%= edit_desktop_settings_path %> class="btn-lg trigger-response-modal">
 			    <i class="fa fa-desktop"></i> Desktop settings

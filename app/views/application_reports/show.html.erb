@@ -123,5 +123,13 @@
       <pre>None</pre>
      <% end %>
 
+    <label>Blueprint</label>
+     <% blueprint = @application.blueprint %>
+    <% if blueprint.present? %>
+   		<%=  (ap blueprint, plain: true, index: false).html_safe %>
+    <% else %>
+      <pre>None</pre>
+     <% end %>
+
   </div>
 </div>

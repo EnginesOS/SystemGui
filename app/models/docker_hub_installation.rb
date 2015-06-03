@@ -1,4 +1,4 @@
-class DockerHubInstaller #< ActiveRecord::Base
+class DockerHubInstallation #< ActiveRecord::Base
 
   include ActiveModel::Model
   include ActiveModel::Validations
@@ -33,15 +33,14 @@ def self.all; Empty.new; end
 
   validate :docker_image_validation
 
-  def self.new_software
-    Software.new do |software|
-      software.build_docker_hub_install
-      software.build_network
-      software.build_resource
-      software.build_attached_services_handler
-
-      software.docker_hub_install.type = "Software"
-      software.network.http_protocol = "HTTPS and HTTP"
+  def self.new_application
+    Application.new do |application|
+      # application.build_docker_hub_installation
+      application.build_network_properties
+      application.build_resources_properties
+      # application.build_attached_services_handler
+      application.docker_hub_install.type = "Software"
+      application.network.http_protocol = "HTTPS and HTTP"
     end
   end
   
