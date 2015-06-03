@@ -1,7 +1,6 @@
 <%  required_memory = f.object.required_memory
 	hint = required_memory.present? ? "minimum is #{required_memory} megabytes" : 'megabytes' %>
-
-<legend>Resources</legend>
+<%= render 'shared/form/legend', text: 'Resources' %>
 <%= render partial: 'shared/form/text_field', locals: {name: :memory, tooltip: "How much memory should the system allocate to running this software.",
 		hint: hint, f: f} %>
 <%= f.hidden_field :required_memory %>

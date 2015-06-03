@@ -17,8 +17,8 @@ class ApplicationInstallation < ActiveRecord::Base
 
   validate :license_terms_and_conditions_accepted_validation
 
-  def load
-    build_application(load_application_params)
+  def load_new
+    build_application(load_new_application_params)
     @software_title = title
     self
   end
@@ -109,7 +109,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
 
-  def load_application_params
+  def load_new_application_params
     {
       container_name: unique_application_name,
       variables_attributes: blueprint_software[:variables],

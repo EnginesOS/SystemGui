@@ -6,7 +6,7 @@ class ApplicationInstallationsController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @application_installation = ApplicationInstallation.new(software_params).load
+    @application_installation = ApplicationInstallation.new(software_params).load_new
   end
 
   def create

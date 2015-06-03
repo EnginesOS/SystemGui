@@ -5,8 +5,7 @@ class DockerHubInstallationsController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @software = DockerHubInstallation.new_application
-    render text: 'hi'
+    @docker_hub_installation = DockerHubInstallation.load_new
   end
 
   # def new_attached_service
