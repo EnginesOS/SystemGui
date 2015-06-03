@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-sm-12">
+    <table>
+      <tr><td><label>Engines name</label></td><td><%= @application.container_name %></td></tr> 
+      <tr><td><label>Host FQDN</label></td><td><a href="" ><%= @application.fqdn %></a></td></tr> 
+      <tr><td><label>About</label></td><td><%= @application.blueprint[:about] %></td></tr> 
+    </table>
+  </div>
+</div>

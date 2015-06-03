@@ -143,7 +143,7 @@ end
 			</li>
 			<% if engine_active == true %>
 			<li class="disabled">
-				<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources", "#" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources", "javascript:void(0);" %>
 			</li>
 			<% else %>
 			<li>
@@ -152,7 +152,7 @@ end
 			<% end %>
 			<% if engine_active == true %>
 			<li class="disabled">
-				<%= link_to content_tag(:i, "", class: "fa fa-question") + " Application variables", "#" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-question") + " Application variables", "javascript:void(0);" %>
 			</li>
 			<% else %>
 			<li>
@@ -165,7 +165,8 @@ end
 			</li>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-info") + " Advanced details", "#", data: {toggle: "modal", target: ("#modal_advanced_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-info-circle") + " About", "#", data: {toggle: "modal", target: ("#modal_about_" + application_name), url: application_about_path(application_name: application_name) }, role: "button", class: "advanced_menu_item" %>
 			</li>
 			<li class="divider"></li>
 			<li>
@@ -175,16 +176,16 @@ end
 	</div>
 </div>
 
-<div class="modal advanced_detail" id="modal_<%= application_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal application_detail advanced_detail" id="modal_advanced_<%= application_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 				</button>
-				<h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced</h4>
+				<h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info") %> Advanced details</h4>
 			</div>
-			<div class="modal-body" id="modal_<%= application_name %>_body">
+			<div class="modal-body" id="modal_advanced_<%= application_name %>_body">
 				<div class="loading_spinner">
 					<%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %>
 				</div>
@@ -194,6 +195,29 @@ end
 					Close
 				</button>
 			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+		</div>
+	</div>
+</div>
+
+<div class="modal application_detail about_detail" id="modal_about_<%= application_name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title"><%= content_tag(:i, "", class: "fa fa-info-circle") %> About</h4>
+			</div>
+			<div class="modal-body" id="modal_about_<%= application_name %>_body">
+				<div class="loading_spinner">
+					<%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
