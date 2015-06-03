@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resource :services_registry
   resource :system
   resource :user
-  resources :backup_tasks
+  # resources :backup_tasks
   resource :domain
   resources :domains, only: [:index]
   resource :domain_certificate

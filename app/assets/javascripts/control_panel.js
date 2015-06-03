@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
 	function bind_control_panel_object_events(obj) {
-		obj.find(".advanced_menu_item").click(function() {
-			load_advanced_details_modal($(this));
+		obj.find(".modal_menu_item").click(function() {
+			load_modal_content($(this));
 		});
 		obj.find(".object_action").click(function() {
 			perform_control_panel_object_action($(this));
@@ -13,10 +13,13 @@ $(document).ready(function() {
 
 
 
-	function load_advanced_details_modal(obj) {
+	function load_modal_content(obj) {
 
 		modal_id = obj.attr("data-target");
 		modal_body_id = modal_id + "_body";
+
+		$(modal_body_id).children('.modal_body_content').hide();
+		$(modal_body_id).children('.loading_spinner').show();
 
 		url = obj.attr("data-url");
 
@@ -24,7 +27,9 @@ $(document).ready(function() {
 			url : url,
 			cache : false,
 			success : function(html) {
-				$(modal_body_id).html(html);
+				$(modal_body_id).children('.modal_body_content').html(html);
+				$(modal_body_id).children('.loading_spinner').slideUp();
+				$(modal_body_id).children('.modal_body_content').slideDown();
 			}
 		});
 

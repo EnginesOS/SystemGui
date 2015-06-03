@@ -1,11 +1,12 @@
-class DockerHubInstallersController < ApplicationController
+class DockerHubInstallationsController < ApplicationController
 
   include ActionController::Live
 
   before_action :authenticate_user!
 
   def new
-    @software = DockerHubInstall.new_software
+    @software = DockerHubInstallation.new_application
+    render text: 'hi'
   end
 
   # def new_attached_service
