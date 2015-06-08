@@ -17,7 +17,7 @@ gem 'twitter-bootstrap-rails-confirm'
 
 gem 'rubytree'
 
-gem 'rubysl-openssl'
+gem 'openssl'
 
 gem "paperclip", "~> 4.2"
 # gem "jquery-fileupload-rails"
