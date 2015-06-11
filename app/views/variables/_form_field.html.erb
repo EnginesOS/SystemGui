@@ -12,6 +12,7 @@
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :hint} %>
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :placeholder} %>
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :select_collection} %>
+<%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :skip_validations, input_class: :skip_validation_input} %>
 
 <% 
 field_type = f.object.field_type.present? ? f.object.field_type : 'text_field'

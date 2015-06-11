@@ -1,4 +1,4 @@
-<div class="col-sm-12 attach_service_fields">
+<div class="col-sm-12 application_service_fields">
 
 	<div class="panel panel-default top-gap">
 
@@ -7,29 +7,74 @@
 			<small>
 				<br>
 				<%= f.object.description %>
-				(<%= f.object.publisher_namespace.to_s + " " + f.object.type_path.to_s%>)
+				(<%= f.object.publisher_namespace.to_s + ":" + f.object.type_path.to_s%>)
 				<br>
 			</small>
 		</div>
 
 		<div class="panel-body">
+			<% select_collection = [ [:new, "Create new application service"] ]
+				if f.object.attachable_active_attached_services.present?
+				  select_collection << [:active, "Use existing active application service"]
+				end
+				if f.object.attachable_orphaned_attached_services.present?
+				  select_collection << [:orphan, "Use existing orphaned application service"]
+			    end
+			%>
+			<div class="application_service_select_create_type">
+				<div class="col-sm-12">
+					<%= render 'shared/form/radio_buttons', f: f, name: :create_type, value: f.object.create_type, label: false,
+							select_collection: select_collection, value_method: :first, text_method: :last, default_value: :new,
+							field_class: "application_service_select_create_type_radios" %>
+				</div>
+			</div>
 
+			<div class="new_application_service_configure col-sm-12">
+			  <%= render partial: 'variables/form_fields', locals: {f: f} %>
+			</div>
 			
-				<%= f.hidden_field :type_path %>
-				<%= f.hidden_field :publisher_namespace %>
-				<%= f.hidden_field :title %>
-				<%= f.hidden_field :description %>
-				<% #= f.hidden_field :software_id, value: @software.id %>
-			
-				<%= render partial: 'variables/form_fields', locals: {f: f} %>
+			<% if f.object.attachable_active_attached_services.present? %>
+
+				<div class="application_service_active_configure">
+					<div class="col-sm-12">
+						<%= render 'shared/form/select', f: f, name: :active_service, label: "Active application service",
+								select_collection: f.object.attachable_active_attached_services,
+								select_class: "application_service_active_configure_select" %>
+					</div>
+				</div>
 				
+			<% end %>
+
+			<% if f.object.attachable_orphaned_attached_services.present? %>
+
+				<div class="application_service_orphan_configure">
+					<div class="col-sm-12">
+						<%= render 'shared/form/select', f: f, name: :orphan_service, label: "Orphaned application service",
+						select_collection: f.object.attachable_orphaned_attached_services,
+								select_class: "application_service_orphan_configure_select" %> 
+					</div>
+				</div>
+
+			<% end %>
+
+			<%= f.hidden_field :type_path %>
+			<%= f.hidden_field :publisher_namespace %>
+
+
 				<div class="col-sm-12 clearfix">
 					<%= render 'shared/form/hidden_field', name: :_destroy, f: f %>
 					<%= link_to content_tag(:i, nil, class:"fa fa-trash"), "javascript:;", onclick: "javascript: remove_fields(this); ",
 					class: "btn btn-default btn-lg pull-right",
-					data: { confirm: "Are you sure?", confirmdetail: "Remove attached service.", holderclass: "attach_service_fields" } %>
+					data: { confirm: "Confirm", confirmdetail: "Remove service?", holderclass: "application_service_fields" } %>
 				</div>
-			
+
+
+
+
+
 		</div>
 	</div>
 </div>
+
+
+

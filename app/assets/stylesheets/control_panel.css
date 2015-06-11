@@ -21,15 +21,15 @@
   max-height: 500px;
 }
 
-.application_detail .modal-dialog {
+.advanced_detail .modal-dialog {
   margin: auto;
   margin-top: 40px;
-}
-
-.application_detail.advanced_detail .modal-dialog {
   width: 90%;
 }
 
+/*.application_detail.advanced_detail .modal-dialog {
+  width: 90%;
+}*/
 .application_detail.about_detail .modal-dialog {
   width: 400px;
 }

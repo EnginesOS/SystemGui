@@ -111,7 +111,7 @@ module Engines::Application
     image: 'image',
     repo: 'repo',
     port: 'port',
-    eports: 'eports',
+    external_ports: 'eports',
     last_error: 'last_error',
     last_result: 'last_result',
     stats: 'stats',

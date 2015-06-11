@@ -1,2 +1,3 @@
-<% value ||= f.object.send(name) %>
-<%= f.hidden_field name, value: value %>
+<% value ||= f.object.send(name)
+	input_class ||= nil %>
+<%= f.hidden_field name, value: value, class: input_class %>
