@@ -11,6 +11,7 @@ class ApplicationInstallationsController < ApplicationController
 
   def create
     @application_installation = ApplicationInstallation.new(application_installation_params)
+    # render text: @application_installation.engine_build_params
     if @application_installation.install
       redirect_to installing_application_installation_path(@application_installation.installing_params)
     else

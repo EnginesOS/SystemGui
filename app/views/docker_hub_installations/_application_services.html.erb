@@ -1,0 +1,5 @@
+<%= render 'shared/form/legend', text: 'Services' %>
+<%= f.fields_for :application_services do |ff| %>
+	<%= render 'application_service_fields', f: ff %>
+<% end %>
+<%= render 'new_application_service_button' %>	

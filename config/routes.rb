@@ -58,6 +58,10 @@ Rails.application.routes.draw do
     get(:installing, :progress)
   end
   resource :docker_hub_installations
+   # do
+    # get :application_service
+  # end
+  # resource :docker_hub_installation_application_services
   resource :repository_url_installations
 
   resource :service_report

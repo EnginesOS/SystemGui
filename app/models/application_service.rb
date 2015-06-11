@@ -6,13 +6,13 @@ class ApplicationService < ActiveRecord::Base
     :type_path,
     :publisher_namespace,
     :service_container_name,
-    # :parent_application_name,
+    #:parent_application_name,
     :service_handle,
     :create_type,
     # :parent_engine,
-    :wizard_create_type,
-    :wizard_orphan_service,
-    :wizard_active_service,
+    # :wizard_create_type,
+    :orphan_service,
+    :active_service,
     :engines_api_error
     )
 
@@ -58,14 +58,6 @@ class ApplicationService < ActiveRecord::Base
   def load_variables
     load_variable_definitions
     variables.each do |variable|
-      
-      p :variable_values____________________________________________________________
-      p variable_values
-      p :variable_values____________________________________________________________
-      p variable_values.class
-      p :variable_values____________________________________________________________
-      
-      
       if variable_values[variable.name.to_sym].present?
         variable.value = variable_values[variable.name.to_sym]
       end
@@ -73,9 +65,6 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def variable_values
-    p :attached_service_hash
-    p attached_service_hash
-    p :attached_service_hash_______________________________________________________________________
     attached_service_hash[:variables]
   end
   
@@ -95,10 +84,10 @@ class ApplicationService < ActiveRecord::Base
       {parent_engine: application.container_name,
       type_path: type_path,
       publisher_namespace: publisher_namespace,
-      variables: varaibles_params}
+      variables: variables_params}
    end 
    
-   def varaibles_params
+   def variables_params
      {}.tap do |result|
        variables.each do |variable|
          result[variable.name.to_sym] = variable.value
@@ -142,11 +131,11 @@ class ApplicationService < ActiveRecord::Base
 
   def service_detail
     
-    p :pppppppppppppppppppppppppppppppppppppppppppublisher_namespace
-    p publisher_namespace
-    p :ttttttttttttttttttttttttttttttttttttttttttttype_path
-    p type_path
-    
+    # p :pppppppppppppppppppppppppppppppppppppppppppublisher_namespace
+    # p publisher_namespace
+    # p :ttttttttttttttttttttttttttttttttttttttttttttype_path
+    # p type_path
+#     
     if application.present?
       @service_detail ||= engines_api.templated_software_service_definition(
                           parent_engine: application.container_name,

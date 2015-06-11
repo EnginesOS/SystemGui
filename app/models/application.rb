@@ -23,6 +23,7 @@ class Application < ActiveRecord::Base
   accepts_nested_attributes_for :application_services
   accepts_nested_attributes_for :network_properties
   accepts_nested_attributes_for :resources_properties
+  accepts_nested_attributes_for :eports
 
 
   name_regex = /^[A-Za-z0-9]*$/
