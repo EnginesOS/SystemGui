@@ -12,8 +12,7 @@
     errors_class = "field_with_errors" if errors.present?
 
 %>
-select_collection
-<%= select_collection.class %><%= select_collection %>
+<% #= "select_collection" + select_collection.class.to_s + select_collection.to_s %>
 <%    
     collection_as_array = select_collection.class != Array ? JSON.parse(select_collection) : select_collection
     select_class ||= ""

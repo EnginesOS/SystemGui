@@ -108,6 +108,9 @@ class ApplicationInstallation < ActiveRecord::Base
     ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'].include?(blueprint_protocol) ? blueprint_protocol : 'HTTPS and HTTP'
   end
 
+  def mandatory_fields_present?
+    application.variables.map{|v| v.mandatory }.any?
+  end
 
   def load_new_application_params
     {

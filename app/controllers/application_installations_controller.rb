@@ -13,14 +13,19 @@ class ApplicationInstallationsController < ApplicationController
     @application_installation = ApplicationInstallation.new(application_installation_params)
     # render text: @application_installation.engine_build_params
     if @application_installation.install
-      redirect_to installing_application_installation_path(@application_installation.installing_params)
+      redirect_to set_installing_params_application_installation_path(@application_installation.installing_params)
     else
       render :new
     end
   end
 
+  def set_installing_params
+    $installing_params = software_params
+    redirect_to installing_application_installation_path
+  end
+
   def installing
-    @application_installation_progress = ApplicationInstallationProgress.new(software_params)
+    @application_installation_progress = ApplicationInstallationProgress.new($installing_params)
   end
 
   def progress

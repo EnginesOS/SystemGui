@@ -41,11 +41,11 @@
 		There are no subservices available for this service.
 	<% end %>
 
-	@@@@@@@@@@@ <%= application_service.application_subservices.size %>
+	<%#= application_service.application_subservices.size %>
 
 
 	<% application_service.application_subservices.each do |application_subservice| %>
-		%%%%%%%%%%%%%%%%%% <%= application_subservice.to_json %>
+		<%= application_subservice.to_json %>
 	<% end %>
 
 <% else %>
