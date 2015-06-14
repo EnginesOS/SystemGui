@@ -16,4 +16,4 @@
 //x= require turbolinks
 //= require selectize
 //= require_tree .
-
+//= require ansi_up

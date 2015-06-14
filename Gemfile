@@ -27,6 +27,7 @@ gem 'open_uri_redirections'
 
 # gem 'rails_admin'
 gem 'awesome_print', '~> 1.2.0'
+gem 'ansi_up-rails'
 
 gem 'i18n_country_select'
 

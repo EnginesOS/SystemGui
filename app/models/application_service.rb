@@ -15,7 +15,7 @@ class ApplicationService < ActiveRecord::Base
     :active_service,
     :engines_api_error
     )
-
+ 
   belongs_to :application
   has_many :application_subservices, dependent: :destroy
   has_many :variables, as: :variable_consumer, dependent: :destroy

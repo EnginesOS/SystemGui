@@ -17,9 +17,11 @@
 
 </div>
 
-	<div class="row advanced_fields">
-	    <%= render 'shared/form/legend', text: 'Setup parameters' %>
-	</div>
-    <%= render 'variables/form_fields', f: ff %>
+	<% if ff.object.variables.present? %>
+		<div class="row <%= 'advanced_fields' if !f.object.mandatory_fields_present? %>">
+		    <%= render 'shared/form/legend', text: 'Application variables' %>
+		</div>
+	    <%= render 'variables/form_fields', f: ff %>
+	<% end %>
 
 <% end %>

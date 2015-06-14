@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+
+	
 	if ($(".gallery_software_holder").length > 0) {
 		$.each($(".gallery_software_holder"), function(index, gallery) {
 				$.get("gallery_software", {gallery_id: $(gallery).data('galleryid'), search: $(gallery).data('search')}, function(data){
@@ -25,15 +27,48 @@ $(document).ready(function(){
 				new_line = e.data;
 				second_last_line_in_build_progress_log = last_line_in_build_progress_log;
 				last_line_in_build_progress_log = new_line;
-				$("#installation_progress").prepend(new_line + '<br>');
+				// var html = new_line;
+				var new_html = ansi_up.ansi_to_html(new_line);
+				if ( overwrite_last_line(new_line) ) {
+					var original_html = $("#installation_progress").html();
+					// var replacement_html = original_html;
+					// alert(replacement_html.split('<br>').slice(0).join('<br>'));
+					replacement_html = original_html.substring(original_html.indexOf("<br>") + 4);
+					$("#installation_progress").html(replacement_html);
+				};
+				$("#installation_progress").prepend(new_html + '<br>');
 			};
+
+			function overwrite_last_line(string) {
+				if (string.charCodeAt(3) == 109 && string.charCodeAt(8) == 109) {
+					// alert(  string.charCodeAt(0) + " " + 
+							// string.charCodeAt(1) + " " + 
+							// string.charCodeAt(2) + " " + 
+							// string.charCodeAt(3) + " " + 
+							// string.charCodeAt(4) + " " + 
+							// string.charCodeAt(5) + " " + 
+							// string.charCodeAt(6) + " " + 
+							// string.charCodeAt(7) + " " + 
+							// string.charCodeAt(8) + " " + 
+							// string.charCodeAt(9) + " " + 
+							// string.charCodeAt(10) + " " + 
+							// string.charCodeAt(11) + " " + 
+							// string.charCodeAt(12) + " " + 
+							// string.charCodeAt(13) + " " + 
+							// string.charCodeAt(14) + " " + 
+							// string.charCodeAt(15));
+					return true;
+				};
+			};
+
 
 			var report_listener = function(e) {
 				new_line = e.data;
 				if ($("#installation_report").html().includes("Waiting for installation to complete.")) {
 					$("#installation_report").html('');
 					};
-				$("#installation_report").append(new_line + '<br>');
+				var html = ansi_up.ansi_to_html(new_line);
+				$("#installation_report").append(html + '<br>');
 			};
 			
 			var complete_listener = function(e) {
