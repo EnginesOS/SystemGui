@@ -1,0 +1,30 @@
+<ul class="nav pull-left">
+
+    <li class="dropdown desktop-signin">
+      <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" style="color: <%= @desktop_settings.icon_text_color %>;">
+      		<%= (content_tag(:i, "", class: "fa fa-sign-out") + " Sign in") %>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+		<li>
+				<%= form_for(:user, :url => new_user_session_path) do |f| %>
+					<div class="form-group">
+						<label for="user_username">Username</label>
+						<%= f.text_field :username, value: "admin", class: 'form-control' %>
+					</div>
+					<div class="form-group">
+						<label for="user_username">Password</label>
+						<%= f.password_field :password, value: "EngOS2014", class: 'form-control' %>
+					</div>
+					<div class="form-group">
+						<%= f.check_box(:remember_me) + ' ' + f.label(:remember_me, 'Remember me', class: 'form-text-lg') %>
+					</div>
+					<div class="form-group">
+					  	<%= f.submit 'Sign in', class: 'btn btn-lg btn-primary' %>
+					  	<%= link_to "Forgot your password?", new_user_password_path(), class: "btn btn-sm btn-default pull-right top-gap" %>
+					</div>
+				<% end %>
+		</li>
+      </ul>
+    </li>
+
+</ul>

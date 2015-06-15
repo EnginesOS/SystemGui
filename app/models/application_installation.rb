@@ -115,7 +115,7 @@ class ApplicationInstallation < ActiveRecord::Base
   def load_new_application_params
     {
       container_name: unique_application_name,
-      variables_attributes: blueprint_software[:variables],
+      variables_attributes: blueprint_software[:variables] || [],
       network_properties_attributes: {
         host_name: unique_host_name,
         domain_name: DomainSettings.engines_default_domain,
@@ -125,7 +125,7 @@ class ApplicationInstallation < ActiveRecord::Base
         required_memory: blueprint_software[:required_memory],
         memory: blueprint_software[:recommended_memory] || blueprint_software[:required_memory]
       },
-      application_services_attributes: load_application_services_params
+      application_services_attributes: load_application_services_params || []
     }
 
   end
