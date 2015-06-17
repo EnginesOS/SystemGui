@@ -2,7 +2,7 @@
 
 
 <% if false %>
-scrap
+
 
 <h4><i class="fa fa-hdd-o"></i> <%= volume_name %> files</h4>
 <% volume_backup_tasks = volumes_backup_tasks.select { |volume_backup_task| volume_backup_task.sourceName == volume_name} %>
