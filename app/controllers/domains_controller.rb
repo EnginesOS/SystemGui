@@ -24,7 +24,7 @@ class DomainsController < ApplicationController
   end
 
   def update
-    @domain = Domain.new(domain_params.merge(original_domain_name: domain_name))
+    @domain = Domain.new(domain_params)
     if @domain.update
       redirect_to domains_path, notice: "Successfully updated #{domain_name}."
     else
@@ -57,7 +57,7 @@ private
   end
   
   def domain_name
-    params[:domain_name]
+    params[:domain_name] || domain_params[:domain_name]
   end
   
 end

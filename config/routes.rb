@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :users, :skip => :registrations
-  mount RailsAdmin::Engine => '/admin', as: :rails_admin
+  resource :user_passwords
+  # mount RailsAdmin::Engine => '/admin', as: :rails_admin
   root to: "welcome#start"
 
   # get "help", to: "pages#help"
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
 
   resource :first_run
   resource :desktop
+  resource :desktop_applications
   resource :control_panel
   resource :control_panel_applications
   resource :control_panel_services
@@ -23,7 +25,7 @@ Rails.application.routes.draw do
   resource :services_registry
   resource :system
   resource :user
-  resources :backup_tasks
+  # resources :backup_tasks
   resource :domain
   resources :domains, only: [:index]
   resource :domain_certificate
@@ -37,30 +39,35 @@ Rails.application.routes.draw do
   resource :variables_properties
   resource :display_properties
   resource :application_report
+  resource :application_about
   # resource :services_properties
   resource :application_services
   resource :orphaned_application_service
   resource :application_subservice
   resource :application_uninstall
   resources :applications do
-    member do
+    collection do
       get(
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
         :reinstall, :delete_image,
-        :build, :recreate, :advanced_detail)
+        :build, :recreate)
     end
   end
   resource :application_installation do
-    get(:installing, :progress)
+    get(:installing, :set_installing_params, :progress)
   end
-  resource :docker_hub_installation
+  resource :docker_hub_installations
+   # do
+    # get :application_service
+  # end
+  # resource :docker_hub_installation_application_services
   resource :repository_url_installations
 
   resource :service_report
   resource :service_configuration
   resources :services do
-    member do
+    collection do
       get(
         :advanced_detail,
         :pause,

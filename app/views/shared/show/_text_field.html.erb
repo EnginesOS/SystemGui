@@ -1,13 +1,15 @@
 <%  field ||= :inspect
     label ||= field.to_s.humanize.capitalize %>
 
-<div class="col-sm-8 col-sm-offset-2">
-  <div class="form-group">
-    <label class="control-label">
-      <%= label %>
-    </label>
-    <div class="">
-      <%= object.send(field) %>
+  <div class="row form-group">
+	<div class="col-sm-2">
+    	<label class="control-label">
+      		<%= label %>
+    	</label>
+	</div>
+	<div class="col-sm-10">
+      <%= SharedViews.value_as_html object.send(field) %>
     </div>
   </div>
-</div>
+
+

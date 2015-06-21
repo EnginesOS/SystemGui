@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def update
     @user = User.first
     if @user.update user_params
-      redirect_to new_user_session_path, notice: 'Admin password has been changed. Please log in again.'
+      redirect_to user_path, notice: 'Successfully updated email address.'
     else
       render 'edit'
     end

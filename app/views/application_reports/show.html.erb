@@ -98,7 +98,7 @@
   
      <label>Processes</label>
      <% processes = @application.ps_container %>
-     <% if processes.present? %>
+     <% if processes.present? && processes != true %>
        <pre><table>
          <% processes.each_line do |line | 
            vals = line.split %>
@@ -119,6 +119,14 @@
       <pre>
       	<%= logs %>
 	  </pre>
+    <% else %>
+      <pre>None</pre>
+     <% end %>
+
+    <label>Blueprint</label>
+     <% blueprint = @application.blueprint %>
+    <% if blueprint.present? %>
+   		<%=  (ap blueprint, plain: true, index: false).html_safe %>
     <% else %>
       <pre>None</pre>
      <% end %>

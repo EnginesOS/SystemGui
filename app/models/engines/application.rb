@@ -42,58 +42,31 @@ module Engines::Application
   def attached_services_with_nested_subservices
     parent_services = []
     child_services = []
-    attached_services_hash.each do |attached_service_definition|
-     p :attached_service_definition 
-     p attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
-      if attached_service_definition[:parent_service].nil?
-        parent_services << attached_service_definition.merge(application_subservices: [])
-      else
-        child_services << attached_service_definition
-      end
-    end
-    
-    p :parent_services
-    p parent_services
-    p :child_services
-    p child_services
-    
-    
-    child_services.each do |child_service|
-      p :child_service1
-      p child_service      
-
-      child_service_params = {
-        publisher_namespace: child_service[:publisher_namespace],
-        type_path: child_service[:type_path],
-        service_handle: child_service[:service_handle]
-      }
-      parent_services = parent_services.map do |parent_service|
-        
-        p :parent_service
-        p parent_service
-        p :child_service
-        p child_service      
-        
-        if parent_service[:publisher_namespace] == child_service[:publisher_namespace] &&
-              parent_service[:type_path] == child_service[:type_path] &&
-              parent_service[:service_handle] == child_service[:service_handle]
-           parent_service[:application_subservices] << child_service_params
+    if attached_services_hash.present?
+      attached_services_hash.each do |attached_service_definition|
+        attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
+        if attached_service_definition[:parent_service].nil?
+          parent_services << attached_service_definition.merge(application_subservices: [])
+        else
+          child_services << attached_service_definition
         end
-
-        p :parent_service2
-        p parent_service
-
-        
-        parent_service   
       end
-
+      child_services.each do |child_service|
+        child_service_params = {
+          publisher_namespace: child_service[:publisher_namespace],
+          type_path: child_service[:type_path],
+          service_handle: child_service[:service_handle]
+        }
+        parent_services = parent_services.map do |parent_service|
+          if parent_service[:publisher_namespace] == child_service[:publisher_namespace] &&
+                parent_service[:type_path] == child_service[:type_path] &&
+                parent_service[:service_handle] == child_service[:service_handle]
+             parent_service[:application_subservices] << child_service_params
+          end
+          parent_service   
+        end
+      end
     end
-    
-    p :parent_services
-    p parent_services
-    
-    
-    
     parent_services
   end
 
@@ -101,16 +74,18 @@ module Engines::Application
 #inspectors       
      
      def state_indicator
-       result = state
-       if result != default_startup_state
-         'broken'
+       if is_error?
+         'error'
        else
-         result
+         state
        end
      end
      
     def state
-      @state ||=  
+      @state ||= load_state
+    end
+
+    def load_state
         result = container.read_state
         if result == 'nocontainer'
           'no_container'
@@ -120,9 +95,10 @@ module Engines::Application
     end
 
   {
-    active?: 'is_active',
-    is_running: 'is_running',
-    is_error: 'is_error',
+    active?: 'is_active?',
+    is_running: 'is_running?',
+    is_error?: 'is_error?',
+    has_container?: 'has_container?',
     host_name: 'hostName',
     http_protocol: 'http_protocol',
     domain_name: 'domainName',
@@ -135,7 +111,7 @@ module Engines::Application
     image: 'image',
     repo: 'repo',
     port: 'port',
-    eports: 'eports',
+    external_ports: 'eports',
     last_error: 'last_error',
     last_result: 'last_result',
     stats: 'stats',

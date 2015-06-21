@@ -1,0 +1,55 @@
+<nav class="navbar navbar-default navbar-top navbar-home" role="navigation">
+	<div class="container-fluid">
+		
+		
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <%= link_to image_tag("engines_logo.png", class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
+	    </div>
+
+	    <div class="collapse navbar-collapse" id="main-navbar-collapse">
+		
+			<ul class="nav navbar-nav">
+		    <% if user_signed_in? %>
+	            <li>
+			        <%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Desktop", desktop_path,
+			        title: 'Desktop', class: 'trigger-response-modal', style: "color: #{@desktop_settings.icon_text_color};" %>
+	        	</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path,
+						class: 'trigger-response-modal', style: "color: #{@desktop_settings.icon_text_color};" %>
+				</li>
+			<% end %>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+	
+		    <% if user_signed_in? %>
+				<li>
+					<%= link_to (content_tag(:i, "", class: "fa fa-sign-out") + " Sign out"),
+						destroy_user_session_path,
+						style: "color: #{@desktop_settings.icon_text_color};",
+						class: 'trigger-response-modal', :method => :delete %>
+				</li>
+				<li>
+					<%= content_tag(:div, (content_tag(:i, "", class: "fa fa-user") + ' ' + current_user.email),
+							class: "navbar-user",
+							style: "color: #{@desktop_settings.icon_text_color};") %>
+				</li>
+			<% else %>
+				<li>
+					<%= link_to (content_tag(:i, "", class: "fa fa-sign-out") + " Sign in"),
+						new_user_session_path,
+						style: "color: #{@desktop_settings.icon_text_color};",
+						class: 'trigger-response-modal' %>
+				</li>
+			<% end %>
+			</ul>
+    	</div>
+
+	</div>
+</nav>

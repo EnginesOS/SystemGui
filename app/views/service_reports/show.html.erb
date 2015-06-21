@@ -53,14 +53,13 @@
     <% environments = @service.environments %>
     <% if environments.present? && environments.length > 0 %>
       <pre><table>
-        <th>Name</th>
-        <th>Value</th>
         <% environments.each do |v|%>
+          <th>Name</th>
+          <th>Value</th>
           <% if v.present? %>
             <tr>
               <td><%= v.name %></td>
               <td><%= v.value %></td>
-              <td><%= v.setatrun %></td>
             </tr>
           <%end%>
         <%end%>

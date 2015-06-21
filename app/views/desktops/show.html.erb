@@ -1,41 +1,16 @@
-<!DOCTYPE html>
-
-<% if @desktop_settings.wallpaper.exists? %>
-  <html style="<%= "background-color: " + @desktop_settings.background_color + "; background: url(" + @desktop_settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: 100% 100%;" %>">
-<% else %>
-  <html style="background-color: <%= @desktop_settings.background_color %>">
-<% end %>
-
-<head>
-  <title>Engines</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<div id="content" >
-
-  <%= render partial: 'navbar' %>
-  <%= render partial: 'shared/flash_messages' %>
-
   <div class="contaner-fluid">
-    <div class="home-view">
+    <div class="desktop-view" style="color: <%= @desktop_settings.icon_text_color %>;">
 
-      <%= render partial: 'desktop_applications' %>
+      	<% if @applications.present? %>
+		    <% @applications.each do |application| %>
+				<div class="application desktop_object", id="<%= application.container_name %>", data-url="<%= desktop_applications_path(application_name: application.container_name) %>"></div>
+		    <% end %>
+		<% else %>
+		    <p class="top-gap" style="color: <%= @desktop_settings.icon_text_color %>;">No applications are running.<br>
+		<% end %>
+
     </div>
   </div>
-
-  <div id="footer">
-  </div>
-
-</div>
-
-<%= render partial: 'shared/waiting_for_response' %>
-
-</body>
-</html>
-
 
 
 

@@ -1,10 +1,23 @@
 <div class="col-sm-12">
-  <h1><i class="fa fa-user"></i> Admin user</h1>
-  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
-  <%= link_to content_tag(:i, "", class: "fa fa-lock") + ' Change password', edit_user_path(current_user), class: "btn btn-primary btn-lg trigger-response-modal" %>
-  <div class="top-gap">
-    <%= render partial: 'shared/show/text_fields', locals: {object: @user, fields: [:email, :sign_in_count]} %>
-    <%= render partial: 'shared/show/distance_of_time_fields', locals: {object: @user, fields: [:current_sign_in_at, :last_sign_in_at]} %>
-    <%= render partial: 'shared/show/text_fields', locals: {object: @user, fields: [:current_sign_in_ip, :last_sign_in_ip]} %>
-  </div>
+	<h1><i class="fa fa-user"></i> Admin user</h1>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+	<div class="panel panel-default top-gap">
+		<div class="panel-heading clearfix">
+			<div class="col-sm-12">
+				<div class="pull-right">
+			        <%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', edit_user_path(current_user), class: 'btn btn-lg trigger-response-modal' %>
+					<%= link_to content_tag(:i, '', class: 'fa fa-lock') + ' Change password', edit_user_passwords_path(current_user), class: 'btn btn-lg trigger-response-modal' %>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<%= render 'shared/show/text_field', object: @user, field: :email  %>
+			<%= render 'shared/show/text_field', object: @user, field: :sign_in_count  %>
+			<%= render 'shared/show/text_field', object: @user, field: :current_sign_in_at  %>
+			<%= render 'shared/show/text_field', object: @user, field: :last_sign_in_at  %>
+			<%= render 'shared/show/text_field', object: @user, field: :current_sign_in_ip  %>
+			<%= render 'shared/show/text_field', object: @user, field: :last_sign_in_ip  %>
+		</div>
+	</div>
+
 </div>

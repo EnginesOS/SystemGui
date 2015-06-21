@@ -2,13 +2,13 @@
 
 	<div class="col-sm-12">
 		<h2><i class="fa fa-globe"></i> Domains</h2>
+		<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 	</div>
 
 	<div class="col-sm-12">
-
-		<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+		<%= render 'settings' %>
+		<legend class="top-gap">Domain names</legend>
 		<%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_domain_path, class: "btn btn-lg btn-primary trigger-response-modal" %>
-
 		<% if @domains.present? %>
 		<% @domains.each do |domain| %>
 		<%= render partial: "domain", locals: { domain: domain } %>
@@ -18,10 +18,6 @@
 			No domains.
 		</p>
 		<% end %>
-
-		<%= render 'settings' %>
-
-
 	</div>
 
 </div>

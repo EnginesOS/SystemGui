@@ -23,6 +23,13 @@ class Application < ActiveRecord::Base
   accepts_nested_attributes_for :application_services
   accepts_nested_attributes_for :network_properties
   accepts_nested_attributes_for :resources_properties
+  accepts_nested_attributes_for :eports
+
+
+  name_regex = /^[A-Za-z0-9]*$/
+  validates :container_name, {format: { with:name_regex, multiline: true, 
+      message: "is invalid (please use characters a-z and 0-9)" },
+    length: {minimum: 3, maximum: 24}}
 
 
 #class methods

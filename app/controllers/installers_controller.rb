@@ -6,8 +6,9 @@ class InstallersController < ApplicationController
     if gallery_id.blank?
       redirect_to galleries_path, alert: "No galleries. Add a gallery to install software." 
     else
-      @gallery = Gallery.find(gallery_id).decorate
+      @gallery = Gallery.find(gallery_id) #.decorate
       @other_galleries = Gallery.where.not(id: gallery_id)
+      # render text: @gallery.softwares      
     end
   end
 

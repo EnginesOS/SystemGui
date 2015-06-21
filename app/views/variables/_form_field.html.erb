@@ -12,6 +12,7 @@
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :hint} %>
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :placeholder} %>
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :select_collection} %>
+<%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :skip_validations, input_class: :skip_validation_input} %>
 
 <% 
 field_type = f.object.field_type.present? ? f.object.field_type : 'text_field'
@@ -23,38 +24,41 @@ tooltip = f.object.tooltip
 value = f.object.value
 collection = f.object.select_collection
 mandatory = f.object.mandatory.to_s
+mandatory = (mandatory == "true")
 placeholder = f.object.placeholder
 errors = f.object.errors[name]
 field_class = mandatory ? "" : "advanced_fields"
 
 %>
 
-<div class="<%= field_class %>">
+<div class="row <%= field_class %>">
 
-  <% if field_type == 'text_field' || field_type == 'string' || field_type == 'text' %>
-    <%= render partial: 'shared/form/text_field', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'text_area' %>
-    <%= render partial: 'shared/form/text_area', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'checkbox' %>
-    <%= render partial: 'shared/form/checkbox', locals: {name: :value, errors: errors, label: label, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'select_radio' || field_type == 'radio_buttons' %>
-    <%= render partial: 'shared/form/radio_buttons', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'select' || field_type == 'select_single' %>
-    <%= render partial: 'shared/form/select', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'country_select' %>
-    <%= render partial: 'shared/form/country_select', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'select_multi' %>
-    <%= render partial: 'shared/form/select_multi', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'password_with_confirmation' %>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: f.object.select_collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'password' %>
-    <%= render partial: 'shared/form/password', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: f.object.select_collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-  <% elsif field_type == 'hidden' %>
-    <%= f.hidden_field :value %>
-  <% else %>
-    <div class="col-sm-8 col-sm-offset-2">
-      Error: field type has been improperly defined.
-    </div>
-  <% end %>
+    <div class="col-sm-12">
+	  <% if field_type == 'text_field' || field_type == 'string' || field_type == 'text' %>
+	    <%= render partial: 'shared/form/text_field', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'text_area' %>
+	    <%= render partial: 'shared/form/text_area', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'checkbox' %>
+	    <%= render partial: 'shared/form/checkbox', locals: {name: :value, errors: errors, label: label, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'select_radio' || field_type == 'radio_buttons' %>
+	    <%= render partial: 'shared/form/radio_buttons', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'select' || field_type == 'select_single' %>
+	    <%= render partial: 'shared/form/select', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'country_select' %>
+	    <%= render partial: 'shared/form/country_select', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'select_multi' %>
+	    <%= render partial: 'shared/form/select_multi', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'password_with_confirmation' %>
+	    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: f.object.select_collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'password' %>
+	    <%= render partial: 'shared/form/password', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: f.object.select_collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
+	  <% elsif field_type == 'hidden' %>
+	    <%= f.hidden_field :value %>
+	  <% else %>
+	    <div class="col-sm-8 col-sm-offset-2">
+	      Error: field type has been improperly defined.
+	    </div>
+	  <% end %>
+  </div>
 
 </div>

@@ -15,16 +15,19 @@ gem 'newrelic_rpm'
 # gem 'simple_form'
 gem 'twitter-bootstrap-rails-confirm'
 
+# gem "cocoon"
+
 gem 'rubytree'
 
-gem 'openssl'
+gem 'rubysl-openssl'
 
 gem "paperclip", "~> 4.2"
 # gem "jquery-fileupload-rails"
 gem 'open_uri_redirections'
 
-gem 'rails_admin'
+# gem 'rails_admin'
 gem 'awesome_print', '~> 1.2.0'
+gem 'ansi_up-rails'
 
 gem 'i18n_country_select'
 

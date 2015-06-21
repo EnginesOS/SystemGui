@@ -84,21 +84,17 @@ private
 
   def set_flash_messages_and_redirect
     if @result.was_success == true
-      if @result.result_mesg.blank?
-        message = 'Success. (No message in API result object.)'
-      else
-        message = @result.result_mesg[0..250]
-      end
-      flash[:notice] = message
+      render partial: 'control_panel_applications/show'   
     else
       if @result.result_mesg.blank?
-        message = 'Failed with unknown error. (No message in API result object.)'
+        flash_message = 'Failed with unknown error. (No message in API result object.)'
       else
-        message = @result.result_mesg[0..250]
+        flash_message = @result.result_mesg[0..500]
       end
-      flash[:error] = message
+      # flash[:error] = message
+      render partial: 'control_panel_applications/show', locals: { flash_message: flash_message }   
     end
-    redirect_to control_panel_path
+    # redirect_to control_panel_path
   end
 
 end

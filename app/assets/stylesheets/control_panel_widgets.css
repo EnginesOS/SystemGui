@@ -1,0 +1,135 @@
+.indicator {
+  font-size: 75%;
+}
+
+.indicator_running {
+  color: #4b4;
+}
+
+.indicator_paused {
+  color: #ff7f00;
+}
+
+.indicator_error {
+  color: #f00;
+}
+
+.indicator_stopped {
+  color: #66b;
+}
+
+.indicator_no_container {
+  color: #bbb;
+}
+
+.indicator_state_error {
+  color: #aaa;
+}
+
+.engine_running {
+  background-color: #fff;
+}
+
+.engine_paused {
+  background-color: #fffff9;
+}
+
+.engine_error {
+  background-color: #fff0f0;
+}
+
+.engine_stopped {
+  background-color: #f0f0ff;
+}
+
+.engine_no_container {
+  background-color: #eee;
+}
+
+.engine-gadget {
+    width: 100%;
+}
+
+.engine-gadget .btn {
+  height: 100px;
+  width: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
+  white-space: normal;
+  word-wrap: break-word;
+  /*border-radius: 0px;*/
+  display: table;
+}
+
+.engine-gadget.service .btn {
+  height: 60px;
+}
+
+.engine-gadget .icon_holder {
+  height: 64px;
+  width: 64px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.engine-gadget .text_holder {
+  height: 64px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+  padding-left: 10px;
+  white-space: nowrap;
+}
+
+.engine-gadget .engine_icon {
+  max-height: 64px;
+  max-width: 64px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.engine-gadget .dropdown-menu {
+  min-width: 100%;
+}
+
+.dropdown-title {
+    font-size: 120%;
+    text-align: center;
+    width: 100%;
+} 
+
+.engine-gadget.btn-group {
+  margin-bottom:15px;
+  margin-top: 15px;
+}
+
+.engine-gadget-dropdown-menu {
+  /*border-radius: 0px;*/
+}
+
+.application .control_panel_object_placeholder{
+	height: 100px;
+	padding-top: 30px;
+}
+
+.service .control_panel_object_placeholder{
+	height: 60px;
+	padding-top: 10px;
+}
+
+.control_panel_object_placeholder {
+	font-size: 0.8em;
+	width: 100%;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	white-space: normal;
+	word-wrap: break-word;
+	text-align: center;
+    vertical-align: middle;
+	color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

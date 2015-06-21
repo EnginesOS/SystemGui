@@ -19,11 +19,10 @@ module Engines::Service
   end
 
   def state_indicator
-    result = state
-    if result != default_startup_state
-      'broken'
+    if is_error?
+      'error'
     else
-      result
+      state
     end
   end
 
@@ -76,6 +75,10 @@ module Engines::Service
 
   def last_error
     system_service_object.last_error
+  end
+
+  def is_error?
+    system_service_object.is_error?
   end
 
   def last_result
@@ -175,7 +178,7 @@ private
   def titles_hash
     {
      backup: 'Backup manager',
-     auth: 'Authentication and authorization',
+     auth: 'Authenticate and authorize',
      dns: 'Local DNS server',
      dyndns: 'Dynamic DNS',
      ftp: 'Local FTP server',

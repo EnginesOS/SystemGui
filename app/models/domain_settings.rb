@@ -21,11 +21,11 @@ class DomainSettings < ActiveRecord::Base
   end
 
   def self.engines_default_domain
-    @engines_default_domain ||= engines_api.get_default_domain
+    engines_api.get_default_domain
   end
 
   def self.engines_default_site
-    @engines_default_site ||= engines_api.get_default_site
+    engines_api.get_default_site
   end
 
   def update_default_domain

@@ -17,8 +17,8 @@ class ApplicationInstallation < ActiveRecord::Base
 
   validate :license_terms_and_conditions_accepted_validation
 
-  def load
-    build_application(load_application_params)
+  def load_new
+    build_application(load_new_application_params)
     @software_title = title
     self
   end
@@ -72,7 +72,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def default_name
-    blueprint_software[:name]
+    blueprint_software[:name].gsub('-', '').gsub('_', '')
   end
 
   def blueprint
@@ -104,15 +104,18 @@ class ApplicationInstallation < ActiveRecord::Base
   # end
 
   def default_http_protocol
-    blueprint_protocol = blueprint_software[:http_protocol]
+    blueprint_protocol = blueprint_software[:http_protocol].to_s.gsub('_', ' ').upcase.gsub('ONLY', 'only').gsub('AND', 'and')
     ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'].include?(blueprint_protocol) ? blueprint_protocol : 'HTTPS and HTTP'
   end
 
+  def mandatory_fields_present?
+    application.variables.map{|v| v.mandatory }.any?
+  end
 
-  def load_application_params
+  def load_new_application_params
     {
       container_name: unique_application_name,
-      variables_attributes: blueprint_software[:variables],
+      variables_attributes: blueprint_software[:variables] || [],
       network_properties_attributes: {
         host_name: unique_host_name,
         domain_name: DomainSettings.engines_default_domain,
@@ -122,7 +125,7 @@ class ApplicationInstallation < ActiveRecord::Base
         required_memory: blueprint_software[:required_memory],
         memory: blueprint_software[:recommended_memory] || blueprint_software[:required_memory]
       },
-      application_services_attributes: load_application_services_params
+      application_services_attributes: load_application_services_params || []
     }
 
   end
@@ -132,7 +135,8 @@ class ApplicationInstallation < ActiveRecord::Base
       service_configuration.symbolize_keys!
       params =  {
                   publisher_namespace: service_configuration[:publisher_namespace],
-                  type_path: service_configuration[:type_path]
+                  type_path: service_configuration[:type_path],
+                  create_type: :new
                 }
       if ApplicationService.new(params).persistant
         params              
@@ -149,7 +153,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def unique_host_name
-    default_host_name = default_name.gsub('-', '')
+    default_host_name = default_name
     unique_host_name_candidate = default_host_name
     index = 2
     while existing_host_names.include? unique_host_name_candidate do
@@ -210,23 +214,24 @@ class ApplicationInstallation < ActiveRecord::Base
 
   def engine_build_attached_services_params
     application.application_services.map do |application_service|
-      result = 
-        {
-          publisher_namespace: application_service.publisher_namespace,
-          type_path: application_service.type_path
-        }
-      if application_service.create_type.blank? || application_service.create_type.to_sym == :new
-        result[:create_type] = "new"
-      elsif application_service.create_type.to_sym == :active
-        result[:create_type] = "active"
-        result[:service_handle] = application_service.service_handle
-        result[:parent_engine] = application_service.parent_engine
-      elsif application_service.create_type.to_sym == :orphaned
-        result[:create_type] = "orphaned"
-        result[:service_handle] = application_service.service_handle
-        result[:parent_engine] = application_service.parent_engine
+      {}.tap do |result|
+        result[:publisher_namespace] = application_service.publisher_namespace,
+        result[:type_path] = application_service.type_path
+        type = application_service.create_type.to_sym
+        result[:create_type] = type.to_s
+        case type
+        when :new
+          # result[:variables] = application_service.variables_params
+        when :active
+          active_service = application_service.active_service.split(" - ")
+          result[:parent_engine] = active_service[0]
+          result[:service_handle] = active_service[1] 
+        when :orphan
+          orphan_service = application_service.orphan_service.split(" - ")
+          result[:parent_engine] = orphan_service[0]
+          result[:service_handle] = orphan_service[1] 
+        end
       end
-      result
     end
   end
 

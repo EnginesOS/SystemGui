@@ -1,17 +1,11 @@
 
 
-/*.home-view ul.dropdown-menu {
-  background-color: #fff;
-  font-size: 24px;
-  border: none;
-  text-align: center;
-}*/
 
-.home-view .home_page_app_gadget {
+.desktop-view .home_page_app_gadget {
   display: inline-block;
 }
 
-.home-view .home_page_app_gadget_holder {
+.desktop-view .home_page_app_gadget_holder {
 }
 
 .btn.btn-launcher {
@@ -27,7 +21,6 @@
   background-color: rgba(0,0,0,0.5);
   border-radius: 5px;
 }
-
 
 .launcher_icon_and_label_holder {
   display: table-cell;
@@ -53,43 +46,34 @@
   word-wrap: break-word;
 }
 
-/*.background-splash { 
-  background-color: #444;
-}*/
-/*.home-view p {
-  color: #fff;
-}*/
-
-.home-view {
+.desktop-view {
   text-align: center;
   padding: 10px;
 }
 
-.navbar-home {
+/*.navbar-home {
   background-color: rgba(0,0,0,0);
   margin-bottom: 0px;
-}
+}*/
 
 /*.navbar-home .navbar-nav li a {
   color: #ccc;
 }*/
 
-.navbar-home .navbar-user {
-	padding: 15px;
+/*.navbar-user {
+	padding: 3px 20px;
 	font-size: 75%;
-	max-width: 250px;
-}
+}*/
 
 
-.navbar-home .nav .active a {
+/*.navbar-home .nav .active a {
   background-color: rgba(0,0,0,0.5); 
 }
 
 .navbar-home .navbar-nav li a:hover {
   background-color: rgba(0,0,0,0.5); 
   color: #fff;
-}
-
+}*/
 
 /*.navbar-home .navbar-brand {
   color: #ccc;
@@ -127,7 +111,7 @@
   background-color: transparent;
  }
 
-#sign-out_button {
+/*#sign-out_button {
   margin-top: 5px;
 }
 
@@ -152,14 +136,13 @@
 #home-page-alerts .alert-success {
   background-color: inherit;
   border: none;
-}
+}*/
 
-
-#home-page-main-container {
+/*#home-page-main-container {
   width: 100%;
-}
+}*/
 
-.home-view .btn-group {
+.desktop-view .btn-group {
   vertical-align: top;
 }
 
@@ -168,6 +151,6 @@
   border-radius: 7px; 
 }*/
 
-.home_menu li {
+.desktop-view li {
   list-style-type: none;
 }
