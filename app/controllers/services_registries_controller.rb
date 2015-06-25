@@ -6,6 +6,7 @@ class ServicesRegistriesController < ApplicationController
     @services_tree_by_provider = Service.services_tree_by_provider
     @services_tree_by_engine = Service.services_tree_by_engine
     @services_tree_of_orphaned_services = Service.services_tree_of_orphaned_services
+    @services_tree_by_configurations = Service.services_tree_by_configurations
   end    
 
 private
