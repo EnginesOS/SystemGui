@@ -1,7 +1,7 @@
 <div class='home_page_app_gadget'>
 	<a class="btn btn-default btn-launcher" href="http://<%= @application.fqdn %>" target="<%= @application.container_name %>">
 	<div class="launcher_icon_and_label_holder">
-		<%= image_tag(@application.display_properties.icon_url, class: "launcher-icon") %>
+		<%= image_tag(@application.display_properties.icon_url, class: "launcher-icon", alt: "") %>
 		<div class="launcher-label">
 			<%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if @application.state != "running" %>
 			<%= @application.display_properties.title %>
