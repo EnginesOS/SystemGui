@@ -26,7 +26,7 @@ end
 	<div class="engine-gadget btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
 			<div class="icon_holder">
-				<%= image_tag(application.display_properties.icon_url, class: "engine_icon") -%>
+				<%= image_tag(application.display_properties.icon_url, class: "engine_icon", alt: "") -%>
 			</div>
 			<div class="text_holder">
 				<%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= state_indicator.humanize %></small>
