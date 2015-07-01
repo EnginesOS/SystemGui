@@ -4,9 +4,13 @@ gem 'devise'
 gem 'file-tail'
 
 gem 'vmstat'
-gem 'therubyracer'
+
+group :development do
+  gem 'therubyracer'
+  gem "puma"
+end
+
 gem 'git'
-gem "puma"
 gem "oink"
 gem 'bootstrap3-rails'
 gem "font-awesome-rails"
