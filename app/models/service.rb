@@ -31,4 +31,8 @@ class Service < ActiveRecord::Base
     engines_api.get_orphaned_services_tree
   end
 
+  def self.services_tree_by_configurations
+    engines_api.get_configurations_tree
+  end
+  
 end
