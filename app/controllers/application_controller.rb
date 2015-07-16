@@ -29,7 +29,7 @@ protected
   end
   
   def after_sign_in_path_for(resource)
-    control_panel_path
+    first_runs_path
   end
 
 
