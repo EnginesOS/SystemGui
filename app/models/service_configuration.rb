@@ -20,7 +20,7 @@ class ServiceConfiguration < ActiveRecord::Base
 
   def load_variable_values
     variables.each do |variable|
-      if variable_values[variable.name.to_sym].present?
+      if variable_values.present? && variable_values[variable.name.to_sym].present?
         variable.value = variable_values[variable.name.to_sym]
       end
     end
@@ -50,7 +50,7 @@ class ServiceConfiguration < ActiveRecord::Base
 # private
  
   def variable_values
-    @service.service_configuration_variables_for(configurator_name)
+    @variable_values ||= @service.service_configuration_variables_for(configurator_name)
   end
   
   def update_service_configuration_variables_params

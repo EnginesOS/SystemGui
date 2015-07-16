@@ -142,9 +142,10 @@ module Engines::Service
   # end
   
   def service_configuration_variables_for(configurator_name)
-
-    engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)[:variables]
-
+    result = engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
+    if result.is_a? Array
+      result[:variables]
+    end
   end
 
 #instructors  

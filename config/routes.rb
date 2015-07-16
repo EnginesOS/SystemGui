@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   resource :control_panel_services
   resource :installer
   resource :services_registry
-  resource :system
+  resource :system do
+    get :restart
+  end
   resource :user
   # resources :backup_tasks
   resource :domain
