@@ -1,8 +1,14 @@
 class FirstRunsController < ApplicationController
 
+  include Engines::FirstRun
+
   def show
-    @first_run = FirstRun.new first_run_params
-    render :show, layout: 'empty_navbar'
+    if FirstRun.required?
+      @first_run = FirstRun.new first_run_params
+      render :show, layout: 'empty_navbar'
+    else
+      redirect_to(desktop_path)
+    end
   end
 
   def create
@@ -21,6 +27,11 @@ class FirstRunsController < ApplicationController
     else
       render :show, layout: 'empty_navbar'
     end
+  end
+  
+  def cancel
+    sign_out current_user
+    redirect_to desktop_path
   end
 
 private
