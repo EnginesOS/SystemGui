@@ -4,9 +4,11 @@
     hint ||= nil
     placeholder ||= "Select a country..."
     comment ||= nil
-    collection ||= nil %>
+    collection ||= nil
+    errors ||= f.object.errors[name]
+    errors_class = "field_with_errors" if errors.present? %>
 
-<div class="col-sm-8 col-sm-offset-2">
+<div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
   <div class="form-group">
     <% if label.present? %>
 	    <%= f.label name, class: 'control-label' do %>
@@ -15,10 +17,24 @@
     <% end %>
     <%= comment %>
     <%= f.country_code_select name, collection, {include_blank: placeholder}, {title: tooltip, class: 'form-control input-lg'} %>
-    <% if hint.present? %>
-      <div class='form-field-hint'>
-        <%= hint %>
+    <% if errors.present? %>
+      <div class='form-field-errors'>
+      	<% errors_collection = [] %>
+        <% errors.each do |error| %>
+          <%if error.class == Array %>
+            <% errors_collection << error[1] %>
+          <% else %>
+            <% errors_collection << error %>
+          <% end %>
+        <% end %>
+        <%= errors_collection.join(', ')%>
       </div>
+    <% else %>
+      <% if hint.present? %>
+        <div class='form-field-hint'>
+          <%= hint %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

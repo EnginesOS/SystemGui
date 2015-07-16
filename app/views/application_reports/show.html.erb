@@ -19,6 +19,16 @@
 <div class="row">
   <div class="col-sm-12 top-gap">
 
+    <label>Installation report</label>
+     <% report = @application.installation_report %>
+    <% if report.present? %>
+      <pre>
+      	<%= report %>
+	  </pre>
+    <% else %>
+      <pre>None</pre>
+     <% end %>
+
     <label>Network activity</label>
     <pre><table>
       <tr><td><label>In</label></td><td><%= @application.network_metrics[:in].to_s + " bytes" %></td></tr>
@@ -49,7 +59,7 @@
 	<label>Last error</label>
 	<% last_error = @application.last_error %>
 	<% if last_error.present? %>
-		<pre><% last_error %></pre>		
+		<pre><%= last_error %></pre>		
     <% else %>
  		<pre>None</pre>
   	<% end %>

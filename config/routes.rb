@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # get "/services/delete_orphaned_attached_service", to: "services#delete_orphaned_attached_service", as: :delete_orphaned_attached_service
   # get "/services/delete_all_orphaned_attached_services", to: "services#delete_all_orphaned_attached_services", as: :delete_all_orphaned_attached_services
 
-  resource :first_run
+  resource :first_runs
   resource :desktop
   resource :desktop_applications
   resource :control_panel
