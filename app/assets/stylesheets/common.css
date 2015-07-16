@@ -11,6 +11,7 @@
 body {
   background-color: transparent;
   font-size: 18px;
+  word-wrap: break-word;
 }
 
 .show label,

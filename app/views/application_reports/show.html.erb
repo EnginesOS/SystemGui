@@ -66,7 +66,7 @@
   
     <label>Variables</label>
     <% software_variables = @application.build_variables_properties.variables %>
-      <% if software_variables.present? %>
+      <% if software_variables.is_a? Array %>
       <pre><% software_variables.each do |v|%><%= v.name %>: <%= v.value %><%end%></pre>
     <% else %>
       <pre>None</pre>
@@ -74,7 +74,7 @@
 
     <label>Services</label>
     <% services = @application.load_application_services.application_services %>
-    <% if services.present? %>
+    <% if services.is_a? Array %>
         <% services.each do |service|%>
             <%= (ap service.attached_service_hash, plain: true, index: false).html_safe %>
         <% end %>
@@ -108,7 +108,7 @@
   
      <label>Processes</label>
      <% processes = @application.ps_container %>
-     <% if processes.present? && processes != true %>
+     <% if processes.is_a? Array %>
        <pre><table>
          <% processes.each_line do |line | 
            vals = line.split %>
@@ -127,7 +127,7 @@
      <% logs = @application.logs_container %>
     <% if logs.present? %>
       <pre>
-      	<%= logs %>
+      	<%= logs.to_s %>
 	  </pre>
     <% else %>
       <pre>None</pre>

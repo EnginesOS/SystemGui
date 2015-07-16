@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-sm-12">
     <table>
-      <tr><td><label>Service name</label></td><td><%= %></td></tr> 
+      <tr><td><label>name</label></td><td><%= @service.container_name %></td></tr> 
       <tr><td><label>Host FQDN</label></td><td><a href=http://<%= @service.fqdn %>><%= @service.fqdn %></a></td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%= @service.default_startup_state %></td></tr> 
@@ -51,7 +51,7 @@
   
     <label>Environment</label>
     <% environments = @service.environments %>
-    <% if environments.present? && environments.length > 0 %>
+    <% if environments.is_a?(Array) && environments.length > 0 %>
       <pre><table>
         <% environments.each do |v|%>
           <th>Name</th>
@@ -69,7 +69,7 @@
     <% end %>
 
     <label>Volumes</label>
-    <% if @service.volumes && @service.volumes.length > 0 %>
+    <% if @service.volumes.is_a?(Array) && @service.volumes.length > 0 %>
       <pre><table>
         <% @service.volumes.each do |v|%>
            <tr>
@@ -82,7 +82,7 @@
     <% end %>  
 
     <label>Consumers</label>
-    <% if @service.consumers.present? %>                
+    <% if @service.consumers.is_a?(Array) %>                
       <pre><table>
         <% @service.consumers.each do |cons|%>
            <tr><td><%= cons %></td></tr>

@@ -12,5 +12,9 @@ class SystemsController < ApplicationController
       redirect_to system_path, alert: "Unable to update system."
     end  
   end
+  
+  def restart
+    render text: "Need restart_system method on api..."
+  end
 
 end

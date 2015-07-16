@@ -3,7 +3,8 @@ class FirstRunsController < ApplicationController
   include Engines::FirstRun
 
   def show
-    if FirstRun.required?
+    Maintenance.full_maintenance
+    if !FirstRun.required?
       @first_run = FirstRun.new first_run_params
       render :show, layout: 'empty_navbar'
     else
