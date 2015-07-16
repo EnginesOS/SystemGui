@@ -3,10 +3,7 @@ class FirstRun
   include Engines::FirstRun
   include ActiveModel::Model
   include ActiveModel::Validations
-
   extend Engines::Api
-
-
 
   attr_accessor(
     :admin_password,
@@ -17,11 +14,6 @@ class FirstRun
     :mysql_password_confirmation,
     :psql_password,
     :psql_password_confirmation,
-    :smarthost_hostname,
-    :smarthost_username,
-    :smarthost_password,
-    :smarthost_authtype,
-    :smarthost_port,
     :default_domain,
     :ssl_country,
     :ssl_state,
@@ -32,19 +24,43 @@ class FirstRun
   validate :password_confirmation_validation
   validate :password_present_and_length_validation
   validate :admin_password_different_to_ssh_password_validation
+  validate :default_domain_is_valid
+  validate :ssl_fields_valid
 
-
-    def self.required?
-      engines_api.first_run_required?
-    end
+  def self.required?
+    engines_api.first_run_required?
+  end
   
-    def self.submit(params)
-      engines_api.set_first_run_parameters params
+  def self.submit(params)
+    engines_api.set_first_run_parameters params
+  end
+
+  def default_domain_is_valid
+    domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
+    if default_domain.blank?
+      errors.add(:default_domain, ["Default domain", "can't be blank"])
+    elsif !default_domain.match(domain_name_regex)
+      errors.add(:default_domain, ["Default domain", "is invalid"])
     end
+  end
 
-
-
-
+  def ssl_fields_valid
+    if ssl_person_name.blank?
+      errors.add(:ssl_person_name, ["Person name", "can't be blank"])
+    end
+    if ssl_organisation_name.blank?
+      errors.add(:ssl_organisation_name, ["Organisation name", "can't be blank"])
+    end
+    if ssl_city.blank?
+      errors.add(:ssl_city, ["City", "can't be blank"])
+    end
+    if ssl_state.blank?
+      errors.add(:ssl_state, ["State", "can't be blank"])
+    end
+    if ssl_country.blank?
+      errors.add(:ssl_country, ["Country", "can't be blank"])
+    end
+  end
 
   def password_confirmation_validation
     password_types.each do |password_name|
@@ -56,17 +72,18 @@ class FirstRun
 
   def password_present_and_length_validation
     password_types.each do |password_name|
-      password_value = send("#{password_name.downcase}_password")
+      password_field = "#{password_name.downcase}_password"
+      password_value = send(password_field)
       if password_value.blank?
-        errors.add(:ssh_password, ["#{password_name} password", "can't be blank"])
+        errors.add(password_field, ["#{password_name} password", "can't be blank"])
       elsif password_value.length < 6
-        errors.add(:ssh_password, ["#{password_name} password", "must be at least 6 charters long"])
+        errors.add(password_field, ["#{password_name} password", "must be at least 6 charters long"])
       end
     end
   end
 
   def admin_password_different_to_ssh_password_validation
-    if admin_password == ssh_password
+    if admin_password != "" && admin_password == ssh_password
       errors.add(:ssh_password, ["SSH password", "must be different from Admin password"])
     end
   end

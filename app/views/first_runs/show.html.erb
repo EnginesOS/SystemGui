@@ -26,6 +26,10 @@
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"]} %>
     <div class="col-sm-12">
+      <legend>SHH</legend>
+    </div>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :ssh_password, f: f, placeholder: ["Enter", "Re-enter"], label: "SSH password"} %>
+    <div class="col-sm-12">
       <legend>MySQL</legend>
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "MySQL password"} %>
@@ -33,14 +37,6 @@
       <legend>Postgres</legend>
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :psql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "PSQL password"} %>
-    <div class="col-sm-12">
-      <legend>Smarthost</legend>
-    </div>
-    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_hostname, label: "Hostname", f: f} %>
-    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_username, label: "Username", f: f} %>
-    <%= render partial: 'shared/form/password', locals: {name: :smarthost_password, label: "Password", f: f} %>
-    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_authtype, collection: EnginesSettings.smtp_auth_types, label: "Authentication type", f: f} %>
-    <%= render partial: 'shared/form/text_field', locals: {name: :smarthost_port, label: "Port", f: f} %>
     <div class="col-sm-12">
       <legend>Default Domain</legend>
     </div>

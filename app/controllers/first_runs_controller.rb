@@ -1,14 +1,14 @@
 class FirstRunsController < ApplicationController
 
-  def first_run
+  def show
     @first_run = FirstRun.new first_run_params
-    render :first_run, layout: 'empty_navbar'
+    render :show, layout: 'empty_navbar'
   end
 
-  def submit_first_run
+  def create
     @first_run = FirstRun.new first_run_params
     if @first_run.valid?
-      result = EnginesFirstRun.send_parameters(first_run_params)
+      result = Engines::FirstRun.submit(first_run_params)
       if result.was_success
         current_user.update(
           password: first_run_params[:admin_password],
@@ -16,10 +16,10 @@ class FirstRunsController < ApplicationController
           )
         redirect_to control_panel_path, notice: 'First run parameters were successfully saved.'
       else
-        redirect_to first_run_path(first_run: first_run_params), alert: 'First run parameters were not saved. ' + result.result_mesg
+        redirect_to first_runs_path(first_run: first_run_params), alert: 'First run parameters were not saved. ' + result.result_mesg
       end
     else
-      render :first_run, layout: 'empty_navbar'
+      render :show, layout: 'empty_navbar'
     end
   end
 
@@ -31,6 +31,7 @@ private
         
       }
     else
+      params[:first_run][:ssl_country] = "" if params[:first_run][:ssl_country] == "Select a country..."
       params.require(:first_run).permit!
     end
   end
