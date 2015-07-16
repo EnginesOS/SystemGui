@@ -139,7 +139,9 @@ module Engines::Application
     engines_api.get_engine_memory_statistics(container_name)
   end
  
- 
+  def installation_report
+    engines_api.get_engine_build_report(container_name)
+  end
  
   def attached_services_hash
     @attached_services_hash ||= engines_api.list_attached_services_for('ManagedEngine', container_name)

@@ -4,7 +4,7 @@ class GallerySoftwaresController < ApplicationController
   def show
     @gallery = Gallery.find(params[:gallery_id])
     # render text: @gallery.methods.sort
-    @softwares = @gallery.search_software_titles(params[:search]).sort_by{|b| b[:title] }
+    @softwares = @gallery.search_software_titles(params[:search]).sort_by{|b| b[:title].downcase }
     render layout: false
   end
 

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, :skip => :registrations
   resource :user_passwords
   # mount RailsAdmin::Engine => '/admin', as: :rails_admin
-  root to: "welcome#start"
+  root to: "desktops#show"
 
   # get "help", to: "pages#help"
   # get "system/update", to: "system#system_update"
@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   # get "/services/delete_orphaned_attached_service", to: "services#delete_orphaned_attached_service", as: :delete_orphaned_attached_service
   # get "/services/delete_all_orphaned_attached_services", to: "services#delete_all_orphaned_attached_services", as: :delete_all_orphaned_attached_services
 
-  resource :first_run
+  resource :first_runs do
+    get :cancel
+  end
   resource :desktop
   resource :desktop_applications
   resource :control_panel
@@ -23,7 +25,9 @@ Rails.application.routes.draw do
   resource :control_panel_services
   resource :installer
   resource :services_registry
-  resource :system
+  resource :system do
+    get :restart
+  end
   resource :user
   # resources :backup_tasks
   resource :domain
