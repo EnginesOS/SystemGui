@@ -11,6 +11,10 @@
   border-top: 1px solid #ddd;
 }
 
+.installer .engine-install-row {
+  color: #666;
+}
+
 .installer .engine-install-icon {
   max-height: 96px;
   max-width: 96px;
@@ -30,7 +34,6 @@
 
 .installer .engine-install-name {
   font-size: 1.2em;
-  color: #666;
 }
 
 .installer .engine-install-text {
