@@ -94,6 +94,10 @@ module Engines::Application
         end
     end
 
+    def uri
+      'http' + (http_protocol_as_sym == :https_only ? 's' : '') + '://' + fqdn
+    end
+
   {
     active?: 'is_active?',
     is_running: 'is_running?',
@@ -101,6 +105,8 @@ module Engines::Application
     has_container?: 'has_container?',
     host_name: 'hostName',
     http_protocol: 'http_protocol',
+    http_protocol_as_sym: 'protocol',
+    https_only: 'https_only',
     domain_name: 'domainName',
     fqdn: 'fqdn',
     default_startup_state: 'setState',

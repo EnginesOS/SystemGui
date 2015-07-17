@@ -15,6 +15,7 @@ class FirstRun
     :psql_password,
     :psql_password_confirmation,
     :default_domain,
+    :default_domain_config,
     :ssl_country,
     :ssl_state,
     :ssl_city,

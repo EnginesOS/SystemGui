@@ -170,7 +170,7 @@ end
 			</li>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + application.fqdn, "http://" + application.fqdn, target: application_name %>
+				<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + application.uri, application.uri, target: application_name %>
 			</li>
 		</ul>
 	</div>
