@@ -3,6 +3,6 @@
   <%= render 'shared/form/hidden_field', name: :original_domain_name, value: @domain.domain_name, f: f %>
   <%= render partial: 'shared/form/text_field', locals: {name: :domain_name, label: 'Domain', f: f} %>
   <%= render partial: 'shared/form/checkbox', locals: {name: :self_hosted, label: 'Self-hosted', f: f} %>
-  <%= render partial: 'shared/form/checkbox', locals: {name: :internal_only, f: f} %>
+  <%= render partial: 'shared/form/checkbox', locals: {name: :internal_only, depends_on_id: "domain_self_hosted", f: f} %>
   <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: domains_path} %>
 <% end %>

@@ -6,17 +6,19 @@ class SystemsController < ApplicationController
   end
   
   def restart
-    result = System.restart
-    if result.kind_of?(EnginesOSapiResult)
-      if result.was_success
-        alert = "Restarting..."
-      else
-        alert = ( "Unable to restart system. " + result.result_mesg )[0,500]
-      end
-    else
-      alert = "No result"
-    end
-    redirect_to control_panel_path, alert: alert
+    # result = System.restart
+    # if result.kind_of?(EnginesOSapiResult)
+      # if result.was_success
+        redirect_to restarting_system_path
+      # else
+        # redirect_to control_panel_path, alert: ( "Unable to restart system. " + result.result_mesg )[0,500]
+      # end
+    # else
+      # redirect_to control_panel_path, alert: "No result"
+    # end
+  end
+  
+  def restarting
   end
 
   def engines_update

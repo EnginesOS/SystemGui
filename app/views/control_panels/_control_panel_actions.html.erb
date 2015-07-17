@@ -24,18 +24,9 @@
 			</li>
             <li class="divider"></li>
 	        <li>
-	          <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System stats", system_path, class: 'btn-lg trigger-response-modal' %>
+	          <%= link_to content_tag(:i, "", class: "fa fa-dashboard") + " System", system_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
-      	    <li>
-      	    	<%= link_to content_tag(:i, "", class: "fa fa-clock-o") + ' Update system', engines_update_system_path,
-					data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to update the Engines system?" },
-					class: 'btn-lg' %>
-			</li>
-      	    <li>
-      	    	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Restart system', restart_system_path,
-					data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the Engines system?" },
-					class: 'btn-lg' %>
-			</li>
+
 
   </ul>
 </div>

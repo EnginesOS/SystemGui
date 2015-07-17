@@ -32,6 +32,8 @@
 					  				<small style="color: #f00;"><i>This variable is not properly defined.</i></small><br>
 								<% end %>
 			  			<% end %>
+			  		<% else %>
+			  			Unable to load variables. Check that service is running.
 			  		<% end %>
 		  			<%= link_to content_tag(:i, "", class: "fa fa-edit") + ' Edit',
 		  					edit_service_configuration_path(service_name: @service.container_name, configurator_name: configurator[:name]),
