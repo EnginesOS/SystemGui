@@ -13,8 +13,14 @@ class SystemsController < ApplicationController
     end  
   end
   
-  def restart
-    render text: "Need restart_system method on api..."
+  def reboot
+    System.reboot
+    render text: "Rebooting..."
+  end
+
+  def engines_update
+    System.update
+    render text: "Updating..."
   end
 
 end
