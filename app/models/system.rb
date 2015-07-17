@@ -19,7 +19,7 @@ class System
   end
   
   def self.update
-    engines_api.system_update
+    engines_api.update_system
   end
 
 end

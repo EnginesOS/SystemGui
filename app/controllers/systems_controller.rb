@@ -5,22 +5,34 @@ class SystemsController < ApplicationController
     @system_info = System.system_info
   end
   
-  def update
-    if System.update
-      redirect_to system_path, notice: "Sucessfully updated system."
-    else
-      redirect_to system_path, alert: "Unable to update system."
-    end  
+  def restart
+    # result = System.restart
+    # if result.kind_of?(EnginesOSapiResult)
+      # if result.was_success
+        redirect_to restarting_system_path
+      # else
+        # redirect_to control_panel_path, alert: ( "Unable to restart system. " + result.result_mesg )[0,500]
+      # end
+    # else
+      # redirect_to control_panel_path, alert: "No result"
+    # end
   end
   
-  def restart
-    System.restart
-    render text: "Rebooting..."
+  def restarting
   end
 
   def engines_update
-    System.update
-    render text: "Updating..."
+    result = System.update
+    if result.kind_of?(EnginesOSapiResult)
+      if result.was_success
+        alert = "Updating..."
+      else
+        alert = ( "Unable to update system. " + result.result_mesg )[0,500]
+      end
+    else
+      alert = "No result"
+    end
+    redirect_to control_panel_path, alert: alert
   end
 
 end

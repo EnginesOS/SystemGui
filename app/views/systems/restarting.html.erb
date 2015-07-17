@@ -1,0 +1,11 @@
+<div id="system_restarting" class="col-sm-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-power-off") %> Restarting</h2>
+
+	<%= link_to content_tag(:i, "", class: "fa fa-refresh") + ' Reload', control_panel_path, class: "btn btn-warning btn-lg" %>
+
+	<p>
+		<br>
+		<span id="restarting_timer_message">Waiting for system to respond</span>
+	</p>
+
+</div>
