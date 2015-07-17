@@ -15,7 +15,7 @@ class FirstRunsController < ApplicationController
   def create
     @first_run = FirstRun.new first_run_params
     if @first_run.valid?
-      result = Engines::FirstRun.submit(first_run_params)
+      result = @first_run.submit
       if result.was_success
         current_user.update(
           password: first_run_params[:admin_password],
@@ -39,9 +39,7 @@ private
 
   def first_run_params
     if params[:first_run].nil?
-      {
-        
-      }
+      {}
     else
       params[:first_run][:ssl_country] = "" if params[:first_run][:ssl_country] == "Select a country..."
       params.require(:first_run).permit!
