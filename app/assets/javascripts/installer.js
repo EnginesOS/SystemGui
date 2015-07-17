@@ -41,26 +41,9 @@ $(document).ready(function(){
 
 			function overwrite_last_line(string) {
 				if (string.charCodeAt(3) == 109 && string.charCodeAt(8) == 109) {
-					// alert(  string.charCodeAt(0) + " " + 
-							// string.charCodeAt(1) + " " + 
-							// string.charCodeAt(2) + " " + 
-							// string.charCodeAt(3) + " " + 
-							// string.charCodeAt(4) + " " + 
-							// string.charCodeAt(5) + " " + 
-							// string.charCodeAt(6) + " " + 
-							// string.charCodeAt(7) + " " + 
-							// string.charCodeAt(8) + " " + 
-							// string.charCodeAt(9) + " " + 
-							// string.charCodeAt(10) + " " + 
-							// string.charCodeAt(11) + " " + 
-							// string.charCodeAt(12) + " " + 
-							// string.charCodeAt(13) + " " + 
-							// string.charCodeAt(14) + " " + 
-							// string.charCodeAt(15));
 					return true;
 				};
 			};
-
 
 			var report_listener = function(e) {
 				new_line = e.data;

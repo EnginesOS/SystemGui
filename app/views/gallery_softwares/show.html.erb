@@ -15,8 +15,8 @@
 %>
 <% install_url = new_application_installation_path(repository_url: software[:repository_url]) %>
 
-<div class="col-md-12 engine-install-row">
-  <div class="col-md-3">
+<div class="engine-install-row clearfix">
+  <div class="col-md-3 clearfix">
     <div class="engine-install-icon-container">
 
 <%
@@ -34,7 +34,7 @@
       <img src="<%= image_url %>" class="engine-install-icon">
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6 clearfix">
 
     <div class="engine-install-text">
       <% if gallery_title.present? %>
@@ -49,8 +49,8 @@
     </div>
 
   </div>
-  <div class="col-md-3">
-    <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal" data-toggle="tooltip" title="Click to install <%= gallery_title %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a>
+  <div class="col-md-3 clearfix">
+    <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal pull-right" data-toggle="tooltip" title="Click to install <%= gallery_title %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a>
     <br>
     <% if home_page.present? %>
     <a class="btn btn-lg" href="<%= home_page %>" title="<%= home_page %>"><i class="fa fa-globe"></i> website</a>
