@@ -29,12 +29,9 @@ class ApplicationService < ActiveRecord::Base
     # self
   # end
 
-
-
-
-
-
-
+ def service
+   @service_engine ||= Service.new(container_name: service_container_name)
+ end
   
   def build_for_show
     load_subservices

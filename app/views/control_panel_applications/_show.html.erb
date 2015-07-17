@@ -152,16 +152,16 @@ end
 			<% end %>
 			<% if engine_active == true %>
 			<li class="disabled">
-				<%= link_to content_tag(:i, "", class: "fa fa-question") + " Application variables", "javascript:void(0);" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-question") + " Variables", "javascript:void(0);" %>
 			</li>
 			<% else %>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-question") + " Application variables", edit_variables_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+				<%= link_to content_tag(:i, "", class: "fa fa-question") + " Variables", edit_variables_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
 			</li>
 			<% end %>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-arrows-h") + " Registered services", application_services_path(application_name: application_name),  class: "trigger-response-modal" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-arrows-h") + " Services", application_services_path(application_name: application_name),  class: "trigger-response-modal" %>
 			</li>
 			<li class="divider"></li>
 			<li>

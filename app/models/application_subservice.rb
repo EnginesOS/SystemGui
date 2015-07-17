@@ -25,6 +25,11 @@ class ApplicationSubservice < ActiveRecord::Base
 
   belongs_to :application_service
 
+ # def service
+   # @service_engine ||= Service.new(container_name: service_container_name)
+ # end
+  
+
   def load
     load_variables
   end
