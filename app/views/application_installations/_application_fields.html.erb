@@ -10,9 +10,11 @@
 	<%= ff.fields_for :resources_properties do |fff| %>
 		<%= render 'resources_properties/form_fields', f: fff %>
 	<% end %>
-    <%= render 'shared/form/legend', text: 'Services' %>
-	<%= ff.fields_for :application_services do |fff| %>
-		<%= render 'application_service', f: fff %>
+	<% if ff.object.application_services.present? %>
+	    <%= render 'shared/form/legend', text: 'Services' %>
+		<%= ff.fields_for :application_services do |fff| %>
+			<%= render 'application_service', f: fff %>
+		<% end %>
 	<% end %>
 
 </div>

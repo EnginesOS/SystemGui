@@ -1,6 +1,6 @@
 <% domains = Domain.domain_names_list %>
 <%= render 'shared/form/legend', text: 'URL' %>
-<%= render partial: 'shared/form/text_field', locals: {name: :host_name, tooltip: "Letters, numbers and '.'", f: f} %>
-<%= render partial: 'shared/form/select', locals: {name: :domain_name, collection: domains, tooltip: "Letters, numbers and '.'", f: f} %>
+<%= render partial: 'shared/form/text_field', locals: {name: :host_name, hint: "Letters and numbers only", f: f} %>
+<%= render partial: 'shared/form/select', locals: {name: :domain_name, collection: domains, hint: "Letters, numbers and '.'", f: f} %>
 <%= render 'shared/form/legend', text: 'HTTP protocol' %>
 <%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false, select_collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: f} %>

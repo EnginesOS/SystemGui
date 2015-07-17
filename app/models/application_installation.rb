@@ -131,17 +131,22 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def load_application_services_params
-    blueprint_software[:service_configurations].map do |service_configuration|
-      service_configuration.symbolize_keys!
-      params =  {
-                  publisher_namespace: service_configuration[:publisher_namespace],
-                  type_path: service_configuration[:type_path],
-                  create_type: :new
-                }
-      if ApplicationService.new(params).persistant
-        params              
-      end
-    end.compact
+    service_configurations = blueprint_software[:service_configurations]
+    if service_configurations.present?
+      return service_configurations.map do |service_configuration|
+        service_configuration.symbolize_keys!
+        params =  {
+                    publisher_namespace: service_configuration[:publisher_namespace],
+                    type_path: service_configuration[:type_path],
+                    create_type: :new
+                  }
+        if ApplicationService.new(params).persistant
+          params              
+        end
+      end.compact
+    else
+      return {}
+    end
   end
 
 
