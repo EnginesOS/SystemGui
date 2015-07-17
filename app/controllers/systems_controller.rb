@@ -13,8 +13,8 @@ class SystemsController < ApplicationController
     end  
   end
   
-  def reboot
-    System.reboot
+  def restart
+    System.restart
     render text: "Rebooting..."
   end
 

@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resource :installer
   resource :services_registry
   resource :system do
-    get(:reboot, :engines_update)
+    get(:restart, :engines_update)
   end
   resource :user
   # resources :backup_tasks
