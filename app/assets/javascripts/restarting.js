@@ -21,9 +21,8 @@ $(document).ready(function(){
 
 	function restarting_poll_progress() {
 	   	setTimeout(function() {
-	       	$.ajax({ url: "/system/restarting", success: function(data) {
-				$("#restarting_message").append(".");
-	       }, complete: restarting_poll_progress });
+			$("#restarting_message").append(".");
+	        restarting_poll_progress();
 	    }, 500);
 	};
 
