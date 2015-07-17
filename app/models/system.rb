@@ -14,8 +14,8 @@ class System
     }
   end
   
-  def self.reboot
-    engines_api.reboot_system
+  def self.restart
+    engines_api.restart_system
   end
   
   def self.update
