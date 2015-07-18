@@ -58,16 +58,25 @@
       <% else %>
          <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
       <%  end %>
+      <% if @service.configurators.present? %>
   		<li class="divider"></li>
-		<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Configuration", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %></li>
-
-  		<li class="divider"></li>
-    	<li>
-			<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "modal_menu_item" %>
-  		</li>
-  		<li class="divider"></li>
-     	<li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + service_fqdn, "http://" + service_fqdn, target: "_blank"%></li>
-    </ul>
+		<% if service_state == "running" %>
+			<li>
+				<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Configuration", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
+			</li>
+		<% else %>
+			<li class="disabled">
+				<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Configuration", "javascript:void(0);" %>
+			</li>
+		<% end %>
+	  <% end %>
+  	  <li class="divider"></li>
+	  <li>
+		<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "modal_menu_item" %>
+	  </li>
+	  <li class="divider"></li>
+ 	  <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + service_fqdn, "http://" + service_fqdn, target: "_blank"%></li>
+      </ul>
   </div>
 </div>
 
