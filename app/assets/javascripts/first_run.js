@@ -4,12 +4,10 @@ $(document).ready(function() {
     admin_password = randomPassword();
     ssh_password = randomPassword();
     mysql_password = randomPassword();
-    psql_password = randomPassword();
 
     var passwords_html = '<pre style="font-size: 18px;"><div><label>   Admin password: </label> ' + admin_password +'</div>' +
       '<div><label>     SSH password: </label> ' + ssh_password + '</div>' +
-      '<div><label>   MySQL password: </label> ' + mysql_password + '</div>' +
-      '<div><label>Postgres password: </label> ' + psql_password + '</div></pre>';
+      '<div><label>   MySQL password: </label> ' + mysql_password + '</div>';
 
     $("#first_run_form_auto_generated_passwords").html(passwords_html);
 

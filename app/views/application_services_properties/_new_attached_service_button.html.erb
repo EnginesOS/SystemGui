@@ -1,0 +1,29 @@
+<% 	available_services = @application_services_properties.application.available_services %>
+
+<div class="btn-group dropdown">
+
+	<button class="btn btn-lg btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+		<%= content_tag(:i, "", class: "fa fa-plus") + " Add" %>
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+
+		<% available_services.each do |available_service| %>
+		<li>
+			<%= link_to(
+			available_service[:title],
+			new_application_services_path(
+			application_name: @application_services_properties.application.container_name,
+			application_service: {
+			type_path: available_service[:type_path],
+			publisher_namespace: available_service[:publisher_namespace],
+			}
+			),
+			class: "btn-lg trigger-response-modal")
+			%>
+
+		</li>
+		<% end %>
+
+	</ul>
+</div>

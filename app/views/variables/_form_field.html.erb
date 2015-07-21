@@ -38,7 +38,7 @@ field_class = mandatory ? "" : "advanced_fields"
 	    <%= render partial: 'shared/form/text_field', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 	  <% elsif field_type == 'text_area' %>
 	    <%= render partial: 'shared/form/text_area', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-	  <% elsif field_type == 'checkbox' %>
+	  <% elsif field_type == 'checkbox' && field_type == 'boolean' %>
 	    <%= render partial: 'shared/form/checkbox', locals: {name: :value, errors: errors, label: label, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 	  <% elsif field_type == 'select_radio' || field_type == 'radio_buttons' %>
 	    <%= render partial: 'shared/form/radio_buttons', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, collection: collection, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>

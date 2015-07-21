@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127075938) do
+ActiveRecord::Schema.define(version: 20150718221202) do
+
+  create_table "application_display_properties", force: true do |t|
+    t.integer "application_id"
+    t.string  "title"
+    t.text    "detail"
+    t.string  "icon_file_name"
+    t.string  "icon_content_type"
+    t.integer "icon_file_size"
+    t.string  "icon_updated_at"
+  end
 
   create_table "application_installations", force: true do |t|
     t.integer "application_id"
@@ -21,12 +31,28 @@ ActiveRecord::Schema.define(version: 20150127075938) do
     t.integer "application_id"
   end
 
+  create_table "application_network_properties", force: true do |t|
+    t.integer "application_id"
+  end
+
+  create_table "application_resources_properties", force: true do |t|
+    t.integer "application_id"
+  end
+
   create_table "application_services", force: true do |t|
+    t.integer "application_id"
+  end
+
+  create_table "application_services_properties", force: true do |t|
     t.integer "application_id"
   end
 
   create_table "application_subservices", force: true do |t|
     t.integer "application_service_id"
+  end
+
+  create_table "application_variables_properties", force: true do |t|
+    t.integer "application_id"
   end
 
   create_table "applications", force: true do |t|
@@ -50,16 +76,6 @@ ActiveRecord::Schema.define(version: 20150127075938) do
     t.datetime "wallpaper_updated_at"
     t.string   "background_color"
     t.string   "icon_text_color"
-  end
-
-  create_table "display_properties", force: true do |t|
-    t.integer "application_id"
-    t.string  "title"
-    t.text    "detail"
-    t.string  "icon_file_name"
-    t.string  "icon_content_type"
-    t.integer "icon_file_size"
-    t.string  "icon_updated_at"
   end
 
   create_table "docker_hub_installations", force: true do |t|
@@ -101,23 +117,11 @@ ActiveRecord::Schema.define(version: 20150127075938) do
     t.integer "application_id"
   end
 
-  create_table "network_properties", force: true do |t|
-    t.integer "application_id"
-  end
-
-  create_table "resources_properties", force: true do |t|
-    t.integer "application_id"
-  end
-
   create_table "service_configurations", force: true do |t|
   end
 
   create_table "services", force: true do |t|
     t.string "container_name"
-  end
-
-  create_table "services_properties", force: true do |t|
-    t.integer "application_id"
   end
 
   create_table "users", force: true do |t|
@@ -144,10 +148,6 @@ ActiveRecord::Schema.define(version: 20150127075938) do
   create_table "variables", force: true do |t|
     t.integer "variable_consumer_id"
     t.string  "variable_consumer_type"
-  end
-
-  create_table "variables_properties", force: true do |t|
-    t.integer "application_id"
   end
 
 end

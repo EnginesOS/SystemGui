@@ -65,7 +65,7 @@
   	<% end %>
   
     <label>Variables</label>
-    <% software_variables = @application.build_variables_properties.variables %>
+    <% software_variables = @application.build_application_variables_properties.variables %>
       <% if software_variables.is_a? Array %>
       <pre><% software_variables.each do |v|%><%= v.name %>: <%= v.value %><%end%></pre>
     <% else %>

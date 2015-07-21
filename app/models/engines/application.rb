@@ -10,11 +10,6 @@ module Engines::Application
       
 #extractors
 
-  def show_on_desktop?
-    default_startup_state == 'running' || active?
-  end
-
-
   def blueprint_software_details
     blueprint['software']
   end
@@ -35,40 +30,42 @@ module Engines::Application
     # EnginesBackupTask.all #.select { |backup_task| backup_task.present? }
   # end
 
-  def existing_attached_services
-    @existing_attached_services ||= attached_services_with_nested_subservices
+  def services_properties
+    @services_properties ||= attached_services_hash
   end  
+
+  # def 
   
-  def attached_services_with_nested_subservices
-    parent_services = []
-    child_services = []
-    if attached_services_hash.present?
-      attached_services_hash.each do |attached_service_definition|
-        attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
-        if attached_service_definition[:parent_service].nil?
-          parent_services << attached_service_definition.merge(application_subservices: [])
-        else
-          child_services << attached_service_definition
-        end
-      end
-      child_services.each do |child_service|
-        child_service_params = {
-          publisher_namespace: child_service[:publisher_namespace],
-          type_path: child_service[:type_path],
-          service_handle: child_service[:service_handle]
-        }
-        parent_services = parent_services.map do |parent_service|
-          if parent_service[:publisher_namespace] == child_service[:publisher_namespace] &&
-                parent_service[:type_path] == child_service[:type_path] &&
-                parent_service[:service_handle] == child_service[:service_handle]
-             parent_service[:application_subservices] << child_service_params
-          end
-          parent_service   
-        end
-      end
-    end
-    parent_services
-  end
+  # def attached_services_with_nested_subservices
+    # parent_services = []
+    # child_services = []
+    # if attached_services_hash.present?
+      # attached_services_hash.each do |attached_service_definition|
+        # attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
+        # if attached_service_definition[:parent_service].nil?
+          # parent_services << attached_service_definition.merge(application_subservices: [])
+        # else
+          # child_services << attached_service_definition
+        # end
+      # end
+      # child_services.each do |child_service|
+        # child_service_params = {
+          # publisher_namespace: child_service[:publisher_namespace],
+          # type_path: child_service[:type_path],
+          # service_handle: child_service[:service_handle]
+        # }
+        # parent_services = parent_services.map do |parent_service|
+          # if parent_service[:publisher_namespace] == child_service[:publisher_namespace] &&
+                # parent_service[:type_path] == child_service[:type_path] &&
+                # parent_service[:service_handle] == child_service[:service_handle]
+             # parent_service[:application_subservices] << child_service_params
+          # end
+          # parent_service   
+        # end
+      # end
+    # end
+    # parent_services
+  # end
 
 
 #inspectors       

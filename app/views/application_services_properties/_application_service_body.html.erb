@@ -1,0 +1,31 @@
+
+
+<%= service_variables = application_service.attached_service_hash[:variables] %>
+<% # configurator = application_service.service.attached_service_hash[:variables] %>
+<% if false #service_variables.present? %>
+	<% service_variables.each do |variable_name, variable_value| %>
+		<% variable_definition = configurator[:params][variable_name]
+			if variable_definition.present? %>
+				<label><%= variable_definition[:label] %></label>
+				<% if variable_definition[:field_type].include? 'password' %>
+					<%= variable_value.length.times.map{ '*' }.join() %>
+				<% else %>
+					<%= variable_value %>
+				<% end %><br>
+			<% else %>
+  				<label style="color: #f00;"><%= variable_name.to_s %></label> <%= variable_value %>
+  				<small style="color: #f00;"><i>This variable is not properly defined.</i></small><br>
+			<% end %>
+	<% end %>
+<% else %>
+	Unable to load variables. Check that service is running.
+<% end %>
+
+
+@application_service.service_configuration_variables_for(configurator[:name])
+
+
+
+<br>
+<br>
+<br>

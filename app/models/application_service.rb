@@ -6,7 +6,7 @@ class ApplicationService < ActiveRecord::Base
     :type_path,
     :publisher_namespace,
     :service_container_name,
-    #:parent_application_name,
+    :application_name,
     :service_handle,
     :create_type,
     # :parent_engine,
@@ -29,37 +29,57 @@ class ApplicationService < ActiveRecord::Base
     # self
   # end
 
- def service
-   @service_engine ||= Service.new(container_name: service_container_name)
- end
-  
-  def build_for_show
-    load_subservices
-    load_variables
-    self
+  def service
+    @service_engine ||= Service.new(container_name: service_container_name)
   end
   
-  def load_variable_definitions
-    variable_definitions.each do |variable_definition|
-      variables.build(variable_definition)
-    end
+  def build_for_new
+    load_variable_definitions
   end
+  
+  def build_for_edit
+    load_variable_definitions
+    # load_variables_with_values
+  end
+  
+#   
+  # def build
+    # build_application
+    # build_subservices
+    # build_variables
+    # self
+  # end
+
+  # def application
+#     
+  # end
+
    
-  def load_subservices
+  def build_subservices
     # application.attached_services_hash.each do |subservice_params|
 #       
     # end
   end
-   
-   
-  def load_variables
+
+
+  def load_variables_with_values
     load_variable_definitions
     variables.each do |variable|
       if variable_values[variable.name.to_sym].present?
-        variable.value = variable_values[variable.name.to_sym]
+
+p :variable_value
+p        variable.value = variable_values[variable.name.to_sym]
       end
     end
   end
+
+  
+  def load_variable_definitions
+    # variable_definitions.each do |variable_definition|
+      variables.build(variable_definitions)
+    # end
+  end
+
   
   def variable_values
     attached_service_hash[:variables]
@@ -91,6 +111,17 @@ class ApplicationService < ActiveRecord::Base
        end
      end
    end
+
+  def edit_params
+    {
+        application_name: application.container_name,
+        application_service: {
+          type_path: type_path,
+          publisher_namespace: publisher_namespace
+                   }
+    }
+  end
+
   
 
   # def application_name

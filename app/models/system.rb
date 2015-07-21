@@ -2,7 +2,7 @@ class System
 
   extend Engines::Api
 
-  def self.system_info
+  def self.monitor
     {
       memory: engines_api.get_system_memory_info,
       loading: engines_api.get_system_load_info,
@@ -11,6 +11,13 @@ class System
         vm2: (sleep(1); Vmstat.memory),
         cpu: Vmstat.cpu
       }
+    }
+  end
+
+  def self.info
+    {
+      memory: engines_api.get_system_memory_info[:total],
+      cpus: Vmstat.cpu.count
     }
   end
   

@@ -6,9 +6,9 @@
 
 	<div class="top-gap">
 
-		<% if @service.configurators.present? %>
+		<% if @service.configurator_params.is_a? Array %>
 
-			<% @service.configurators.each do |configurator| %>
+			<% @service.configurator_params.each do |configurator| %>
 		
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -16,19 +16,18 @@
 		  			<small><%= configurator[:description] %></small>
 				</div>
 				<div class="panel-body">
-					<% existing_variables = @service.service_configuration_variables_for(configurator[:name]) %>
-					<% if existing_variables.present? %>
-						<% existing_variables.each do |variable_name, variable_value| %>
-			  				<% variable_definition = configurator[:params][variable_name]
+					<% existing_variables = configurator[:variables_attributes] %>
+					<% if existing_variables.is_a? Array %>
+						<% existing_variables.each do |variable_definition|
 								if variable_definition.present? %>
 									<label><%= variable_definition[:label] %></label>
 									<% if variable_definition[:field_type].include? 'password' %>
-										<%= variable_value.length.times.map{ '*' }.join() %>
+										<%= variable_definition[:value].length.times.map{ '*' }.join() %>
 									<% else %>
-										<%= variable_value %>
+										<%= variable_definition[:value] %>
 									<% end %><br>
 								<% else %>
-					  				<label style="color: #f00;"><%= variable_name.to_s %></label> <%= variable_value %>
+					  				<label style="color: #f00;"><%= variable_definition[:name].to_s %></label> <%= variable_definition[:value] %>
 					  				<small style="color: #f00;"><i>This variable is not properly defined.</i></small><br>
 								<% end %>
 			  			<% end %>
