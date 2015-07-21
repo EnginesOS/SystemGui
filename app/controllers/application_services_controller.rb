@@ -2,14 +2,18 @@ class ApplicationServicesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_application
-  before_action :set_application_service, except: :show
+  before_action :set_application_service #, except: :show
 
-  def show
-    @application.load_application_services
-  end
+  # def show
+    # @application.load_application_services
+  # end
 
   def new
-    @application_service.load_variable_definitions
+    @application_service.build_for_new
+  end
+
+  def edit
+    @application_service.build_for_edit
   end
 
   def create

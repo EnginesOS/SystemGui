@@ -1,10 +1,9 @@
-<div class="col-sm-12 top-gap app_installs">
-  <h3 class=''><i class='fa fa-question'></i> Edit application variables for <%= @variables_properties.application_name %></h3>
-
-	<%= form_for @variables_properties,
-					url: variables_properties_path(
-					application_name: @variables_properties.application_name) do |f| %>
-	    <% if @variables_properties.variables.present? %>
+<div class="col-sm-12">
+  <h2 class=''><i class='fa fa-question'></i> Variables for <%= @application_variables_properties.application_name %></h2>
+	<%= form_for @application_variables_properties,
+					url: application_variables_properties_path(
+					application_name: @application_variables_properties.application_name) do |f| %>
+	    <% if @application_variables_properties.variables.present? %>
 	  		<%= render partial: 'shared/form/errors', locals: {f: f, label: 'application variables'} %>
  			<%= render partial: 'variables/form_fields', locals: {f: f} %>
 		      <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>

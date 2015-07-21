@@ -10,9 +10,9 @@ class GalleryDecorator < Draper::Decorator
   #     end
   #   end
   
-  def hi
-    "hi"
-  end
+  # def test
+    # "hi"
+  # end
   
 
 end

@@ -3,6 +3,9 @@ class Service < ActiveRecord::Base
   include Engines::Service
   extend Engines::Api
 
+  # has_many :service_configurations, dependent: :destroy
+  # accepts_nested_attributes_for :service_configurations
+
   def self.load_all
     service_container_names_list.map do |container_name|
       load_by_container_name(container_name)
@@ -14,6 +17,10 @@ class Service < ActiveRecord::Base
     service.save
     service
   end
+
+  # def build_configurations
+    # service_configurations.build(configurator_params)
+  # end
 
   def self.service_container_names_list
     engines_api.list_services.sort

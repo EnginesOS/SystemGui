@@ -1,12 +1,14 @@
 <div class="col-sm-12">
 
-	<h2 class=''><%= content_tag(:i, "", class: "fa fa-wrench") + " Configure " + @service_configuration.service.label %></h2>
+	<h2 class=''><%= content_tag(:i, "", class: "fa fa-wrench") + " Configure " + @service_configuration.service_name %></h2>
 
 	<div class="top-gap">
 
 	<%= form_for @service_configuration, url: service_configuration_path(
-				service_name: @service_configuration.service_name,
-				configurator_name: @service_configuration.configurator_name ) do |f| %>
+				service_name: @service_configuration.service_name) do |f| %>
+		<%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :service_name} %>
+		<%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :name} %>
+		<%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :label} %>
 	 	<%= render partial: 'shared/form/errors', locals: {f: f, label: 'configuration'} %>
 		<%= render partial: 'variables/form_fields', locals: {f: f} %>
      	<%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f,

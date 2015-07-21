@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resource :installer
   resource :services_registry
   resource :system do
-    get(:restart, :restarting, :engines_update)
+    get(:monitor, :restart, :restarting, :engines_update)
   end
   resource :user
   # resources :backup_tasks
@@ -38,14 +38,14 @@ Rails.application.routes.draw do
   resources :galleries
   resource :gallery_software
   resource :gallery_settings
-  resource :network_properties
-  resource :resources_properties
-  resource :variables_properties
-  resource :display_properties
+  resource :application_network_properties
+  resource :application_resources_properties
+  resource :application_variables_properties
+  resource :application_display_properties
+  resource :application_services_properties
+  resource :application_services
   resource :application_report
   resource :application_about
-  # resource :services_properties
-  resource :application_services
   resource :orphaned_application_service
   resource :application_subservice
   resource :application_uninstall

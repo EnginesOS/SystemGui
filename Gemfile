@@ -10,6 +10,7 @@ group :development do
   gem "puma"
 end
 
+gem 'r509'
 gem 'git'
 gem "oink"
 gem 'bootstrap3-rails'

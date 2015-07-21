@@ -1,4 +1,4 @@
-class DisplayProperties < ActiveRecord::Base
+class ApplicationDisplayProperties < ActiveRecord::Base
 
   include Rails.application.routes.url_helpers
 
@@ -9,7 +9,6 @@ class DisplayProperties < ActiveRecord::Base
 
   belongs_to :application
 
-  # validates :application_name, presence: true, uniqueness: true, length: { maximum: 16 }
   validates :title, length: { maximum: 30 }
   validates :detail, length: { maximum: 1000 }
 

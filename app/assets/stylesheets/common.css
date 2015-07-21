@@ -14,6 +14,10 @@ body {
   word-wrap: break-word;
 }
 
+#content .container {
+  padding: 5px;
+}
+
 .show label,
 th
  {
@@ -38,4 +42,8 @@ hr {
 
 .btn-xlg {
   font-size: 30px;
+}
+
+.btn-noborder {
+	border: none;
 }
