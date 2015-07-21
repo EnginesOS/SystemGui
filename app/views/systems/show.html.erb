@@ -1,12 +1,12 @@
-<div class='row'>
+
+	<div class="col-sm-6 pull-right">
+		<%= render 'system_actions' %>
+	</div>
+
 	<div class="col-sm-6">
 		<h2><%= content_tag(:i, "", class: "fa fa-tachometer") %> System</h2>
 		<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 	</div>
-	<div class="col-sm-6">
-		<%= render 'system_actions' %>
-	</div>
-</div>
 
 <div class="col-sm-12">
 

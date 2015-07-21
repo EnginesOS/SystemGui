@@ -5,9 +5,12 @@
     hint ||= nil
     comment ||= nil
     errors ||= f.object.errors[name]
-    errors_class = "field_with_errors" if errors.present? %>
+    errors_class = "field_with_errors" if errors.present?
+ 	html_id = f.object.class.to_s.underscore + '_' + name.to_s
+	depends_on_id ||= ""
+	depends_on_regex ||= "^true$" %>
 
-<div class="<%= errors_class %> col-sm-8 col-sm-offset-2">
+<div class="<%= errors_class %> col-sm-8 col-sm-offset-2 <%= 'dependent_field' if depends_on_id.present? %>" data-dependsonid="<%= depends_on_id %>" data-dependsonregex="<%= depends_on_regex %>" >
   <div class="form-group">
     <%= f.check_box(name, checked: value, title: tooltip) + ' ' + f.label(name, label, class: 'form-text-lg', title: tooltip) %> <%= comment %><br>
     <% if errors.present? %>

@@ -19,9 +19,6 @@ $(document).ready(function() {
 	$("#first_run_ssh_password_confirmation").val(ssh_password);
 	$("#first_run_mysql_password").val(mysql_password);
 	$("#first_run_mysql_password_confirmation").val(mysql_password);
-	$("#first_run_psql_password").val(psql_password);
-	$("#first_run_psql_password_confirmation").val(psql_password);
-
 
   });
 

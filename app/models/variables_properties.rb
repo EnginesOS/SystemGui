@@ -20,19 +20,16 @@ class VariablesProperties < ActiveRecord::Base
     false
   end 
   
-  # def update(variables_properties_params)
-    # assign_attributes variables_properties_params
-    # valid? && save
-  # end
+  def update(variables_properties_params)
+    assign_attributes variables_properties_params
+    valid? && save
+  end
 
   def load
     variables_definitions.each do |variable_definition|
       variables.build(variable_definition)
-    end
+    end if variables_definitions.is_a? Array
   end
-  
-  
-  
   
   def variables_definitions
     application.blueprint_software_details['variables']

@@ -4,6 +4,7 @@ class FirstRun
   include ActiveModel::Model
   include ActiveModel::Validations
   extend Engines::Api
+  include Engines::Api
 
   attr_accessor(
     :admin_password,
@@ -12,9 +13,8 @@ class FirstRun
     :ssh_password_confirmation,
     :mysql_password,
     :mysql_password_confirmation,
-    :psql_password,
-    :psql_password_confirmation,
     :default_domain,
+    :default_domain_config,
     :ssl_country,
     :ssl_state,
     :ssl_city,
@@ -31,8 +31,8 @@ class FirstRun
     engines_api.first_run_required?
   end
   
-  def self.submit(params)
-    engines_api.set_first_run_parameters params
+  def submit
+    engines_api.set_first_run_parameters submit_params
   end
 
   def default_domain_is_valid
@@ -88,10 +88,26 @@ class FirstRun
     end
   end
 
-private
+# private
 
   def password_types
-    ["Admin", "SSH", "MySQL", "PSQL"]
+    ["Admin", "SSH", "MySQL"]
+  end
+  
+  def submit_params
+    {
+      admin_password: admin_password,
+      ssh_password: ssh_password,
+      mysql_password: mysql_password,
+      default_domain: default_domain,
+      default_domain_internal_only: default_domain_config == 'Private',
+      default_domain_self_hosted: (default_domain_config == 'Private' || default_domain_config.include?('self-hosted DNS') ),
+      ssl_person_name: ssl_person_name,
+      ssl_organisation_name: ssl_organisation_name,
+      ssl_city: ssl_city,
+      ssl_state: ssl_state,
+      ssl_country: ssl_country
+    }
   end
 
 end

@@ -1,0 +1,19 @@
+<% if errors.present? %>
+  <div class='form-field-errors'>
+  	<% errors_collection = [] %>
+    <% errors.each do |error| %>
+      <%if error.class == Array %>
+        <% errors_collection << error[1] %>
+      <% else %>
+        <% errors_collection << error %>
+      <% end %>
+    <% end %>
+    <%= errors_collection.join(', ')%>
+  </div>
+<% else %>
+  <% if hint.present? %>
+    <div class='form-field-hint'>
+      <%= simple_format hint %>
+    </div>
+  <% end %>
+<% end %>

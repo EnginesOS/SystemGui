@@ -22,25 +22,18 @@
     </div>
 
     <div class="col-sm-12">
-      <legend>Admin</legend>
+      <legend>Passwords</legend>
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"]} %>
-    <div class="col-sm-12">
-      <legend>SHH</legend>
-    </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :ssh_password, f: f, placeholder: ["Enter", "Re-enter"], label: "SSH password"} %>
-    <div class="col-sm-12">
-      <legend>MySQL</legend>
-    </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "MySQL password"} %>
-    <div class="col-sm-12">
-      <legend>Postgres</legend>
-    </div>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :psql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "PSQL password"} %>
     <div class="col-sm-12">
       <legend>Default Domain</legend>
     </div>
     <%= render partial: 'shared/form/text_field', locals: {name: :default_domain, label: "Domain name", f: f} %>
+    <%= render partial: 'shared/form/radio_buttons', locals: {name: :default_domain_config,
+			hint: "Private: For private use on a local network. DNS is hosted locally.\nPublic\n- external DNS: DNS is hosted elsewhere on the Internet.\n- self-hosted DNS: DNS is hosted locally.",
+			select_collection: ['Private', 'Public (external DNS)', 'Public (self-hosted DNS)'], default_value: 'Private', label: "Setup as", f: f} %>
     <div class="col-sm-12">
       <legend>SSL</legend>
     </div>

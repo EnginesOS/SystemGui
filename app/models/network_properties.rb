@@ -10,7 +10,7 @@ class NetworkProperties < ActiveRecord::Base
 
   name_regex = /^[A-Za-z0-9]*$/
   validates :host_name, {format: { with:name_regex, multiline: true, 
-      message: "is invalid (please use character a-z and 0-9)" },
+      message: "is invalid (character a-z and digits 0-9 only)" },
     length: {minimum: 2, maximum: 50}}
   validate :domain_name_present
   # validate :fqdn_is_unique_on_update?, on: :update

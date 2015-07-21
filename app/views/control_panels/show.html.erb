@@ -1,10 +1,10 @@
 <div class='control_panel'>
 	<div class='row'>
-		<div class="col-sm-6">
-			<h2><%= content_tag(:i, "", class: "fa fa-tablet") %> Applications</h2>
+		<div class="col-sm-6 pull-right">
+			<%= render 'control_panel_actions' %>
 		</div>
 		<div class="col-sm-6">
-			<%= render 'control_panel_actions' %>
+			<h2><%= content_tag(:i, "", class: "fa fa-tablet") %> Applications</h2>
 		</div>
 	</div>
 	
@@ -25,7 +25,7 @@
 			<% end %>
 		<% else %>
 			<div class="col-sm-12">
-				No software installed.
+				No software is installed.<br><small>Click on the blue menu button to open the installer.</small>
 			</div>
 		<% end %>
 	</div>

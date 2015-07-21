@@ -14,8 +14,12 @@ class System
     }
   end
   
+  def self.restart
+    engines_api.restart_system
+  end
+  
   def self.update
-    false #engines_api.system_update
+    engines_api.update_system
   end
 
 end
