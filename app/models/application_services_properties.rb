@@ -1,31 +1,72 @@
 class ApplicationServicesProperties < ActiveRecord::Base
 
-  # include Engines::Api
+  include Engines::Api
 
   # after_initialize :load
   # before_save :write_data
 
   belongs_to :application
+  # has_many :application_services, through: :application
   
   
-  
-   def build_for_show
-    # application.existing_attached_services.each do |attached_service|
-# 
-# attached_service = attached_service.except(:application_subservices)
-# 
-# p :__________________________________________________________________________________________________________________attached_service
-# p attached_service      
-# 
-#       
-      application.application_services.build(application.services_properties_definition) #.build_for_show
-    # end
-    # self
-
-
+   def build_application_services
+      application_services = application.application_services.build(build_application_services_attributes)
+      application_services.each do |application_service|
+        application_service.build_variables
+      end
   end
 
+  def properties_from_system
+    @properties ||= application.services_properties
+  end
+  
+  def build_application_services_attributes
+    properties_from_system.map do |application_service|
+      params_for_build_application_service application_service
+    end
+    # [{type_path: "hi"}]
+  end
+  
+  def params_for_build_application_service application_service
+      {
+        publisher_namespace: application_service[:publisher_namespace],
+        type_path: application_service[:type_path],
+        # variables_attributes: fully_defined_variables_attributes_for(application_service)
+      }
+  end
 
+  # def fully_defined_variables_attributes_for(application_service)
+# p     service_detail_for application_service   
+# p :service_detail_above
+# []
+  # end
+# 
+  # def service_detail_for(application_service)
+      # engines_api.templated_software_service_definition(
+                          # parent_engine: application.container_name,
+                          # publisher_namespace: application_service[:publisher_namespace],
+                          # type_path: application_service[:type_path])
+  # end
+
+
+#   
+  # :publisher_namespace => "EnginesSystem",
+                     # :type_path => "filesystem/local/filesystem",
+                     # :variables => {
+                     # :name => "mahara",
+               # :volume_src => " ",
+              # :permissions => "rw",
+              # :engine_path => "/home/fs/datadir",
+            # :parent_engine => "mahara"
+        # },
+                  # :service_type => "filesystem/local/filesystem",
+                    # :persistant => true,
+                 # :parent_engine => "mahara",
+                # :service_handle => "mahara",
+                         # :fresh => true,
+                # :container_type => "container",
+        # :service_container_name => "volmanager"
+    # }
  
   # has_many :application_services, through: :application
   # has_many :variables, through: :application

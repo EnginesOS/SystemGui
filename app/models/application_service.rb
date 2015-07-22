@@ -34,11 +34,11 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def build_for_new
-    load_variable_definitions
+    build_variables
   end
   
   def build_for_edit
-    load_variable_definitions
+    build_variables
     # load_variables_with_values
   end
   
@@ -74,7 +74,7 @@ p        variable.value = variable_values[variable.name.to_sym]
   end
 
   
-  def load_variable_definitions
+  def build_variables
     # variable_definitions.each do |variable_definition|
       variables.build(variable_definitions)
     # end
@@ -158,12 +158,7 @@ p        variable.value = variable_values[variable.name.to_sym]
 ######
 
   def service_detail
-    
-    # p :pppppppppppppppppppppppppppppppppppppppppppublisher_namespace
-    # p publisher_namespace
-    # p :ttttttttttttttttttttttttttttttttttttttttttttype_path
-    # p type_path
-#     
+  
     if application.present?
       @service_detail ||= engines_api.templated_software_service_definition(
                           parent_engine: application.container_name,
@@ -176,7 +171,6 @@ p        variable.value = variable_values[variable.name.to_sym]
     end
   end
 
-#####
 
   def title
     service_detail[:title]

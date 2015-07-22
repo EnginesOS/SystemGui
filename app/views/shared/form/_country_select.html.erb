@@ -16,7 +16,7 @@
 	    <% end %>
     <% end %>
     <%= comment %>
-    <%= f.country_code_select name, collection, {include_blank: placeholder}, {title: tooltip, class: 'form-control input-lg'} %>
+    <%= f.country_select name, collection, {include_blank: placeholder}, {title: tooltip, class: 'form-control input-lg'} %>
     <% if errors.present? %>
       <div class='form-field-errors'>
       	<% errors_collection = [] %>

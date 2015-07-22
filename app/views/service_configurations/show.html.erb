@@ -12,6 +12,10 @@
 		
 			<div class="panel panel-default">
 				<div class="panel-heading">
+		  			<%= link_to content_tag(:i, "", class: "fa fa-edit") + ' Edit',
+		  					edit_service_configuration_path(service_name: @service.container_name, configurator_name: configurator[:name]),
+		  					class: "btn btn-default btn-noborder btn-lg trigger-response-modal pull-right" %>
+
 		  			<%= configurator[:label] %><br>
 		  			<small><%= configurator[:description] %></small>
 				</div>
@@ -22,7 +26,7 @@
 								if variable_definition.present? %>
 									<label><%= variable_definition[:label] %></label>
 									<% if variable_definition[:field_type].include? 'password' %>
-										<%= variable_definition[:value].length.times.map{ '*' }.join() %>
+										<%= variable_definition[:value].map{ '*' }.join() if variable_definition[:value].present? %>
 									<% else %>
 										<%= variable_definition[:value] %>
 									<% end %><br>
@@ -34,9 +38,6 @@
 			  		<% else %>
 			  			Unable to load variables. Check that service is running.
 			  		<% end %>
-		  			<%= link_to content_tag(:i, "", class: "fa fa-edit") + ' Edit',
-		  					edit_service_configuration_path(service_name: @service.container_name, configurator_name: configurator[:name]),
-		  					class: "btn btn-default btn-lg trigger-response-modal pull-right" %>
 				</div>
 			</div>
 		
