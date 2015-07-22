@@ -112,15 +112,15 @@ p        variable.value = variable_values[variable.name.to_sym]
      end
    end
 
-  def edit_params
-    {
-        application_name: application.container_name,
-        application_service: {
-          type_path: type_path,
-          publisher_namespace: publisher_namespace
-                   }
-    }
-  end
+  # def edit_params
+    # {
+        # application_name: application.container_name,
+        # application_service: {
+          # type_path: type_path,
+          # publisher_namespace: publisher_namespace
+                   # }
+    # }
+  # end
 
   
 
@@ -158,12 +158,7 @@ p        variable.value = variable_values[variable.name.to_sym]
 ######
 
   def service_detail
-    
-    # p :pppppppppppppppppppppppppppppppppppppppppppublisher_namespace
-    # p publisher_namespace
-    # p :ttttttttttttttttttttttttttttttttttttttttttttype_path
-    # p type_path
-#     
+  
     if application.present?
       @service_detail ||= engines_api.templated_software_service_definition(
                           parent_engine: application.container_name,
@@ -176,7 +171,6 @@ p        variable.value = variable_values[variable.name.to_sym]
     end
   end
 
-#####
 
   def title
     service_detail[:title]

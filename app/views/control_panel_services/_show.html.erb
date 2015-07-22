@@ -44,7 +44,7 @@
 			<% else %>
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
 			<% end %>
-	  	    <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Swtart", "javascript:void(0);", class: 'object_action', data: { action: "Starting", url: start_services_path(service_name: service_name) } %></li>
+	  	    <li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "Starting", url: start_services_path(service_name: service_name) } %></li>
   		    <li class="divider"></li>
   		    <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "Rebuilding", url: recreate_services_path(service_name: service_name) } %> </li>
   		<% elsif  service_state == "no_container" %>   

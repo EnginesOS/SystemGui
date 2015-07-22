@@ -6,7 +6,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
   # before_save :write_data
 
   belongs_to :application
-  
+  has_many :application_services, through: :application
   
   
    def build_for_show
@@ -18,14 +18,16 @@ class ApplicationServicesProperties < ActiveRecord::Base
 # p attached_service      
 # 
 #       
-      application.application_services.build(application.services_properties_definition) #.build_for_show
+      application.application_services.build(properties) #.build_for_show
     # end
     # self
 
 
   end
 
-
+  def properties
+    @properties ||= application.attached_services_hash
+  end  
  
   # has_many :application_services, through: :application
   # has_many :variables, through: :application
