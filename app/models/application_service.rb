@@ -34,11 +34,11 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def build_for_new
-    load_variable_definitions
+    build_variables
   end
   
   def build_for_edit
-    load_variable_definitions
+    build_variables
     # load_variables_with_values
   end
   
@@ -74,7 +74,7 @@ p        variable.value = variable_values[variable.name.to_sym]
   end
 
   
-  def load_variable_definitions
+  def build_variables
     # variable_definitions.each do |variable_definition|
       variables.build(variable_definitions)
     # end
@@ -112,15 +112,15 @@ p        variable.value = variable_values[variable.name.to_sym]
      end
    end
 
-  # def edit_params
-    # {
-        # application_name: application.container_name,
-        # application_service: {
-          # type_path: type_path,
-          # publisher_namespace: publisher_namespace
-                   # }
-    # }
-  # end
+  def edit_params
+    {
+        application_name: application.container_name,
+        application_service: {
+          type_path: type_path,
+          publisher_namespace: publisher_namespace
+                   }
+    }
+  end
 
   
 

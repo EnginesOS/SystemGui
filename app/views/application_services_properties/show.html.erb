@@ -7,12 +7,11 @@
 	<%= render 'new_attached_service_button' %>
 
 	<div>
-		<%= ap(@application_services_properties.properties, plain: true, index: false).html_safe %>
-		<% @application_services_properties.application_services.each do |application_service| %>
+		<% @application_services_properties.application.application_services.each do |application_service| %>
 			<%#= ap(application_service, plain: true, index: false).html_safe %>
 			<%= render "application_service", application_service: application_service %>
 		<% end %>
-
 	</div>
+		<%= ap(@application_services_properties.application.services_properties, plain: true, index: false).html_safe %>
 
 </div>
