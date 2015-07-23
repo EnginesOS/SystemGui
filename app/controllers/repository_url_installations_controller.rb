@@ -7,7 +7,12 @@ class RepositoryUrlInstallationsController < ApplicationController
   end
 
   def create
-    redirect_to new_application_installation_path(repository_url_installation_params) 
+    @repository_url_installation = RepositoryUrlInstallation.new(repository_url_installation_params)
+    if @repository_url_installation.valid?
+      redirect_to new_application_installation_path(repository_url_installation_params)
+    else
+      render :new
+    end
   end
 
 private
