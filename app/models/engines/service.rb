@@ -129,13 +129,28 @@ module Engines::Service
     @service_definition ||= ( engines_api.get_service_definition(type_path, publisher_namespace) || {} )
   end
 
-  def configurators
-    configurators_hash.values
+  def configurator_params_without_values
+    @configurator_params_without_values ||= configurators_from_service_definition.map{ |c| c[:variables_attributes] = c[:params].values ; c }.map{ |c| c.delete :params ; c }
+  end
+  
+  def configurator_params
+    configurator_params_without_values.map do |c|
+      variables_values = service_configuration_variables_for(c[:name])
+      c[:variables_attributes].each do |v|
+        v[:value] = variables_values[v[:name].to_sym]
+      end
+      c
+    end
   end
 
-  def configurators_hash
-    @configurators_hash ||= ( service_definition[:configurators] || {} )
+  def configurators_from_service_definition
+    @configurators_from_service_definition ||= ( ( service_definition[:configurators] || {} ).values || [] )
   end
+
+  def configurator_params_for configurator_name
+    configurator_params.find{|c| c[:name] == configurator_name }
+  end
+
   
   # def configurators
     # configurators_hash.keys
@@ -143,6 +158,18 @@ module Engines::Service
   
   def service_configuration_variables_for(configurator_name)
     engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)[:variables]
+  end
+
+  def test(configurator_name)
+    
+
+p :__call____receive_service_configuration____with_params    
+p :container_name
+p container_name
+p :configurator_name
+p configurator_name
+
+    engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
   end
 
 #instructors  
@@ -176,6 +203,7 @@ private
   def titles_hash
     {
      backup: 'Backup manager',
+     cert_auth: 'Security certificates',
      auth: 'Authenticate and authorize',
      dns: 'Local DNS server',
      dyndns: 'Dynamic DNS',

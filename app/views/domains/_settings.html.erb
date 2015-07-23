@@ -4,15 +4,12 @@
   <div class="panel-heading clearfix">
     <div class="col-sm-12">
       <div class="pull-right">
-      	<%= link_to content_tag(:i, '', class: 'fa fa-edit') + ' Edit', edit_domain_settings_path, class: 'btn btn-lg trigger-response-modal' %>
+      	<%= link_to content_tag(:i, '', class: 'fa fa-edit') + ' Edit', edit_domain_settings_path, class: 'btn btn-default btn-noborder btn-lg trigger-response-modal' %>
       </div>
     </div>
   </div>
   <div class="panel-body">
-
       <%= render 'shared/show/text_field', object: @domain_settings, field: :default_domain  %>
       <%= render 'shared/show/text_field', object: @domain_settings, field: :default_site  %>
-
-
   </div>
 </div>

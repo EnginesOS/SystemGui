@@ -1,11 +1,14 @@
-<div class="panel panel-default top-gap">
+<div class="panel panel-default top-gap clearfix">
 
-	<div class="panel-heading">
+	<div class="panel-heading clearfix">
 		<%= render "application_service_header", application_service: application_service %>
 	</div>
 
 	<div class="panel-body">
 		<%= render "application_service_body", application_service: application_service %>
 	</div>
+
+<% #= ap(application_service.variable_values, index: false, plain: true).html_safe %>
+
 
 </div>

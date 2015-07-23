@@ -3,7 +3,7 @@
 
   <%= form_for @first_run do |f| %>
 
-    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+    <%= render partial: 'shared/form/errors', locals: {f: f, label: 'Setup wizard', verb: 'run'} %>
 
     <div class="col-sm-8 clearfix" id="first_run_form_auto_generated_passwords">
       &nbsp
@@ -24,9 +24,9 @@
     <div class="col-sm-12">
       <legend>Passwords</legend>
     </div>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"]} %>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :ssh_password, f: f, placeholder: ["Enter", "Re-enter"], label: "SSH password"} %>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "MySQL password"} %>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"], comment: "password for the adminstrator of this Engines system", label: "Admin"} %>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :ssh_password, f: f, placeholder: ["Enter", "Re-enter"], label: "SSH"} %>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "MySQL"} %>
     <div class="col-sm-12">
       <legend>Default Domain</legend>
     </div>

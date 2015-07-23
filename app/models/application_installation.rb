@@ -36,8 +36,8 @@ class ApplicationInstallation < ActiveRecord::Base
       repository_url: repository_url,
       title: software_title,
       application_name: application.container_name,
-      host_name: application.network_properties.host_name,
-      domain_name: application.network_properties.domain_name
+      host_name: application.application_network_properties.host_name,
+      domain_name: application.application_network_properties.domain_name
       }
   end
 
@@ -72,7 +72,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def default_name
-    blueprint_software[:name].gsub('-', '').gsub('_', '')
+    blueprint_software[:name].to_s.gsub('-', '').to_s.gsub('_', '')
   end
 
   def blueprint
@@ -84,7 +84,11 @@ class ApplicationInstallation < ActiveRecord::Base
   # end
   
   def blueprint_software
-    @blueprint_software ||= blueprint[:software].symbolize_keys
+    @blueprint_software ||= if blueprint
+                              blueprint[:software].symbolize_keys
+                            else
+                              {}
+                            end
   end
 
   # def software_definition
@@ -116,12 +120,12 @@ class ApplicationInstallation < ActiveRecord::Base
     {
       container_name: unique_application_name,
       variables_attributes: blueprint_software[:variables] || [],
-      network_properties_attributes: {
+      application_network_properties_attributes: {
         host_name: unique_host_name,
         domain_name: DomainSettings.engines_default_domain,
         http_protocol: default_http_protocol
       },
-      resources_properties_attributes: {
+      application_resources_properties_attributes: {
         required_memory: blueprint_software[:required_memory],
         memory: blueprint_software[:recommended_memory] || blueprint_software[:required_memory]
       },
@@ -199,10 +203,10 @@ class ApplicationInstallation < ActiveRecord::Base
   def engine_build_params
     {
       engine_name: application.container_name,
-      host_name: application.network_properties.host_name,
-      domain_name: application.network_properties.domain_name,
-      http_protocol: application.network_properties.http_protocol,
-      memory: application.resources_properties.memory,
+      host_name: application.application_network_properties.host_name,
+      domain_name: application.application_network_properties.domain_name,
+      http_protocol: application.application_network_properties.http_protocol,
+      memory: application.application_resources_properties.memory,
       variables: engine_build_variables_params,
       attached_services: engine_build_attached_services_params,
       repository_url: resolved_repository_url

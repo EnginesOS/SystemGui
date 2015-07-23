@@ -16,11 +16,11 @@
 		<%= f.fields_for :application do |ff| %>
 			<%= render 'shared/form/legend', text: 'Engine' %>
 			<%= render partial: 'shared/form/text_field', locals: {name: :container_name, label: 'Name', tooltip: "Give the software installation a unique name.", f: ff, hint: "maximum length is 16 characters"} %>
-		    <%= ff.fields_for :network_properties do |fff| %>
-		      	<%= render partial: 'network_properties/form_fields', locals: {f: fff} %>
+		    <%= ff.fields_for :application_network_properties do |fff| %>
+		      	<%= render partial: 'application_network_properties/form_fields', locals: {f: fff} %>
 		    <% end %>
-		  	<%= ff.fields_for :resources_properties do |fff| %>
-		    	<%= render partial: 'resources_properties/form_fields', locals: {f: fff} %>
+		  	<%= ff.fields_for :application_resources_properties do |fff| %>
+		    	<%= render partial: 'application_resources_properties/form_fields', locals: {f: fff} %>
 		  	<% end %>
 			<%= render 'application_services', f: ff %>
 			<%= render 'environment_variables', f: ff %>

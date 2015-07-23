@@ -1,0 +1,17 @@
+<div class="col-sm-12">
+
+	<h2 class=''><i class='fa fa-arrows-v'></i> Services connected to <%= @application_services_properties.application.container_name %></h2>
+
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+	<%= render 'new_attached_service_button' %>
+
+	<div>
+		<% @application_services_properties.application.application_services.each do |application_service| %>
+			<%#= ap(application_service, plain: true, index: false).html_safe %>
+			<%= render "application_service", application_service: application_service %>
+		<% end %>
+	</div>
+		<% #= ap(@application_services_properties.application.services_properties, plain: true, index: false).html_safe %>
+
+</div>

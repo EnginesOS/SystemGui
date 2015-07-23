@@ -4,11 +4,11 @@
 
     <%= render 'shared/form/legend', text: 'Engine' %>
 	<%= render partial: 'shared/form/text_field', locals: {name: :container_name, label: 'Name', tooltip: "Give the software installation a unique name.", f: ff, hint: "maximum length is 16 characters"} %>
-	<%= ff.fields_for :network_properties do |fff| %>
-		<%= render 'network_properties/form_fields', f: fff %>
+	<%= ff.fields_for :application_network_properties do |fff| %>
+		<%= render 'application_network_properties/form_fields', f: fff %>
 	<% end %>
-	<%= ff.fields_for :resources_properties do |fff| %>
-		<%= render 'resources_properties/form_fields', f: fff %>
+	<%= ff.fields_for :application_resources_properties do |fff| %>
+		<%= render 'application_resources_properties/form_fields', f: fff %>
 	<% end %>
 	<% if ff.object.application_services.present? %>
 	    <%= render 'shared/form/legend', text: 'Services' %>

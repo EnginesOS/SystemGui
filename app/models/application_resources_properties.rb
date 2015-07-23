@@ -1,4 +1,4 @@
-class ResourcesProperties < ActiveRecord::Base
+class ApplicationResourcesProperties < ActiveRecord::Base
 
   include Engines::Api
 
@@ -19,8 +19,8 @@ class ResourcesProperties < ActiveRecord::Base
       required_memory: application.blueprint_software_details["required_memory"] )
   end
 
-  def update(resources_properties_params)
-    assign_attributes resources_properties_params
+  def update(application_resources_properties_params)
+    assign_attributes application_resources_properties_params
     valid? && save
   end
 

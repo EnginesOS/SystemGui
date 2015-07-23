@@ -38,8 +38,8 @@ class DockerHubInstallation < ActiveRecord::Base
     new do |new_docker_hub_installation|
       new_docker_hub_installation.type = "Software"
       new_docker_hub_installation.build_application do |new_application|
-        new_application.build_resources_properties
-        new_application.build_network_properties(http_protocol: "HTTPS and HTTP")
+        new_application.build_application_resources_properties
+        new_application.build_application_network_properties(http_protocol: "HTTPS and HTTP")
       end
     end
   end
@@ -52,7 +52,7 @@ class DockerHubInstallation < ActiveRecord::Base
     if new_application_service_publisher_namespace.present? && new_application_service_type_path.present?
       application.application_services.
         build(create_type: :new, publisher_namespace: new_application_service_publisher_namespace, type_path: new_application_service_type_path).
-        load_variable_definitions
+        build_variables
       self.new_application_service_type_path = nil
       self.new_application_service_publisher_namespace = nil
       self.scroll_form_to = :application_service_fields
@@ -77,7 +77,7 @@ class DockerHubInstallation < ActiveRecord::Base
   def installation_params
     {
       engine_name: application.container_name,
-      memory: application.resources_properties.memory,
+      memory: application.application_resources_properties.memory,
       docker_image: docker_image,
       run_as_user: run_as_user,
       run_command: run_command,

@@ -10,6 +10,7 @@ group :development do
   gem "puma"
 end
 
+# gem 'r509'
 gem 'git'
 gem "oink"
 gem 'bootstrap3-rails'
@@ -23,7 +24,7 @@ gem 'twitter-bootstrap-rails-confirm'
 
 gem 'rubytree'
 
-gem 'rubysl-openssl'
+# gem 'rubysl-openssl'
 
 gem "paperclip", "~> 4.2"
 # gem "jquery-fileupload-rails"
@@ -33,7 +34,8 @@ gem 'open_uri_redirections'
 gem 'awesome_print', '~> 1.2.0'
 gem 'ansi_up-rails'
 
-gem 'i18n_country_select'
+gem 'country_select'
+# gem 'i18n_country_select'
 
 #presentation logic
 gem 'draper', '~> 1.3'

@@ -1,6 +1,6 @@
 <div class="col-sm-12">
 
-  <h2><i class='fa fa-arrows-h'></i> Register <%= @application_subservice.application_name %> with <%= @application_subservice.parent_title %> <%= @application_subservice.title %></h2>
+  <h2><i class='fa fa-arrows-h'></i> Connect <%= @application_subservice.title %> to <%= @application_subservice.parent_title %> on <%= @application_subservice.application_name %> </h2>
 
   <%= form_for @application_subservice, url: application_subservice_path do |f| %>
   		<!-- type_path: @application_subservice.type_path,
@@ -24,7 +24,7 @@
 
     <%= render partial: 'shared/form/errors', locals: {f: f, label: @application_subservice.title} %>
     <%= render partial: 'variables/form_fields', locals: {f: f} %>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: application_services_path(application_name: @application_subservice.application_name)} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: application_services_properties_path(application_name: @application_subservice.application_name)} %>
 
   <% end %>
 

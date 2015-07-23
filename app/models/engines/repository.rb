@@ -27,6 +27,8 @@ private
     blueprint_json_str = File.read(blueprint_filename)
     bluePrint = JSON.parse(blueprint_json_str)
     return bluePrint.symbolize_keys!
+  rescue
+    return false
   end
 
   def clone_repo(buildname)

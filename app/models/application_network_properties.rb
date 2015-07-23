@@ -1,4 +1,4 @@
-class NetworkProperties < ActiveRecord::Base
+class ApplicationNetworkProperties < ActiveRecord::Base
 
   include Engines::Api
 

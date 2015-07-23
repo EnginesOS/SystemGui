@@ -28,7 +28,7 @@
     </button>
     <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
     	<li><div class="dropdown-title" %><%= service_name %></div></li>
-  		<% if service_state == "running"&& service_name != 'mgmt'  #FIXME use flag instead %>
+  		<% if service_state == "running" %>
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
   			<% if service_name != 'mgmt' %>
 				<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_services_path(service_name: service_name) } %></li>
@@ -56,9 +56,9 @@
 			<% end %>
   			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_services_path(service_name: service_name) } %></li> 
       <% else %>
-         <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error</div></li>
+         <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error<br>(should be <%= service.state_indicator %>)</div></li>
       <%  end %>
-      <% if @service.configurators.present? %>
+      <% if true #@service.configurator_params.present? %>
   		<li class="divider"></li>
 		<% if service_state == "running" %>
 			<li>
