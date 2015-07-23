@@ -72,7 +72,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def default_name
-    blueprint_software[:name].gsub('-', '').gsub('_', '')
+    blueprint_software[:name].to_s.gsub('-', '').to_s.gsub('_', '')
   end
 
   def blueprint
@@ -84,7 +84,11 @@ class ApplicationInstallation < ActiveRecord::Base
   # end
   
   def blueprint_software
-    @blueprint_software ||= blueprint[:software].symbolize_keys
+    @blueprint_software ||= if blueprint
+                              blueprint[:software].symbolize_keys
+                            else
+                              {}
+                            end
   end
 
   # def software_definition
