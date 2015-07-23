@@ -26,7 +26,7 @@
 								if variable_definition.present? %>
 									<label><%= variable_definition[:label] %></label>
 									<% if variable_definition[:field_type].include? 'password' %>
-										<%= variable_definition[:value].map{ '*' }.join() if variable_definition[:value].present? %>
+										<%= variable_definition[:value].length.times.map{ '*' }.join() if variable_definition[:value].present? %>
 									<% else %>
 										<%= variable_definition[:value] %>
 									<% end %><br>
@@ -38,6 +38,7 @@
 			  		<% else %>
 			  			Unable to load variables. Check that service is running.
 			  		<% end %>
+			  		<% #= ap(@service.test(configurator[:name]), plain: true, index: false).html_safe %>
 				</div>
 			</div>
 		

@@ -21,7 +21,7 @@
         <%= label %>
       <% end %>
     <% end %>
-    <%= comment %>
+    <small><%= comment %></small>
     <%= f.text_area name, value: value, title: tooltip, rows: rows.to_s, placeholder: placeholder, style: ("font-family:courier;" if code), spellcheck: ("false" if code), class: 'form-control input-lg' %>
     <% if errors.present? %>
       <div class='form-field-errors <%= text_class %>'>

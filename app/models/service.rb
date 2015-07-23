@@ -21,6 +21,11 @@ class Service < ActiveRecord::Base
   # def build_configurations
     # service_configurations.build(configurator_params)
   # end
+  def build_service_configuration_for configurator_name
+     @service_configuration = ServiceConfiguration.new(service_name: container_name)
+     @service_configuration.assign_attributes(configurator_params_for configurator_name)
+     @service_configuration
+  end
 
   def self.service_container_names_list
     engines_api.list_services.sort

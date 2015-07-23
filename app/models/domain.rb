@@ -7,6 +7,7 @@ class Domain < ActiveRecord::Base
     :domain_name,
     :internal_only,
     :self_hosted,
+    :new_record,
     :engines_api_error)
 
   domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
@@ -18,16 +19,23 @@ class Domain < ActiveRecord::Base
     end
   end
   
-  def self.load(domain_name)
-    domain_params = engines_domain_params_for domain_name
-    new(domain_params)
-  end
-#   
-  # def load_settings
-    # self.assign_attributes(
-      # internal_only: domain_name_detail[:internal_only],
-      # self_hosted: domain_name_detail[:self_hosted])
+  # def self.load(domain_name)
+    # domain_params = engines_domain_params_for domain_name
+    # new(domain_params)
   # end
+  
+  def self.build_new
+    self.new(new_record: true)
+  end
+  
+  def self.build_edit_for domain_name
+    self.new(new_record: false, domain_name: domain_name).load_domain_properties
+  end
+  
+  def load_domain_properties
+    self.assign_attributes(engines_domain_params)
+    self
+  end
   
 
   def destroy
@@ -47,7 +55,7 @@ class Domain < ActiveRecord::Base
   # end
   
   def new_record? 
-    !domain_name.present?
+    self.new_record == true #!domain_name.present?
   end
   
   def create
@@ -59,24 +67,36 @@ class Domain < ActiveRecord::Base
   end
 
   def create_domain
-    self.class.engines_api.add_domain(
-      domain_name: domain_name,
-      internal_only: internal_only == "1",
-      self_hosted: self_hosted == "1").was_success
+    result = self.class.engines_api.add_domain create_domain_params
+    if !result.was_success
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create domain. No result message given by engines api. Called 'add_domain(#{create_domain_params})'")
+    end
+    result.was_success
   end
 
   def update_domain
-    params = {
-      original_domain_name: original_domain_name,
-      domain_name: domain_name,
-      internal_only: internal_only == "1",
-      self_hosted: self_hosted == "1"
-      }
-    result = self.class.engines_api.update_domain params
+    result = self.class.engines_api.update_domain update_domain_params
     if !result.was_success
-      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to update domain. No result message given by engines api. #{params}")
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to update domain. No result message given by engines api. #{update_domain_params}")
     end
     result.was_success
+  end
+
+  def create_domain_params
+      {
+        domain_name: domain_name,
+        internal_only: internal_only == "1",
+        self_hosted: self_hosted == "1"
+      }
+  end
+
+  def update_domain_params
+      {
+        original_domain_name: original_domain_name,
+        domain_name: domain_name,
+        internal_only: internal_only == "1",
+        self_hosted: self_hosted == "1"
+      }
   end
 
   def self.domain_names_list
@@ -87,8 +107,8 @@ class Domain < ActiveRecord::Base
     # self.class.domain_names_hash.select{|name, detail| name == domain_name}
   # end
   
-  def self.engines_domain_params_for(domain_name)
-    all_engines_domain_names_details[domain_name]
+  def engines_domain_params
+    self.class.all_engines_domain_names_details[domain_name.to_s]
   end
 
   def self.all_engines_domain_names_details

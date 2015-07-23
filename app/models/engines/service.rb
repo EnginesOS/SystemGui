@@ -157,7 +157,19 @@ module Engines::Service
   # end
   
   def service_configuration_variables_for(configurator_name)
-    {} #engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)[:variables]
+    engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)[:variables]
+  end
+
+  def test(configurator_name)
+    
+
+p :__call____receive_service_configuration____with_params    
+p :container_name
+p container_name
+p :configurator_name
+p configurator_name
+
+    engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
   end
 
 #instructors  
@@ -191,6 +203,7 @@ private
   def titles_hash
     {
      backup: 'Backup manager',
+     cert_auth: 'Security certificates',
      auth: 'Authenticate and authorize',
      dns: 'Local DNS server',
      dyndns: 'Dynamic DNS',

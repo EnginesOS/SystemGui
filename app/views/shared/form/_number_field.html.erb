@@ -16,7 +16,7 @@
     <%= f.label name, class: 'control-label' do %>
       <%= label %>
     <% end %>
-    <%= comment %>
+    <small><%= comment %></small>
     <%= f.number_field name, value: value, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
     <% if errors.present? %>
       <div class='form-field-errors'>

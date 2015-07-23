@@ -19,7 +19,7 @@
 	      <%= label %>
 	    <% end %>
     <% end %>
-    <br><%= comment %>
+    <br><small><%= comment %></small>
     <div class="form-group <%= field_class %>">
     	<%= f.collection_radio_buttons name, select_collection, value_method, text_method, {checked: value}, {title: tooltip} do |radio|
            radio.label(class: "form-text-lg", "data-value" => radio.value) { radio.radio_button + ' ' + radio.text } + '<br>'.html_safe

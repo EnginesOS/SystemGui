@@ -1,7 +1,8 @@
 <div class="col-sm-12">
-	<h2><i class='fa fa-arrows-v'></i> Edit <%= @application_service.title %> for <%= @application_service.application.container_name %></h2>
+	<h2><i class='fa fa-arrows-v'></i> Edit <%= @application_service.title %> on <%= @application_service.application.container_name %></h2>
   	<%= form_for @application_service, url: application_services_path(application_name: @application_service.application.container_name), method: :patch do |f| %>
 		<%= render 'form_fields', f: f %>
 	<% end %>
 </div>
+<% #= ap(@application_service.service_detail, index: false, plain: true).html_safe %>
 

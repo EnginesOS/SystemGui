@@ -15,7 +15,7 @@
 	      <%= label %>
 	    <% end %>
     <% end %>
-    <%= comment %>
+    <small><%= comment %></small>
     <%= f.text_field name, value: value, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
     <% if errors.present? %>
       <div class='form-field-errors'>
