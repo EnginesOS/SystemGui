@@ -3,6 +3,14 @@
 	<div class="panel panel-default top-gap">
 
 		<div class="panel-heading">
+
+			<div class="pull-right clearfix">
+				<%= render 'shared/form/hidden_field', name: :_destroy, f: f %>
+				<%= link_to (content_tag(:i, nil, class:"fa fa-trash") + " Remove"), "javascript:;", onclick: "javascript: remove_fields(this); ",
+				class: "btn btn-default btn-noborder btn-lg pull-right",
+				data: { confirm: "Confirm", confirmdetail: "Remove service?", holderclass: "application_service_fields" } %>
+			</div>
+
 			<%= f.object.title %>
 			<small>
 				<br>
@@ -10,6 +18,7 @@
 				(<%= f.object.publisher_namespace.to_s + ":" + f.object.type_path.to_s%>)
 				<br>
 			</small>
+
 		</div>
 
 		<div class="panel-body">
@@ -59,18 +68,6 @@
 
 			<%= f.hidden_field :type_path %>
 			<%= f.hidden_field :publisher_namespace %>
-
-
-				<div class="col-sm-12 clearfix">
-					<%= render 'shared/form/hidden_field', name: :_destroy, f: f %>
-					<%= link_to content_tag(:i, nil, class:"fa fa-trash"), "javascript:;", onclick: "javascript: remove_fields(this); ",
-					class: "btn btn-default btn-lg pull-right",
-					data: { confirm: "Confirm", confirmdetail: "Remove service?", holderclass: "application_service_fields" } %>
-				</div>
-
-
-
-
 
 		</div>
 	</div>

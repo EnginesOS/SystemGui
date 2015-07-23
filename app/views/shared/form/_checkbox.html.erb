@@ -12,7 +12,7 @@
 
 <div class="<%= errors_class %> col-sm-8 col-sm-offset-2 <%= 'dependent_field' if depends_on_id.present? %>" data-dependsonid="<%= depends_on_id %>" data-dependsonregex="<%= depends_on_regex %>" >
   <div class="form-group">
-    <%= f.check_box(name, checked: value, title: tooltip) + ' ' + f.label(name, label, class: 'form-text-lg', title: tooltip) %> <%= comment %><br>
+    <%= f.check_box(name, checked: value, title: tooltip) + ' ' + f.label(name, label, class: 'form-text-lg', title: tooltip) %> <small><%= comment %></small><br>
     <% if errors.present? %>
       <div class='form-field-errors'>
         <% errors.each do |error| %>

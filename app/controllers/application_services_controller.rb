@@ -2,25 +2,38 @@ class ApplicationServicesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_application
-  before_action :set_application_service #, except: :show
-
-  # def show
-    # @application.load_application_services
-  # end
+  before_action :set_application_service
 
   def new
-    @application_service.build_for_new
+    @application_service.build_new
   end
 
   def edit
-    @application_service.build_for_edit
+    # render text: params
+    @application_service.build_edit
   end
 
   def create
     if @application_service.create
-      redirect_to application_services_path(application_name: @application_service.application.container_name), notice: "Successfully attached #{@application_service.title} to #{@application_service.application.container_name}."
+      redirect_to application_services_properties_path(application_name: @application_service.application.container_name), notice: "Successfully connected #{@application_service.title} to #{@application_service.application.container_name}."
     else
       render :new
+    end
+  end
+
+  def update
+    if @application_service.update
+      redirect_to application_services_properties_path(application_name: @application_service.application.container_name), notice: "Successfully updated #{@application_service.title} on #{@application_service.application.container_name}."
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    if @application_service.destroy
+      redirect_to application_services_properties_path(application_name: @application_service.application.container_name), notice: "Successfully removed #{@application_service.title} from #{@application_service.application.container_name}."
+    else
+      redirect_to application_services_properties_path(application_name: @application_service.application.container_name), notice: "Unable to remove #{@application_service.title} from #{@application_service.application.container_name}."
     end
   end
 

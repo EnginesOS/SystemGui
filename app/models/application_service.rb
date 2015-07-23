@@ -13,6 +13,7 @@ class ApplicationService < ActiveRecord::Base
     # :wizard_create_type,
     :orphan_service,
     :active_service,
+    :new_record,
     :engines_api_error
     )
  
@@ -22,64 +23,40 @@ class ApplicationService < ActiveRecord::Base
   accepts_nested_attributes_for :application_subservices
   accepts_nested_attributes_for :variables
   
-  # def load
-    # p :application_id
-    # p application_id
-    # load_variable_definitions && load_variable_values
-    # self
-  # end
-
   def service
     @service_engine ||= Service.new(container_name: service_container_name)
   end
   
-  def build_for_new
+  # def build_subservices
+    # # application.attached_services_hash.each do |subservice_params|
+# #       
+    # # end
+  # end
+
+  def build_new
+    self.new_record = true
     build_variables
   end
   
-  def build_for_edit
+  def build_edit
+    self.new_record = false
     build_variables
-    # load_variables_with_values
-  end
-  
-#   
-  # def build
-    # build_application
-    # build_subservices
-    # build_variables
-    # self
-  # end
-
-  # def application
-#     
-  # end
-
-   
-  def build_subservices
-    # application.attached_services_hash.each do |subservice_params|
-#       
-    # end
+    load_variable_values
   end
 
+  def build_variables
+    variables.build(variable_definitions)
+  end
 
-  def load_variables_with_values
-    load_variable_definitions
+  def load_variable_values
     variables.each do |variable|
-      if variable_values[variable.name.to_sym].present?
-
-p :variable_value
-p        variable.value = variable_values[variable.name.to_sym]
-      end
+      load_value_for variable
     end
   end
-
-  
-  def build_variables
-    # variable_definitions.each do |variable_definition|
-      variables.build(variable_definitions)
-    # end
+    
+  def load_value_for(variable)
+    variable.value = variable_values[variable.name.to_sym]
   end
-
   
   def variable_values
     attached_service_hash[:variables]
@@ -89,10 +66,34 @@ p        variable.value = variable_values[variable.name.to_sym]
     valid? && create_attached_service
   end
   
+  def update
+    valid? && update_attached_service
+  end
+  
+  def destroy
+    remove_attached_service
+  end
+
+  def remove_attached_service
+    result = engines_api.dettach_service(to_json)
+    if !result.was_success
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to remove connected service. No result message given by engines api. Called 'dettach_service' with params: #{to_json}")
+    end
+    result.was_success
+  end
+  
   def create_attached_service
     result = engines_api.attach_service(to_json)
     if !result.was_success
       @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{to_json}")
+    end
+    result.was_success
+  end
+  
+  def update_attached_service
+    result = engines_api.update_attached_service(to_json)
+    if !result.was_success
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to edit connected service. No result message given by engines api. Called 'update_attached_service' with params: #{to_json}")
     end
     result.was_success
   end
@@ -112,17 +113,20 @@ p        variable.value = variable_values[variable.name.to_sym]
      end
    end
 
-  def edit_params
+  def identification_params
     {
         application_name: application.container_name,
         application_service: {
           type_path: type_path,
-          publisher_namespace: publisher_namespace
+          publisher_namespace: publisher_namespace,
+          service_handle: service_handle
                    }
     }
   end
 
-  
+  def new_record?
+    new_record == true
+  end
 
   # def application_name
     # parent_application_name || application.container_name
@@ -232,6 +236,31 @@ end
 
 
 
+  # def build_for_new
+    # build_variables
+  # end
+#   
+  # def build_for_edit
+    # build_variables
+    # # load_variables_with_values
+  # end
+  
+#   
+  # def build
+    # build_application
+    # build_subservices
+    # build_variables
+    # self
+  # end
+
+  # def application
+#     
+  # end
+
+ # def new_record?
+   # false
+ # end
+#    
 
 
 

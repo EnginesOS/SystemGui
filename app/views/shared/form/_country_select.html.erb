@@ -15,7 +15,7 @@
 	      <%= label %>
 	    <% end %>
     <% end %>
-    <%= comment %>
+    <small><%= comment %></small>
     <%= f.country_select name, collection, {include_blank: placeholder}, {title: tooltip, class: 'form-control input-lg'} %>
     <% if errors.present? %>
       <div class='form-field-errors'>

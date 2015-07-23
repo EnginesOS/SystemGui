@@ -58,7 +58,7 @@
       <% else %>
          <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error<br>(should be <%= service.state_indicator %>)</div></li>
       <%  end %>
-      <% if @service.configurator_params.present? %>
+      <% if true #@service.configurator_params.present? %>
   		<li class="divider"></li>
 		<% if service_state == "running" %>
 			<li>

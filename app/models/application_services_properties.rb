@@ -2,12 +2,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
 
   include Engines::Api
 
-  # after_initialize :load
-  # before_save :write_data
-
   belongs_to :application
-  # has_many :application_services, through: :application
-  
   
    def build_application_services
       application_services = application.application_services.build(build_application_services_attributes)
@@ -24,16 +19,19 @@ class ApplicationServicesProperties < ActiveRecord::Base
     properties_from_system.map do |application_service|
       params_for_build_application_service application_service
     end
-    # [{type_path: "hi"}]
   end
   
   def params_for_build_application_service application_service
       {
         publisher_namespace: application_service[:publisher_namespace],
         type_path: application_service[:type_path],
-        # variables_attributes: fully_defined_variables_attributes_for(application_service)
+        service_handle: application_service[:service_handle]
       }
   end
+
+end
+
+
 
   # def fully_defined_variables_attributes_for(application_service)
 # p     service_detail_for application_service   
@@ -136,8 +134,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
   # end
  
 
- 
-end
+
 
 
 

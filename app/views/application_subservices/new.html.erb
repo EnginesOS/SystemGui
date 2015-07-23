@@ -1,6 +1,6 @@
 <div class="col-sm-12">
 
-  <h2><i class='fa fa-arrows-h'></i> Register <%= @application_subservice.application_name %> with <%= @application_subservice.parent_title %> <%= @application_subservice.title %></h2>
+  <h2><i class='fa fa-arrows-h'></i> Connect <%= @application_subservice.title %> to <%= @application_subservice.parent_title %> on <%= @application_subservice.application_name %> </h2>
 
   <%= form_for @application_subservice, url: application_subservice_path do |f| %>
   		<!-- type_path: @application_subservice.type_path,

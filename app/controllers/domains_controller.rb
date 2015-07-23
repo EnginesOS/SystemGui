@@ -16,11 +16,11 @@ class DomainsController < ApplicationController
   end
 
   def new
-    @domain = Domain.new
+    @domain = Domain.build_new
   end
 
   def edit
-    @domain = Domain.load domain_name
+    @domain = Domain.build_edit_for domain_name
   end
 
   def update
@@ -28,7 +28,7 @@ class DomainsController < ApplicationController
     if @domain.update
       redirect_to domains_path, notice: "Successfully updated #{domain_name}."
     else
-      render :new
+      render :edit
     end
   end
 
@@ -42,7 +42,7 @@ class DomainsController < ApplicationController
   end
 
   def destroy
-    @domain = Domain.load domain_name
+    @domain = Domain.new(domain_name: domain_name)
     if @domain.destroy
       redirect_to domains_path, notice: "Successfully deleted #{domain_name}."
     else
