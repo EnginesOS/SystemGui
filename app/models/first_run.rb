@@ -9,8 +9,8 @@ class FirstRun
   attr_accessor(
     :admin_password,
     :admin_password_confirmation,
-    :ssh_password,
-    :ssh_password_confirmation,
+    :console_password,
+    :console_password_confirmation,
     :mysql_password,
     :mysql_password_confirmation,
     :default_domain,
@@ -23,7 +23,7 @@ class FirstRun
 
   validate :password_confirmation_validation
   validate :password_present_and_length_validation
-  validate :admin_password_different_to_ssh_password_validation
+  validate :admin_password_different_to_console_password_validation
   validate :default_domain_is_valid
   validate :ssl_fields_valid
 
@@ -82,22 +82,22 @@ class FirstRun
     end
   end
 
-  def admin_password_different_to_ssh_password_validation
-    if admin_password != "" && admin_password == ssh_password
-      errors.add(:ssh_password, ["SSH password", "must be different from Admin password"])
+  def admin_password_different_to_console_password_validation
+    if admin_password != "" && admin_password == console_password
+      errors.add(:console_password, ["Console password", "must be different from Admin password"])
     end
   end
 
 # private
 
   def password_types
-    ["Admin", "SSH", "MySQL"]
+    ["Admin", "Console", "MySQL"]
   end
   
   def submit_params
     {
       admin_password: admin_password,
-      ssh_password: ssh_password,
+      console_password: console_password,
       mysql_password: mysql_password,
       default_domain: default_domain,
       default_domain_internal_only: default_domain_config == 'Private',

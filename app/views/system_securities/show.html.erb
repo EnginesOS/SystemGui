@@ -1,0 +1,40 @@
+<div class="col-sm-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-user-secret") %> Security</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+</div>
+
+<div class="col-sm-12 top-gap">
+
+		<div class="btn-group-vertical">
+			<%= link_to content_tag(:i, "", class: "fa fa-certificate") + ' Download security certificate', certificate_download_system_security_path, class: "btn btn-lg btn-default" %>
+			<%= link_to content_tag(:i, "", class: "fa fa-key") + ' Download access key', access_key_download_system_security_path, class: "btn btn-lg btn-default" %>
+		</div>
+
+
+
+
+</div>
+
+
+<% if true #Rails.env.development? %>
+
+	<div class="col-sm-12 top-gap panel panel-info">
+		<div class="panel-body">
+			<legend>update_public_key</legend>
+			API Result:<br> <%= Engines::ApiLoader.instance.engines_api.update_public_key(
+					'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjZ3x6LX9D+NOamgmpxqcmYnTCbNilZ3Hsph4U8apGn3L/If9iUApHgmFQwToTNWMj1b5G0hP/OPrr2kIbPPGNrgrpD50bdGyEfO4IJDaef26jMGq1SlWT9AkErv0SE7Y7cGhFSFJ0OBYx/I5VZi3wqoLLIAukhpy1SW+fF3FA3WDDYxY3VciVefoBE8HIU8/p62c7OkQJw2XPfQvue15gY8PWkgQEbRcli5KP7Fg9saozxOS12cjb63enSN49uf+A2Rm79mkScHib85fO8xFK+czxlG0XwTnH+Css72WmGd+6MfMCXltFfEku8u7fLNIHB3JsT3NJlIslCt3kwXcF lachlan@APOLLO'
+					).was_success %>
+			<legend>generate_private_key</legend>
+			String:<br> <%= Engines::ApiLoader.instance.engines_api.generate_private_key %>
+			<legend>get_system_ca</legend>
+			String:<br> <%= Engines::ApiLoader.instance.engines_api.get_system_ca %>
+			<legend>upload_ssl_certificate</legend>
+			API Result:<br> <%= Engines::ApiLoader.instance.engines_api.upload_ssl_certificate(
+						certificate: 'wft',
+						domain_name: 'demo.test',
+						use_as_default: true
+					).was_success %>
+		</div>
+	</div>
+
+<% end %>
