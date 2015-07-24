@@ -9,12 +9,12 @@
 	    $('#waiting-for-response-modal').modal('show');
 	  });
 	
-	  $("input").bind("invalid", function(){
-	  	alert('hi');
-		    $('#waiting-for-response-modal').modal('hide');
-		    $('.form-buttons').show();
-		    $('.submit-message').hide();
-		});
+	  // $("input").bind("invalid", function(){
+	  	// alert('hi');
+		    // $('#waiting-for-response-modal').modal('hide');
+		    // $('.form-buttons').show();
+		    // $('.submit-message').hide();
+		// });
 	
 	};
 	

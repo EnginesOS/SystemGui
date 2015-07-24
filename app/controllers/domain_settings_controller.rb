@@ -12,7 +12,7 @@ class DomainSettingsController < ApplicationController
     if @domain_settings.update
       redirect_to domains_path, notice: "Successfully updated default settings for domains."
     else
-      render :new
+      render :edit
     end
   end
     

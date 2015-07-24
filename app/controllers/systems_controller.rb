@@ -25,18 +25,4 @@ class SystemsController < ApplicationController
   def restarting
   end
 
-  def engines_update
-    result = System.update
-    if result.kind_of?(EnginesOSapiResult)
-      if result.was_success
-        alert = "Updating..."
-      else
-        alert = ( "Unable to update system. " + result.result_mesg )[0,500]
-      end
-    else
-      alert = "No result"
-    end
-    redirect_to control_panel_path, alert: alert
-  end
-
 end
