@@ -87,6 +87,10 @@ class FirstRun
       errors.add(:console_password, ["Console password", "must be different from Admin password"])
     end
   end
+  
+  def encrypt_password
+    
+  end
 
 # private
 
@@ -97,7 +101,7 @@ class FirstRun
   def submit_params
     {
       admin_password: admin_password,
-      console_password: console_password,
+      console_password: console_password.crypt('$1$' + SecureRandom.hex(6)),
       mysql_password: mysql_password,
       default_domain: default_domain,
       default_domain_internal_only: default_domain_config == 'Private',
