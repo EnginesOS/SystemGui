@@ -28,8 +28,12 @@ Rails.application.routes.draw do
   resource :system do
     get(:monitor, :restart, :restarting, :engines_update)
   end
-  resource :system_security do
-    get( :access_key_download, :access_key_update, :certificate_download, :certificate_upload )
+  resource :system_security
+  resource :system_security_certificate do
+    get :download
+  end
+  resource :system_security_key do
+    get :download
   end
   resource :user
   # resources :backup_tasks

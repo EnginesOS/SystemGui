@@ -5,18 +5,42 @@
 
 <div class="col-sm-12 top-gap">
 
-		<div class="btn-group-vertical">
-			<%= link_to content_tag(:i, "", class: "fa fa-certificate") + ' Download security certificate', certificate_download_system_security_path, class: "btn btn-lg btn-default" %>
-			<%= link_to content_tag(:i, "", class: "fa fa-key") + ' Download access key', access_key_download_system_security_path, class: "btn btn-lg btn-default" %>
-		</div>
+<div class="btn-toolbar">
+<div class="btn-group">
 
+	<div class="dropdown">
+	  <button class="btn btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+	    <%= content_tag(:i, "", class: "fa fa-key") + ' Access key' %>
+	    <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to content_tag(:i, "", class: "fa fa-download") + ' Download', download_system_security_key_path, class: "btn-lg" %></li>
+	    <li><%= link_to content_tag(:i, "", class: "fa fa-upload") + ' Upload', new_system_security_key_path, class: "btn-lg trigger-response-modal" %></li>
+	  </ul>
+	</div>
 
+</div>
+<div class="btn-group">
+
+	<div class="dropdown">
+	  <button class="btn btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+	    <%= content_tag(:i, "", class: "fa fa-certificate") + ' Certificate' %>
+	    <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to content_tag(:i, "", class: "fa fa-download") + ' Download', download_system_security_certificate_path, class: "btn-lg" %></li>
+	    <li><%= link_to content_tag(:i, "", class: "fa fa-upload") + ' Upload', new_system_security_certificate_path, class: "btn-lg trigger-response-modal" %></li>
+	  </ul>
+	</div>
+
+</div>
+</div>
 
 
 </div>
 
 
-<% if true #Rails.env.development? %>
+<% if false #Rails.env.development? %>
 
 	<div class="col-sm-12 top-gap panel panel-info">
 		<div class="panel-body">
