@@ -6,7 +6,11 @@
 
     <li>
 		<%= link_to content_tag(:i, "", class: "fa fa-tachometer") + ' Monitor', monitor_system_path, class: "btn-lg trigger-response-modal" %>
+    </li>
+	<li class="divider"></li>
     <li>
+		<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: "btn-lg trigger-response-modal" %>
+    </li>
 	<li class="divider"></li>
     <li>
     	<%= link_to content_tag(:i, "", class: "fa fa-clock-o") + ' Update', engines_update_system_path,

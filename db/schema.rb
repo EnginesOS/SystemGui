@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150718221202) do
+ActiveRecord::Schema.define(version: 20150724004642) do
 
   create_table "application_display_properties", force: true do |t|
     t.integer "application_id"
@@ -122,6 +122,20 @@ ActiveRecord::Schema.define(version: 20150718221202) do
 
   create_table "services", force: true do |t|
     t.string "container_name"
+  end
+
+  create_table "system_security_certificates", force: true do |t|
+    t.string   "certificate_file_name"
+    t.string   "certificate_content_type"
+    t.integer  "certificate_file_size"
+    t.datetime "certificate_updated_at"
+  end
+
+  create_table "system_security_keys", force: true do |t|
+    t.string   "public_key_file_name"
+    t.string   "public_key_content_type"
+    t.integer  "public_key_file_size"
+    t.datetime "public_key_updated_at"
   end
 
   create_table "users", force: true do |t|
