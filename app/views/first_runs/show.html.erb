@@ -19,13 +19,22 @@
 
     <div class="col-sm-12">
       <h4>Keep a safe record of your passwords. You will need them later.</h4>
+      <div id='first_run_dynamic_form_validation'></div>
     </div>
 
     <div class="col-sm-12">
       <legend>Engines passwords</legend>
     </div>
+
+<% if false %>
+	<div class="alert alert-warning alert-dismissible fade in">
+      <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+      <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+    </div>
+<% end %>    
+    
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"], comment: "Password for the account 'admin' on this Engines system.", label: "Admin"} %>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f, placeholder: ["Enter", "Re-enter"], label: "Console", comment: "Password for accessing the account 'engines' on this Engines system from a console or terminal."} %>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f, hint: "Console password must be different from admin password.", placeholder: ["Enter", "Re-enter"], label: "Console", comment: "Password for accessing the account 'engines' on this Engines system from a console or terminal."} %>
     <div class="col-sm-12">
       <legend>Database password</legend>
     </div>

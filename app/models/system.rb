@@ -25,8 +25,12 @@ class System
     engines_api.restart_system
   end
   
-  def self.update
+  def self.update_base
     engines_api.update_system
+  end
+
+  def self.update_engines
+    engines_api.update_engines_system_software 
   end
 
 end
