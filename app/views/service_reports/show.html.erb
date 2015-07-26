@@ -95,7 +95,7 @@
      <label>Statistics</label>  
     <% if state != "nocontainer" 
       stats = @service.stats
-      if stats != nil  %>
+      if stats != nil && stats != false  %>
         <pre><table>
           <tr><td>State: <%= stats.state  %></tr></td>
           <tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
@@ -106,6 +106,7 @@
           <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
         </table></pre>
       <%end%>
+      <pre>None</pre>
     <% else %>
       <pre>None</pre>
      <% end %>

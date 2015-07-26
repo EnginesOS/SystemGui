@@ -6,12 +6,15 @@
 
     <li>
 		<%= link_to content_tag(:i, "", class: "fa fa-tachometer") + ' Monitor', monitor_system_path, class: "btn-lg trigger-response-modal" %>
-    <li>
+    </li>
 	<li class="divider"></li>
     <li>
-    	<%= link_to content_tag(:i, "", class: "fa fa-clock-o") + ' Update', engines_update_system_path,
-			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to update the Engines system?" },
-			class: 'btn-lg' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: "btn-lg trigger-response-modal" %>
+    </li>
+	<li class="divider"></li>
+    <li>
+    	<%= link_to content_tag(:i, "", class: "fa fa-clock-o") + ' Update', system_update_path,
+			class: 'btn-lg trigger-response-modal' %>
 	</li>
     <li>
     	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Restart', restart_system_path,

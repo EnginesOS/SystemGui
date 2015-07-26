@@ -5,16 +5,17 @@
 	function bind_trigger_response_modal_events() {
 
 	  $(".trigger-response-modal").click(function(){
-
 	    $('#waiting-for-response-modal').modal('show');
+	    $('#big_waiting_for_response_spinner').fadeIn(3000);
 	  });
 	
-	  $("input").bind("invalid", function(){
-	  	alert('hi');
-		    $('#waiting-for-response-modal').modal('hide');
-		    $('.form-buttons').show();
-		    $('.submit-message').hide();
-		});
+	
+	  // $("input").bind("invalid", function(){
+	  	// alert('hi');
+		    // $('#waiting-for-response-modal').modal('hide');
+		    // $('.form-buttons').show();
+		    // $('.submit-message').hide();
+		// });
 	
 	};
 	
