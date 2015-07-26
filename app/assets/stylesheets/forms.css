@@ -62,20 +62,19 @@ input[type="checkbox"] {
 }
 
 .field_with_errors label {
-  color: #F00;
+  color: #f00;
 }
 
 .field_with_errors input {
-  border-color: #F00;
+  border-color: #f00;
 }
 
 .field_with_errors select {
-  border-color: #F00;
+  border-color: #f00;
 }
 
-.error-well {
-  background-color: #FEE;
-  border-color: #F00;
+.form_errors {
+	margin-bottom: 10px;
 }
 
 .form-text-lg {

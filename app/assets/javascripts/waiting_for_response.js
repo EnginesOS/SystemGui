@@ -6,7 +6,7 @@
 
 	  $(".trigger-response-modal").click(function(){
 	    $('#waiting-for-response-modal').modal('show');
-	    $('#big_waiting_for_response_spinner').fadeIn(3000);
+	    $('#big_waiting_for_response_spinner').fadeIn(1500);
 	  });
 	
 	
