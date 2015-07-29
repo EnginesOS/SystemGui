@@ -47,3 +47,7 @@ hr {
 .btn-noborder {
 	border: none;
 }
+
+.inactive_attribute {
+	color: #ccc;
+}

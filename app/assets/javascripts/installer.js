@@ -47,7 +47,7 @@ $(document).ready(function(){
 
 			var report_listener = function(e) {
 				new_line = e.data;
-				if ($("#installation_report").html().includes("Waiting for installation to complete.")) {
+				if ($("#installation_report").html().indexOf("Waiting for installation to complete.") > -1 ) {
 					$("#installation_report").html('');
 					};
 				var html = ansi_up.ansi_to_html(new_line);
@@ -55,7 +55,7 @@ $(document).ready(function(){
 			};
 			
 			var complete_listener = function(e) {
-				if ($("#installation_report").html().includes("Waiting for installation to complete.")) {
+				if ($("#installation_report").html().indexOf("Waiting for installation to complete.") > -1 ) {
 					$("#installation_report").html('No report');
 					};
 				if (e.data == 'close') {

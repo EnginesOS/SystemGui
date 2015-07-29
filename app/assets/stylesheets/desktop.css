@@ -23,6 +23,17 @@
 }
 
 .launcher_icon_and_label_holder {
+}
+
+
+.launcher_icon_holder_center {
+	margin-top: 10px;
+  margin-left:  37px;
+}
+
+.launcher_icon_holder {
+  height: 128px;
+  width: 128px;
   display: table-cell;
   vertical-align: middle;
 }
@@ -30,7 +41,6 @@
 .launcher-icon {
   max-height: 128px;
   max-width: 128px;
-  border-radius: 5px;
 }
 
 .launcher-label {

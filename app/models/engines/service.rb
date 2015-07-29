@@ -22,7 +22,11 @@ module Engines::Service
     if is_error?
       'error'
     else
-      state
+      if state.to_s == "no_container"
+        "unbuilt"
+      else
+        state
+      end
     end
   end
 
