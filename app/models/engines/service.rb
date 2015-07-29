@@ -221,7 +221,7 @@ private
      cron: 'Job scheduler',
      servicemanager: 'Services interaction manager',
      awsdb: 'AWS database',
-     email: 'e-mail server',
+     email: 'mail server',
      imap: 'IMAP server',
      syslog: 'System logging',
      nfs: 'Network storage'

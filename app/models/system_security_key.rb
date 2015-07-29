@@ -3,7 +3,8 @@ class SystemSecurityKey < ActiveRecord::Base
   include Engines::Api
 
   has_attached_file :public_key
-  validates_attachment_content_type :public_key, :content_type => /\Atext\/.*\Z/
+  validates_attachment_presence :public_key
+  validates_attachment_content_type :public_key, :content_type => /\Aapplication\/.*\Z/
   
   def save
     valid? && persist!
