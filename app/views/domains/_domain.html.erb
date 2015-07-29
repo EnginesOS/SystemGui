@@ -8,10 +8,8 @@
     </div>
   </div>
   <div class="panel-body">
-
       <%= render 'shared/show/text_field', object: domain, field: :domain_name  %>
-      <%= render 'shared/show/text_field', object: domain, field: :internal_only  %>
       <%= render 'shared/show/text_field', object: domain, field: :self_hosted  %>
-
+      <span class="<%= domain.self_hosted == false ? "inactive_attribute" : "" %>"><%= render 'shared/show/text_field', object: domain, field: :internal_only  %></span>
   </div>
 </div>

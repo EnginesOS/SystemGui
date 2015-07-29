@@ -53,7 +53,11 @@ class DomainsController < ApplicationController
 private
 
   def domain_params
-    @domain_params ||= params.require(:domain).permit!
+    p = params.require(:domain).permit!
+    if p[:self_hosted] == "0"
+      p[:internal_only] = "0"
+    end
+    p
   end
   
   def domain_name

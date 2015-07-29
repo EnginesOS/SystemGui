@@ -22,7 +22,11 @@ module Engines::Service
     if is_error?
       'error'
     else
-      state
+      if state.to_s == "no_container"
+        "unbuilt"
+      else
+        state
+      end
     end
   end
 
@@ -221,7 +225,7 @@ private
      cron: 'Job scheduler',
      servicemanager: 'Services interaction manager',
      awsdb: 'AWS database',
-     email: 'e-mail server',
+     email: 'mail server',
      imap: 'IMAP server',
      syslog: 'System logging',
      nfs: 'Network storage'

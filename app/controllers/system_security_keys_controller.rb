@@ -23,7 +23,11 @@ class SystemSecurityKeysController < ApplicationController
 private
 
   def system_security_key_params
-    params.require(:system_security_key).permit!
+    if params[:system_security_key].present?
+      params.require(:system_security_key).permit!
+    else
+      {}
+    end
   end
 
 end

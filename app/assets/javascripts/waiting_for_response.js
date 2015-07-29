@@ -1,22 +1,15 @@
 
 
 
+	function show_waiting_for_response_modal() {
+	    $('#waiting-for-response-modal').modal('show');
+	    $('#big_waiting_for_response_spinner').fadeIn(1000);
+	  };
 
 	function bind_trigger_response_modal_events() {
-
 	  $(".trigger-response-modal").click(function(){
-	    $('#waiting-for-response-modal').modal('show');
-	    $('#big_waiting_for_response_spinner').fadeIn(3000);
+	  	show_waiting_for_response_modal();
 	  });
-	
-	
-	  // $("input").bind("invalid", function(){
-	  	// alert('hi');
-		    // $('#waiting-for-response-modal').modal('hide');
-		    // $('.form-buttons').show();
-		    // $('.submit-message').hide();
-		// });
-	
 	};
 	
 	// function confirmation_popup(object, message) {
@@ -30,11 +23,11 @@
 	function bind_form_button_events() {
 	  $(".form-button-submit").click(function(){
 	    show_submit_message();
-	    $('#waiting-for-response-modal').modal('show');
+	    show_waiting_for_response_modal();
 	  });
 	  $(".form-button-cancel").click(function(){
 	    show_cancel_message();
-	    $('#waiting-for-response-modal').modal('show');
+	    show_waiting_for_response_modal();
 	  });
 	  function show_submit_message() {
 	      $('.form-buttons').hide();

@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+<div id="first_run_form" class="col-sm-12">
   <h2><i class="fa fa-magic"></i> Setup wizard</h2>
 
   <%= form_for @first_run do |f| %>
@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
-
+ 
     <div class="col-sm-12">
       <h4>Keep a safe record of your passwords. You will need them later.</h4>
       <div id='first_run_dynamic_form_validation'></div>
@@ -25,27 +25,21 @@
     <div class="col-sm-12">
       <legend>Engines passwords</legend>
     </div>
-
-<% if false %>
-	<div class="alert alert-warning alert-dismissible fade in">
-      <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
-      <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
-    </div>
-<% end %>    
-    
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"], comment: "Password for the account 'admin' on this Engines system.", label: "Admin"} %>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f, hint: "Console password must be different from admin password.", placeholder: ["Enter", "Re-enter"], label: "Console", comment: "Password for accessing the account 'engines' on this Engines system from a console or terminal."} %>
+
     <div class="col-sm-12">
       <legend>Database password</legend>
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f, placeholder: ["Enter", "Re-enter"], label: "MySQL", comment: "Password for the default database."} %>
+
     <div class="col-sm-12">
-      <legend>Default Domain</legend>
+      <legend>Domain</legend>
     </div>
     <%= render partial: 'shared/form/text_field', locals: {name: :default_domain, label: "Domain name", f: f} %>
     <%= render partial: 'shared/form/radio_buttons', locals: {name: :default_domain_config,
 			hint: "Private: For private use on a local network. DNS is hosted locally.\nPublic\n- external DNS: DNS is hosted elsewhere on the Internet.\n- self-hosted DNS: DNS is hosted locally.",
-			select_collection: ['Private', 'Public (external DNS)', 'Public (self-hosted DNS)'], default_value: 'Private', label: "Setup as", f: f} %>
+			select_collection: ['Private', 'Public (external DNS)', 'Public (self-hosted DNS)'], default_value: 'Private', label: false, f: f} %>
     <div class="col-sm-12">
       <legend>SSL</legend>
     </div>
@@ -60,3 +54,31 @@
   <% end %>
 
 </div>
+
+<div id="first_run_field_error_template" style="display: none;">
+	<div class="col-sm-8 col-sm-offset-2">
+		<div class="alert alert-warning alert-dismissible">
+      		<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+      		<div class="first_run_error_message"></div>
+	    </div>
+    </div>
+</div>
+
+<div id="first_run_submit_validation_template" style="display: none;">
+	<div class="btn-group pull-right">
+		<div class="btn btn-lg btn-primary">
+    	    <%= content_tag(:i, "", class: "fa fa-check") + " Submit" %>
+    	</div>
+  	</div>
+</div>
+
+<div id="first_run_auto_generated_passwords_template" style="display: none;">
+	<div class="alert alert-info">
+  		<div class="first_run_passwords">
+  			<div class="admin_password_area"><strong>Admin password:</strong> <span class="admin_password"></span></div>
+  			<div class="console_password_area"><strong>Console password:</strong> <span class="console_password"></span></div>
+  			<div class="mysql_password_area"><strong>MySQL password:</strong> <span class="mysql_password"></span></div>
+  		</div>
+    </div>
+</div>
+

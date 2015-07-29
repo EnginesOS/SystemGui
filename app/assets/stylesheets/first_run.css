@@ -1,8 +1,3 @@
-#first_run_form_auto_generated_passwords {
-  font-size: 1.5em;
-  color: #00F;
-}
-
-#first_run_form_auto_generated_passwords label {
-  color: #333;
+.first_run_passwords span {
+	letter-spacing: 2px;
 }
