@@ -17,7 +17,7 @@ class ApplicationDisplayPropertiesController < ApplicationController
 private
 
   def set_application_display_properties
-    @application_display_properties = Application.find_by(container_name: application_name).build_application_display_properties
+    @application_display_properties = Application.find_by(container_name: application_name).application_display_properties
   end
       
   def application_name

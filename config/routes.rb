@@ -15,9 +15,6 @@ Rails.application.routes.draw do
   # get "/services/delete_orphaned_attached_service", to: "services#delete_orphaned_attached_service", as: :delete_orphaned_attached_service
   # get "/services/delete_all_orphaned_attached_services", to: "services#delete_all_orphaned_attached_services", as: :delete_all_orphaned_attached_services
 
-  resource :first_runs do
-    get :cancel
-  end
   resource :desktop
   resource :desktop_applications
   resource :control_panel
@@ -95,5 +92,11 @@ Rails.application.routes.draw do
         :manager)
     end
   end
+
+  resource :first_runs do
+    get :cancel
+  end
+  get 'first_run', to: "first_runs#show"
+
   
 end

@@ -2,7 +2,6 @@ $(document).ready(function() {
 
 	if ($('#first_run_form').length > 0) {
 		
-		setup_first_run_form();
 	
 		function setup_first_run_form() {
 			var submit_button_area = $('#first_run_form').find('.form-button-submit').parent();
@@ -13,6 +12,7 @@ $(document).ready(function() {
 			submit_validation_button.attr('id', 'first_run_submit_validation_button');
 			submit_button_area.hide();
 			bind_first_form_submit_validation_button_events();
+			bind_field_change_events();
 		};
 	
 		function bind_first_form_submit_validation_button_events() {
@@ -200,49 +200,53 @@ $(document).ready(function() {
 		 	};
 		};
 	
-		 $("#first_run_admin_password").change( function() {
-		 	if ($('#first_run_admin_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.admin_password').text()) {
-				$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #31708f');
-			} else {
-				$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #B7CDD8');
-			};
-		 });
-		
-		 $("#first_run_console_password").change( function() {
-		 	if ($('#first_run_console_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.console_password').text()) {
-				$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #31708f');
-			} else {
-				$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #B7CDD8');
-			};
-		 });
-		
-		 $("#first_run_mysql_password").change( function() {
-		 	if ($('#first_run_mysql_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.mysql_password').text()) {
-				$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #31708f');
-			} else {
-				$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #B7CDD8');
-			};
-		 });
 	
-		$("#first_run_form_auto_generate_passwords_button").click(function() {
-		    var admin_password = randomPassword();
-		    var console_password = randomPassword();
-		    var mysql_password = randomPassword();
-		    var passwords_html = $('#first_run_auto_generated_passwords_template').html();
+		function bind_field_change_events() {
+	
+			 $("#first_run_admin_password").change( function() {
+			 	if ($('#first_run_admin_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.admin_password').text()) {
+					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #31708f');
+				} else {
+					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #B7CDD8');
+				};
+			 });
+			
+			 $("#first_run_console_password").change( function() {
+			 	if ($('#first_run_console_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.console_password').text()) {
+					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #31708f');
+				} else {
+					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #B7CDD8');
+				};
+			 });
+			
+			 $("#first_run_mysql_password").change( function() {
+			 	if ($('#first_run_mysql_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.mysql_password').text()) {
+					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #31708f');
+				} else {
+					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #B7CDD8');
+				};
+			 });
 		
-		    $("#first_run_form_auto_generated_passwords").html(passwords_html);
-		    $("#first_run_form_auto_generated_passwords").find('.admin_password').text(admin_password);
-		    $("#first_run_form_auto_generated_passwords").find('.console_password').text(console_password);
-		    $("#first_run_form_auto_generated_passwords").find('.mysql_password').text(mysql_password);
-		
-			$("#first_run_admin_password").val(admin_password);
-			$("#first_run_admin_password_confirmation").val(admin_password);
-			$("#first_run_console_password").val(console_password);
-			$("#first_run_console_password_confirmation").val(console_password);
-			$("#first_run_mysql_password").val(mysql_password);
-			$("#first_run_mysql_password_confirmation").val(mysql_password);
-		
-		  });
+			$("#first_run_form_auto_generate_passwords_button").click(function() {
+			    var admin_password = randomPassword();
+			    var console_password = randomPassword();
+			    var mysql_password = randomPassword();
+			    var passwords_html = $('#first_run_auto_generated_passwords_template').html();
+			
+			    $("#first_run_form_auto_generated_passwords").html(passwords_html);
+			    $("#first_run_form_auto_generated_passwords").find('.admin_password').text(admin_password);
+			    $("#first_run_form_auto_generated_passwords").find('.console_password').text(console_password);
+			    $("#first_run_form_auto_generated_passwords").find('.mysql_password').text(mysql_password);
+			
+				$("#first_run_admin_password").val(admin_password);
+				$("#first_run_admin_password_confirmation").val(admin_password);
+				$("#first_run_console_password").val(console_password);
+				$("#first_run_console_password_confirmation").val(console_password);
+				$("#first_run_mysql_password").val(mysql_password);
+				$("#first_run_mysql_password_confirmation").val(mysql_password);
+			
+			  });
+			};
 	
 	  function randomPassword() {
 	    var chars = "23456789ABCDEFGHJKLMNPQRSTUVWXTZabcdefghikmnpqrstuvwxyz";
@@ -254,6 +258,9 @@ $(document).ready(function() {
 	      };
 	    return randomstring;
 	  };
+	  
+	  setup_first_run_form();
+
 	};
 
 });

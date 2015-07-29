@@ -1,5 +1,7 @@
 class FirstRunsController < ApplicationController
 
+  before_action :authenticate_user!
+
   include Engines::FirstRun
 
   def show
