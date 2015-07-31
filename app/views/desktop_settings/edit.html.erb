@@ -2,8 +2,12 @@
   <h2><i class="fa fa-desktop"></i> Desktop settings</h2>
   <%= form_for @desktop_settings, url: desktop_settings_path do |f| %>
     <%= render partial: 'shared/form/errors', locals: {f: f} %>
+</div>
+<div class="col-sm-12">
     <legend>Wallpaper</legend>
     <%= render partial: 'shared/form/image_field', locals: {name: :wallpaper, label: false, tooltip: "Change wallpaper.", f: f} %>
+</div>
+<div class="col-sm-12">
     <legend>Colors</legend>
     <%= render partial: 'shared/form/color_field', locals: {name: :icon_text_color, label: 'Text', f: f} %>
     <%= render partial: 'shared/form/color_field', locals: {name: :background_color, label: 'Background', f: f} %>

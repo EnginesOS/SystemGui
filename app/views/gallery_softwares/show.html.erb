@@ -13,7 +13,7 @@
   end
 
 %>
-<% install_url = new_application_installation_path(repository_url: software[:repository_url]) %>
+<% install_url = new_application_installation_path(repository_url: software[:repository_url], gallery_icon_url: software[:icon_url_from_gallery]) %>
 
 <div class="engine-install-row clearfix">
   <div class="col-md-3 clearfix">

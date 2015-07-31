@@ -15,20 +15,24 @@ class FirstRunsController < ApplicationController
   end
 
   def create
-    @first_run = FirstRun.new first_run_params
-    if @first_run.valid?
-      result = @first_run.submit
-      if result.was_success
-        current_user.update(
-          password: first_run_params[:admin_password],
-          password_confirmation: first_run_params[:admin_password_confirmation]
-          )
-        redirect_to control_panel_path, notice: 'First run parameters were successfully saved.'
+    if FirstRun.required?
+      @first_run = FirstRun.new first_run_params
+      if @first_run.valid?
+        result = @first_run.submit
+        if result.was_success
+          current_user.update(
+            password: first_run_params[:admin_password],
+            password_confirmation: first_run_params[:admin_password_confirmation]
+            )
+          redirect_to control_panel_path, notice: 'First run parameters were successfully saved.'
+        else
+          redirect_to first_runs_path(first_run: first_run_params), alert: 'First run parameters were not saved. ' + result.result_mesg
+        end
       else
-        redirect_to first_runs_path(first_run: first_run_params), alert: 'First run parameters were not saved. ' + result.result_mesg
+        render :show, layout: 'empty_navbar'
       end
     else
-      render :show, layout: 'empty_navbar'
+      redirect_to(desktop_path)
     end
   end
   
