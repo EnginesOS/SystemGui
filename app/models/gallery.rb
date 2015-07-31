@@ -30,11 +30,15 @@ class Gallery < ActiveRecord::Base
       softwares.select{|software| software[:title].to_s.downcase.include? search_string.to_s.downcase }
     end
   end
+  
+  def gallery_url_with_api_version
+    "http://" + url + "/api/v0/software"
+  end
 
 private
 
   def load_gallery_softwares
-    gallery_uri = URI(url)
+    gallery_uri = URI(gallery_url_with_api_version)
     return [] if (gallery_uri.host.nil? || gallery_uri.port.nil?)
     Net::HTTP.start(gallery_uri.host, gallery_uri.port) do |http|
       request = Net::HTTP::Get.new gallery_uri

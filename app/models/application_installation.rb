@@ -4,9 +4,8 @@ class ApplicationInstallation < ActiveRecord::Base
   include Engines::Api
 
   attr_accessor(
-    # :gallery_url,
-    # :gallery_software_id,
     :repository_url,
+    :gallery_icon_url,
     :software_title,
     :license_terms_and_conditions,
     :advanced_selected
@@ -22,14 +21,6 @@ class ApplicationInstallation < ActiveRecord::Base
     @software_title = title
     self
   end
-  
-  def create
-    valid? && create_application
-  end
-
-  # def create_application
-    # engines_api.build_engine(engine_build_params)
-  # end
 
   def installing_params
     {
@@ -79,10 +70,10 @@ class ApplicationInstallation < ActiveRecord::Base
     @blueprint ||= Engines::Repository.new(resolved_repository_url).blueprint
   end
 
-  # def blueprint_from_gallery
-    # JSON.parse(software_definition[:blueprint]).symbolize_keys
-  # end
-  
+  # # def blueprint_from_gallery
+    # # JSON.parse(software_definition[:blueprint]).symbolize_keys
+  # # end
+#   
   def blueprint_software
     @blueprint_software ||= if blueprint
                               blueprint[:software].symbolize_keys
@@ -91,22 +82,22 @@ class ApplicationInstallation < ActiveRecord::Base
                             end
   end
 
-  # def software_definition
-    # @software_definition ||= (
-      # return nil if (gallery_url.blank? || gallery_software_id.blank?)
-      # blueprint_uri = URI(gallery_url + "/" +  gallery_software_id)
-      # return nil if (blueprint_uri.host.nil? || blueprint_uri.port.nil?)
-      # Net::HTTP.start(blueprint_uri.host, blueprint_uri.port) do |http|
-        # blueprint_request = Net::HTTP::Get.new blueprint_uri
-        # blueprint_response = http.request blueprint_request
-        # if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400
-          # JSON.parse(blueprint_response.body).symbolize_keys
-        # else
-          # nil
-        # end    
-      # end )
-  # end
-
+  # # def software_definition
+    # # @software_definition ||= (
+      # # return nil if (gallery_url.blank? || gallery_software_id.blank?)
+      # # blueprint_uri = URI(gallery_url + "/" +  gallery_software_id)
+      # # return nil if (blueprint_uri.host.nil? || blueprint_uri.port.nil?)
+      # # Net::HTTP.start(blueprint_uri.host, blueprint_uri.port) do |http|
+        # # blueprint_request = Net::HTTP::Get.new blueprint_uri
+        # # blueprint_response = http.request blueprint_request
+        # # if blueprint_response.code.to_i >= 200 && blueprint_response.code.to_i < 400
+          # # JSON.parse(blueprint_response.body).symbolize_keys
+        # # else
+          # # nil
+        # # end    
+      # # end )
+  # # end
+# 
   def default_http_protocol
     blueprint_protocol = blueprint_software[:http_protocol].to_s.gsub('_', ' ').upcase.gsub('ONLY', 'only').gsub('AND', 'and')
     ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'].include?(blueprint_protocol) ? blueprint_protocol : 'HTTPS and HTTP'
@@ -153,8 +144,6 @@ class ApplicationInstallation < ActiveRecord::Base
     end
   end
 
-
-
   def license_terms_and_conditions_accepted_validation
     if license_terms_and_conditions != "1"
       errors.add(:license_terms_and_conditions, ["License", "must be accepted"])
@@ -197,7 +186,15 @@ class ApplicationInstallation < ActiveRecord::Base
   def build_engine
     Thread.new do
       engines_api.build_engine engine_build_params
+      create_fresh_application
     end
+  end
+
+  def create_fresh_application
+    fresh_application = Application.where(container_name: application.container_name).first_or_create
+    fresh_application.assign_attributes(application_display_properties_attributes: { gallery_icon_url: gallery_icon_url })
+    fresh_application.application_display_properties.set_defaults
+    fresh_application.save
   end
 
   def engine_build_params
@@ -224,218 +221,23 @@ class ApplicationInstallation < ActiveRecord::Base
   def engine_build_attached_services_params
     application.application_services.map do |application_service|
       {}.tap do |result|
-        result[:publisher_namespace] = application_service.publisher_namespace,
+        result[:publisher_namespace] = application_service.publisher_namespace
         result[:type_path] = application_service.type_path
         type = application_service.create_type.to_sym
         result[:create_type] = type.to_s
         case type
-        when :new
-          # result[:variables] = application_service.variables_params
         when :active
           active_service = application_service.active_service.split(" - ")
           result[:parent_engine] = active_service[0]
-          result[:service_handle] = active_service[1] 
+          result[:service_handle] = (active_service[1] || active_service[0])
         when :orphan
           orphan_service = application_service.orphan_service.split(" - ")
           result[:parent_engine] = orphan_service[0]
-          result[:service_handle] = orphan_service[1] 
+          result[:service_handle] = (active_service[1] || active_service[0]) 
         end
       end
     end
   end
 
-
-# 
-  # include ActionController::Live
-# 
-  # def progress
-    # error = false
-    # previous_line = ''
-    # response.headers['Content-Type'] = 'text/event-stream'
-    # send_event :installation_progress, "Starting build...\n"
-    # File.open('/home/engines/deployment/deployed/build.out') do |f|
-      # f.extend(File::Tail)
-      # f.interval = 10
-      # f.backward(10000)
-      # f.tail do |line|
-        # send_event :installation_progress, line
-        # if line.start_with?("Build Finished")
-          # error = true if previous_line.start_with?("ERROR")
-          # break 
-        # end
-        # previous_line = line
-      # end
-    # end
-    # unless error
-      # EnginesInstaller.installation_report_lines(params[:engine_name]).each do |line|
-        # send_event :installation_report, line
-      # end
-    # end
-  # ensure
-    # send_event :message, "close"
-    # response.stream.close
-  # end
-# 
-# # private
-# 
-  # def send_event(event, data='')
-       # response.stream.write "event: #{event}\n"
-       # response.stream.write "data: #{data}\n\n"
-  # end
-
-
-
-
-
-
-
-
 end
-
-
-  # extend EnginesApi
-# 
-  # def self.build_engine (engine_build_params)
-    # engines_api.build_engine engine_build_params
-  # end
-#   
-  # def self.build_engine_from_docker_image (engine_build_params)
-    # engines_api.build_engine_from_docker_image engine_build_params
-  # end
-# 
-  # def self.generate_next_unique_engine_name_for(engine_name)
-    # existing_engine_names = EnginesSoftware.all_engine_names
-    # unique_engine_name_candidate = engine_name
-    # index = 2
-    # while existing_engine_names.include? unique_engine_name_candidate do
-      # unique_engine_name_candidate = engine_name + index.to_s
-      # index += 1
-    # end
-    # unique_engine_name_candidate
-  # end
-# 
-  # def self.generate_next_unique_host_name_for(host_name)
-    # host_name = host_name.sub('-', '')
-    # existing_host_names = EnginesSoftware.all_host_names
-    # unique_host_name_candidate = host_name
-    # index = 2
-    # while existing_host_names.include? unique_host_name_candidate do
-      # unique_host_name_candidate = host_name + index.to_s
-      # index += 1
-    # end
-    # unique_host_name_candidate
-  # end
-# 
-  # def self.engine_name_is_unique?(engine_name)
-    # EnginesSoftware.all_engine_names.exclude?(engine_name)
-  # end
-# 
-  # def self.fqdn_is_unique?(fqdn)
-    # EnginesSoftware.all_fqdns.exclude?(fqdn)
-  # end
-#   
-  # def self.installation_report_lines(engine_name)
-    # engines_api.get_engine_build_report(engine_name).split("\n")
-  # end
-#   
-  
-  
-  
-  
-
-
-
-  # def initialize(gallery_url, gallery_software_id)
-    # @gallery_url = gallery_url,
-    # @gallery_software_id = gallery_software_id
-  # end
-
-
-  # def software
-    # new_software_params = new_software_from_gallery_params(gallery_url: gallery_url, gallery_software_id: gallery_software_id)
-    # if new_software_params.nil?
-      # nil
-    # else
-      # Software.new(new_software_params) do |software|
-        # software.attached_services_handler.load_attached_services_details
-      # end
-    # end
-  # end
-# 
-  # def self.new_software_for_create(new_software_install_params)
-    # Software.new(new_software_install_params) do |software|
-      # software.install.load_blueprint
-      # software.attached_services_handler.load_attached_services_details
-    # end
-  # end
-# 
-  # def load_blueprint
-    # @blueprint ||= (EnginesRepository.blueprint_from_repository repository_url: repository_url).to_json.to_s
-  # end
-# 
-# private
-# 
-#  
-  # def new_software_from_gallery_params(gallery_software_params)
-    # gallery_software = Engines::Galleries::software(gallery_software_params)
-# 
-    # if gallery_software.kind_of?(EnginesOSapiResult) || gallery_software.nil?
-      # nil
-    # else
-#   
-      # repository_url = gallery_software[:repository_url]
-      # blueprint = EnginesRepository.blueprint_from_repository repository_url: repository_url
-# 
-      # blueprint_software_params = blueprint[:software]
-      # software_name = blueprint_software_params['name'].gsub(/[^0-9A-Za-z]/, '').downcase
-#   
-      # icon_url = 
-        # (gallery_software[:icon_url_from_gallery] if gallery_software[:icon_url_from_gallery].present?) ||
-        # (gallery_software[:icon_url_from_blueprint] if gallery_software[:icon_url_from_blueprint].present?) ||
-        # (gallery_software[:icon_url_from_repository] if gallery_software[:icon_url_from_repository].present?) ||
-        # "_placeholder_for_missing_engine.jpg"
-#   
-      # {
-        # engine_name: EnginesInstaller.generate_next_unique_engine_name_for(software_name),
-        # install_attributes: {
-          # repository_url: repository_url,
-          # gallery_url: gallery_software_params[:gallery_url],
-          # gallery_software_id: gallery_software_params[:gallery_software_id],
-          # default_image_url: icon_url,
-          # license_name: blueprint_software_params['license_name'],
-          # license_label: blueprint_software_params['license_label'],
-          # license_sourceurl: blueprint_software_params['license_sourceurl'],
-          # license_terms_and_conditions: false,
-          # blueprint: blueprint.to_json.to_s
-        # },
-        # display_attributes: {
-          # display_name: blueprint_software_params['short_title'],
-          # display_description: blueprint_software_params['description']
-        # },
-        # software_variables_handler_attributes: {variables_attributes: blueprint_software_params["variables"]},
-        # network_attributes: {
-          # host_name: EnginesInstaller.generate_next_unique_host_name_for(software_name),
-          # domain_name: Network.best_default_domain,
-          # http_protocol: Network.best_http_protocol(blueprint_software_params['http_protocol'])
-        # },
-        # resource_attributes: {
-          # required_memory: blueprint_software_params['required_memory'],
-          # memory: blueprint_software_params['recommended_memory'] || blueprint_software_params['requiredmemory']
-        # },
-        # attached_services_handler_attributes: {attached_services_attributes:
-          # blueprint_software_params["service_configurations"].map do |attached_service|
-            # if EnginesAttachedService.service_is_persistant(attached_service["type_path"], attached_service["publisher_namespace"])
-              # {
-                # publisher_namespace: attached_service["publisher_namespace"],
-                # type_path: attached_service["type_path"],
-                # create_type: :new
-              # }
-            # end
-          # end.compact
-        # }
-      # }
-# 
-    # end
-# 
-  # end
 

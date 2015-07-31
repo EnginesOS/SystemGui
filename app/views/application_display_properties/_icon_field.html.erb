@@ -3,5 +3,68 @@
 		Icon
 	</legend>
 </div>
-<%= render 'shared/form/image_field', name: :icon, label: false, tooltip: "Add an icon.", f: f %>
-<%= render 'shared/form/checkbox', name: :reset_icon, f: f %>
+
+
+
+
+<% gallery_icon_url = f.object.gallery_icon_url 
+   blueprint_icon_url = f.object.icon_url_from_blueprint
+   select_collection = ['Keep existing icon',
+  						('Blueprint icon' if blueprint_icon_url.present?),
+  						('Installer icon' if gallery_icon_url.present?),
+						'Upload icon', 'No icon'].compact
+%>
+
+
+
+<div id="display_properties_set_icon_radios">
+	<%= render 'shared/form/radio_buttons', name: :set_icon, label: false, select_collection: select_collection, f: f %>
+</div>
+
+
+		<div class="col-sm-8 col-sm-offset-2">
+			<div id="display_properties_existing_icon" class='form-image-control'>
+				<div class='form-image-centering'>
+					<% if f.object.icon.exists? %>
+						<%= image_tag(f.object.send(:icon).url, class: 'form-image') %>
+					<% else %>
+						<%= image_tag(url_for("placeholder_for_missing_icon.jpg"), class: 'form-image') %>
+				    <% end %>
+				</div>
+			</div>
+			<div id="display_properties_no_icon" class='form-image-control' style='display: none;'>
+				<div class='form-image-centering'>
+					<%= image_tag(url_for("placeholder_for_missing_icon.jpg"), class: 'form-image') %>
+				</div>
+			</div>
+			<div id="display_properties_blueprint_icon" class='form-image-control' style='display: none;'>
+				<div class='form-image-centering'>
+					<%= image_tag(blueprint_icon_url, class: 'form-image') %>
+				</div>
+			</div>
+			<div id="display_properties_installer_icon" class='form-image-control' style='display: none;'>
+				<div class='form-image-centering'>
+					<% if gallery_icon_url.present? %>
+					  <%= image_tag(gallery_icon_url, class: 'form-image') %>
+					<% end %>
+				</div>
+			</div>
+			<div id="display_properties_upload_icon" style='display: none;'>
+			    <%= f.file_field :icon, class: 'choose_file_form_control top-gap' %>
+			    <% errors = f.object.errors[:icon] %>
+			    <% if errors.present? %>
+			      <div class='form-field-errors'>
+			        <% errors.each do |error| %>
+			          <%if error.class == Array %>
+			            <%= error[1] %>
+			          <% else %>
+			            <%= error %>
+			          <% end %>
+			        <% end %>
+			      </div>
+		        <% end %>
+			</div>
+
+
+		</div>
+

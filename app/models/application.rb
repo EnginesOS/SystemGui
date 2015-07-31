@@ -22,6 +22,7 @@ class Application < ActiveRecord::Base
   # accepts_nested_attributes_for :application_variables_properties
   accepts_nested_attributes_for :variables
   accepts_nested_attributes_for :application_network_properties
+  accepts_nested_attributes_for :application_display_properties
   accepts_nested_attributes_for :application_resources_properties
   accepts_nested_attributes_for :application_services
   accepts_nested_attributes_for :eports

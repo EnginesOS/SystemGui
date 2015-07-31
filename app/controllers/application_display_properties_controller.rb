@@ -4,9 +4,11 @@ class ApplicationDisplayPropertiesController < ApplicationController
   before_action :set_application_display_properties
 
   def edit
+    @application_display_properties.set_icon = "Keep existing icon"
   end
 
   def update
+    # render text: params
     if @application_display_properties.update(application_display_properties_params)
       redirect_to control_panel_path, notice: "Successfully updated display properties for #{application_name}."
     else
