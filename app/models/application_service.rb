@@ -9,6 +9,7 @@ class ApplicationService < ActiveRecord::Base
     :application_name,
     :service_handle,
     :create_type,
+    :service_action,
     # :parent_engine,
     # :wizard_create_type,
     :orphan_service,

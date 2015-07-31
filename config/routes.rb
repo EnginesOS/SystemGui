@@ -5,15 +5,7 @@ Rails.application.routes.draw do
   # mount RailsAdmin::Engine => '/admin', as: :rails_admin
   root to: "desktops#show"
 
-  # get "help", to: "pages#help"
-  # get "system/update", to: "system#system_update"
-  # get "settings/edit_mail", to: "settings#edit_mail"
-  # get "installs/cancel", to: "installs#cancel_installation", as: :cancel_installation
-  # get "installs/docker_hub_install", to: "docker_hub_installs#new", as: :new_docker_hub_install
-  # post "installs/docker_hub_install", to: "docker_hub_installs#create", as: :create_docker_hub_install
-  # get "/installs/docker_hub_install_attach_service", to: "docker_hub_installs#new_attached_service", as: :docker_hub_install_attach_service
-  # get "/services/delete_orphaned_attached_service", to: "services#delete_orphaned_attached_service", as: :delete_orphaned_attached_service
-  # get "/services/delete_all_orphaned_attached_services", to: "services#delete_all_orphaned_attached_services", as: :delete_all_orphaned_attached_services
+
 
   resource :desktop
   resource :desktop_applications
@@ -50,7 +42,9 @@ Rails.application.routes.draw do
   resource :application_variables_properties
   resource :application_display_properties
   resource :application_services_properties
-  resource :application_services
+  resource :application_services do
+    get :action
+  end
   resource :application_report
   resource :application_about
   resource :orphaned_application_service

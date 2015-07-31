@@ -36,6 +36,10 @@ class ApplicationServicesController < ApplicationController
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), notice: "Unable to remove #{@application_service.title} from #{@application_service.application.container_name}."
     end
   end
+  
+  def action
+    render text: params
+  end
 
 private
 
