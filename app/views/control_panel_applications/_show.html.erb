@@ -53,10 +53,10 @@ end
 				</div>
 			</li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop container", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_applications_path(application_name: application_name) } %>
 			</li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause container", "javascript:void(0);", class: 'object_action', data: { action: "Pausing", url: pause_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "Pausing", url: pause_applications_path(application_name: application_name) } %>
 			</li>
 			<% elsif state == "paused" %>
 			<li>
@@ -65,7 +65,7 @@ end
 				</div>
 			</li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause container", "javascript:void(0);", class: 'object_action', data: { action: "Unpausing", url: unpause_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "Unpausing", url: unpause_applications_path(application_name: application_name) } %>
 			</li>
 			<% elsif state == "stopped" %>
 			<% if state_indicator == "error" %>
@@ -87,19 +87,20 @@ end
 			</li>
 			<% end %>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-play") + " Start container", "javascript:void(0);", class: 'object_action', data: { action: "Starting", url: start_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "Starting", url: start_applications_path(application_name: application_name) } %>
 			</li>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Destroy container", "javascript:void(0);", class: 'object_action', data: { action: "Destroying", url: destroy_container_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Unbuild", "javascript:void(0);", class: 'object_action', data: { action: "Destroying", url: destroy_container_applications_path(application_name: application_name) } %>
 			</li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Recreate container", "javascript:void(0);", class: 'object_action', data: { action: "Recreating", url: recreate_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "Recreating", url: recreate_applications_path(application_name: application_name) } %>
 			</li>
+			<li class="divider"></li>
 			<li>
 				<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", "javascript:void(0);", class: 'object_action', data: { action: "Reinstalling", url: reinstall_applications_path(application_name: application_name) } %>
 			</li>
-			<% elsif  state == "no_container" %>
+			<% elsif  state == "unbuilt" %>
 			<% if state_indicator == "error" %>
 			<li>
 				<div class="<%= indicator_class %> dropdown-title">
@@ -119,10 +120,11 @@ end
 			</li>
 			<% end %>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_applications_path(application_name: application_name) } %>
 			</li>
+			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall software", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
 			</li>
 			<li>
 				<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", "javascript:void(0);", class: 'object_action', data: { action: "Reinstalling", url: reinstall_applications_path(application_name: application_name) } %>
@@ -161,7 +163,7 @@ end
 			<% end %>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-arrows-v") + " Connect services", application_services_properties_path(application_name: application_name),  class: "trigger-response-modal" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-arrows-v") + " Connected services", application_services_properties_path(application_name: application_name),  class: "trigger-response-modal" %>
 			</li>
 			<li class="divider"></li>
 			<li>

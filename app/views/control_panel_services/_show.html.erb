@@ -52,23 +52,27 @@
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
 	  			<li><div class="dropdown-title"><small><%= service_state.humanize %></small></div></li>
 			<% else %>
-	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt</div></li>
+	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Disabled</div></li>
 			<% end %>
-  			<li><%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Create container", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_services_path(service_name: service_name) } %></li> 
+  			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_services_path(service_name: service_name) } %></li> 
       <% else %>
          <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error<br>(should be <%= service.state_indicator %>)</div></li>
       <%  end %>
-      <% if true #@service.configurator_params.present? %>
-  		<li class="divider"></li>
+		<li class="divider"></li>
+      <% if (@service.configurator_params.is_a?(Array) && @service.configurator_params.present?) %>
 		<% if service_state == "running" %>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Configuration", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
+				<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Configuration", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
 			</li>
 		<% else %>
 			<li class="disabled">
-				<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Configuration", "javascript:void(0);" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Configuration", "javascript:void(0);" %>
 			</li>
 		<% end %>
+	  <% else %>
+			<li class="disabled">
+				<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Not configurable", "javascript:void(0);" %>
+			</li>
 	  <% end %>
   	  <li class="divider"></li>
 	  <li>

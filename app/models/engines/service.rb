@@ -23,7 +23,7 @@ module Engines::Service
       'error'
     else
       if state.to_s == "no_container"
-        "unbuilt"
+        "disabled"
       else
         state
       end

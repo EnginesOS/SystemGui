@@ -1,12 +1,12 @@
 <div class="col-sm-12">
 
-	<h2 class=''><%= content_tag(:i, "", class: "fa fa-wrench") + " Configure " + @service.label %></h2>
+	<h2 class=''><%= content_tag(:i, "", class: "fa fa-gear") + " Configure " + @service.label %></h2>
 
 	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 
 	<div class="top-gap">
 
-		<% if @service.configurator_params.is_a? Array %>
+		<% if (@service.configurator_params.is_a?(Array) && @service.configurator_params.present?) %>
 
 			<% @service.configurator_params.each do |configurator| %>
 		
@@ -21,7 +21,8 @@
 				</div>
 				<div class="panel-body">
 					<% existing_variables = configurator[:variables_attributes] %>
-					<% if existing_variables.is_a? Array %>
+		<%= existing_variables.class %>
+					<% if (existing_variables.is_a?(Array) && existing_variables.present?) %>
 						<% existing_variables.each do |variable_definition|
 								if variable_definition.present? %>
 									<label><%= variable_definition[:label] %></label>
