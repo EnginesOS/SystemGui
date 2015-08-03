@@ -100,7 +100,7 @@ class Domain < ActiveRecord::Base
   end
 
   def self.domain_names_list
-    all_engines_domain_names_details.keys.sort
+    @domain_names_list ||= all_engines_domain_names_details.keys.sort
   end
 # 
   # def domain_name_detail
@@ -108,11 +108,11 @@ class Domain < ActiveRecord::Base
   # end
   
   def engines_domain_params
-    self.class.all_engines_domain_names_details[domain_name.to_s]
+    @engines_domain_params ||= self.class.all_engines_domain_names_details[domain_name.to_s]
   end
 
   def self.all_engines_domain_names_details
-    engines_api.list_domains
+    @all_engines_domain_names_details ||= engines_api.list_domains
   end
   
   def self.all_engines_domain_names_params
