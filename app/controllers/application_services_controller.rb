@@ -38,7 +38,12 @@ class ApplicationServicesController < ApplicationController
   end
   
   def action
-    render text: params
+    # render text: @application_service.service_action
+    if @application_service.perform_action
+      redirect_to application_services_properties_path(application_name: @application_service.application.container_name), notice: "Successfully performed #{@application_service.service_action} action on #{@application_service.title}."
+    else
+      redirect_to application_services_properties_path(application_name: @application_service.application.container_name), notice: "Unable to perform #{@application_service.service_action} action on #{@application_service.title}. " + @application_service.engines_api_error
+    end
   end
 
 private
