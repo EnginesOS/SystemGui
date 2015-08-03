@@ -132,7 +132,12 @@ class ApplicationService < ActiveRecord::Base
    def variables_params
      {}.tap do |result|
        variables.each do |variable|
-         result[variable.name.to_sym] = variable.value
+          value = variable.value
+          if (variable.field_type.to_sym == :boolean || variable.field_type.to_sym == :checkbox)
+            value = true if value == "1"
+            value = false if value == "0"
+          end
+          result[variable.name.to_sym] = value
        end
      end
    end
