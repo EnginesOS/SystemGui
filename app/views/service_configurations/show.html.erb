@@ -21,24 +21,18 @@
 				</div>
 				<div class="panel-body">
 					<% existing_variables = configurator[:variables_attributes] %>
-		<%= existing_variables.class %>
 					<% if (existing_variables.is_a?(Array) && existing_variables.present?) %>
-						<% existing_variables.each do |variable_definition|
-								if variable_definition.present? %>
-									<label><%= variable_definition[:label] %></label>
-									<% if variable_definition[:field_type].include? 'password' %>
-										<%= variable_definition[:value].length.times.map{ '*' }.join() if variable_definition[:value].present? %>
-									<% else %>
-										<%= variable_definition[:value] %>
-									<% end %><br>
-								<% else %>
-					  				<label style="color: #f00;"><%= variable_definition[:name].to_s %></label> <%= variable_definition[:value] %>
-					  				<small style="color: #f00;"><i>This variable is not properly defined.</i></small><br>
-								<% end %>
-			  			<% end %>
-			  		<% else %>
-			  			Unable to load variables. Check that service is running.
-			  		<% end %>
+						<% existing_variables.each do |variable|%>
+							<% value = variable[:value]
+								if variable[:field_type].include? 'password'
+							      value = value.to_s.length.times.map{ '*' }.join()
+							   	end
+							 %>
+							 <%= render partial: 'shared/show/label_and_text', locals: {label: variable[:label], text: value} %>
+						<% end %>
+					<% else %>
+						Unable to load variables. Check that service is running.
+					<% end %>
 			  		<% #= ap(@service.test(configurator[:name]), plain: true, index: false).html_safe %>
 				</div>
 			</div>
