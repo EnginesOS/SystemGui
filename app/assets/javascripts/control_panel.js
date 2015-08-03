@@ -30,6 +30,7 @@ $(document).ready(function() {
 				$(modal_body_id).children('.modal_body_content').html(html);
 				$(modal_body_id).children('.loading_spinner').slideUp();
 				$(modal_body_id).children('.modal_body_content').slideDown();
+				bind_new_window_popup_events();
 			}
 		});
 

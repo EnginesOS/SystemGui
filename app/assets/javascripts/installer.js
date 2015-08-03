@@ -11,8 +11,8 @@ $(document).ready(function(){
 			});
 	};
 	
-	
-    if ($("#installation_status").length > 0){
+
+    if ($("#installation_status").length > 0) {
     	if ($("#installation_progress").html() == '') {
 			$("#installation_progress").html('Starting installation.');
 			var asciiart = "  ______                   _                      \n |  ____|                 (_)                     \n | |__     _ __     __ _   _   _ __     ___   ___ \n |  __|   | '_ \\   / _` | | | | '_ \\   / _ \\ / __|\n | |____  | | | | | (_| | | | | | | | |  __/ \\__ \\\n |______| |_| |_|  \\__, | |_| |_| |_|  \\___| |___/\n                    __/ |                         \n                   |___/\n\n";
@@ -71,6 +71,7 @@ $(document).ready(function(){
 					$("body").append(flash_message_data_html);
 					do_flash_messages();
 					$("#installation_report_tab_button").click();
+					$("#open_installation_report_in_new_tab").show();
 				};
 			};
 			

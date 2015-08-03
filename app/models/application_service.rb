@@ -9,6 +9,7 @@ class ApplicationService < ActiveRecord::Base
     :application_name,
     :service_handle,
     :create_type,
+    :container_type,
     :service_action,
     # :parent_engine,
     # :wizard_create_type,
@@ -126,6 +127,7 @@ class ApplicationService < ActiveRecord::Base
       publisher_namespace: publisher_namespace,
       service_handle: service_handle,
       service_container_name: service_container_name,
+      container_type: container_type,
       variables: variables_params}
    end 
    
@@ -149,6 +151,7 @@ class ApplicationService < ActiveRecord::Base
           type_path: type_path,
           publisher_namespace: publisher_namespace,
           service_handle: service_handle,
+          container_type: container_type,
           service_container_name: service_container_name
                    }
     }

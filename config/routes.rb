@@ -45,7 +45,9 @@ Rails.application.routes.draw do
   resource :application_services do
     get :action
   end
-  resource :application_report
+  resource :application_report do
+    get :installation_report
+  end
   resource :application_about
   resource :orphaned_application_service
   resource :application_subservice
