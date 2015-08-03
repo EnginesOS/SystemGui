@@ -100,7 +100,7 @@ class Domain < ActiveRecord::Base
   end
 
   def self.domain_names_list
-    @domain_names_list ||= all_engines_domain_names_details.keys.sort
+    @domain_names_list ||= all_engines_domain_names_details.keys.map(&:to_s).sort
   end
 # 
   # def domain_name_detail

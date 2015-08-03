@@ -4,7 +4,7 @@ class DomainSettings < ActiveRecord::Base
 
   attr_accessor :default_domain, :default_site, :engines_api_error
 
-  validates :default_domain, :default_site, presence: true
+  validates :default_domain, presence: true
 
   def self.load
     new(
@@ -39,13 +39,17 @@ class DomainSettings < ActiveRecord::Base
   end
 
   def update_default_site
-    result = self.class.engines_api.set_default_site(default_site_url: default_site)
-    if !result.was_success
-      @engines_api_error = [ @engines_api_error.to_s, "Unable to update default site.",  
-                            (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api."),
-                                  "Called 'set_default_site' with default_site: #{default_site}" ].join(' ')
+    if default_site.present?
+      result = self.class.engines_api.set_default_site(default_site_url: default_site)
+      if !result.was_success
+        @engines_api_error = [ @engines_api_error.to_s, "Unable to update default site.",  
+                              (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api."),
+                                    "Called 'set_default_site' with default_site: #{default_site}" ].join(' ')
+      end
+      result.was_success
+    else
+      true
     end
-    result.was_success
   end
   
   def new_record?

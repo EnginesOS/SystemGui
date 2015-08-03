@@ -104,10 +104,28 @@ class ApplicationService < ActiveRecord::Base
     result.was_success
   end
   
+  def perform_action
+    action = service_action.to_sym
+    if action == :register
+      api_method = :register_attached_service
+    elsif action == :deregister
+      api_method = :deregister_attached_service
+    elsif action == :reregister
+      api_method = :reregister_attached_service
+    end
+    result = engines_api.send(api_method)
+    if !result.was_success
+      @engines_api_error = "Unable to {#action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called 'update_attached_service' with params: #{to_json}")
+    end
+    result.was_success    
+  end
+  
   def to_json
       {parent_engine: application.container_name,
       type_path: type_path,
       publisher_namespace: publisher_namespace,
+      service_handle: service_handle,
+      service_container_name: service_container_name,
       variables: variables_params}
    end 
    
@@ -125,7 +143,8 @@ class ApplicationService < ActiveRecord::Base
         application_service: {
           type_path: type_path,
           publisher_namespace: publisher_namespace,
-          service_handle: service_handle
+          service_handle: service_handle,
+          service_container_name: service_container_name
                    }
     }
   end
