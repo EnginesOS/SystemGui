@@ -45,6 +45,11 @@ class ApplicationService < ActiveRecord::Base
     load_variable_values
   end
 
+  def build_show
+    build_variables
+    load_variable_values
+  end
+
   def build_variables
     variables.build(variable_definitions)
   end
