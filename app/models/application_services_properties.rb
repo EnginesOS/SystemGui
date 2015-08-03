@@ -25,7 +25,8 @@ class ApplicationServicesProperties < ActiveRecord::Base
       {
         publisher_namespace: application_service[:publisher_namespace],
         type_path: application_service[:type_path],
-        service_handle: application_service[:service_handle]
+        service_handle: application_service[:service_handle],
+        service_container_name: application_service[:service_container_name]
       }
   end
 

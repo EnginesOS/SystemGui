@@ -124,6 +124,8 @@ class ApplicationService < ActiveRecord::Base
       {parent_engine: application.container_name,
       type_path: type_path,
       publisher_namespace: publisher_namespace,
+      service_handle: service_handle,
+      service_container_name: service_container_name,
       variables: variables_params}
    end 
    
@@ -141,7 +143,8 @@ class ApplicationService < ActiveRecord::Base
         application_service: {
           type_path: type_path,
           publisher_namespace: publisher_namespace,
-          service_handle: service_handle
+          service_handle: service_handle,
+          service_container_name: service_container_name
                    }
     }
   end
