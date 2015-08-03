@@ -21,6 +21,7 @@ class DomainsController < ApplicationController
 
   def edit
     @domain = Domain.build_edit_for domain_name
+    # render text: Domain.all_engines_domain_names_params
   end
 
   def update

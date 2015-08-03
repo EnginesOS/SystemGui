@@ -133,12 +133,16 @@ module Engines::Service
     @service_definition ||= ( engines_api.get_service_definition(type_path, publisher_namespace) || {} )
   end
 
+  def is_configurable?
+    configurators_from_service_definition.present?
+  end
+
   def configurator_params_without_values
     @configurator_params_without_values ||= configurators_from_service_definition.map{ |c| c[:variables_attributes] = c[:params].values ; c }.map{ |c| c.delete :params ; c }
   end
   
   def configurator_params
-    configurator_params_without_values.map do |c|
+    @configurator_params ||= configurator_params_without_values.map do |c|
       variables_values = service_configuration_variables_for(c[:name])
       c[:variables_attributes].each do |v|
         v[:value] = variables_values[v[:name].to_sym]
@@ -161,20 +165,21 @@ module Engines::Service
   # end
   
   def service_configuration_variables_for(configurator_name)
-    engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)[:variables]
+    result = engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
+    result.is_a?(EnginesOSapiResult) ? {} : result[:variables]
   end
 
-  def test(configurator_name)
-    
-
-p :__call____receive_service_configuration____with_params    
-p :container_name
-p container_name
-p :configurator_name
-p configurator_name
-
-    engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
-  end
+  # def test(configurator_name)
+#     
+# 
+# p :__call____receive_service_configuration____with_params    
+# p :container_name
+# p container_name
+# p :configurator_name
+# p configurator_name
+# 
+    # engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
+  # end
 
 #instructors  
 

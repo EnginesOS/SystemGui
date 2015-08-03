@@ -59,7 +59,7 @@
          <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error<br>(should be <%= service.state_indicator %>)</div></li>
       <%  end %>
 		<li class="divider"></li>
-      <% if (@service.configurator_params.is_a?(Array) && @service.configurator_params.present?) %>
+      <% if @service.is_configurable? %>
 		<% if service_state == "running" %>
 			<li>
 				<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Configuration", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
