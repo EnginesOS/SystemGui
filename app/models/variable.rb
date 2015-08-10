@@ -27,16 +27,16 @@ class Variable < ActiveRecord::Base
   validate :value_confirmation_validation
   validate :value_present_validation
   
-  def do_validations?
-
-# p name
-# p :variable_consumer
-# p variable_consumer
-# p @docker_hub_installation
-
-    type = variable_consumer.create_type
-    type != :active && type != :orphan
-  end
+  # def do_validations?
+# 
+# # p name
+# # p :variable_consumer
+# # p variable_consumer
+# # p @docker_hub_installation
+# 
+    # type = variable_consumer.create_type
+    # type != :active && type != :orphan
+  # end
   # validate :test_vali
 # 
   # def test_vali
