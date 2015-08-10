@@ -20,10 +20,12 @@ class ApplicationDisplayProperties < ActiveRecord::Base
   end
 
   def set_defaults
-    self.title = application.blueprint_software_details["short_title"]
+    title_from_blueprint = application.blueprint_software_details["short_title"]
+    self.title = title_from_blueprint.present? ? title_from_blueprint : application.container_name
     self.detail = application.blueprint_software_details["long_title"]
-    self.icon = file_from(gallery_icon_url || icon_url_from_blueprint)
-    self
+    url_for_new_icon = gallery_icon_url.present? ? gallery_icon_url : icon_url_from_blueprint
+    self.icon = file_from(url_for_new_icon)
+    self.save
   end
 
   def update(params)

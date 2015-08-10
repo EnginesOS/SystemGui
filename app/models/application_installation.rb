@@ -53,8 +53,8 @@ class ApplicationInstallation < ActiveRecord::Base
   end
   
   def resolved_repository_url
-    p :repository_url
-    p repository_url
+# p :repository_url
+# p repository_url
     repository_url # || software_definition[:repository_url]
   end
 
@@ -185,7 +185,12 @@ class ApplicationInstallation < ActiveRecord::Base
   
   def build_engine
     Thread.new do
-      engines_api.build_engine engine_build_params
+      result = engines_api.build_engine engine_build_params
+      
+# p :________________________build_done_____now_create_application
+# p result
+# p result.class
+      
       create_fresh_application
     end
   end
@@ -198,7 +203,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def engine_build_params
-    {
+    @engine_build_params ||= {
       engine_name: application.container_name,
       host_name: application.application_network_properties.host_name,
       domain_name: application.application_network_properties.domain_name,

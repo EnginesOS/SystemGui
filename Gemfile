@@ -22,6 +22,9 @@ gem 'twitter-bootstrap-rails-confirm'
 
 # gem "cocoon"
 
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
+
 gem 'rubytree'
 
 # gem 'rubysl-openssl'

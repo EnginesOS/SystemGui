@@ -35,7 +35,9 @@ Rails.application.routes.draw do
   resource :domain_settings
   resource :desktop_settings
   resources :galleries
-  resource :gallery_software
+  resource :gallery_software do
+    get :tags_list
+  end
   resource :gallery_settings
   resource :application_network_properties
   resource :application_resources_properties

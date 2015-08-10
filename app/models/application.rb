@@ -48,7 +48,7 @@ class Application < ActiveRecord::Base
     application = where(container_name: container_name).first_or_create
     application.save
     if application.application_display_properties.blank?
-      application.build_application_display_properties.set_defaults.save
+      application.build_application_display_properties.set_defaults
     end
     application
   end

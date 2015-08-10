@@ -3,12 +3,13 @@ class InstallersController < ApplicationController
   before_action :authenticate_user!
 
   def show
+    # render text: params
     if gallery_id.blank?
       redirect_to galleries_path, alert: "No galleries. Add a gallery to install software." 
     else
-      @gallery = Gallery.find(gallery_id) #.decorate
+      @gallery = Gallery.find(gallery_id)
       @other_galleries = Gallery.where.not(id: gallery_id)
-      # render text: @gallery.softwares      
+      params[:tags] = ( (params[:commit] == 'All' || params[:tags].blank?) ? 'All' : params[:tags] )
     end
   end
 
