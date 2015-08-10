@@ -33,7 +33,7 @@ class ApplicationInstallation < ActiveRecord::Base
   end
 
   def icon_url
-    blueprint_software[:icon_url]
+    blueprint_software[:icon_url] || gallery_icon_url
   end
 
   def description
