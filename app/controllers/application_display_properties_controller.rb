@@ -5,6 +5,8 @@ class ApplicationDisplayPropertiesController < ApplicationController
 
   def edit
     @application_display_properties.set_icon = "Keep existing icon"
+
+# @application_display_properties.set_defaults
   end
 
   def update

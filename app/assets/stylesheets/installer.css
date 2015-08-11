@@ -53,6 +53,29 @@
   height: 500px;
 }
 
+.find_by_dropdown_submit_button{
+	padding: 3px 20px;
+	line-height: 1.42857;
+	min-width: 100%;
+	text-align: left;	
+	border: none;
+	border-radius: 0px;
+	background-color: #FFF;
+}
+
+.find_by_dropdown_submit_button:hover{
+	background-color: #F5F5F5;
+}
+
+.search-clear-button {
+  background-color: #FFF;
+  color: #555;
+}
+
+.search-clear-button:hover {
+  color: #333;
+}
+
 
 /*.galleries .gallery_title {
   font-size: 2em;
@@ -60,9 +83,7 @@
   padding-top: 10px;
 }
 
-.input-group-addon.search-clear-button {
-  font-size: 13px;
-}
+
 
 .form-data {
   font-size: 18px;

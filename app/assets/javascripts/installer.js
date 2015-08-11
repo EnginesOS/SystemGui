@@ -1,49 +1,61 @@
 $(document).ready(function(){
 	
-
-	
-	if ($(".gallery_software_holder").length > 0) {
-		$.each($(".gallery_software_holder"), function(index, gallery) {
-				$.get("gallery_software", {gallery_id: $(gallery).data('galleryid'), search: $(gallery).data('search')}, function(data){
-					$(gallery).html(data);
-					bind_trigger_response_modal_events();
-				});
-			});
+	if ($("#find_by_tags_list_loader").length > 0) {
+		var gallery_id = $("#find_by_tags_list_loader").data('galleryid');
+		$.get("gallery_software/tags_list", {gallery_id: gallery_id}, function(tags_list){
+			$("#find_by_tags_list_holder").html(tags_list);
+			$("#find_by_tags_list_holder").show();
+			$("#find_by_tags_list_loader").remove();
+			bind_trigger_response_modal_events();
+		});
 	};
 	
-	
-    if ($("#installation_status").length > 0){
+	if ($("#gallery_software_loader").length > 0 ) {
+		var gallery_id = $("#gallery_software_loader").data('galleryid');
+		var search = $("#gallery_software_loader").data('search');
+		var tags = $("#gallery_software_loader").data('tags');
+		var page = $("#gallery_software_loader").data('page');
+		$.get("gallery_software", {gallery_id: gallery_id, search: search, tags: tags, page: page}, function(data){
+			$("#gallery_software_holder").html(data);
+			$("#gallery_software_holder").show();
+			$("#gallery_software_loader").remove();
+			bind_trigger_response_modal_events();
+			});
+	};
+
+
+    if ($("#installation_status").length > 0) {
     	if ($("#installation_progress").html() == '') {
 			$("#installation_progress").html('Starting installation.');
 			var asciiart = "  ______                   _                      \n |  ____|                 (_)                     \n | |__     _ __     __ _   _   _ __     ___   ___ \n |  __|   | '_ \\   / _` | | | | '_ \\   / _ \\ / __|\n | |____  | | | | | (_| | | | | | | | |  __/ \\__ \\\n |______| |_| |_|  \\__, | |_| |_| |_|  \\___| |___/\n                    __/ |                         \n                   |___/\n\n";
 			$("#installation_report").html(asciiart + '       Waiting for installation to complete.');
 			var progress_path = $("#installation_status").data("progresspath");
 			var evtSource = new EventSource(progress_path);
-			var last_line_in_build_progress_log = '';
-			var second_last_line_in_build_progress_log = '';
+			var build_progress_log_result_message = '';
 			var new_line;
 			
 			var progress_listener = function(e) {
 				new_line = e.data;
-				second_last_line_in_build_progress_log = last_line_in_build_progress_log;
-				last_line_in_build_progress_log = new_line;
-				// var html = new_line;
-				var new_html = ansi_up.ansi_to_html(new_line);
-				if ( overwrite_last_line(new_line) ) {
-					var original_html = $("#installation_progress").html();
-					// var replacement_html = original_html;
-					// alert(replacement_html.split('<br>').slice(0).join('<br>'));
-					replacement_html = original_html.substring(original_html.indexOf("<br>") + 4);
-					$("#installation_progress").html(replacement_html);
+				if (new_line.substring(0, 13) == "Build Result:") {
+					build_progress_log_result_message = new_line.substring(13);
 				};
-				$("#installation_progress").prepend(new_html + '<br>');
+
+				var new_html = ansi_up.ansi_to_html(new_line);
+				// if ( overwrite_last_line(new_line) ) {
+					// var original_html = $("#installation_progress").html();
+					// // var replacement_html = original_html;
+					// // alert(replacement_html.split('<br>').slice(0).join('<br>'));
+					// replacement_html = original_html.substring(original_html.indexOf("<br>") + 4);
+					// $("#installation_progress").html(replacement_html);
+				// };
+				$("#installation_progress").prepend(new_html + '\n');
 			};
 
-			function overwrite_last_line(string) {
-				if (string.charCodeAt(3) == 109 && string.charCodeAt(8) == 109) {
-					return true;
-				};
-			};
+			// function overwrite_last_line(string) {
+				// if (string.charCodeAt(3) == 109 && string.charCodeAt(8) == 109) {
+					// return true;
+				// };
+			// };
 
 			var report_listener = function(e) {
 				new_line = e.data;
@@ -59,7 +71,7 @@ $(document).ready(function(){
 					$("#installation_report").html('No report');
 					};
 				if (e.data == 'close') {
-					var flash_message = second_last_line_in_build_progress_log;
+					var flash_message = "Done. " + build_progress_log_result_message;
 					evtSource.close();
 					$("#installation_done_button").slideDown();
 					if ((/^ERROR/).test(flash_message)) {
@@ -71,6 +83,7 @@ $(document).ready(function(){
 					$("body").append(flash_message_data_html);
 					do_flash_messages();
 					$("#installation_report_tab_button").click();
+					$("#open_installation_report_in_new_tab").show();
 				};
 			};
 			

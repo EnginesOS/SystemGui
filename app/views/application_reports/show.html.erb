@@ -22,9 +22,11 @@
     <label>Installation report</label>
      <% report = @application.installation_report %>
     <% if report.present? %>
-      <pre>
-      	<%= report %>
-	  </pre>
+      <pre><%= report %></pre>
+ 		<%= link_to content_tag(:i, "", class: "fa fa-external-link") + ' Open in separate window',
+			installation_report_application_report_path(application_name: @application.container_name),
+			class: 'btn btn-default pull-right', id: "open_installation_report_in_new_tab", data: {popup: true} %><br>
+
     <% else %>
       <pre>None</pre>
      <% end %>
@@ -126,9 +128,7 @@
     <label>Logs</label>
      <% logs = @application.logs_container %>
     <% if logs.present? %>
-      <pre>
-      	<%= logs.to_s %>
-	  </pre>
+      <pre><%= logs.to_s %></pre>
     <% else %>
       <pre>None</pre>
      <% end %>

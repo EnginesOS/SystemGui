@@ -1,64 +1,77 @@
-<% if @softwares.present? %>
-<% @softwares.each do |software|  %>
+<% if @paginated_softwares.softwares.present? %>
 
-<% software_id = software[:id]
-  gallery_title = software[:title]
-  gallery_detail = software[:detail]
-  home_page = software[:website_from_blueprint]
-  image_url =
-  if software[:icon_url_from_gallery].present?
-    software[:icon_url_from_gallery]
-  else
-    software[:icon_url_from_blueprint]
-  end
+	<% @paginated_softwares.softwares.each do |software|  %>
+	
+		<% software_id = software[:id]
+		  gallery_title = software[:title]
+		  gallery_detail = software[:detail]
+		  home_page = software[:website_from_blueprint]
+		  image_url =
+		  if software[:icon_url_from_gallery].present?
+		    software[:icon_url_from_gallery]
+		  else
+		    software[:icon_url_from_blueprint]
+		  end
+		
+		  install_url = new_application_installation_path(repository_url: software[:repository_url], gallery_icon_url: software[:icon_url_from_gallery],
+		  					gallery_id: params[:gallery_id], tags: params[:tags], search: params[:search], page: params[:page]) 
+		%>
 
-%>
-<% install_url = new_application_installation_path(repository_url: software[:repository_url], gallery_icon_url: software[:icon_url_from_gallery]) %>
+		<div class="row">		
+			<div class="col-md-12">
+				<div class="engine-install-row ">
+				  <div class="col-md-3">
+				    <div class="engine-install-icon-container">
+				
+				<%
+				  # begin
+				    # result = false
+				    # url = URI.parse(image_url)
+				    # request = Net::HTTP.new(url.host, url.port)
+				    # result = request.request_head(url.path).class
+				  # rescue
+				  # ensure
+				    # image_url = image_path("placeholder_for_missing_icon.jpg") if result != Net::HTTPOK
+				  # end
+				%>
+				
+				      <img src="<%= image_url %>" class="engine-install-icon" alt="">
+				    </div>
+				  </div>
+				  <div class="col-md-6 clearfix">
+				
+				    <div class="engine-install-text">
+				      <% if gallery_title.present? %>
+				      <span class="engine-install-name"><%= gallery_title %>
+				        <br>
+				      </span>
+				      <% end %>
+				      <% if gallery_detail.present? %>
+				      <%= gallery_detail %>
+				      <br>
+				      <% end %>
+				    </div>
+				
+				  </div>
+				  <div class="col-md-3 clearfix">
+				    <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal pull-right" data-toggle="tooltip" title="Click to install <%= gallery_title %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a>
+				    <br>
+				    <% if home_page.present? %>
+				    <a class="btn btn-lg" href="<%= home_page %>" title="<%= home_page %>"><i class="fa fa-globe"></i> website</a>
+				    <% end %>
+				  </div>
+				</div>
+			</div>
+		</div>
+	<%end%>
 
-<div class="engine-install-row clearfix">
-  <div class="col-md-3 clearfix">
-    <div class="engine-install-icon-container">
-
-<%
-  begin
-        res = false
-        url = URI.parse(image_url)
-        req = Net::HTTP.new(url.host, url.port)
-        res = req.request_head(url.path).class
-    rescue
-  ensure
-      image_url = image_path("placeholder_for_missing_icon.jpg") if res != Net::HTTPOK
-    end
-%>
-
-      <img src="<%= image_url %>" class="engine-install-icon">
-    </div>
-  </div>
-  <div class="col-md-6 clearfix">
-
-    <div class="engine-install-text">
-      <% if gallery_title.present? %>
-      <span class="engine-install-name"><%= gallery_title %>
-        <br>
-      </span>
-      <% end %>
-      <% if gallery_detail.present? %>
-      <%= gallery_detail %>
-      <br>
-      <% end %>
-    </div>
-
-  </div>
-  <div class="col-md-3 clearfix">
-    <a href="<%= install_url %>" class="btn btn-default btn-lg trigger-response-modal pull-right" data-toggle="tooltip" title="Click to install <%= gallery_title %>"><%= content_tag(:i, "", class: "fa fa-arrow-circle-right") %> Install</a>
-    <br>
-    <% if home_page.present? %>
-    <a class="btn btn-lg" href="<%= home_page %>" title="<%= home_page %>"><i class="fa fa-globe"></i> website</a>
-    <% end %>
-  </div>
-</div>
-<%end%>
+	<div class="col-sm-12">
+	  <%= paginate @paginated_softwares, theme: 'twitter-bootstrap-3', params: {controller: "installers", action: "show"} %>
+	</div>
+	
 <% else %>
-None
+	<div class="col-sm-12">
+		None
+	</div>
 <%end%>
-
+<% #= (ap @paginated_softwares, index: false, plain: true).html_safe %>

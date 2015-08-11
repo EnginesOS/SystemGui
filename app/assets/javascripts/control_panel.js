@@ -30,6 +30,7 @@ $(document).ready(function() {
 				$(modal_body_id).children('.modal_body_content').html(html);
 				$(modal_body_id).children('.loading_spinner').slideUp();
 				$(modal_body_id).children('.modal_body_content').slideDown();
+				bind_new_window_popup_events();
 			}
 		});
 
@@ -45,7 +46,6 @@ $(document).ready(function() {
 	load_control_panel_objects();
 
 	function load_control_panel_object(obj) {
-
 		var url = obj.attr("data-url");
 
 		obj.next().html(obj.html());
@@ -53,10 +53,15 @@ $(document).ready(function() {
 		$.ajax({
 			url : url,
 			cache : false,
+			timeout: 20000,
 			success : function(html) {
 				obj.html(html);
 				do_flash_messages();
-				bind_control_panel_object_events(obj);
+				bind_control_panel_object_events(obj);			
+			},
+			error: function(request, status, error){
+				var msg = ['<i class="fa fa-warning"></i> Load error', error].join(' ') + '.<br>Try reloading the page.';
+				obj.find(".control_panel_object_placeholder").html(msg);
 			}
 		});
 
@@ -77,10 +82,15 @@ $(document).ready(function() {
 		$.ajax({
 			url : url,
 			cache : false,
+			timeout: 60000,
 			success : function(html) {
 				parent_obj.html(html);
 				bind_control_panel_object_events(parent_obj);
 				do_flash_messages();
+			},
+			error: function(request, status, error){
+				var msg = ['<i class="fa fa-warning"></i> Load error', error].join(' ') + '.<br>Try reloading the page.';
+				parent_obj.find(".control_panel_object_placeholder").html(msg);
 			}
 		});
 		

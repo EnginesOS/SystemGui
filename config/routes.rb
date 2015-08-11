@@ -35,7 +35,9 @@ Rails.application.routes.draw do
   resource :domain_settings
   resource :desktop_settings
   resources :galleries
-  resource :gallery_software
+  resource :gallery_software do
+    get :tags_list
+  end
   resource :gallery_settings
   resource :application_network_properties
   resource :application_resources_properties
@@ -45,7 +47,9 @@ Rails.application.routes.draw do
   resource :application_services do
     get :action
   end
-  resource :application_report
+  resource :application_report do
+    get :installation_report
+  end
   resource :application_about
   resource :orphaned_application_service
   resource :application_subservice

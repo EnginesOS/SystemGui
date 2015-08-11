@@ -9,6 +9,7 @@ class ApplicationService < ActiveRecord::Base
     :application_name,
     :service_handle,
     :create_type,
+    :container_type,
     :service_action,
     # :parent_engine,
     # :wizard_create_type,
@@ -126,13 +127,19 @@ class ApplicationService < ActiveRecord::Base
       publisher_namespace: publisher_namespace,
       service_handle: service_handle,
       service_container_name: service_container_name,
+      container_type: container_type,
       variables: variables_params}
    end 
    
    def variables_params
      {}.tap do |result|
        variables.each do |variable|
-         result[variable.name.to_sym] = variable.value
+          value = variable.value
+          if (variable.field_type.to_sym == :boolean || variable.field_type.to_sym == :checkbox)
+            value = true if value == "1"
+            value = false if value == "0"
+          end
+          result[variable.name.to_sym] = value
        end
      end
    end
@@ -144,6 +151,7 @@ class ApplicationService < ActiveRecord::Base
           type_path: type_path,
           publisher_namespace: publisher_namespace,
           service_handle: service_handle,
+          container_type: container_type,
           service_container_name: service_container_name
                    }
     }
