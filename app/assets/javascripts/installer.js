@@ -3,10 +3,13 @@ $(document).ready(function(){
 	if ($("#find_by_tags_list_loader").length > 0) {
 		var gallery_id = $("#find_by_tags_list_loader").data('galleryid');
 		$.get("gallery_software/tags_list", {gallery_id: gallery_id}, function(tags_list){
-			$("#find_by_tags_list_holder").html(tags_list);
-			$("#find_by_tags_list_holder").show();
+			if (tags_list) {			
+				$("#find_by_tags_list_holder").html(tags_list);
+				$('#installer_find_button').html($('#find_button_when_tags_present').html()); 
+				$('#search_result_summary').html($('#search_result_summary_when_tags_present').html()); 
+				bind_trigger_response_modal_events();
+			}
 			$("#find_by_tags_list_loader").remove();
-			bind_trigger_response_modal_events();
 		});
 	};
 	

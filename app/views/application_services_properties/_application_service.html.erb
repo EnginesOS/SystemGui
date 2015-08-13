@@ -1,10 +1,10 @@
 <div class="panel panel-default top-gap clearfix">
 
 	<div class="panel-heading clearfix">
-		<%= render "application_service_header", application_service: application_service %>
+		<%= render "application_service_header", application_service: application_service, index: index %>
 	</div>
 
-	<div class="collapse" id="application_service_settings">
+	<div class="collapse" id="application_service_settings_<%= index.to_s%>">
 		<div class="panel-body">
 			<%= render "application_service_body", application_service: application_service %>
 		</div>

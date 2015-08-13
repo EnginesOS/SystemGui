@@ -3,7 +3,7 @@ class ApplicationUninstall
   include ActiveModel::Model
   include Engines::Api
 
-  attr_accessor :remove_all_data, :application_name
+  attr_accessor :remove_all_data, :application_name, :engines_api_error
 
   def uninstall
     result = engines_api.deleteEngineImage( engine_name: application_name, remove_all_data: ( remove_all_data == '1' ) )

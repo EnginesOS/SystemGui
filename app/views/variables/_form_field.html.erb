@@ -33,7 +33,7 @@ field_class = mandatory ? "" : "advanced_fields"
 
 <div class="row <%= field_class %>">
 
-    <div class="col-sm-12">
+    <div class="">
 	  <% if field_type == 'text_field' || field_type == 'string' || field_type == 'text' %>
 	    <%= render partial: 'shared/form/text_field', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 	  <% elsif field_type == 'text_area' %>

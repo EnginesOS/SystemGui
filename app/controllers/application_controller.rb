@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller? 
+
+  rescue_from Exception, :with => :render_500
   
   require "/opt/engines/lib/ruby/EnginesOSapi.rb"
   require 'git'
@@ -32,5 +34,10 @@ protected
     first_runs_path
   end
 
+  def render_500(exception)
+    @page_title = "Engines error (500)"
+    @exception = exception
+    render "shared/500", :status => 500, layout: "empty_navbar"
+  end
 
 end

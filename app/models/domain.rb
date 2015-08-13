@@ -112,7 +112,7 @@ class Domain < ActiveRecord::Base
   end
 
   def self.all_engines_domain_names_details
-    @all_engines_domain_names_details ||= engines_api.list_domains
+    engines_api.list_domains
   end
   
   def self.all_engines_domain_names_params

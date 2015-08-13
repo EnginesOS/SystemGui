@@ -14,8 +14,17 @@ body {
   word-wrap: break-word;
 }
 
+div.row{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 #content .container {
   padding: 5px;
+}
+
+.dropdown-menu li .btn-lg {
+	border-radius: 0px;
 }
 
 .show label,
