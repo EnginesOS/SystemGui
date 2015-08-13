@@ -32,5 +32,13 @@ class System
   def self.update_engines
     engines_api.update_engines_system_software 
   end
+  
+  def self.status
+    if engines_api.needs_reboot?
+      {message: "needs reboot", message_class: :warning}
+    else
+      {message: "OK", message_class: :notice}
+    end
+  end
 
 end
