@@ -30,7 +30,9 @@ errors = f.object.errors[name]
 field_class = mandatory ? "" : "advanced_fields"
 
 %>
-
+<% if f.object.select_collection.present? %>
+select_collection <%= f.object.select_collection %> present, of class <%= f.object.select_collection.class %>.
+<% end %>
 <div class="row <%= field_class %>">
 
     <div class="">

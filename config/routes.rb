@@ -15,10 +15,10 @@ Rails.application.routes.draw do
   resource :installer
   resource :services_registry
   resource :system do
-    get(:monitor, :restart, :restarting, :engines_update)
+    get(:monitor, :restart, :restarting)
   end
   resource :system_update do
-    get(:update_base, :update_engines)
+    get(:update_base, :update_engines, :updating)
   end
   resource :system_security
   resource :system_security_certificate do

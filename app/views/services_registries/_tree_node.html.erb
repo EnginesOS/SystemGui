@@ -9,9 +9,17 @@ delete = false if delete.nil?
 		<span class="<%= has_children ? 'btn btn-lg btn-default' : 'btn-lg-placeholder' %>"> <%= (content_tag(:i, nil, class: 'fa fa-caret-right') + ' ') if has_children %>
 			<%= child_node.name %> </span>
 		<% content = child_node.content %>
-		<% if delete && !has_children  %>
+		<% if delete && !has_children && content.class == Hash 
+			service_params = {
+							  container_type: content[:container_type],
+							  parent_engine: content[:parent_engine],
+							  publisher_namespace: content[:publisher_namespace],
+							  service_handle: content[:service_handle],
+							  type_path: content[:type_path]
+			  				 }
+		%>
 			<%= link_to (content_tag(:i, nil, class: "fa fa-trash") + ' Delete'),
-			orphaned_application_service_path(service: (content if content.class == Hash)), method: :delete,
+			orphaned_application_service_path(service: service_params), method: :delete,
 			class: 'btn btn-default btn-lg pull-right',
 			data: { confirm: "Confirm", confirmdetail: "Are you sure that you want to delete this orphaned attached service?" } %>
 		<% end %>
