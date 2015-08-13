@@ -59,9 +59,13 @@ $(document).ready(function() {
 				do_flash_messages();
 				bind_control_panel_object_events(obj);			
 			},
-			error: function(request, status, error){
-				var msg = ['<i class="fa fa-warning"></i> Load error', error].join(' ') + '.<br>Try reloading the page.';
-				obj.find(".control_panel_object_placeholder").html(msg);
+			error: function(response, status, error){
+				if (response.status == 500) {
+					document.write(response.responseText);
+				} else {
+ 				    var msg = ['<i class="fa fa-warning"></i> Load error', error].join(' ') + '.<br>Try reloading the page.';
+				    obj.find(".control_panel_object_placeholder").html(msg);
+				};
 			}
 		});
 
@@ -88,9 +92,13 @@ $(document).ready(function() {
 				bind_control_panel_object_events(parent_obj);
 				do_flash_messages();
 			},
-			error: function(request, status, error){
-				var msg = ['<i class="fa fa-warning"></i> Load error', error].join(' ') + '.<br>Try reloading the page.';
-				parent_obj.find(".control_panel_object_placeholder").html(msg);
+			error: function(response, status, error){
+				if (response.status == 500) {
+					document.write(response.responseText);
+				} else {
+					var msg = ['<i class="fa fa-warning"></i> Load error', error].join(' ') + '.<br>Try reloading the page.';
+					parent_obj.find(".control_panel_object_placeholder").html(msg);
+				};
 			}
 		});
 		

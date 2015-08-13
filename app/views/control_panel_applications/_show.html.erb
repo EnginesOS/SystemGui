@@ -98,7 +98,7 @@ end
 			</li>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", "javascript:void(0);", class: 'object_action', data: { action: "Reinstalling", url: reinstall_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "Reinstalling", url: reinstall_applications_path(application_name: application_name) } %>
 			</li>
 			<% elsif  state == "unbuilt" %>
 			<% if state_indicator == "error" %>
@@ -124,10 +124,10 @@ end
 			</li>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall software", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
+				<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
 			</li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall software", "javascript:void(0);", class: 'object_action', data: { action: "Reinstalling", url: reinstall_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "Reinstalling", url: reinstall_applications_path(application_name: application_name) } %>
 			</li>
 			<% else %>
 			<li>

@@ -1,67 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Something went wrong (500)</title>
+  <title>The application failed to process your request (500)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
   body {
-    background-color: #EFEFEF;
-    color: #2E2F30;
+    margin: 50px;
     text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
   }
-
+  img.engines_logo {
+  	width: 50%;
+  	max-width: 300px; 
+  }
   div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
-
-  div.dialog > div {
+  	margin-top: 15px;
+  	margin-left: auto;
+  	margin-right: auto;
     border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-
-  h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
-
-  div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+    border-radius: 6px;
+    background-color: rgb(0,0,170);
+    color: #FFF;
+    text-align: left;
+    font-family: courier;
+    max-width: 700px;
+    min-height: 500px;
+    padding: 15px;
   }
   </style>
 </head>
 
 <body>
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <div>
-      <h1>Something went wrong.</h1>
-      <img style="display:block; margin:0px auto 10px; text-align:center;cursor:pointer; cursor:hand;width: 320px; height: 242px;" src="http://2.bp.blogspot.com/_m-NewLwJEb8/S88qdKT4paI/AAAAAAAAAl0/Nyesq2mvYPs/s320/broken+engine.png" border="0" alt="" id="BLOGGER_PHOTO_ID_5462631553496032674">
-    </div>
-    <p>If you are the application owner check the logs for more information.</p>
-  </div>
+	<img class="engines_logo" src="/assets/engines_logo.png" alt="">
+	<div class="dialog">
+		*** Engines Systems Management GUI<br><br>
+		ERROR: 500<br>
+		The application failed to process your request.
+	</div>
 </body>
 </html>

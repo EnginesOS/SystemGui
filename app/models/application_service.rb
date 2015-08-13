@@ -98,6 +98,13 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def update_attached_service
+    
+p :to_json
+p to_json
+p to_json.class
+p to_json.to_s
+
+    
     result = engines_api.update_attached_service(to_json)
     if !result.was_success
       @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to edit connected service. No result message given by engines api. Called 'update_attached_service' with params: #{to_json}")

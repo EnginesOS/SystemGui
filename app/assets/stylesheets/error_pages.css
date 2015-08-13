@@ -1,0 +1,21 @@
+pre#bsod_dialog {
+  	margin-top: 15px;
+    min-height: 200px;
+    height: 200px;
+    min-width:100%;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    resize: both;
+}
+  
+#submit_bug_report_message {
+  	display: inline-block;
+  	text-align: center;
+  	padding:11px 16px;
+  	line-height: 1.33;
+  	border: none; 
+}
+  
+h2.h2_with_error {
+	color: rgb(170,0,0);
+}
