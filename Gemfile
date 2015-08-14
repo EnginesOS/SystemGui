@@ -6,7 +6,7 @@ gem 'file-tail'
 gem 'vmstat'
 
 group :development do
-  gem 'therubyracer'
+  # gem 'therubyracer'
   gem "puma"
 end
 

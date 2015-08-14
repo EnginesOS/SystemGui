@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
 
-  devise_for :users, :skip => :registrations
-  resource :user_passwords
-  # mount RailsAdmin::Engine => '/admin', as: :rails_admin
   root to: "desktops#show"
 
+  resource :user_passwords
 
 
   resource :desktop
@@ -15,10 +13,13 @@ Rails.application.routes.draw do
   resource :installer
   resource :services_registry
   resource :system do
-    get(:monitor, :restart, :restarting)
+    get :monitor
+  end
+  resource :system_restart do
+    get :restart, :restarting
   end
   resource :system_update do
-    get(:update_base, :update_engines, :updating)
+    get :update_base, :update_engines, :updating
   end
   resource :system_security
   resource :system_security_certificate do
@@ -90,6 +91,7 @@ Rails.application.routes.draw do
         :manager)
     end
   end
+  devise_for :users, :skip => :registrations
 
   resource :first_runs do
     get :cancel

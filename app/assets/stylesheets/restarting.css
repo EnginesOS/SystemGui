@@ -1,11 +1,10 @@
-#updating_system_page_reloader {
-	margin-top: 30px;
+#restarting_system_page_reloader_progress {
 	border: 1px solid #ccc;
 	width: 100%;
 	line-height: 0;
 }
 
-#updating_system_page_reloader_done {
+#restarting_system_page_reloader_done {
 	display: inline-block;
 	background-color: #ccc;
 	width: 0%;

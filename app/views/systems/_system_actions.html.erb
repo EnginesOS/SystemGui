@@ -17,9 +17,8 @@
 			class: 'btn-lg trigger-response-modal' %>
 	</li>
     <li>
-    	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Restart', restart_system_path,
-			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the Engines system?" },
-			class: 'btn-lg' %>
+    	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', system_restart_path,
+			class: 'btn-lg trigger-response-modal' %>
 	</li>
 
   </ul>

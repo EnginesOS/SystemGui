@@ -2,7 +2,6 @@
 	<div class='row'>
 		<div class="col-sm-6 pull-right">
 			<%= render 'control_panel_actions' %>
-	        <div id="system_status_navbar_message_area" class="pull-right <%= @system_status[:message_class] %>">System <span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><%= @system_status[:message] %></span></div>
 		</div>
 		<div class="col-sm-6">
 			<h2><%= content_tag(:i, "", class: "fa fa-tablet") %>&nbspApplications</h2>
@@ -26,7 +25,10 @@
 			<% end %>
 		<% else %>
 			<div class="col-sm-12">
-				No applications are installed.<br><small>Click on the blue menu button to open the installer.</small>
+				No applications are installed.<br><small id="click_on_blue_menu_button_message" style="opacity:0;">
+				Click on the blue
+				<%= content_tag :span, content_tag(:i, "", class: "fa fa-bars").html_safe, id: "blue_menu_button_highlight" %>
+				 menu button to open the installer.</small>
 			</div>
 		<% end %>
 	</div>
