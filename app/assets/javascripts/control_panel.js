@@ -10,9 +10,6 @@ $(document).ready(function() {
 		bind_trigger_response_modal_events();
 	};
 
-
-
-
 	function load_modal_content(obj) {
 
 		modal_id = obj.attr("data-target");
@@ -53,7 +50,7 @@ $(document).ready(function() {
 		$.ajax({
 			url : url,
 			cache : false,
-			timeout: 20000,
+			timeout: 180000,
 			success : function(html) {
 				obj.html(html);
 				do_flash_messages();
@@ -104,6 +101,15 @@ $(document).ready(function() {
 		
 
 	}
+
+	function control_panel_call_to_action() {
+		setTimeout(function(){
+		    $('#click_on_blue_menu_button_message').fadeTo(800,1);
+		}, 3000);
+	};
+
+	control_panel_call_to_action();
+
 
 });
 

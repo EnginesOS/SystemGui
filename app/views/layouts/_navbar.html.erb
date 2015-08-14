@@ -12,9 +12,7 @@
 	    <div class="navbar-header">
 	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse">
 	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
+	        <i class="fa fa-caret-down"></i>
 	      </button>
 	      <%= link_to image_tag("engines_logo.png", class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
   		  <% @system_status = System.status %>	        
@@ -39,11 +37,13 @@
 			</li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li id="navbar_collapse" class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-user") %> <%= current_user.email %><span class="caret"></span></a>
+	        <li class="dropdown">
+	          <a id="navbar_user_menu_toggle" href="#" class="dropdown-toggle" data-toggle="dropdown">
+	          	<%= content_tag(:i, '<span class="caret"></span>'.html_safe, class: "fa fa-user navbar_user_icon") %>
+	          </a>
 	          <ul class="dropdown-menu" role="menu">
 	    		<li>
-				  <% link_body = (content_tag(:i, '', class: 'fa fa-cog') + ' Manage admin'.html_safe) %>
+				  <% link_body = (content_tag(:i, '', class: 'fa fa-cog') + ' ' + current_user.email).html_safe %>
 				  <%= link_to link_body, user_path, class: 'trigger-response-modal' %>
 		        </li>
 	            <li class="divider"></li>
