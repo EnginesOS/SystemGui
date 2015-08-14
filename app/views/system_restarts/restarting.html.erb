@@ -1,0 +1,11 @@
+<div id="system_restarting" class="col-sm-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-clock-o") %> <span id="restarting_system_page_heading"><%= params[:action].to_s.humanize %></span></h2>
+	<div id="restarting_system_page_reloader" data-waitforupdate="<%= params[:wait_for_update] %>" style="display:none;">
+	  <p id="restarting_system_message"></p>
+  	  <div id="restarting_system_page_reloader_progress">
+	    <div id="restarting_system_page_reloader_done"></div>
+	  </div>
+	</div>
+</div>
+
+

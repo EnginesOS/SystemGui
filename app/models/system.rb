@@ -35,9 +35,9 @@ class System
   
   def self.status
     if engines_api.needs_reboot?
-      {message: "needs reboot", message_class: :warning}
+      {message: "Needs reboot", message_class: :warning, url: "/system_restart"}
     else
-      {message: "OK", message_class: :notice}
+      {message: "OK", message_class: :notice, url: ""}
     end
   end
 
