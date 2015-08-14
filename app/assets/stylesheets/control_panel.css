@@ -34,34 +34,3 @@
   width: 400px;
 }
 
-#system_status_navbar_message_area {
-	font-size: 14px;
-	text-align: center;
-	vertical-align: middle;
-	padding: 12px;
-	height: 46px;
-	margin-top: 15px;
-	border: 1px solid #CCC;
-	border-radius: 6px;
-	margin-right: 5px;
-}
-
-#system_status_navbar_message {
-	
-}
-
-#system_status_navbar_message_area.notice {
-	background-color: #fff;
-}
-
-#system_status_navbar_message_area.warning {
-	background-color: rgb(255,230,230); 
-}
-
-#system_status_navbar_message.notice {
-	color: rgb(0,170,0);
-}
-
-#system_status_navbar_message.warning {
-	color: rgb(255,0,0);
-}

@@ -2,7 +2,6 @@
 	<div class='row'>
 		<div class="col-sm-6 pull-right">
 			<%= render 'control_panel_actions' %>
-	        <div id="system_status_navbar_message_area" class="pull-right <%= @system_status[:message_class] %>">System <span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><%= @system_status[:message] %></span></div>
 		</div>
 		<div class="col-sm-6">
 			<h2><%= content_tag(:i, "", class: "fa fa-tablet") %>&nbspApplications</h2>
