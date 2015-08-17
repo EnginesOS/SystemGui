@@ -3,9 +3,9 @@ class SystemRestartsController < ApplicationController
 
   def show
     if !System.restarting?
-      # result = System.restart
-      if true #result.kind_of?(EnginesOSapiResult)
-        if true #result.was_success
+      result = System.restart
+      if result.kind_of?(EnginesOSapiResult)
+        if result.was_success
           System.enable_restarting_flag
           @system_status = System.status
         else
