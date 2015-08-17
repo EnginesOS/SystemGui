@@ -13,13 +13,16 @@ Rails.application.routes.draw do
   resource :installer
   resource :services_registry
   resource :system do
-    get :monitor
+    get :monitor, :updater, :restart
   end
   resource :system_restart do
-    get :restart, :restarting
+    get :progress
   end
-  resource :system_update do
-    get :update_base, :update_engines, :updating
+  resource :system_engines_update do
+    get :progress
+  end
+  resource :system_base_update do
+    get :progress
   end
   resource :system_security
   resource :system_security_certificate do
@@ -29,7 +32,6 @@ Rails.application.routes.draw do
     get :download
   end
   resource :user
-  # resources :backup_tasks
   resource :domain
   resources :domains, only: [:index]
   resource :domain_certificate
@@ -65,7 +67,7 @@ Rails.application.routes.draw do
     end
   end
   resource :application_installation do
-    get(:installing, :set_installing_params, :progress)
+    get(:set_installing_params, :installing, :progress)
   end
   resource :docker_hub_installations
    # do

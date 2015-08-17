@@ -14,7 +14,6 @@
 	</p>
 
 	<%= content_tag :div, class: 'top-gap', id: "installation_status", data: { 
-				returnurl: '/control_panel',
 				progresspath: progress_application_installation_path(application_name: @application_installation_progress.application_name)
 			} do %>
 	  <ul class="nav nav-tabs" role="tablist">
@@ -22,7 +21,7 @@
 	    <li><a href="#installation_report_tab" data-toggle="tab" id="installation_report_tab_button">Report</a></li>
 	  </ul>
 	  <div class="tab-content">
-	    <div class="tab-pane active" id="installation_progress_tab"><pre id="installation_progress" class="top-gap"></pre></div>
+	    <div class="tab-pane active" id="installation_progress_tab"><pre id="installation_progress" class="top-gap"></pre><div id="installation_progress_feed" display: none;></div></div>
 	    <div class="tab-pane" id="installation_report_tab">
 	    	<div class="row">
 	    		<div class="col-md-12 top-gap">

@@ -15,7 +15,6 @@
 	        <i class="fa fa-caret-down"></i>
 	      </button>
 	      <%= link_to image_tag("engines_logo.png", class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
-  		  <% @system_status = System.status %>	        
 		  <div id="status_message_area_when_menu_collpased">
     	  </div>
 
@@ -31,9 +30,15 @@
 	          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path, class: 'trigger-response-modal' %>
 	        </li>
 			<li id="status_message_area_when_menu_not_collpased">
-	    	  <a href="<%= @system_status[:url] %>" id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">
-				  <i class="fa fa-heartbeat"></i> <span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><%= @system_status[:message] %></span>
-    	  	  </a>
+				<% if @system_status[:button_url].present? %>
+	    	  		<a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">
+				  		<span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><i class="fa fa-heartbeat"></i> <%= @system_status[:message] %></span>
+    	  	  		</a>
+    	  	  	<% else %>
+	    	  		<div id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">
+				  		<span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><i class="fa fa-heartbeat"></i> <%= @system_status[:message] %></span>
+    	  	  		</div>
+    	  	  	<% end %>
 			</li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">

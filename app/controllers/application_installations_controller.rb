@@ -13,6 +13,7 @@ class ApplicationInstallationsController < ApplicationController
   def create
     @application_installation = ApplicationInstallation.new(application_installation_params)
     if @application_installation.install
+      System.enable_installing_flag
       redirect_to set_installing_params_application_installation_path(@application_installation.installing_params)
     else
       render :new
@@ -20,12 +21,16 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def set_installing_params
-    $installing_params = software_params
+    System.set_installing_params(software_params)
     redirect_to installing_application_installation_path
   end
 
   def installing
-    @application_installation_progress = ApplicationInstallationProgress.new($installing_params)
+    if System.installing?
+      @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
+    else
+      redirect_to control_panel_path, alert: "Installation not running."
+    end
   end
 
   def progress
@@ -42,6 +47,7 @@ class ApplicationInstallationsController < ApplicationController
         send_event :installation_progress, line
         if line.start_with?("Build Finished")
           error = true if previous_line.start_with?("ERROR")
+          System.disable_installing_flag
           break 
         end
         previous_line = line

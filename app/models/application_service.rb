@@ -121,7 +121,14 @@ p to_json.to_s
     elsif action == :reregister
       api_method = :reregister_attached_service
     end
-    result = engines_api.send(api_method)
+
+params_for_backend = identification_params
+
+p :GUI_action_on_connected_service_call
+p "Call: " + api_method.to_s + "(" + identification_params.to_s + ")"   
+    result = engines_api.send(api_method, params_for_backend)
+p :GUI_action_on_connected_service_result
+p "Result: " + result.to_s
     if !result.was_success
       @engines_api_error = "Unable to {#action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called 'update_attached_service' with params: #{to_json}")
     end

@@ -5,7 +5,6 @@
       		<%= (content_tag(:i, "", class: "fa fa-sign-out") + " Sign in") %>
       </a>
       <ul class="dropdown-menu dropdown-menu-right" role="menu">
-		<li>
 				<%= form_for(:user, :url => new_user_session_path) do |f| %>
 					<div class="form-group">
 						<label for="user_username">Username</label>
@@ -23,7 +22,6 @@
 					  	<%= link_to "Forgot your password?", new_user_password_path(), class: "btn btn-sm btn-default pull-right top-gap" %>
 					</div>
 				<% end %>
-		</li>
       </ul>
     </li>
 
