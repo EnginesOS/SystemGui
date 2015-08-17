@@ -35,5 +35,9 @@
 }
 
 #blue_menu_button_highlight {
-	color: #428bca;
+	background-color: #428bca;
+	color: #FFF;
+	border-radius: 3px;
+	font-size: 12px;
+	padding: 4px 7px;
 }

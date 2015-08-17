@@ -94,17 +94,21 @@ module Engines::Application
     def uri
       'http' + (http_protocol_as_sym == :https_only ? 's' : '') + '://' + fqdn
     end
+    
+    def websites
+      container.web_sites
+    end
 
   {
     active?: 'is_active?',
     is_running: 'is_running?',
     is_error?: 'is_error?',
     has_container?: 'has_container?',
-    host_name: 'hostName',
+    host_name: 'hostname',
     http_protocol: 'http_protocol',
     http_protocol_as_sym: 'protocol',
     https_only: 'https_only',
-    domain_name: 'domainName',
+    domain_name: 'domain_name',
     fqdn: 'fqdn',
     default_startup_state: 'setState',
     memory: 'memory',
@@ -112,7 +116,7 @@ module Engines::Application
     framework: 'framework',
     runtime: 'runtime',
     image: 'image',
-    repo: 'repo',
+    repository: 'repository',
     port: 'port',
     external_ports: 'eports',
     last_error: 'last_error',

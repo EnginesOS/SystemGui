@@ -3,8 +3,8 @@
 Sorry. You have encountered an internal error in Engines. Please send a report to help us fix the problem.
   <div class="col-md-8 col-md-offset-2 clearfix">
 	<pre id="bsod_dialog" class="top-gap">
-		<% root_path_length = Rails.root.to_s.length %>
-		<% full_trace = @exception.backtrace.map{ |line| line[root_path_length..-1] } %>
+		<% root_path = Rails.root.to_s %>
+		<% full_trace = @exception.backtrace.map{ |line| line.sub(root_path, '') } %>
 		<% application_trace = full_trace.select{ |line| a = line.split('/')[1]; a == "app" || a == "opt" } %>
 *** Engines Management GUI
 ERROR: 500
@@ -29,7 +29,7 @@ Full trace:
 		
   	<div class="btn-toolbar">
       <div class="btn-group top-gap">
-		<%= link_to content_tag(:i, "", class: "fa fa-times") + ' No thanks', root_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+		<%= link_to content_tag(:i, "", class: "fa fa-times") + ' No thanks', desktop_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 	  </div>
   	  <div class="btn-group top-gap pull-right">
 		  <%= button_tag type: 'submit', id: "submit_bug_report_button", class: "btn btn-default btn-lg trigger-response-modal" do %>
@@ -53,20 +53,5 @@ Full trace:
 	$(this).hide();
 	$('#submit_bug_report_message').show();
   });
-
-
-  // function target_popup(form) {
-    // window.open('', 'formpopup', 'width=400,height=400,resizeable,scrollbars');
-    // form.target = 'formpopup';
-  // }
-// 
-
-// 
-
-    // $('#submit_bug_report_form').submit(function() {
-        // window.open('', 'formpopup', 'width=400,height=400,resizeable,scrollbars');
-        // this.target = 'formpopup';
-    // });
-
 
 </script>

@@ -14,6 +14,27 @@ class ApplicationController < ActionController::Base
     # new_user_session_path
   # end
 
+  before_action :check_system_status
+
+  def check_system_status
+      # render text: params
+     if user_signed_in? && !(params[:controller] == "devise/sessions" && params[:action] == "destroy")
+      @system_status = System.status
+  p :SYSTEM_STATE
+  p @system_status[:status]
+      case @system_status[:status]
+      when :restarting
+        redirect_to system_restart_path if params[:controller] != "system_restarts"
+      when :base_updating
+        redirect_to system_base_update_path if params[:controller] != "system_base_updates"
+      when :engines_updating
+        redirect_to system_engines_update_path if params[:controller] != "system_engines_updates"
+      when :installing
+        redirect_to installing_application_installation_path if params[:controller] != "application_installations"
+      end
+    end
+  end
+
 protected
 
   def configure_permitted_parameters
@@ -37,7 +58,7 @@ protected
   def render_500(exception)
     @page_title = "Engines error (500)"
     @exception = exception
-    render "shared/500", :status => 500, layout: "empty_navbar"
+    render "systems/500", :status => 500, layout: "empty_navbar"
   end
 
 end

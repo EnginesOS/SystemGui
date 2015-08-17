@@ -34,11 +34,46 @@ class System
   end
   
   def self.status
-    if engines_api.needs_reboot?
-      {message: "Needs reboot", message_class: :warning, url: "/system_restart"}
+    if restarting?
+      {status: :restarting, message: "Rebooting", message_class: :warning}
+    elsif engines_updating?
+      {status: :engines_updating, message: "Updating", message_class: :warning}
+    elsif base_system_updating?
+      {status: :base_updating, message: "Updating", message_class: :warning}
+    elsif installing?
+      {status: :installing, message: "Installing", message_class: :warning}
+    elsif needs_restart?
+      {status: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: "/system/restart"}
     else
-      {message: "OK", message_class: :notice, url: ""}
+      {status: :ok, message: "OK", message_class: :ok}
     end
   end
+  
+  def self.enable_restarting_flag;            $restarting = "1"; end
+  def self.disable_restarting_flag;           $restarting = "0"; end
+  def self.restarting?;                       $restarting == "1"; end
+
+  def self.enable_engines_updating_flag;      $engines_updating = "1"; end
+  def self.disable_engines_updating_flag;     $engines_updating = "0"; end
+  def self.engines_updating?;                 $engines_updating == "1" && engines_api.is_engines_system_updating?; end
+
+  def self.enable_base_system_updating_flag;  $base_updating = "1"; end
+  def self.disable_base_system_updating_flag; $base_updating = "0"; end
+  def self.base_system_updating?;             $base_updating == "1" && engines_api.is_base_system_updating?; end
+
+  def self.enable_installing_flag;            $installing = "1"; end
+  def self.disable_installing_flag;           $installing = "0"; end
+  def self.installing?;                       $installing == "1";  end
+  def self.set_installing_params(params);     $installing_params = params; end
+  def self.installing_params;                 $installing_params; end
+
+  def self.check_for_needs_restart;           engines_api.needs_reboot? ? $needs_restart = "1" : $needs_restart = "0"; end
+  def self.needs_restart?;                    $needs_restart == "1"; end
+
+  def self.enable_no_default_domain_flag;     $no_default_domain = "1"; end
+  def self.disable_no_default_domain_flag;    $no_default_domain = "0"; end
+  def self.no_default_domain?;                $no_default_domain == "1";  end
+
+
 
 end

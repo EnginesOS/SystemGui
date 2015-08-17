@@ -44,21 +44,8 @@ $(document).ready(function(){
 				};
 
 				var new_html = ansi_up.ansi_to_html(new_line);
-				// if ( overwrite_last_line(new_line) ) {
-					// var original_html = $("#installation_progress").html();
-					// // var replacement_html = original_html;
-					// // alert(replacement_html.split('<br>').slice(0).join('<br>'));
-					// replacement_html = original_html.substring(original_html.indexOf("<br>") + 4);
-					// $("#installation_progress").html(replacement_html);
-				// };
 				$("#installation_progress").prepend(new_html + '\n');
 			};
-
-			// function overwrite_last_line(string) {
-				// if (string.charCodeAt(3) == 109 && string.charCodeAt(8) == 109) {
-					// return true;
-				// };
-			// };
 
 			var report_listener = function(e) {
 				new_line = e.data;

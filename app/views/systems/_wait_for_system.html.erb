@@ -1,0 +1,15 @@
+<div id="wait_for_system" class="col-sm-12"
+	data-pollurl="<%= poll_url %>"
+	data-wait="<%= wait %>"
+	data-pollperiod="<%= poll_period %>"
+	data-pollmessage="<%= poll_message %>">
+	<h2><%= content_tag(:i, "", class: "fa fa-clock-o") %>
+		<span class="wait_for_system_page_title">
+			<%= title %>
+		</span>
+	</h2>
+    <p class="wait_for_system_progress_bar_message"><%= wait_message %></p>
+    <div class="wait_for_system_progress_bar">
+      <div class="wait_for_system_progress_bar_done"></div>
+    </div>
+</div>

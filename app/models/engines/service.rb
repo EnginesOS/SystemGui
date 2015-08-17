@@ -65,8 +65,8 @@ module Engines::Service
     system_service_object.image
   end
 
-  def repo
-    system_service_object.repo
+  def repository
+    system_service_object.repository
   end
 
   def port
