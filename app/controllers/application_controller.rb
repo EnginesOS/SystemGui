@@ -17,12 +17,9 @@ class ApplicationController < ActionController::Base
   before_action :check_system_status
 
   def check_system_status
-      # render text: params
      if user_signed_in? && !(params[:controller] == "devise/sessions" && params[:action] == "destroy")
       @system_status = System.status
-  p :SYSTEM_STATE
-  p @system_status[:status]
-      case @system_status[:status]
+      case @system_status[:state]
       when :restarting
         redirect_to system_restart_path if params[:controller] != "system_restarts"
       when :base_updating

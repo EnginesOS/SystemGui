@@ -7,7 +7,7 @@ class ApplicationInstallationsController < ApplicationController
 
   def new
     @application_installation = ApplicationInstallation.new(software_params).load_new
-    redirect_to installer_path, alert: "Unable to load from repository #{params[:repository_url]}." if @application_installation.blueprint == false
+    redirect_to installer_path, alert: "Unable to install #{software_params[:application_name]}. Can't load from repository #{params[:repository_url]}." if @application_installation.blueprint == false
   end
 
   def create

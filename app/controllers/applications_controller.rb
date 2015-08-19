@@ -10,6 +10,10 @@ class ApplicationsController < ApplicationController
     # redirect_to delete_image_software_path(id: engine_name, remove_all_application_data: remove_all_application_data)
   # end
 
+  def open
+    redirect_to @application.uri, target: @application.container_name
+  end
+
 private
 
   def set_application

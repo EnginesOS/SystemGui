@@ -25,7 +25,7 @@
 						<% existing_variables.each do |variable|%>
 							<% value = variable[:value]
 								if variable[:field_type].include? 'password'
-							      value = value.to_s.length.times.map{ '*' }.join()
+							      value = value.to_s.length.times.map{ '<small><i class="fa fa-circle"></i></small>' }.join().html_safe
 							   	end
 							 %>
 							 <%= render partial: 'shared/show/label_and_text', locals: {label: variable[:label], text: value} %>

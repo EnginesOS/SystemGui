@@ -35,17 +35,17 @@ class System
   
   def self.status
     if restarting?
-      {status: :restarting, message: "Rebooting", message_class: :warning}
+      {state: :restarting, message: "Rebooting", message_class: :warning}
     elsif engines_updating?
-      {status: :engines_updating, message: "Updating", message_class: :warning}
+      {state: :engines_updating, message: "Updating", message_class: :warning}
     elsif base_system_updating?
-      {status: :base_updating, message: "Updating", message_class: :warning}
+      {state: :base_updating, message: "Updating", message_class: :warning}
     elsif installing?
-      {status: :installing, message: "Installing", message_class: :warning}
+      {state: :installing, message: "Installing", message_class: :warning}
     elsif needs_restart?
-      {status: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: "/system/restart"}
+      {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: "/system/restart"}
     else
-      {status: :ok, message: "OK", message_class: :ok}
+      {state: :ok, message: "OK", message_class: :ok}
     end
   end
   

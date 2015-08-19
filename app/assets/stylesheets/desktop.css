@@ -22,7 +22,8 @@
   border-radius: 5px;
 }
 
-.launcher_icon_and_label_holder {
+.launcher-icon {
+  border-radius: 6px;
 }
 
 
