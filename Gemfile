@@ -14,7 +14,7 @@ end
 gem 'git'
 gem "oink"
 gem 'bootstrap3-rails'
-gem "font-awesome-rails"
+gem "font-awesome-rails", git: "https://github.com/bokmann/font-awesome-rails.git"
 gem "selectize-rails"
 gem 'newrelic_rpm'
 # gem 'simple_form'
