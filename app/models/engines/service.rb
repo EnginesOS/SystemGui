@@ -224,11 +224,11 @@ private
       mgmt: {title: 'Engines system manager', fa_icon: 'hand-pointer-o'},
       mongo_server: {title: 'Mongo NoSQL database', fa_icon: 'database'},
       mysql_server: {title: 'MySQL database', fa_icon: 'database'},
-      nginx: {title: 'Web router', fa_icon: 'globe'},
+      nginx: {title: 'Web router', fa_icon: 'random'},
       cAdvisor: {title: 'Activitiy monitor', fa_icon: 'bar-chart'},
       pgsql_server: {title: 'Postgres database', fa_icon: 'database'},
-      smtp: {title: 'Outbound mail', fa_icon: 'send'},
-      volmanager: {title: 'File system manager', fa_icon: 'folder'},
+      smtp: {title: 'Outbound mail', fa_icon: 'send-o'},
+      volmanager: {title: 'File system manager', fa_icon: 'folder-o'},
       shareservice: {title: 'File system sharing manager', fa_icon: 'share-alt'},
       couriermail: {title: 'Inbound mail', fa_icon: 'inbox'},
       cron: {title: 'Job scheduler', fa_icon: 'calendar'},
@@ -237,7 +237,7 @@ private
       email: {title: 'Mail server', fa_icon: 'envelope-o'},
       imap: {title: 'IMAP server', fa_icon: 'envelope-square'},
       syslog: {title: 'System logging', fa_icon: 'file-text-o'},
-      nfs: {title: 'Network storage', fa_icon: 'folder-o'},
+      nfs: {title: 'Network storage', fa_icon: 'hdd-o'},
     }
   end
  
