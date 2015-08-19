@@ -26,7 +26,6 @@ $(document).ready(function(){
 			});
 	};
 
-
     if ($("#installation_status").length > 0) {
     	if ($("#installation_progress").html() == '') {
 			$("#installation_progress").html('Starting installation.');
@@ -73,7 +72,7 @@ $(document).ready(function(){
 					$("body").append(flash_message_data_html);
 					do_flash_messages();
 					$("#installation_report_tab_button").click();
-					$("#open_installation_report_in_new_tab").show();
+					$("#report_tab_buttons").show();
 				};
 			};
 			

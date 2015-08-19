@@ -63,7 +63,7 @@ Rails.application.routes.draw do
         :start, :stop, :pause, :unpause, :restart,
         :create_container, :destroy_container,
         :reinstall, :delete_image,
-        :build, :recreate)
+        :build, :recreate, :open)
     end
   end
   resource :application_installation do

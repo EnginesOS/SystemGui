@@ -19,7 +19,7 @@ Full trace:
 <% end %>
 	</pre>
 
-<%= form_tag BUG_REPORTS_SERVER + '/api/v0/bug_reports', id: 'submit_bug_report_form' do |f| %>
+<%= form_tag BUG_REPORTS_SERVER + '/api/v0/contact/bug_reports', id: 'submit_bug_report_form' do |f| %>
 
 		  <%= hidden_field :message, value: @exception.message %>
 		  <%= hidden_field :backtrace, value: full_trace %>

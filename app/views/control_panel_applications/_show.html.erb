@@ -23,7 +23,7 @@ end
 <% end %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-	<div class="engine-gadget btn-group">
+	<div class="engine-gadget btn-group" title='<%= [@application.application_display_properties.title, @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
 		<button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
 			<div class="icon_holder">
 				<%= image_tag(application.application_display_properties.icon_url, class: "engine_icon", alt: "") -%>
@@ -91,7 +91,7 @@ end
 			</li>
 			<li class="divider"></li>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Unbuild", "javascript:void(0);", class: 'object_action', data: { action: "Destroying", url: destroy_container_applications_path(application_name: application_name) } %>
+				<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Unbuild", "javascript:void(0);", class: 'object_action', data: { action: "Unbuilding", url: destroy_container_applications_path(application_name: application_name) } %>
 			</li>
 			<li>
 				<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "Recreating", url: recreate_applications_path(application_name: application_name) } %>
