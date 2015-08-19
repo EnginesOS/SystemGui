@@ -23,7 +23,7 @@ end
 <% end %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-	<div class="engine-gadget btn-group" title='<%= [@application.application_display_properties.title, @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
+	<div class="engine-gadget application btn-group" title='<%= [@application.application_display_properties.title, @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
 		<button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
 			<div class="icon_holder">
 				<%= image_tag(application.application_display_properties.icon_url, class: "engine_icon", alt: "") -%>

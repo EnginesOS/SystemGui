@@ -11,7 +11,11 @@ module Engines::Service
 #extractors
   
   def human_name
-    titles_hash[container_name.to_sym]
+    titles_data[container_name.to_sym][:title]
+  end
+
+  def fa_icon
+    titles_data[container_name.to_sym][:fa_icon]
   end
   
   def label
@@ -209,32 +213,32 @@ module Engines::Service
 
 private
 
-  def titles_hash
+  def titles_data
     {
-     backup: 'Backup manager',
-     cert_auth: 'Security certificates',
-     auth: 'Authenticate and authorize',
-     dns: 'Local DNS server',
-     dyndns: 'Dynamic DNS',
-     ftp: 'Local FTP server',
-     mgmt: 'Engines system manager',
-     mongo_server: 'Mongo NoSQL database',
-     mysql_server: 'MySQL database',
-     nginx: 'Web router',
-     cAdvisor: 'Activitiy monitor',
-     pgsql_server: 'Postgres database',
-     smtp: 'Outbound mail',
-     volmanager: 'File system manager',
-     shareservice: 'File system sharing manager',
-     couriermail: 'Inbound mail',
-     cron: 'Job scheduler',
-     servicemanager: 'Services interaction manager',
-     awsdb: 'AWS database',
-     email: 'mail server',
-     imap: 'IMAP server',
-     syslog: 'System logging',
-     nfs: 'Network storage'
-        }
-      end
+      backup: {title: 'Backup manager', fa_icon: 'history'},
+      cert_auth: {title: 'Security certificates', fa_icon: 'certificate'},
+      auth: {title: 'Authenticate and authorize', fa_icon: 'key'},
+      dns: {title: 'Local DNS server', fa_icon: 'book'},
+      dyndns: {title: 'Dynamic DNS', fa_icon: 'bullhorn'},
+      ftp: {title: 'Local FTP server', fa_icon: 'upload'},
+      mgmt: {title: 'Engines system manager', fa_icon: 'hand-pointer-o'},
+      mongo_server: {title: 'Mongo NoSQL database', fa_icon: 'database'},
+      mysql_server: {title: 'MySQL database', fa_icon: 'database'},
+      nginx: {title: 'Web router', fa_icon: 'globe'},
+      cAdvisor: {title: 'Activitiy monitor', fa_icon: 'bar-chart'},
+      pgsql_server: {title: 'Postgres database', fa_icon: 'database'},
+      smtp: {title: 'Outbound mail', fa_icon: 'send'},
+      volmanager: {title: 'File system manager', fa_icon: 'folder'},
+      shareservice: {title: 'File system sharing manager', fa_icon: 'share-alt'},
+      couriermail: {title: 'Inbound mail', fa_icon: 'inbox'},
+      cron: {title: 'Job scheduler', fa_icon: 'calendar'},
+      servicemanager: {title: 'Services interaction manager', fa_icon: 'arrows'},
+      awsdb: {title: 'AWS database', fa_icon: 'database'},
+      email: {title: 'Mail server', fa_icon: 'envelope-o'},
+      imap: {title: 'IMAP server', fa_icon: 'envelope-square'},
+      syslog: {title: 'System logging', fa_icon: 'file-text-o'},
+      nfs: {title: 'Network storage', fa_icon: 'folder-o'},
+    }
+  end
  
 end

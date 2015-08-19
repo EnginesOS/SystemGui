@@ -69,10 +69,6 @@
   display: table;
 }
 
-.engine-gadget.service .btn {
-  height: 60px;
-}
-
 .engine-gadget .icon_holder {
   height: 64px;
   width: 64px;
@@ -100,15 +96,33 @@
   min-width: 100%;
 }
 
+.engine-gadget .dropdown-title i.fa-spin {
+	padding: 1px;
+}
+
+.engine-gadget.service .btn {
+  height: 60px;
+  text-align: left;
+}
+
+.engine-gadget.service .text_holder {
+	display: inline-block;
+}
+
+.engine-gadget.service .icon_holder {
+	display: inline-block;
+	height: 45px;
+	width: 30px;
+    text-align: center;
+    font-size: 20px;
+}
+
 .dropdown-title {
     font-size: 120%;
     text-align: center;
     width: 100%;
 } 
 
-.engine-gadget .dropdown-title i.fa-spin {
-	padding: 1px;
-}
 
 .engine-gadget.btn-group {
   margin-bottom:15px;
