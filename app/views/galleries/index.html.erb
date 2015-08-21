@@ -1,5 +1,5 @@
 <div class="col-sm-12">
-  <h2><%= content_tag(:i, "", class: "fa fa-th") %> Galleries</h2>
+  <h2><%= content_tag(:i, "", class: "fa fa-th") %> Libraries</h2>
 
   <div class="btn-group">
   <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', installer_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
@@ -11,7 +11,7 @@
           <%= render partial: "show", locals: { gallery: gallery } %>
       <% end %>
   <% else %>
-      <p class='top-gap'>No galleries.</p>
+      <p class='top-gap'>No libraries.</p>
   <% end %>
 
   <%= render 'settings' %>

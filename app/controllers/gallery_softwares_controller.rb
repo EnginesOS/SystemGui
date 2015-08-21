@@ -6,6 +6,12 @@ class GallerySoftwaresController < ApplicationController
 
     def initialize(gallery_softwares_hash)
       gallery_softwares_hash = gallery_softwares_hash.symbolize_keys
+      
+p :gallery_softwares_hash_softwares
+p gallery_softwares_hash[:softwares].first.class      
+      
+      # JSON.parse(string)
+      
       @softwares = gallery_softwares_hash[:softwares].map(&:symbolize_keys)
       @total_pages = gallery_softwares_hash[:total_pages].to_i
       @current_page = (gallery_softwares_hash[:page].present? ? gallery_softwares_hash[:page].to_i : 1)

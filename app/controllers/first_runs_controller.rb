@@ -10,7 +10,7 @@ class FirstRunsController < ApplicationController
       @first_run = FirstRun.new first_run_params
       render :show, layout: 'empty_navbar'
     else
-      redirect_to(desktop_path)
+      redirect_to(control_panel_path)
     end
   end
 

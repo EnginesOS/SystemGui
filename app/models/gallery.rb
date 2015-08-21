@@ -25,6 +25,10 @@ class Gallery < ActiveRecord::Base
     if @softwares.is_a? Array
       @softwares = {softwares: @softwares, total_pages: 1}
     end
+
+p @softwares
+p @softwares.class
+
     @softwares
   end
   
