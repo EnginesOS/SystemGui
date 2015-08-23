@@ -56,6 +56,9 @@ end
 				<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_applications_path(application_name: application_name) } %>
 			</li>
 			<li>
+				<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Restart", "javascript:void(0);", class: 'object_action', data: { action: "Restarting", url: restart_applications_path(application_name: application_name) } %>
+			</li>
+			<li>
 				<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "Pausing", url: pause_applications_path(application_name: application_name) } %>
 			</li>
 			<% elsif state == "paused" %>
