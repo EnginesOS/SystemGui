@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, :with => :render_500
   
-  require "/opt/engines/lib/ruby/EnginesOSapi.rb"
+  require "/opt/engines/lib/ruby/api/public/engines_osapi.rb"
   require 'git'
   require "awesome_print"
 

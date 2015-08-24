@@ -187,9 +187,9 @@ class ApplicationInstallation < ActiveRecord::Base
     Thread.new do
       result = engines_api.build_engine engine_build_params
       
-# p :________________________build_done_____now_create_application
-# p result
-# p result.class
+p :________________________build_done_____now_create_application
+p result
+p result.class
       
       create_fresh_application
     end

@@ -110,6 +110,7 @@ module Engines::Application
     https_only: 'https_only',
     domain_name: 'domain_name',
     fqdn: 'fqdn',
+    web_sites: 'web_sites',
     default_startup_state: 'setState',
     memory: 'memory',
     monitored: 'monitored',

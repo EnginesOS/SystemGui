@@ -6,7 +6,6 @@ class SystemEnginesUpdatesController < ApplicationController
       result = System.update_engines
       if result.kind_of?(EnginesOSapiResult)
         if result.was_success
-          System.enable_engines_updating_flag
           @system_status = System.status
         else
           redirect_to updater_system_path, alert: ( "Unable to update Engines system. " + result.result_mesg )[0,500]
@@ -21,8 +20,6 @@ class SystemEnginesUpdatesController < ApplicationController
     if System.engines_updating?
       render text: "updating"
     else
-      System.disable_engines_updating_flag
-      System.check_for_needs_restart
       render text: "done"
     end
   end
