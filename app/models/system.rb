@@ -34,46 +34,36 @@ class System
   end
   
   def self.status
-    if restarting?
+    @status ||= determine_status
+  end
+  
+  def self.determine_status
+    status_from_api = engines_api.system_status
+    build_status_from_api = engines_api.build_status
+    if status_from_api[:is_rebooting]
       {state: :restarting, message: "Rebooting", message_class: :warning}
-    elsif engines_updating?
+    elsif status_from_api[:is_engines_system_updating]
       {state: :engines_updating, message: "Updating", message_class: :warning}
-    elsif base_system_updating?
+    elsif status_from_api[:is_base_system_updating]
       {state: :base_updating, message: "Updating", message_class: :warning}
-    elsif installing?
+    elsif build_status_from_api[:is_building]
+      $installing_params = engines_api.last_build_params
       {state: :installing, message: "Installing", message_class: :warning}
-    elsif needs_restart?
+    elsif status_from_api[:needs_reboot]
       {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: "/system/restart"}
     else
       {state: :ok, message: "OK", message_class: :ok}
     end
   end
-  
-  def self.enable_restarting_flag;            $restarting = "1"; end
-  def self.disable_restarting_flag;           $restarting = "0"; end
-  def self.restarting?;                       $restarting == "1"; end
 
-  def self.enable_engines_updating_flag;      $engines_updating = "1"; end
-  def self.disable_engines_updating_flag;     $engines_updating = "0"; end
-  def self.engines_updating?;                 $engines_updating == "1" && engines_api.is_engines_system_updating?; end
+  def self.installing_params
+    engines_api.current_build_params
+  end
 
-  def self.enable_base_system_updating_flag;  $base_updating = "1"; end
-  def self.disable_base_system_updating_flag; $base_updating = "0"; end
-  def self.base_system_updating?;             $base_updating == "1" && engines_api.is_base_system_updating?; end
-
-  def self.enable_installing_flag;            $installing = "1"; end
-  def self.disable_installing_flag;           $installing = "0"; end
-  def self.installing?;                       $installing == "1";  end
-  def self.set_installing_params(params);     $installing_params = params; end
-  def self.installing_params;                 $installing_params; end
-
-  def self.check_for_needs_restart;           engines_api.needs_reboot? ? $needs_restart = "1" : $needs_restart = "0"; end
-  def self.needs_restart?;                    $needs_restart == "1"; end
-
-  def self.enable_no_default_domain_flag;     $no_default_domain = "1"; end
-  def self.disable_no_default_domain_flag;    $no_default_domain = "0"; end
-  def self.no_default_domain?;                $no_default_domain == "1";  end
-
-
+  def self.restarting?;                       status[:state] == :restarting; end
+  def self.engines_updating?;                 status[:state] == :engines_updating; end
+  def self.base_system_updating?;             status[:state] == :base_updating; end
+  def self.installing?;                       status[:state] == :installing; end
+  def self.needs_restart?;                    status[:state] == :needs_restart; end
 
 end
