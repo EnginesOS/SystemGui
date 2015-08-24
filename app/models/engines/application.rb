@@ -91,12 +91,16 @@ module Engines::Application
         end
     end
 
-    def uri
-      'http' + (http_protocol_as_sym == :https_only ? 's' : '') + '://' + fqdn
-    end
+    # def uri
+      # 'http' + (http_protocol_as_sym == :https_only ? 's' : '') + '://' + fqdn
+    # end
     
-    def websites
-      container.web_sites
+    def primary_web_site
+      if web_sites.present?
+        web_sites.first
+      else
+        nil
+      end
     end
 
   {
@@ -109,7 +113,7 @@ module Engines::Application
     http_protocol_as_sym: 'protocol',
     https_only: 'https_only',
     domain_name: 'domain_name',
-    fqdn: 'fqdn',
+    # fqdn: 'fqdn',
     web_sites: 'web_sites',
     default_startup_state: 'setState',
     memory: 'memory',

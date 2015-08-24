@@ -22,15 +22,15 @@ class ApplicationInstallation < ActiveRecord::Base
     self
   end
 
-  def installing_params
-    {
-      repository_url: repository_url,
-      title: software_title,
-      application_name: application.container_name,
-      host_name: application.application_network_properties.host_name,
-      domain_name: application.application_network_properties.domain_name
-      }
-  end
+  # def installing_params
+    # {
+      # repository_url: repository_url,
+      # title: software_title,
+      # application_name: application.container_name,
+      # host_name: application.application_network_properties.host_name,
+      # domain_name: application.application_network_properties.domain_name
+      # }
+  # end
 
   def icon_url
     blueprint_software[:icon_url] || gallery_icon_url
@@ -204,6 +204,7 @@ p result.class
 
   def engine_build_params
     @engine_build_params ||= {
+      software_name: default_name,
       engine_name: application.container_name,
       host_name: application.application_network_properties.host_name,
       domain_name: application.application_network_properties.domain_name,

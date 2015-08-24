@@ -1,5 +1,5 @@
 <div class='home_page_app_gadget' title='<%= [@application.application_display_properties.title, @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
-	<a class="btn btn-default btn-launcher" href="<%= @application.uri %>" target="<%= @application.container_name %>">
+	<a class="btn btn-default btn-launcher" href="<%= @application.primary_web_site %>" target="<%= @application.container_name %>">
 	<div class="launcher_icon_and_label_holder">
 	  	<div class="launcher_icon_holder_center">
 			<div class="launcher_icon_holder">

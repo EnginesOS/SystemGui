@@ -33,11 +33,10 @@ class System
     engines_api.update_engines_system_software 
   end
   
-  def self.status
-    @status ||= determine_status
-  end
   
-  def self.determine_status
+  
+  
+  def self.status
     status_from_api = engines_api.system_status
     build_status_from_api = engines_api.build_status
     if status_from_api[:is_rebooting]
@@ -57,7 +56,11 @@ class System
   end
 
   def self.installing_params
-    engines_api.current_build_params
+    stored_build_params = engines_api.current_build_params
+    {software_name: stored_build_params[:software_name],
+     application_name: stored_build_params[:engine_name],
+     host_name: stored_build_params[:host_name],
+     domain_name: stored_build_params[:domain_name] }
   end
 
   def self.restarting?;                       status[:state] == :restarting; end

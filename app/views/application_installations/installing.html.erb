@@ -9,8 +9,7 @@
 		  } , class: 'btn btn-lg btn-danger', id: "installation_cancel_button", style: "display: none;" %>
 	
 	<p class="top-gap">
-		Engine: <%= @application_installation_progress.application_name %><br>
-	    Host: <%= @application_installation_progress.host_name %>.<%= @application_installation_progress.domain_name %>
+	    <%= @application_installation_progress.host_name %>.<%= @application_installation_progress.domain_name %>
 	</p>
 
 	<%= content_tag :div, class: 'top-gap', id: "installation_status", data: { 

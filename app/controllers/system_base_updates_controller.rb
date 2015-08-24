@@ -18,7 +18,7 @@ class SystemBaseUpdatesController < ApplicationController
   
   def progress
     if System.base_system_updating?
-      render text: "updating"
+      render text: "busy"
     else
       render text: "done"
     end

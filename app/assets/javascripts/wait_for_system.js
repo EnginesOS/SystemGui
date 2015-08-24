@@ -6,6 +6,7 @@ $(document).ready(function() {
 	var wait = $("#wait_for_system").data('wait');
 	var poll_period = $("#wait_for_system").data('pollperiod');
 	var poll_message = $("#wait_for_system").data('pollmessage');
+	var redirect_url = $("#wait_for_system").data('redirecturl');
 
 	function set_progress_bar_width(width) {
 		var total_width = $(".wait_for_system_progress_bar_done").parent().width();
@@ -42,7 +43,7 @@ $(document).ready(function() {
 
 	function wait_for_system_polling() {
        	$.ajax({ url: poll_url,
-			success: function(data) { if (data == 'done') { show_waiting_for_response_modal(); window.location.href = "/control_panel"; }; }, 
+			success: function(data) { if (data != 'busy') { show_waiting_for_response_modal(); window.location.href = redirect_url; }; }, 
         	complete: setTimeout(function() {wait_for_system_polling();}, poll_period * 1000)
 		});
 	};
