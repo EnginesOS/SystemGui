@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     end
   end
   resource :application_installation do
-    get(:set_installing_params, :installing, :progress)
+    get(:preparing_installation, :preparing_installation_progress, :installing, :progress)
   end
   resource :docker_hub_installations
    # do

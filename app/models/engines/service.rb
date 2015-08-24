@@ -45,8 +45,16 @@ module Engines::Service
 
 #inspectors     
 
-  def fqdn
-    system_service_object.fqdn
+  # def fqdn
+    # service_fqdn = system_service_object.fqdn
+    # if service_fqdn.kind_of?(EnginesOSapiResult)
+      # service_fqdn = "?"
+    # end
+    # service_fqdn   
+  # end
+  
+  def web_sites
+    service_fqdn = system_service_object.web_sites
   end
 
   def default_startup_state

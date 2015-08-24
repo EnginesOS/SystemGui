@@ -16,6 +16,7 @@ if blueprint.kind_of?(EnginesOSapiResult)
 else
   default_name = blueprint['short_title'] || blueprint['full_title'] || blueprint['name']
 end
+web_sites = application.web_sites
 %>
 
 <% if flash_message.present? %>
@@ -33,7 +34,7 @@ end
 				<br>
 				<%= content_tag(:strong, application_name) %>
 				<br>
-				<%= content_tag(:i, "", class: "fa fa-globe") + ' ' + application.fqdn %>
+				<%= content_tag(:i, "", class: "fa fa-globe") + ' ' + (application.primary_web_site || 'N/A') %>
 				<br>
 				<%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.application_display_properties.title %>
 				<br>
@@ -176,13 +177,7 @@ end
 				<%= link_to content_tag(:i, "", class: "fa fa-info-circle") + " About", "#", data: {toggle: "modal", target: ("#modal_about_" + application_name), url: application_about_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
 			</li>
 			<li class="divider"></li>
-			<li>
-				 ManagedContainer.uri
-				<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + application.uri, application.uri, target: application_name %>
-			</li>
-			<li class="divider"></li>
-			ManagedContainer.web_sites
-			<% application.web_sites.each do |web_site| %>
+			<% web_sites.each do |web_site| %>
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: application_name %>
 				</li>

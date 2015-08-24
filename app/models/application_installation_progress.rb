@@ -4,9 +4,8 @@ class ApplicationInstallationProgress
   include Engines::Api
   include ActiveModel::Model
 
-  attr_accessor(
-    :repository_url,
-    :title,
+  attr_accessor( 
+    :software_name,
     :application_name,
     :host_name,
     :domain_name)

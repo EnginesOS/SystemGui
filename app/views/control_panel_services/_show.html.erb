@@ -8,11 +8,9 @@
     end
     indicator_class = "indicator_" + service.state_indicator
     background_class = "engine_" + service.state_indicator
-    service_fqdn = service.fqdn
+	web_sites = service.web_sites
     # service_protocol = service.protocol
-    if service_fqdn.kind_of?(EnginesOSapiResult)
-      service_fqdn = "?"
-    end    
+ 
 %>
 
 <% if flash_message.present? %>
@@ -87,7 +85,11 @@
 		<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "modal_menu_item" %>
 	  </li>
 	  <li class="divider"></li>
- 	  <li><%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + service_fqdn, "http://" + service_fqdn, target: "_blank"%></li>
+	  <% web_sites.each do |web_site| %>
+		<li>
+		  <%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: service_name %>
+		</li>
+	  <% end %> 	  
       </ul>
   </div>
 </div>

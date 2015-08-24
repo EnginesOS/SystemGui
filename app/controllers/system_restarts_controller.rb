@@ -18,7 +18,7 @@ class SystemRestartsController < ApplicationController
 
   def progress
     if System.restarting?
-      render text: "restarting"
+      render text: "busy"
     else
       render text: "done"
     end

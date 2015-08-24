@@ -160,14 +160,12 @@ p "Result: " + result.to_s
 
   def identification_params
     {
-        application_name: application.container_name,
-        application_service: {
-          type_path: type_path,
-          publisher_namespace: publisher_namespace,
-          service_handle: service_handle,
-          container_type: container_type,
-          service_container_name: service_container_name
-                   }
+        parent_engine: application.container_name,
+        type_path: type_path,
+        publisher_namespace: publisher_namespace,
+        service_handle: service_handle,
+        container_type: container_type,
+        service_container_name: service_container_name
     }
   end
 

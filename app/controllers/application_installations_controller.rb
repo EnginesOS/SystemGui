@@ -6,38 +6,50 @@ class ApplicationInstallationsController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @application_installation = ApplicationInstallation.new(software_params).load_new
-    redirect_to installer_path, alert: "Unable to install #{software_params[:application_name]}. Can't load from repository #{params[:repository_url]}." if @application_installation.blueprint == false
+    @application_installation = ApplicationInstallation.new(application_installation_params).load_new
+    redirect_to installer_path,
+      alert: "Unable to install #{application_installation_params[:software_title]}. Can't load from repository #{params[:repository_url]}." if @application_installation.blueprint == false
   end
 
   def create
     @application_installation = ApplicationInstallation.new(application_installation_params)
     # render text: @application_installation.engine_build_params
     if @application_installation.install
-      sleep(10)
-      render text: System.installing_params
-      # redirect_to installing_application_installation_path #set_installing_params_application_installation_path(@application_installation.installing_params)
+      redirect_to preparing_installation_application_installation_path(application_name: application_installation_params["application_attributes"]["container_name"]) #set_installing_params_application_installation_path(@application_installation.installing_params)
     else
       render :new
     end
   end
 
-  # def set_installing_params
-    # System.set_installing_params(software_params)
-    # redirect_to installing_application_installation_path
-  # end
+  def preparing_installation
+    @application_name = params[:application_name]
+  end
+
+  def preparing_installation_progress
+
+p :installing?    
+p System.installing?   
+p engines_api.build_status
+ 
+    if !System.installing?
+      render text: "busy"
+    else
+      render text: "done"
+    end
+  end
 
   def installing
-    # render text: System.installing?
+    # render text: System.installing_params
     if System.installing?
       @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
     else
-      redirect_to control_panel_path, alert: "Installation not running."
+      redirect_to control_panel_path, alert: "Installation not in progress."
     end
   end
 
   def progress
-    @application_installation_progress = ApplicationInstallationProgress.new(software_params)
+    # render text: params
+    @application_installation_progress = ApplicationInstallationProgress.new(application_name: params[:application_name])
     error = false
     previous_line = ''
     response.headers['Content-Type'] = 'text/event-stream'
@@ -56,10 +68,8 @@ class ApplicationInstallationsController < ApplicationController
         previous_line = line
       end
     end
-    unless error
-      @application_installation_progress.installation_report_lines.each do |line|
-        send_event :installation_report, line
-      end
+    @application_installation_progress.installation_report_lines.each do |line|
+      send_event :installation_report, line
     end
   ensure
     send_event :message, "close"
@@ -73,9 +83,9 @@ private
        response.stream.write "data: #{data}\n\n"
   end
 
-  def software_params
-    params.permit(:repository_url, :gallery_icon_url, :title, :application_name, :host_name, :domain_name)
-  end
+  # def software_params
+    # params.permit(:repository_url, :gallery_icon_url, :title, :application_name, :host_name, :domain_name)
+  # end
 
   def application_installation_params
     params.require(:application_installation).permit!

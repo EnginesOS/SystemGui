@@ -13,8 +13,14 @@
 		    software[:icon_url_from_blueprint]
 		  end
 		
-		  install_url = new_application_installation_path(repository_url: software[:repository_url], gallery_icon_url: software[:icon_url_from_gallery],
-		  					gallery_id: params[:gallery_id], tags: params[:tags], search: params[:search], page: params[:page]) 
+		  install_url = new_application_installation_path(
+		  						application_installation: {
+									repository_url: software[:repository_url],
+									gallery_icon_url: software[:icon_url_from_gallery] },
+								software_title: software[:title], 
+		  						tags: params[:tags],
+								search: params[:search],
+								page: params[:page]) 
 		%>
 
 		<div class="row">		
