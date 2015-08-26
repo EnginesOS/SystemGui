@@ -4,7 +4,11 @@
   <div class="col-sm-12">
     <table>
       <tr><td><label>Name</label></td><td><%= @application.container_name %></td></tr> 
-      <tr><td><label>Host FQDN</label></td><td><a href=http://<%= @application.fqdn %>><%= @application.fqdn %></a></td></tr> 
+      <tr><td><label>Websites</label></td><td>
+      	<% @application.web_sites.each do |web_site| %>
+      		<a href=http://<%= web_site %>><%= web_site %></a>
+        <% end %>
+      </td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%= @application.default_startup_state %></td></tr> 
       <tr><td><label>Memory</label></td><td><%= @application.memory %> MB</td></tr>

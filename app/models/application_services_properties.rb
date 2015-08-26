@@ -12,7 +12,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
   end
 
   def properties_from_system
-    @properties ||= application.services_properties
+    @properties ||= (application.services_properties || [])
   end
   
   def build_application_services_attributes

@@ -24,28 +24,28 @@
       	<i class="fa fa-<%= service.fa_icon %>"></i>
       </div>
       <div class="text_holder">
-          <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= service.state_indicator.humanize %></small>
     	  <strong><%= service_name %></strong><br>
-	      <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + service.human_name %>
+	      <%= content_tag(:i, '', class: 'fa fa-bookmark-o') + ' ' + service.human_name %><br>
+          <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= service.state_indicator.humanize %></small>
       </div>
     </button>
     <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
     	<li><div class="dropdown-title" %><%= service_name %></div></li>
   		<% if service_state == "running" %>
-  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running</div></li>
+  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-play") %> Running</div></li>
   			<% if service_name != 'mgmt' %>
 				<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_services_path(service_name: service_name) } %></li>
             	<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "Pausing", url: pause_services_path(service_name: service_name) } %></li>
         	<% end %>
   		<% elsif service_state == "paused" %>
-  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused</div></li>
+  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-pause") %> Paused</div></li>
 	 		<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "Unpausing", url: unpause_services_path(service_name: service_name) } %></li>
   		<% elsif service_state == "stopped" %>
 	  		<% if service.state_indicator == "error" %>
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
 	  			<li><div class="dropdown-title"><small><%= service_state.humanize %></small></div></li>
 			<% else %>
-	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped</div></li>
+	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-stop") %> Stopped</div></li>
 			<% end %>
 	  		<% if service.state_indicator == "error" %>
 				<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_services_path(service_name: service_name) } %></li>
@@ -58,11 +58,11 @@
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
 	  			<li><div class="dropdown-title"><small><%= service_state.humanize %></small></div></li>
 			<% else %>
-	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> Disabled</div></li>
+	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-ban") %> Disabled</div></li>
 			<% end %>
   			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_services_path(service_name: service_name) } %></li> 
       <% else %>
-         <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-circle-o") %> State error<br>(should be <%= service.state_indicator %>)</div></li>
+         <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> State error<br>(should be <%= service.state_indicator %>)</div></li>
       <%  end %>
 		<li class="divider"></li>
       <% if @service.is_configurable? %>
@@ -84,11 +84,13 @@
 	  <li>
 		<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced", "javascript:void(0);", data: {toggle: "modal", target: ("#modal_" + service_name), url: service_report_path(service_name: service_name) }, role: "button", class: "modal_menu_item" %>
 	  </li>
-	  <li class="divider"></li>
-	  <% web_sites.each do |web_site| %>
-		<li>
-		  <%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: service_name %>
-		</li>
+  	  <% if web_sites.present? %>
+		  <li class="divider"></li>
+		  <% web_sites.each do |web_site| %>
+			<li>
+		  		<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: service_name %>
+			</li>
+		  <% end %> 	  
 	  <% end %> 	  
       </ul>
   </div>

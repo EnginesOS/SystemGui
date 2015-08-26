@@ -4,6 +4,13 @@ class ApplicationInstallationsController < ApplicationController
   include Engines::Api
 
   before_action :authenticate_user!
+  before_action :check_for_existing_installation, only: [:new, :create]
+
+  def check_for_existing_installation
+    if System.installing?
+      redirect_to installing_application_installation_path, alert: 'Please wait for current installation to complete before starting a new one.' 
+    end
+  end
 
   def new
     @application_installation = ApplicationInstallation.new(application_installation_params).load_new
@@ -26,12 +33,7 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def preparing_installation_progress
-
-p :installing?    
-p System.installing?   
-p engines_api.build_status
- 
-    if !System.installing?
+    if System.waiting_for_installation
       render text: "busy"
     else
       render text: "done"
@@ -43,13 +45,17 @@ p engines_api.build_status
     if System.installing?
       @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
     else
-      redirect_to control_panel_path, alert: "Installation not in progress."
+      redirect_to control_panel_path, alert: "Not installing."
     end
   end
 
   def progress
     # render text: params
     @application_installation_progress = ApplicationInstallationProgress.new(application_name: params[:application_name])
+
+p :application_installation_progress
+p @application_installation_progress.inspect
+
     error = false
     previous_line = ''
     response.headers['Content-Type'] = 'text/event-stream'
@@ -60,19 +66,25 @@ p engines_api.build_status
       f.backward(10000)
       f.tail do |line|
         send_event :installation_progress, line
-        if line.start_with?("Build Finished")
-          error = true if previous_line.start_with?("ERROR")
-          System.disable_installing_flag
+        if line.start_with?('Build Finished')
+          error = true if previous_line.start_with?('ERROR')
           break
         end
         previous_line = line
       end
     end
+    
+    sleep(10)
+    
     @application_installation_progress.installation_report_lines.each do |line|
+      
+p :line
+p line
+      
       send_event :installation_report, line
     end
   ensure
-    send_event :message, "close"
+    send_event :message, 'close'
     response.stream.close
   end
 

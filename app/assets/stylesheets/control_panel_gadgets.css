@@ -59,7 +59,7 @@
 }
 
 .engine-gadget .btn {
-  height: 100px;
+  height: 80px;
   width: 100%;
   margin-left: 5px;
   margin-right: 5px;
@@ -101,7 +101,7 @@
 }
 
 .engine-gadget.service .btn {
-  height: 60px;
+  height: 80px;
   text-align: left;
 }
 
@@ -134,13 +134,13 @@
 }
 
 .application .control_panel_object_placeholder{
-	height: 100px;
-	padding-top: 30px;
+	height: 80px;
+	padding-top: 15px;
 }
 
 .service .control_panel_object_placeholder{
-	height: 60px;
-	padding-top: 10px;
+	height: 80px;
+	padding-top: 15px;
 }
 
 .control_panel_object_placeholder {
