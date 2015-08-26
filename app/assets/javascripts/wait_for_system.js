@@ -43,8 +43,24 @@ $(document).ready(function() {
 
 	function wait_for_system_polling() {
        	$.ajax({ url: poll_url,
-			success: function(data) { if (data != 'busy') { show_waiting_for_response_modal(); window.location.href = redirect_url; }; }, 
-        	complete: setTimeout(function() {wait_for_system_polling();}, poll_period * 1000)
+			success: function(data) {
+				if (data != 'busy') {
+					show_waiting_for_response_modal();
+					window.location.href = redirect_url;
+				} else {
+		        	setTimeout(function() {wait_for_system_polling();}, poll_period * 1000);
+				};
+			}, 
+			error: function(response, status, error){
+				if (response.status == 500) {
+					document.write(response.responseText);
+				} else {
+ 				    var msg = 'An error has occurred.';
+				    $(".wait_for_system_progress_bar_message").text(msg);
+				    $(".wait_for_system_progress_bar").hide();
+				};
+			},
+
 		});
 	};
 

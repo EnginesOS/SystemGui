@@ -11,7 +11,7 @@ class ApplicationsController < ApplicationController
   # end
 
   def open
-    redirect_to @application.uri, target: @application.container_name
+    redirect_to @application.primary_web_site, target: @application.container_name
   end
 
 private

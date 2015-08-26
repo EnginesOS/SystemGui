@@ -30,14 +30,9 @@ web_sites = application.web_sites
 				<%= image_tag(application.application_display_properties.icon_url, class: "engine_icon", alt: "") -%>
 			</div>
 			<div class="text_holder">
+				<%= content_tag(:strong, application_name) %><br>
+				<%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.application_display_properties.title %><br>
 				<%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= state_indicator.humanize %></small>
-				<br>
-				<%= content_tag(:strong, application_name) %>
-				<br>
-				<%= content_tag(:i, "", class: "fa fa-globe") + ' ' + (application.primary_web_site || 'N/A') %>
-				<br>
-				<%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.application_display_properties.title %>
-				<br>
 			</div>
 		</button>
 
@@ -50,7 +45,7 @@ web_sites = application.web_sites
 			<% if state == "running" %>
 			<li>
 				<div class="<%= indicator_class %> dropdown-title">
-					<%= content_tag(:i, "", class: "fa fa-circle-o-notch fa-spin") %> Running
+					<%= content_tag(:i, "", class: "fa fa-play") %> Running
 				</div>
 			</li>
 			<li>
@@ -65,7 +60,7 @@ web_sites = application.web_sites
 			<% elsif state == "paused" %>
 			<li>
 				<div class="<%= indicator_class %> dropdown-title">
-					<%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Paused
+					<%= content_tag(:i, "", class: "fa fa-pause") %> Paused
 				</div>
 			</li>
 			<li>
@@ -86,7 +81,7 @@ web_sites = application.web_sites
 			<% else %>
 			<li>
 				<div class="<%= indicator_class %> dropdown-title">
-					<%= content_tag(:i, "", class: "fa fa-circle-o-notch") %> Stopped
+					<%= content_tag(:i, "", class: "fa fa-stop") %> Stopped
 				</div>
 			</li>
 			<% end %>
@@ -136,7 +131,7 @@ web_sites = application.web_sites
 			<% else %>
 			<li>
 				<div class="<%= indicator_class %> dropdown-title">
-					<%= content_tag(:i, "", class: "fa fa-circle-o") %> State error
+					<%= content_tag(:i, "", class: "fa fa-warning") %> State error
 				</div>
 			</li>
 			<%  end %>
@@ -176,11 +171,13 @@ web_sites = application.web_sites
 			<li>
 				<%= link_to content_tag(:i, "", class: "fa fa-info-circle") + " About", "#", data: {toggle: "modal", target: ("#modal_about_" + application_name), url: application_about_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
 			</li>
-			<li class="divider"></li>
-			<% web_sites.each do |web_site| %>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: application_name %>
-				</li>
+			<% if web_sites.present? %>
+				<li class="divider"></li>
+				<% web_sites.each do |web_site| %>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: application_name %>
+					</li>
+				<% end %>
 			<% end %>
 		</ul>
 	</div>

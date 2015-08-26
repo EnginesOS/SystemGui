@@ -32,23 +32,19 @@ class System
   def self.update_engines
     engines_api.update_engines_system_software 
   end
-  
-  
-  
-  
+
   def self.status
-    status_from_api = engines_api.system_status
-    build_status_from_api = engines_api.build_status
-    if status_from_api[:is_rebooting]
+    @status_from_api = engines_api.system_status
+    @build_status_from_api = engines_api.build_status
+    if @status_from_api[:is_rebooting]
       {state: :restarting, message: "Rebooting", message_class: :warning}
-    elsif status_from_api[:is_engines_system_updating]
+    elsif @status_from_api[:is_engines_system_updating]
       {state: :engines_updating, message: "Updating", message_class: :warning}
-    elsif status_from_api[:is_base_system_updating]
+    elsif @status_from_api[:is_base_system_updating]
       {state: :base_updating, message: "Updating", message_class: :warning}
-    elsif build_status_from_api[:is_building]
-      $installing_params = engines_api.last_build_params
+    elsif @build_status_from_api[:is_building]
       {state: :installing, message: "Installing", message_class: :warning}
-    elsif status_from_api[:needs_reboot]
+    elsif @status_from_api[:needs_reboot]
       {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: "/system/restart"}
     else
       {state: :ok, message: "OK", message_class: :ok}
@@ -57,8 +53,7 @@ class System
 
   def self.installing_params
     stored_build_params = engines_api.current_build_params
-    {software_name: stored_build_params[:software_name],
-     application_name: stored_build_params[:engine_name],
+    {application_name: stored_build_params[:engine_name],
      host_name: stored_build_params[:host_name],
      domain_name: stored_build_params[:domain_name] }
   end
@@ -68,5 +63,9 @@ class System
   def self.base_system_updating?;             status[:state] == :base_updating; end
   def self.installing?;                       status[:state] == :installing; end
   def self.needs_restart?;                    status[:state] == :needs_restart; end
+
+  def self.waiting_for_installation
+    !@build_status_from_api[:is_building] && !@build_status_from_api[:did_build_fail]
+  end
 
 end

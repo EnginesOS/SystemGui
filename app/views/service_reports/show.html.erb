@@ -4,7 +4,11 @@
   <div class="col-sm-12">
     <table>
       <tr><td><label>name</label></td><td><%= @service.container_name %></td></tr> 
-      <tr><td><label>Host FQDN</label></td><td><a href=http://<%= @service.fqdn %>><%= @service.fqdn %></a></td></tr> 
+      <tr><td><label>Websites</label></td><td>
+      	<% @service.web_sites.each do |web_site| %>
+      		<a href=http://<%= web_site %>><%= web_site %></a>
+        <% end %>
+      </td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
       <tr><td><label>Default state</label></td><td><%= @service.default_startup_state %></td></tr> 
       <tr><td><label>Memory</label></td><td><%= @service.memory %> MB</td></tr>

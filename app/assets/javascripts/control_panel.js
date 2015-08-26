@@ -28,6 +28,14 @@ $(document).ready(function() {
 				$(modal_body_id).children('.loading_spinner').slideUp();
 				$(modal_body_id).children('.modal_body_content').slideDown();
 				bind_new_window_popup_events();
+			},
+			error: function(response, status, error){
+				if (response.status == 500) {
+					document.write(response.responseText);
+				} else {
+ 				    var msg = 'Try reloading the page.';
+				    obj.find(modal_body_id).html(msg);
+				};
 			}
 		});
 
@@ -105,7 +113,7 @@ $(document).ready(function() {
 	function control_panel_call_to_action() {
 		setTimeout(function(){
 		    $('#click_on_blue_menu_button_message').fadeTo(800,1);
-		}, 3000);
+		}, 1500);
 	};
 
 	control_panel_call_to_action();
