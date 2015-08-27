@@ -80,25 +80,28 @@ class ApplicationService < ActiveRecord::Base
   end
 
   def remove_attached_service
-    result = engines_api.dettach_service(to_json)
+    result = engines_api.dettach_service(params_for_engines_api)
     if !result.was_success
-      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to remove connected service. No result message given by engines api. Called 'dettach_service' with params: #{to_json}")
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : 
+        "Unable to remove connected service. No result message given by engines api. Called 'dettach_service' with params: #{params_for_engines_api}")
     end
     result.was_success
   end
   
   def create_attached_service
-    result = engines_api.attach_service(to_json)
+    result = engines_api.attach_service(params_for_engines_api)
     if !result.was_success
-      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{to_json}")
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : 
+        "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{params_for_engines_api}")
     end
     result.was_success
   end
   
   def update_attached_service
-    result = engines_api.update_attached_service(to_json)
+    result = engines_api.update_attached_service(params_for_engines_api)
     if !result.was_success
-      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to edit connected service. No result message given by engines api. Called 'update_attached_service' with params: #{to_json}")
+      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : 
+        "Unable to edit connected service. No result message given by engines api. Called 'update_attached_service' with params: #{params_for_engines_api}")
     end
     result.was_success
   end
@@ -112,29 +115,24 @@ class ApplicationService < ActiveRecord::Base
     elsif action == :reregister
       api_method = :reregister_attached_service
     end
-
-params_for_backend = identification_params
-
-p :GUI_action_on_connected_service_call
-p "Call: " + api_method.to_s + "(" + identification_params.to_s + ")"   
-    result = engines_api.send(api_method, params_for_backend)
-p :GUI_action_on_connected_service_result
-p "Result: " + result.to_s
+    result = engines_api.send(api_method, params_for_engines_api)
     if !result.was_success
-      @engines_api_error = "Unable to #{action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called 'update_attached_service' with params: #{identification_params}")
+      @engines_api_error = "Unable to #{action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called '#{api_method}' with params: #{params_for_engines_api}")
     end
     result.was_success    
   end
   
-  def to_json
-      {parent_engine: application.container_name,
-      type_path: type_path,
-      publisher_namespace: publisher_namespace,
-      service_handle: service_handle,
-      service_container_name: service_container_name,
-      container_type: container_type,
-      variables: variables_params}
-   end 
+  # def to_json
+      # {
+        # parent_engine: application.container_name,
+        # type_path: type_path,
+        # publisher_namespace: publisher_namespace,
+        # service_handle: service_handle,
+        # service_container_name: service_container_name,
+        # container_type: container_type,
+        # variables: variables_params
+      # }
+   # end 
    
    def variables_params
      {}.tap do |result|
@@ -151,12 +149,25 @@ p "Result: " + result.to_s
 
   def identification_params
     {
-        parent_engine: application.container_name,
-        type_path: type_path,
-        publisher_namespace: publisher_namespace,
-        service_handle: service_handle,
-        container_type: container_type,
-        service_container_name: service_container_name
+        application_name: application.container_name,
+        application_service: {
+          type_path: type_path,
+          publisher_namespace: publisher_namespace,
+          service_handle: service_handle,
+          container_type: container_type,
+          service_container_name: service_container_name }
+    }
+  end
+
+  def params_for_engines_api
+    {
+      parent_engine: application.container_name,
+      type_path: type_path,
+      publisher_namespace: publisher_namespace,
+      service_handle: service_handle,
+      container_type: container_type,
+      service_container_name: service_container_name,
+      variables: variables_params
     }
   end
 
