@@ -67,10 +67,12 @@
 					action_application_services_path(
 					application_name: @application_services_properties.application.container_name,
 					application_service: {
-					service_action: service_action,
+						service_action: service_action,
+						service_container_name: application_service.service_container_name,
 						type_path: application_service.type_path,
 						publisher_namespace: application_service.publisher_namespace,
-						service_handle: application_service.service_handle
+						service_handle: application_service.service_handle,
+						container_type: application_service.container_type
 						}
 					),
 					class: "btn-lg trigger-response-modal") %>
