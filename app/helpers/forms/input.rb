@@ -25,11 +25,19 @@ class Forms::Input
 
   def render
     @template.content_tag :div, class: @class do
-        [render_label, render_comment, render_text_field, render_hint_and_errors, render_buffer].join.html_safe
+        [render_label, render_comment, render_field, render_hint_and_errors, render_buffer].join.html_safe
     end
   end
 
   private
+
+  def render_field
+    render_text_field
+  end
+
+  def render_text_field
+    @form_builder.text_field(@name, value: @value, title: @tooltip, placeholder: @placeholder, class: 'form-control input-lg').html_safe
+  end
 
   def render_label
     @form_builder.label(@name, class: 'control-label'){@label}.html_safe if @label.present?
@@ -37,10 +45,6 @@ class Forms::Input
 
   def render_comment
     @template.content_tag(:small){@comment}.html_safe
-  end
-
-  def render_text_field
-    @form_builder.text_field(@name, value: @value, title: @tooltip, placeholder: @placeholder, class: 'form-control input-lg').html_safe
   end
 
   def render_errors
