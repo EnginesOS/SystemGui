@@ -6,12 +6,10 @@ class ApplicationService < ActiveRecord::Base
     :type_path,
     :publisher_namespace,
     :service_container_name,
-    :application_name,
     :service_handle,
     :create_type,
     :container_type,
     :service_action,
-    # :parent_engine,
     # :wizard_create_type,
     :orphan_service,
     :active_service,
@@ -98,13 +96,6 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def update_attached_service
-    
-p :to_json
-p to_json
-p to_json.class
-p to_json.to_s
-
-    
     result = engines_api.update_attached_service(to_json)
     if !result.was_success
       @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to edit connected service. No result message given by engines api. Called 'update_attached_service' with params: #{to_json}")
@@ -130,7 +121,7 @@ p "Call: " + api_method.to_s + "(" + identification_params.to_s + ")"
 p :GUI_action_on_connected_service_result
 p "Result: " + result.to_s
     if !result.was_success
-      @engines_api_error = "Unable to {#action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called 'update_attached_service' with params: #{to_json}")
+      @engines_api_error = "Unable to #{action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called 'update_attached_service' with params: #{identification_params}")
     end
     result.was_success    
   end
