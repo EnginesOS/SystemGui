@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730041540) do
+ActiveRecord::Schema.define(version: 20150902033757) do
 
   create_table "application_display_properties", force: true do |t|
     t.integer "application_id"
@@ -21,14 +21,10 @@ ActiveRecord::Schema.define(version: 20150730041540) do
     t.string  "icon_content_type"
     t.integer "icon_file_size"
     t.string  "icon_updated_at"
-    t.string  "gallery_icon_url"
+    t.string  "installer_icon_url"
   end
 
   create_table "application_installations", force: true do |t|
-    t.integer "application_id"
-  end
-
-  create_table "application_installs", force: true do |t|
     t.integer "application_id"
   end
 
@@ -62,14 +58,6 @@ ActiveRecord::Schema.define(version: 20150730041540) do
     t.integer "docker_hub_installation_id"
   end
 
-  create_table "backup_properties", force: true do |t|
-    t.integer "application_id"
-  end
-
-  create_table "backup_tasks", force: true do |t|
-    t.integer "application_id"
-  end
-
   create_table "desktop_settings", force: true do |t|
     t.string   "wallpaper_file_name"
     t.string   "wallpaper_content_type"
@@ -77,10 +65,6 @@ ActiveRecord::Schema.define(version: 20150730041540) do
     t.datetime "wallpaper_updated_at"
     t.string   "background_color"
     t.string   "icon_text_color"
-  end
-
-  create_table "docker_hub_installations", force: true do |t|
-    t.integer "application_id"
   end
 
   create_table "domain_certificates", force: true do |t|
@@ -110,11 +94,11 @@ ActiveRecord::Schema.define(version: 20150730041540) do
     t.integer "default_gallery_id"
   end
 
-  create_table "installer_settings", force: true do |t|
-    t.boolean "install_from_docker_hub"
+  create_table "install_from_blueprints", force: true do |t|
+    t.integer "application_id"
   end
 
-  create_table "installers", force: true do |t|
+  create_table "install_from_docker_hubs", force: true do |t|
     t.integer "application_id"
   end
 

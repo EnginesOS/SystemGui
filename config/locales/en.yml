@@ -20,4 +20,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  hello: 'Hello world'
+  activerecord:
+    # models:
+      # user: Dude
+    attributes:
+      install_from_docker_hub/application/application_network_properties:
+        host_name: 'Host name'
+      install_from_docker_hub:
+        docker_image: 'Hi'
+# 
+      # user:
+        # login: 'Handle'
+      # will translate User attribute "login" as "Handle"

@@ -2,13 +2,17 @@
 	<h2><%= image_tag('docker_icon.png', height: '30') %> Install from Docker image</h2>
 </div>
 
-	<%= form_for @docker_hub_installation do |f| %>
-		<%= render 'shared/form/errors', f: f, verb: :installed %>
+	<%= form_for @install_from_docker_hub, url: install_from_docker_hub_path do |f| %>
+		<%= render 'shared/form/errors', f: f, verb: :installed, label: 'Docker image' %>
 			<%= f.hidden_field :scroll_form_to %>
 			<%= f.hidden_field :new_application_service_publisher_namespace %>
 			<%= f.hidden_field :new_application_service_type_path %>
 			<%= f.hidden_field :new_environment_variable %>
 			<%= f.hidden_field :new_eport %>
+			
+			<%= t(:hello) %>
+			
+			
 			<% #= f.hidden_field :advanced_selected %>
 			<%= render 'shared/form/legend', text: 'Docker image' %>
 			<%= render 'shared/form/text_field', f: f, name: :docker_image, label: 'Source URL' %>		

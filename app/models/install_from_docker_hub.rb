@@ -1,4 +1,4 @@
-class DockerHubInstallation < ActiveRecord::Base
+class InstallFromDockerHub < ActiveRecord::Base
 
   # include ActiveModel::Model
   # include ActiveModel::Validations
@@ -12,7 +12,7 @@ class DockerHubInstallation < ActiveRecord::Base
   
   
   
-  has_one :application
+  belongs_to :application
   # has_one :attached_services_handler, through: :software
   # has_many :attached_services, through: :attached_services_handler
   # has_many :variables, as: :variable_consumer, dependent: :destroy
@@ -33,11 +33,10 @@ class DockerHubInstallation < ActiveRecord::Base
 
   validate :docker_image_validation
 
-
-  def self.load_new
-    new do |new_docker_hub_installation|
-      new_docker_hub_installation.type = "Software"
-      new_docker_hub_installation.build_application do |new_application|
+  def self.build_new
+    new.tap do |new_install|
+      new_install.type = "Software"
+      new_install.build_application do |new_application|
         new_application.build_application_resources_properties
         new_application.build_application_network_properties(http_protocol: "HTTPS and HTTP")
       end
@@ -72,7 +71,6 @@ class DockerHubInstallation < ActiveRecord::Base
       false
     end
   end
-
 
   def installation_params
     {
@@ -146,12 +144,12 @@ class DockerHubInstallation < ActiveRecord::Base
 
   # def self.new_installation
     # new.application do |new_application|
-      # # application.build_docker_hub_installation
+      # # application.build_install_from_docker_hub
       # new_application.build_network_properties http_protocol: "HTTPS and HTTP"
-      # docker_hub_installation.application.build_resources_properties
+      # install_from_docker_hub.application.build_resources_properties
       # # application.build_attached_services_handler
-      # docker_hub_installation.type = "Software"
-      # # docker_hub_installation.network.http_protocol = "HTTPS and HTTP"
+      # install_from_docker_hub.type = "Software"
+      # # install_from_docker_hub.network.http_protocol = "HTTPS and HTTP"
     # end
   # end
 

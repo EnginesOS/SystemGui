@@ -1,7 +1,0 @@
-  <div class="col-sm-12">
-    <legend>Labels</legend>
-  </div>
-  <%= f.input :title, label: 'Title', tooltip: "Give the software a title." %>
-  <%= f.input :detail, label: 'Detail', tooltip: "Give the software a description." %>
-  <%= render partial: 'shared/form/text_field', locals: {name: :title, label: 'Title', tooltip: "Give the software a title.", f: f} %>
-  <%= render partial: 'shared/form/text_area', locals: {name: :detail, label: 'Detail', tooltip: "Give the software a description.", f: f} %>

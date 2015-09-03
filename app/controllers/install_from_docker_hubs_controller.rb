@@ -1,17 +1,17 @@
-class DockerHubInstallationsController < ApplicationController
+class InstallFromDockerHubsController < ApplicationController
 
   include ActionController::Live
 
   before_action :authenticate_user!
 
   def new
-    @docker_hub_installation = DockerHubInstallation.load_new
+    @install_from_docker_hub = InstallFromDockerHub.build_new
   end
 
   def create
     # render text: params
-    @docker_hub_installation = DockerHubInstallation.new(docker_hub_installation_params)
-    if @docker_hub_installation.ready_to_install?
+    @install_from_docker_hub = InstallFromDockerHub.new(install_from_docker_hub_params)
+    if @install_from_docker_hub.ready_to_install?
       install_software
     else
       render :new
@@ -19,11 +19,11 @@ class DockerHubInstallationsController < ApplicationController
   end
 
     
-    # if @docker_hub_installation.new_application_service?
+    # if @install_from_docker_hub.new_application_service?
       # render :new
-    # elsif @docker_hub_installation.new_eport?
+    # elsif @install_from_docker_hub.new_eport?
       # render :new
-    # elsif @docker_hub_installation.new_environment_variable?
+    # elsif @install_from_docker_hub.new_environment_variable?
 
 
   # def application_service
@@ -86,21 +86,21 @@ class DockerHubInstallationsController < ApplicationController
   # end
 # 
   def install_software
-    render text: @docker_hub_installation.installation_params
+    render text: @install_from_docker_hub.installation_params
     # Thread.new do
-      # EnginesInstaller.build_engine_from_docker_image(@docker_hub_installation.installation_params)
+      # EnginesInstaller.build_engine_from_docker_image(@install_from_docker_hub.installation_params)
     # end #.object_id
     # redirect_to installing_application_installation_path(
-      # title: @docker_hub_installation.docker_image, 
-      # application_name: @docker_hub_installation.application.container_name,
-      # host_name: @docker_hub_installation.application.network_properties.host_name,
-      # domain_name: @docker_hub_installation.application.network_properties.domain_name )
+      # title: @install_from_docker_hub.docker_image, 
+      # application_name: @install_from_docker_hub.application.container_name,
+      # host_name: @install_from_docker_hub.application.network_properties.host_name,
+      # domain_name: @install_from_docker_hub.application.network_properties.domain_name )
   end
 
 private
 
-  def docker_hub_installation_params
-    @software_install_params ||= params.require(:docker_hub_installation).permit!
+  def install_from_docker_hub_params
+    @software_install_params ||= params.require(:install_from_docker_hub).permit!
   end
   
   # def application_service_params
