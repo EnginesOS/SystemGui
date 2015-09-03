@@ -83,7 +83,7 @@ module Engines::Application
     end
 
     def load_state
-        result = container.read_state
+        result = container.read_state.to_s
         if result == 'nocontainer'
           'unbuilt'
         else
