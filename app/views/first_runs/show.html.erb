@@ -1,7 +1,7 @@
 <div id="first_run_form" class="col-sm-12">
   <h2><i class="fa fa-magic"></i> Setup wizard</h2>
 
-  <%= form_for @first_run do |f| %>
+  <%= form_for @first_run, url: first_run_path do |f| %>
 
     <%= render partial: 'shared/form/errors', locals: {f: f, label: 'Setup wizard', verb: 'run'} %>
 
@@ -49,7 +49,7 @@
     <%= render partial: 'shared/form/text_field', locals: {name: :ssl_state, label: "State", f: f} %>
     <%= render partial: 'shared/form/country_select', locals: {name: :ssl_country, label: "Country", f: f} %>
 
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: cancel_first_runs_path, submit_label: "Submit"} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: cancel_first_run_path, submit_label: "Submit"} %>
 
   <% end %>
 

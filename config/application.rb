@@ -16,5 +16,5 @@ module EnginesSystemGUI
   end
 end
 
-ActionView::Base.default_form_builder = 'Forms::FormBuilder'
+ActionView::Base.default_form_builder = 'EnginesHelper::Forms::FormBuilder'
 

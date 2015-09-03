@@ -43,9 +43,9 @@ class System
     elsif @status_from_api[:is_base_system_updating]
       {state: :base_updating, message: "Updating", message_class: :warning}
     elsif @build_status_from_api[:is_building]
-      {state: :installing, message: "Installing", message_class: :warning}
+      {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing'}
     elsif @status_from_api[:needs_reboot]
-      {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: "/system/restart"}
+      {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: '/system/restart'}
     else
       {state: :ok, message: "OK", message_class: :ok}
     end

@@ -1,46 +1,48 @@
-.installer .engine-install-icon-container {
-  height: 100px;
-  width: 100px;
-  padding: 2px;
+.installer .install-software-panel {
+	padding: 5px;
 }
 
-.installer .engine-install-row {
-  min-height: 120px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-top: 1px solid #ddd;
+.installer .install-software-panel a.btn {
+  width: 100%;
+  white-space: normal;
+  padding: 5px;
 }
 
-.installer .engine-install-row {
-  color: #666;
+.installer .engine-install-icon-area {
+  height: 96px;
+  width: 100%;
+  text-align: center;
 }
 
 .installer .engine-install-icon {
+  vertical-align: middle;
   max-height: 96px;
-  max-width: 96px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
   border-radius: 5px;
 }
 
-/*.installer .engine-install-button {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}*/
-
 .installer .engine-install-name {
-  font-size: 1.2em;
+  height: 48px;
 }
 
-.installer .engine-install-text {
-  word-wrap: break-word;
+.installer .engine-install-detail {
+	font-size: 0.8em;
+	height: 78px;
 }
+
+@media (max-width:991px) {
+	
+	.installer .engine-install-name {
+	  height: 24px;
+	}
+	
+	.installer .engine-install-detail {
+		height: 39px;
+	}
+}
+
 
 .installer .engine-install-text small p {
+  font-size: 0.8em;
   margin-bottom: 0px;
   color: #666;
 }

@@ -8,16 +8,10 @@ class ApplicationNetworkPropertiesController < ApplicationController
   end
 
   def update
-    @application_network_properties.assign_attributes(application_network_properties_params)
-# update_network_properties
-    if @application_network_properties.update_engines
-      # if @network_properties.save
+    if @application_network_properties.update(application_network_properties_params)
         redirect_to control_panel_path, notice: "Successfully updated network properties for #{application_name}."
-      # else
-        # redirect_to control_panel_path, alert: "Unable to update network properties for #{application_name}."
-      # end
     else
-      render :edit # text: @network_properties.engines_update_params #.engines_api_error #:edit 
+      render :edit 
     end
   end
 

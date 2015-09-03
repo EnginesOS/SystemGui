@@ -9,36 +9,31 @@ class ApplicationController < ActionController::Base
   require 'git'
   require 'awesome_print'
 
-  # Overwriting the devise sign_out redirect path method
-  # def after_sign_out_path_for(resource_or_scope)
-    # new_user_session_path
-  # end
-
   before_action :set_system_status
 
-  # def controllers_dependent_on_system_state
-    # ['system_base_updates', 'system_engines_updates', 'system_restarts', 'application_installations', 'docker_hub_installations']
-  # end
-
   def set_system_status
-    if user_signed_in?
-      @system_status = System.status
-      # if controllers_dependent_on_system_state.include? params[:controller]
-        # case @system_status[:state]
-        # when :restarting
-          # redirect_to system_restart_path if (params[:controller] == 'system_restarts'
-        # when :base_updating
-          # redirect_to system_base_update_path if params[:controller] != 'system_base_updates'
-        # when :engines_updating
-          # redirect_to system_engines_update_path if params[:controller] != 'system_engines_updates'
-        # when :installing
-          # redirect_to installing_application_installation_path if (
-              # params[:controller] != 'application_installations' ||
-              # params[:action] == 'new' ||
-              # params[:action] == 'create' )
-        # end
-      # end
-    end
+      @system_status = System.status.tap do |system_status|
+        case system_status[:state]
+        when :restarting
+          redirect_to system_restart_path,
+            alert: 'Please wait for system to reboot.' \
+            if params[:controller] == 'system_restarts'
+        when :base_updating
+          redirect_to system_base_update_path,
+            alert: 'Please wait for system to update.' \
+            if params[:controller] != 'system_base_updates'
+        when :engines_updating
+          redirect_to system_engines_update_path,
+            alert: 'Please wait for Engines to update.' \
+            if params[:controller] != 'system_engines_updates'
+        when :installing
+          redirect_to installing_application_installation_path,
+            alert: 'Please wait for current installation to complete before starting a new one.' \
+            if ( params[:controller] == 'install_from_blueprints' ||
+                params[:controller] == 'install_from_repository_urls' ||
+                params[:controller] == 'install_from_docker_hubs' )
+        end
+      end if user_signed_in?
   end
 
 protected
@@ -58,7 +53,12 @@ protected
   end
   
   def after_sign_in_path_for(resource)
-    first_runs_path
+    Maintenance.full_maintenance
+    if FirstRun.required?
+      first_run_path
+    else
+      control_panel_path
+    end
   end
 
   def render_500(exception)

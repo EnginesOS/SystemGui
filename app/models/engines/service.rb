@@ -5,10 +5,6 @@ module Engines::Service
 #loaders
   
   def system_service_object
- 
-p :container_name
-p container_name   
- 
     @system_service_object ||= engines_api.getManagedService container_name
   end
 

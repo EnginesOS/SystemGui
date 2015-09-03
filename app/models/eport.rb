@@ -7,6 +7,6 @@ class Eport < ActiveRecord::Base
     :tcp,
     :udp)
 
-  belongs_to :docker_hub_installation
+  belongs_to :install_from_docker_hub
 
 end

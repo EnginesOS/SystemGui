@@ -1,13 +1,9 @@
 <div class="software_installation_form">
 
 	<div class="col-sm-12">
-		<h2><%= content_tag(:i, "", class: "fa fa-play-circle-o") %> Install <%= @application_installation.title %></h2>
+		<h2><%= content_tag(:i, "", class: "fa fa-play-circle-o") %> Install <%= @install_from_blueprint.title %></h2>
 		<div class="col-sm-2 top-gap">
-			<%= render 'shared/form/image', url: @application_installation.icon_url %>
-		</div>
-		<div class="col-sm-8 top-gap">
-			<%= @application_installation.description %>
-
+			<%= render 'shared/form/image', url: @install_from_blueprint.icon_url %>
 		</div>
 
 		<div class="btn-group-vertical top-gap pull-right">
@@ -22,19 +18,17 @@
 		</div>
 	</div>
 
-
 <div class="col-sm-12 top-gap">
-<p>Existing host names: <%= @application_installation.existing_host_names.to_s[1..-2] %><br>
-Next unique host name: <%= @application_installation.unique_host_name %></p>
+<p>Existing host names: <%= @install_from_blueprint.existing_host_names.to_s[1..-2] %><br>
+Next unique host name: <%= @install_from_blueprint.unique_host_name %></p>
 </div>
 
 
 
-		<%= form_for @application_installation, url: application_installation_path(title: @application_installation.title) do |f| %>
-			<%= f.hidden_field :repository_url %>
-			<%= f.hidden_field :gallery_icon_url %>
-			<%= f.hidden_field :software_title %>
+		<%= form_for @install_from_blueprint, url: install_from_blueprint_path(title: @install_from_blueprint.title) do |f| %>
 			<%= f.hidden_field :advanced_selected %>
+			<%= f.hidden_field :repository_url %>
+			<%= f.hidden_field :installer_icon_url %>
 
 			<%= render 'shared/form/errors', f: f %>
 			<%= render 'application_fields', f: f %>
@@ -61,10 +55,10 @@ Next unique host name: <%= @application_installation.unique_host_name %></p>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title"><i class="fa fa-file-text"></i> Blueprint for <%= @application_installation.title %></h4>
+				<h4 class="modal-title"><i class="fa fa-file-text"></i> Blueprint for <%= @install_from_blueprint.title %></h4>
 			</div>
 			<div class="modal-body">
-				<%= (ap @application_installation.blueprint, plain: true, index: false).html_safe %>
+				<%= (ap @install_from_blueprint.blueprint, plain: true, index: false).html_safe %>
 			</div>
 		</div>
 	</div>

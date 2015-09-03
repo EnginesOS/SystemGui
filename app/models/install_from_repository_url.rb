@@ -1,4 +1,4 @@
-class RepositoryUrlInstallation
+class InstallFromRepositoryUrl
 
   include ActiveModel::Model
 

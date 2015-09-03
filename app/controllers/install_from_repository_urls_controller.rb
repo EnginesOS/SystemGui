@@ -1,15 +1,15 @@
-class RepositoryUrlInstallationsController < ApplicationController
+class InstallFromRepositoryUrlsController < ApplicationController
 
   before_action :authenticate_user!
 
   def new
-    @repository_url_installation = RepositoryUrlInstallation.new()
+    @install_from_repository_url = InstallFromRepositoryUrl.new()
   end
 
   def create
-    @repository_url_installation = RepositoryUrlInstallation.new(repository_url_installation_params)
-    if @repository_url_installation.valid?
-      redirect_to new_application_installation_path(repository_url_installation_params)
+    @install_from_repository_url = InstallFromRepositoryUrl.new(install_from_repository_url_params)
+    if @install_from_repository_url.valid?
+      redirect_to new_install_from_blueprint_path(install_from_blueprint_params)
     else
       render :new
     end
@@ -17,8 +17,12 @@ class RepositoryUrlInstallationsController < ApplicationController
 
 private
 
-  def repository_url_installation_params
-    params.require(:repository_url_installation).permit(:repository_url)
+  def install_from_blueprint_params
+    {install_from_blueprint: {repository_url: install_from_repository_url_params[:repository_url]}}
+  end
+
+  def install_from_repository_url_params
+    params.require(:install_from_repository_url).permit(:repository_url)
   end
 
 end
