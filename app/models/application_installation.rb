@@ -29,7 +29,7 @@ class ApplicationInstallation < ActiveRecord::Base
       engine_name: application.container_name,
       host_name: application.application_network_properties.host_name,
       domain_name: application.application_network_properties.domain_name,
-      http_protocol: application.application_network_properties.http_protocol,
+      http_protocol: application.application_network_properties.http_protocol.sub(' and ', '_').downcase,
       memory: application.application_resources_properties.memory,
       variables: engine_build_variables_params,
       attached_services: engine_build_attached_services_params,
