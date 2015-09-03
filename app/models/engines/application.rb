@@ -122,7 +122,7 @@ module Engines::Application
     runtime: 'runtime',
     image: 'image',
     repository: 'repository',
-    port: 'port',
+    port: 'web_port',
     external_ports: 'eports',
     last_error: 'last_error',
     last_result: 'last_result',

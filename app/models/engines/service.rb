@@ -82,7 +82,7 @@ module Engines::Service
   end
 
   def port
-    system_service_object.port
+    system_service_object.web_port
   end
 
   def eports
