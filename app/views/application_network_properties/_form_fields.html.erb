@@ -3,4 +3,6 @@
 <%= render partial: 'shared/form/text_field', locals: {name: :host_name, hint: "Letters and numbers only", f: f} %>
 <%= render partial: 'shared/form/select', locals: {name: :domain_name, collection: domains, f: f} %>
 <%= render 'shared/form/legend', text: 'HTTP protocol' %>
-<%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false, select_collection: ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'], tooltip: "Select a protocol.", f: f} %>
+<%= render partial: 'shared/form/radio_buttons', locals: {name: :http_protocol, label: false,
+		select_collection: [[:https, 'HTTPS only'], [:http, 'HTTP only'], [:http_https, 'HTTP and HTTPS']],
+		text_method: :last, value_method: :first, tooltip: "Select a protocol.", f: f} %>

@@ -5,11 +5,12 @@ Sorry. You have encountered an internal error in Engines. Please send a report t
 	<pre id="bsod_dialog" class="top-gap">
 		<% root_path = Rails.root.to_s %>
 		<% full_trace = @exception.backtrace.map{ |line| line.sub(root_path, '') } %>
+		<% exception_message = @exception.message.gsub(root_path, '') %>
 		<% application_trace = full_trace.select{ |line| a = line.split('/')[1]; a == "app" || a == "opt" } %>
 *** Engines Management GUI
 ERROR: 500
 Application failed to process request.
-<%= @exception.message %>
+<%= exception_message %>
 Parameters: <%= params %>
 Application trace:
 <%= application_trace.map{ |line| line.split('/')[-1] }.join('<br>').html_safe %>
@@ -21,7 +22,7 @@ Full trace:
 
 <%= form_tag BUG_REPORTS_SERVER + '/api/v0/contact/bug_reports', id: 'submit_bug_report_form' do |f| %>
 
-		  <%= hidden_field_tag :message, @exception.message %>
+		  <%= hidden_field_tag :message, exception_message %>
 		  <%= hidden_field_tag :backtrace, full_trace %>
 		  <%= hidden_field_tag :request_params, params.to_s %>
 		  <%= hidden_field_tag :return_url, request.base_url.to_s %>
