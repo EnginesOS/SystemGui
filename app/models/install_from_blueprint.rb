@@ -63,8 +63,9 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def default_http_protocol
-    blueprint_protocol = blueprint_software[:http_protocol].to_s.gsub('_', ' ').upcase.gsub('ONLY', 'only').gsub('AND', 'and')
-    ['HTTPS only', 'HTTP only', 'HTTPS and HTTP'].include?(blueprint_protocol) ? blueprint_protocol : 'HTTPS and HTTP'
+    blueprint_protocol = blueprint_software[:http_protocol].to_s.downcase.sub('only', '').sub('and', '').strip.gsub(/[ ]./, '_').to_sym
+    blueprint_protocol = :http_https if blueprint_protocol == :https_http
+    [:http, :https, :http_https].include?(blueprint_protocol) ? blueprint_protocol : :http_https
   end
 
   def mandatory_fields_present?
@@ -146,7 +147,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   
   
   def install
-    ApplicationInstallation.new(application_installation_params).install
+    valid? && ApplicationInstallation.new(application_installation_params).install
   end
   
   def application_installation_params
