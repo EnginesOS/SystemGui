@@ -6,9 +6,12 @@
   width: 100%;
   white-space: normal;
   padding: 5px;
+  height: 250px;
 }
 
 .installer .engine-install-icon-area {
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: 96px;
   width: 100%;
   text-align: center;
@@ -17,16 +20,19 @@
 .installer .engine-install-icon {
   vertical-align: middle;
   max-height: 96px;
+  max-width: 250px;
   border-radius: 5px;
 }
 
 .installer .engine-install-name {
-  height: 48px;
+  max-height: 48px;
+  overflow: hidden;
 }
 
 .installer .engine-install-detail {
-	font-size: 0.8em;
-	height: 78px;
+  font-size: 0.8em;
+  height: 78px;
+  overflow: hidden;
 }
 
 @media (max-width:991px) {

@@ -1,17 +1,18 @@
 <% if @paginated_softwares.softwares.present? %>
 
 	<% @paginated_softwares.softwares.each do |software|  %>
-	
-		<% software_id = software[:id]
-		  gallery_title = software[:title]
+
+	  <%  gallery_title = software[:label] || software[:title]
 		  gallery_detail = software[:detail]
-		  home_page = software[:website_from_blueprint]
+		  library_page_url = software[:library_page_url]
 		  image_url =
-		  if software[:icon_url_from_gallery].present?
-		    software[:icon_url_from_gallery]
-		  else
-		    software[:icon_url_from_blueprint]
-		  end
+			  if software[:icon_url_from_gallery].present?
+			    software[:icon_url_from_gallery]
+			  elsif software[:icon_url].present?
+			    software[:icon_url]
+			  else
+			    software[:icon_url_from_blueprint]
+			  end
 		
 		  install_url = new_install_from_blueprint_path(
 		  						install_from_blueprint: {
