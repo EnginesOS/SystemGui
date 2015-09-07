@@ -29,7 +29,8 @@ class Gallery < ActiveRecord::Base
 
   
   def softwares_url(find_software_params)
-    "http://" + url + "/api/v0/software?search=#{find_software_params[:search]}&tags=#{find_software_params[:tags]}&page=#{find_software_params[:page]}"
+    search_string = "search=#{find_software_params[:search]}&tags=#{find_software_params[:tags]}&page=#{find_software_params[:page]}&per_page=#{find_software_params[:per_page]}"
+    "http://#{url}/api/v0/software?#{search_string}"
   end
 
   def software_tags_url
@@ -38,13 +39,24 @@ class Gallery < ActiveRecord::Base
 
 private
 
-  def load_gallery_data(gallery_data_url)  
+  def load_gallery_data(gallery_data_url)
+    
+    
+p gallery_data_url
+p :gallery_data_url    
+      
     gallery_uri = URI(gallery_data_url)
     return nil if (gallery_uri.host.nil? || gallery_uri.port.nil?)
     Net::HTTP.start(gallery_uri.host, gallery_uri.port) do |http|
       request = Net::HTTP::Get.new gallery_uri
       http.read_timeout = 10 #Default is 60 seconds
-      response = http.request request   
+      response = http.request request 
+
+p response.body      
+p :response
+      
+      
+        
       if response.code.to_i >= 200 && response.code.to_i < 400 
         JSON.parse(response.body)
       else
