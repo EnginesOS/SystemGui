@@ -69,24 +69,26 @@
 }
 
 .navbar-default {
+	/*border-color: rgba(255,255,255,0);*/
 	background-color: #fff;
 }
 
-.user_signed_out {
+.navbar.user_signed_out {
+	background-color: rgba(255,255,255,0);
+}
+
+
+
+.navbar li a.dropdown-toggle {
 	background-color: rgba(255,255,255,0);
 	border-color: rgba(255,255,255,0);
 }
 
-.navbar.user_signed_out li a.dropdown-toggle {
-	background-color: rgba(255,255,255,0);
-	border-color: rgba(255,255,255,0);
-}
-
-.navbar.user_signed_out li a.dropdown-toggle:hover {
+.navbar li a.dropdown-toggle:hover {
   background-color: rgba(0,0,0,0.1);
 }
 
-.user_signed_out .desktop-signin .dropdown-menu {
+ .desktop-signin .dropdown-menu {
 	margin-top: 5px;
 	min-width: 400px;
 	padding: 10px;

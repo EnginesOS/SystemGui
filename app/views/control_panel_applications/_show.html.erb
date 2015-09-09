@@ -64,6 +64,9 @@ web_sites = application.web_sites
 					</div>
 				</li>
 				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_applications_path(application_name: application_name) } %>
+				</li>
+				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "Unpausing", url: unpause_applications_path(application_name: application_name) } %>
 				</li>
 			<% elsif state == "stopped" %>
