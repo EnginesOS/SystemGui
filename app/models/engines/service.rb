@@ -15,7 +15,7 @@ module Engines::Service
   end
 
   def fa_icon
-    titles_data[container_name.to_sym][:fa_icon]
+    titles_data[container_name.to_sym].present? ? titles_data[container_name.to_sym][:fa_icon] : 'circle'
   end
   
   def label
