@@ -39,7 +39,7 @@ module Engines::Service
     if system_service_object.blank? || (system_service_object.read_state == 'nocontainer')
       'no_container'
     else
-      result
+      system_service_object.read_state
     end
   end
 
