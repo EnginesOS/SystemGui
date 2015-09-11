@@ -37,10 +37,20 @@ module Engines::Service
   end
 
   def state
-    if system_service_object.blank? || (system_service_object.read_state == 'nocontainer')
-      'no_container'
+    if system_service_object.blank?
+      'no_service'
     else
-      system_service_object.read_state
+      current_task_state = nil #system_service_object.task_at_hand
+      if current_task_state.present?
+        current_task_state
+      else      
+        service_state = system_service_object.read_state
+        if service_state == 'nocontainer'
+          'no_container'
+        else
+          service_state
+        end
+      end
     end
   end
 
@@ -239,7 +249,7 @@ private
       dns: {title: 'Local DNS server', fa_icon: 'book'},
       dyndns: {title: 'Dynamic DNS', fa_icon: 'bullhorn'},
       ftp: {title: 'Local FTP server', fa_icon: 'upload'},
-      mgmt: {title: 'Engines system manager', fa_icon: 'hand-pointer-o'},
+      mgmt: {title: 'Engines system manager', fa_icon: 'dashboard'},
       mongo_server: {title: 'Mongo NoSQL database', fa_icon: 'database'},
       mysql_server: {title: 'MySQL database', fa_icon: 'database'},
       nginx: {title: 'Web router', fa_icon: 'random'},
