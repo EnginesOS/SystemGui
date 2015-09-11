@@ -128,11 +128,11 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def existing_engine_names
-    @existing_engine_names ||= engines_api.list_apps + engines_api.list_services
+    @existing_engine_names ||= (engines_api.reserved_engine_names || [])
   end
   
   def existing_host_names
-    @existing_host_names ||= [] #Service.new(container_name: 'nginx').consumers.map{ |consumer| consumer[:variables][:fqdn].split('.').first }
+    @existing_host_names ||= (engines_api.reserved_hostnames || [])
   end
 
   def unique_application_name
