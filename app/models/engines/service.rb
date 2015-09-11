@@ -7,6 +7,7 @@ module Engines::Service
   def system_service_object
     @system_service_object ||= engines_api.getManagedService container_name
     @system_service_object = nil if @system_service_object.is_a? EnginesOSapiResult
+    @system_service_object
   end
 
 #extractors

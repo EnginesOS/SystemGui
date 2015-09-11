@@ -1,7 +1,7 @@
 <%  service = @service
 	flash_message ||= nil
 	flash_alert_class ||= :danger
-	service_state = service.state
+	service_state = service.state.to_s
 	service_name = service.container_name
     if service_state.kind_of?(EnginesOSapiResult)
       service_state = "state_error"
