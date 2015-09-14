@@ -1,4 +1,5 @@
-<div class="col-sm-12">
+<div class="col-sm-12">	
+	
 	<div class="pull-right">
 		<%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', 
 				edit_application_services_path(application_service.identification_params),
@@ -15,6 +16,9 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
+				
+				
+				
 				<% if application_service.available_subservices.present? %>
 
 				<% application_service.available_subservices.each do |available_subservice| %>
@@ -22,15 +26,16 @@
 					<%= link_to(
 					available_subservice[:title],
 					new_application_subservice_path(
-					application_subservice: {
-					application_name: application_service.application.container_name,
-					parent_service_handle: application_service.service_handle,
-					parent_publisher_namespace: application_service.publisher_namespace,
-					parent_type_path: application_service.type_path,
-					parent_title: application_service.title,
-					type_path: available_subservice[:type_path],
-					publisher_namespace: available_subservice[:publisher_namespace]
-					}
+					application_subservice:
+						{
+						application_name: application_service.application.container_name,
+						parent_service_handle: application_service.service_handle,
+						parent_publisher_namespace: application_service.publisher_namespace,
+						parent_type_path: application_service.type_path,
+						parent_title: application_service.title,
+						type_path: available_subservice[:type_path],
+						publisher_namespace: available_subservice[:publisher_namespace]
+						}
 					),
 					class: "btn-lg trigger-response-modal") %>
 
