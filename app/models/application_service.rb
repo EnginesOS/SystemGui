@@ -203,7 +203,7 @@ class ApplicationService < ActiveRecord::Base
   end
 # 
   def available_subservices
-    application.available_services_hash[:subservices][type_path]
+    engines_api.load_avail_services_for_type(type_path)
   end
 
 ######
