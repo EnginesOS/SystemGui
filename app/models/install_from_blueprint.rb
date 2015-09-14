@@ -120,7 +120,7 @@ class InstallFromBlueprint < ActiveRecord::Base
     default_host_name = default_name
     unique_host_name_candidate = default_host_name
     index = 2
-    while existing_host_names.include? unique_host_name_candidate do
+    while existing_host_names.include? "#{unique_host_name_candidate.to_s}.#{DomainSettings.engines_default_domain.to_s}" do
       unique_host_name_candidate = default_host_name + index.to_s
       index += 1
     end

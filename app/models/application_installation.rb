@@ -9,6 +9,8 @@ class ApplicationInstallation < ActiveRecord::Base
   accepts_nested_attributes_for :application
   
   def install
+p :INSTALLING
+p engine_build_params
     Thread.new do
       result = engines_api.build_engine engine_build_params
       persist_application
@@ -60,7 +62,7 @@ class ApplicationInstallation < ActiveRecord::Base
         when :orphan
           orphan_service = application_service.orphan_service.split(" - ")
           result[:parent_engine] = orphan_service[0]
-          result[:service_handle] = (active_service[1] || active_service[0]) 
+          result[:service_handle] = (orphan_service[1] || orphan_service[0]) 
         end
       end
     end
