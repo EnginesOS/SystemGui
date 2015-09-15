@@ -80,28 +80,28 @@ class ApplicationService < ActiveRecord::Base
   end
 
   def remove_attached_service
-    result = engines_api.dettach_service(params_for_engines_api)
+    result = engines_api.dettach_service(params_to_identify_service_for_engines_api)
     if !result.was_success
       @engines_api_error = (result.result_mesg.present? ? result.result_mesg : 
-        "Unable to remove connected service. No result message given by engines api. Called 'dettach_service' with params: #{params_for_engines_api}")
+        "Unable to remove connected service. No result message given by engines api. Called 'dettach_service' with params: #{params_to_identify_service_for_engines_api}")
     end
     result.was_success
   end
   
   def create_attached_service
-    result = engines_api.attach_service(params_for_engines_api)
+    result = engines_api.attach_service(params_to_identify_service_for_engines_api)
     if !result.was_success
       @engines_api_error = (result.result_mesg.present? ? result.result_mesg : 
-        "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{params_for_engines_api}")
+        "Unable to create attached service. No result message given by engines api. Called 'attach_service' with params: #{params_to_identify_service_for_engines_api}")
     end
     result.was_success
   end
   
   def update_attached_service
-    result = engines_api.update_attached_service(params_for_engines_api)
+    result = engines_api.update_attached_service(params_to_identify_service_for_engines_api)
     if !result.was_success
       @engines_api_error = (result.result_mesg.present? ? result.result_mesg : 
-        "Unable to edit connected service. No result message given by engines api. Called 'update_attached_service' with params: #{params_for_engines_api}")
+        "Unable to edit connected service. No result message given by engines api. Called 'update_attached_service' with params: #{params_to_identify_service_for_engines_api}")
     end
     result.was_success
   end
@@ -115,9 +115,9 @@ class ApplicationService < ActiveRecord::Base
     elsif action == :reregister
       api_method = :reregister_attached_service
     end
-    result = engines_api.send(api_method, params_for_engines_api)
+    result = engines_api.send(api_method, params_to_identify_service_for_engines_api)
     if !result.was_success
-      @engines_api_error = "Unable to #{action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called '#{api_method}' with params: #{params_for_engines_api}")
+      @engines_api_error = "Unable to #{action} connected service. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called '#{api_method}' with params: #{params_to_identify_service_for_engines_api}")
     end
     result.was_success    
   end
@@ -159,7 +159,7 @@ class ApplicationService < ActiveRecord::Base
     }
   end
 
-  def params_for_engines_api
+  def params_to_identify_service_for_engines_api
     {
       parent_engine: application.container_name,
       type_path: type_path,
@@ -209,8 +209,7 @@ class ApplicationService < ActiveRecord::Base
 ######
 
   def service_detail
-  
-    if application.present?
+    result = if application.present?
       @service_detail ||= engines_api.templated_software_service_definition(
                           parent_engine: application.container_name,
                           publisher_namespace: publisher_namespace,
@@ -220,23 +219,29 @@ class ApplicationService < ActiveRecord::Base
                           publisher_namespace: publisher_namespace,
                           type_path: type_path)
     end
+    if result.is_a?(EnginesOSapiResult)
+      engines_api_error = result.result_mesg
+      {}
+    else
+      result
+    end
   end
 
 
   def title
-    service_detail[:title]
+    service_detail[:title] || '?'
   end
   
   def description
-    service_detail[:description]
+    service_detail[:description] || '?'
   end
 
   def persistant
-    service_detail[:persistant]
+    service_detail[:persistant] || false
   end
 
   def variable_definitions
-    @variable_definitions ||= service_detail[:consumer_params].values
+    @variable_definitions ||= service_detail.present? ? service_detail[:consumer_params].values : []
   end    
 
 

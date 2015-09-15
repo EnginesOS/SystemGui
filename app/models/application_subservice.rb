@@ -9,6 +9,7 @@ class ApplicationSubservice < ActiveRecord::Base
     :parent_service_handle,
     :parent_publisher_namespace,
     :parent_type_path,
+    :parent_service_container_name,
     :parent_title,
     :engines_api_error
     )
