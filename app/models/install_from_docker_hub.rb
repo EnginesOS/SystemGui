@@ -128,7 +128,9 @@ class InstallFromDockerHub < ActiveRecord::Base
      end
    end
    
-   
+   def install
+     engines_api.build_engine_from_docker_image(@install_from_docker_hub.installation_params)
+   end
 
 
   # def load_new_application_params
