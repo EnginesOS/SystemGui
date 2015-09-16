@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate, unless: :devise_controller?
+  before_action :authorize
 
   rescue_from Exception, :with => :render_500
 
@@ -46,8 +46,12 @@ protected
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
   end
 
+  def authorize
+     params[:controller] == 'desktops' || params[:controller] == 'desktop_applications' || devise_controller? || authenticate
+  end
+
   def authenticate
-    if user_signed_in? || params[:controller] == 'desktops' || params[:controller] == 'desktop_applications'
+    if user_signed_in?
       authenticate_user!
     else
       redirect_to desktop_path
