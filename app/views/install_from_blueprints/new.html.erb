@@ -18,13 +18,6 @@
 		</div>
 	</div>
 
-<div class="col-sm-12 top-gap">
-<p>Existing host names: <%= @install_from_blueprint.existing_host_names.to_s[1..-2] %><br>
-Next unique host name: <%= @install_from_blueprint.unique_host_name %></p>
-</div>
-
-
-
 		<%= form_for @install_from_blueprint, url: install_from_blueprint_path(title: @install_from_blueprint.title) do |f| %>
 			<%= f.hidden_field :advanced_selected %>
 			<%= f.hidden_field :repository_url %>

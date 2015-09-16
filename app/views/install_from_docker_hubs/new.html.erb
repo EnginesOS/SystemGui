@@ -10,9 +10,6 @@
 			<%= f.hidden_field :new_environment_variable %>
 			<%= f.hidden_field :new_eport %>
 			
-			<%= t(:hello) %>
-			
-			
 			<% #= f.hidden_field :advanced_selected %>
 			<%= render 'shared/form/legend', text: 'Docker image' %>
 			<%= render 'shared/form/text_field', f: f, name: :docker_image, label: 'Source URL' %>		

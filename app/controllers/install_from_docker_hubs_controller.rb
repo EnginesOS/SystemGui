@@ -86,15 +86,16 @@ class InstallFromDockerHubsController < ApplicationController
   # end
 # 
   def install_software
-    render text: @install_from_docker_hub.installation_params
-    # Thread.new do
-      # EnginesInstaller.build_engine_from_docker_image(@install_from_docker_hub.installation_params)
-    # end #.object_id
-    # redirect_to installing_application_installation_path(
-      # title: @install_from_docker_hub.docker_image, 
-      # application_name: @install_from_docker_hub.application.container_name,
-      # host_name: @install_from_docker_hub.application.network_properties.host_name,
-      # domain_name: @install_from_docker_hub.application.network_properties.domain_name )
+    # render text: "gui needs method to pass these params to...\n" + @install_from_docker_hub.installation_params.to_s
+    Thread.new do
+      @install_from_docker_hub.install
+    end
+    redirect_to preparing_installation_application_installation_path(
+      # software_name: @install_from_docker_hub.docker_image, 
+      application_name: @install_from_docker_hub.application.container_name
+      # host_name: @install_from_docker_hub.application.application_network_properties.host_name,
+      # domain_name: @install_from_docker_hub.application.application_network_properties.domain_name
+      )
   end
 
 private
