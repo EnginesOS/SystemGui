@@ -1,6 +1,6 @@
 <div class="col-sm-12">
 	<h2><i class='fa fa-arrows-v'></i> Connect <%= @application_service.title %> to <%= @application_service.application.container_name %></h2>
-	<%= form_for @application_service, url: select_create_application_services_path(application_name: @application_service.application.container_name) do |f| %>
+	<%= form_for @application_service, url: create_new_application_services_path(application_name: @application_service.application.container_name) do |f| %>
 		<%= render 'install_from_blueprints/application_service', f: f %>
     	<%= render 'shared/form/cancel_and_submit_buttons', f: f, submit_label: 'Select', cancel_path: application_services_properties_path(application_name: @application_service.application.container_name) %>
 	<% end %>

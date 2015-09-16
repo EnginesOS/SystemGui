@@ -303,8 +303,13 @@ class ApplicationService < ActiveRecord::Base
     end
   end
   
+  def shareable
+    persistant #service_detail[:shareable] || false
+  end
   
-  
+  def nothing_to_share
+    !shareable || (attachable_active_attached_services.empty? && attachable_orphaned_attached_services.empty?)
+  end
 
 
 end

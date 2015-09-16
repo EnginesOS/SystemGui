@@ -72,7 +72,7 @@ Rails.application.routes.draw do
   resource :application_services_properties
   resource :application_services do
     get :action, :select_new
-    post :select_create
+    post :create_new
   end
   resource :application_report do
     get :installation_report

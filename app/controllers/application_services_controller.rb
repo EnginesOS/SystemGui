@@ -4,19 +4,12 @@ class ApplicationServicesController < ApplicationController
   before_action :set_application_service
 
   def select_new
-    if !@application_service.persistant || (@application_service.attachable_active_attached_services.empty? &&
-            @application_service.attachable_orphaned_attached_services.empty?)
-      select_redirect_to_new
-    end
+    select_redirect_to_new if @application_service.nothing_to_share
   end
   
-  def select_create
-    # render text: @application_service.create_type
-    if @application_service.create_type.to_sym == :new
-      select_redirect_to_new
-    else
-      render text: @application_service.connect_existing_service
-    end 
+  def create_new
+    @application_service.build_new
+    render :new
   end
 
   def select_redirect_to_new
@@ -28,7 +21,6 @@ class ApplicationServicesController < ApplicationController
         }
       )
   end
-
 
   def new
     @application_service.build_new
@@ -43,7 +35,7 @@ class ApplicationServicesController < ApplicationController
     if @application_service.create
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
         notice: "Successfully connected #{@application_service.title} to #{@application_service.application.container_name}." + 
-                  @application_service.engines_api_error
+                  @application_service.engines_api_error.to_s
     else
       render :new
     end
@@ -55,7 +47,7 @@ class ApplicationServicesController < ApplicationController
     if @application_service.update
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
         notice: "Successfully updated #{@application_service.title} on #{@application_service.application.container_name}." + 
-                  @application_service.engines_api_error
+                  @application_service.engines_api_error.to_s
     else
       render :edit
     end
@@ -68,7 +60,7 @@ class ApplicationServicesController < ApplicationController
     else
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
         alert: "Unable to remove #{@application_service.title} from #{@application_service.application.container_name}." + 
-                  @application_service.engines_api_error
+                  @application_service.engines_api_error.to_s
     end
   end
   
@@ -80,7 +72,7 @@ class ApplicationServicesController < ApplicationController
     else
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
         alert: "Unable to perform #{@application_service.service_action} action on #{@application_service.title}. " + 
-                  @application_service.engines_api_error
+                  @application_service.engines_api_error.to_s
     end
   end
 
