@@ -71,7 +71,8 @@ Rails.application.routes.draw do
   resource :application_display_properties
   resource :application_services_properties
   resource :application_services do
-    get :action
+    get :action, :select_new
+    post :select_create
   end
   resource :application_report do
     get :installation_report
@@ -122,5 +123,9 @@ Rails.application.routes.draw do
     get :cancel
   end
   # get 'first_runs', to: "first_runs#show" #first_runs deprecated in favour of first_run
+
+#Help
+
+  resource :help
   
 end

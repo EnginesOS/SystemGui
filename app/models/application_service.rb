@@ -280,6 +280,32 @@ class ApplicationService < ActiveRecord::Base
     end
   end
 
+  def connect_existing_service
+    engines_api.attach_existing_service_to_engine(connect_existing_service_params)  
+  end
+
+  def connect_existing_service_params
+    {}.tap do |result|
+      result[:publisher_namespace] = publisher_namespace
+      result[:type_path] = type_path
+      type = create_type.to_sym
+      result[:create_type] = type.to_s
+      case type
+      when :active
+        active_service_input = active_service.split(" - ")
+        result[:parent_engine] = active_service_input[0]
+        result[:service_handle] = (active_service_input[1] || active_service_input[0])
+      when :orphan
+        orphan_service_input = orphan_service.split(" - ")
+        result[:parent_engine] = orphan_service_input[0]
+        result[:service_handle] = (orphan_service_input[1] || orphan_service_input[0]) 
+      end
+    end
+  end
+  
+  
+  
+
 
 end
 

@@ -1,6 +1,6 @@
 <%  label = label.nil? ? name.to_s.humanize.capitalize : label
     value ||= f.object.send(name); value = nil if value.blank?
-    select_collection ||= (collection || [] )
+    select_collection ||= collection || []
     id ||= ''
     attach_selectize ||= false
     tooltip ||= nil
@@ -17,7 +17,7 @@
 # p :select_collection_class 
 # p select_collection.class 
     
-    collection_as_array = select_collection.class != Array ? JSON.parse(select_collection) : select_collection
+    collection_as_array = select_collection # select_collection.class.is_a?(String) ? ActiveSupport::JSON.decode(select_collection) : select_collection
     select_class ||= ""
 
     if attach_selectize

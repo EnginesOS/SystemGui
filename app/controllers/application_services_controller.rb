@@ -1,8 +1,34 @@
 class ApplicationServicesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_application
   before_action :set_application_service
+
+  def select_new
+    if !@application_service.persistant || (@application_service.attachable_active_attached_services.empty? &&
+            @application_service.attachable_orphaned_attached_services.empty?)
+      select_redirect_to_new
+    end
+  end
+  
+  def select_create
+    # render text: @application_service.create_type
+    if @application_service.create_type.to_sym == :new
+      select_redirect_to_new
+    else
+      render text: @application_service.connect_existing_service
+    end 
+  end
+
+  def select_redirect_to_new
+      redirect_to new_application_services_path(
+        application_name: @application_service.application.container_name,
+        application_service: {
+          type_path: @application_service.type_path,
+          publisher_namespace: @application_service.publisher_namespace,
+        }
+      )
+  end
+
 
   def new
     @application_service.build_new
@@ -61,6 +87,7 @@ class ApplicationServicesController < ApplicationController
 private
 
   def set_application_service
+    set_application
     @application_service ||= @application.application_services.build(application_service_params)
   end
 
