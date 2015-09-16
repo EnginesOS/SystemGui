@@ -25,7 +25,7 @@ comment = f.object.comment
 hint = f.object.hint
 tooltip = f.object.tooltip
 value = f.object.value
-collection = ActiveSupport::JSON.decode(f.object.select_collection)
+collection = f.object.select_collection == '' ? nil : ActiveSupport::JSON.decode(f.object.select_collection)
 mandatory = f.object.mandatory.to_s
 mandatory = (mandatory == "true")
 placeholder = f.object.placeholder
