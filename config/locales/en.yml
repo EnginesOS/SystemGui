@@ -20,16 +20,12 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: 'Hello world'
-  activerecord:
-    # models:
-      # user: Dude
-    attributes:
-      install_from_docker_hub/application/application_network_properties:
-        host_name: 'Host name'
-      install_from_docker_hub:
-        docker_image: 'Hi'
-# 
-      # user:
-        # login: 'Handle'
-      # will translate User attribute "login" as "Handle"
+  control_panels:
+    show:
+      help: |
+            <h3>Manage an application</h3>
+            Click on an application to manage it. You can perform actions on the application, such as start and stop. 
+            
+            <h3>Install a new application</h3>
+            Click on the installer in the blue menu button to go to the installer.
+

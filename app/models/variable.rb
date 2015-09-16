@@ -42,6 +42,10 @@ class Variable < ActiveRecord::Base
   # def test_vali
     # errors.add(name, [label, "oops"])
   # end
+  
+  # def select_collection_json
+    # ActiveSupport::JSON.encode(select_collection)
+  # end
 
 private
 

@@ -12,7 +12,7 @@
 		<li>
 			<%= link_to(
 			available_service[:title],
-			new_application_services_path(
+			select_new_application_services_path(
 			application_name: @application_services_properties.application.container_name,
 			application_service: {
 			type_path: available_service[:type_path],

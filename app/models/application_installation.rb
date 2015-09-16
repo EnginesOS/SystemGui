@@ -49,22 +49,7 @@ p engine_build_params
 
   def engine_build_attached_services_params
     application.application_services.map do |application_service|
-      {}.tap do |result|
-        result[:publisher_namespace] = application_service.publisher_namespace
-        result[:type_path] = application_service.type_path
-        type = application_service.create_type.to_sym
-        result[:create_type] = type.to_s
-        case type
-        when :active
-          active_service = application_service.active_service.split(" - ")
-          result[:parent_engine] = active_service[0]
-          result[:service_handle] = (active_service[1] || active_service[0])
-        when :orphan
-          orphan_service = application_service.orphan_service.split(" - ")
-          result[:parent_engine] = orphan_service[0]
-          result[:service_handle] = (orphan_service[1] || orphan_service[0]) 
-        end
-      end
+      application_service.connect_existing_service_params
     end
   end
 
