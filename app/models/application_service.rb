@@ -68,7 +68,7 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def create
-    valid? && create_attached_service
+    valid? && connect_service
   end
   
   def update
@@ -88,7 +88,19 @@ class ApplicationService < ActiveRecord::Base
     result.was_success
   end
   
-  def create_attached_service
+  def connect_service
+    if create_type.to_sym == :new
+      connect_new_service
+    else
+      connect_existing_service
+    end
+  end
+  
+  def connect_existing_service
+    engines_api.attach_existing_service_to_engine(connect_existing_service_params)  
+  end
+  
+  def connect_new_service
     result = engines_api.attach_service(params_to_identify_service_for_engines_api)
     if !result.was_success
       @engines_api_error = (result.result_mesg.present? ? result.result_mesg : 
@@ -278,10 +290,6 @@ class ApplicationService < ActiveRecord::Base
         "#{service[:parent_engine]} - #{service[:service_handle]}"
       end
     end
-  end
-
-  def connect_existing_service
-    engines_api.attach_existing_service_to_engine(connect_existing_service_params)  
   end
 
   def connect_existing_service_params
