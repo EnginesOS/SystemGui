@@ -312,7 +312,7 @@ class ApplicationService < ActiveRecord::Base
   end
   
   def shareable
-    persistant #service_detail[:shareable] || false
+    service_detail[:shareable] || false
   end
   
   def nothing_to_share
