@@ -1,30 +1,30 @@
 $(document).ready(function() {
 
 	$(".application_service_select_create_type_radios").each(function() {
-		process_docker_install_form(this);
+		process_application_service_select(this);
 	});
 
 	$(".application_service_select_create_type_radios").change(function() {
-		process_docker_install_form(this);
+		process_application_service_select(this);
 	});
 	
-	function process_docker_install_form(form) {
+	function process_application_service_select(form) {
 		var application_service_panel = $(form).parents(".panel-body");
 		var type = $(form).find("input:checked").val();
 		application_service_panel.find(".create_type_input").val(type);
 		if (type == "active") {
-			application_service_panel.find(".application_service_active_configure").slideDown();
+			application_service_panel.find(".application_service_active_configure").show();
 			application_service_panel.find(".application_service_orphan_configure").hide();
 			application_service_panel.find(".new_application_service_configure").hide();
 			application_service_panel.find(".skip_validation_input").val("1");
 		} else if (type == "orphan") {
-			application_service_panel.find(".application_service_orphan_configure").slideDown();
+			application_service_panel.find(".application_service_orphan_configure").show();
 			application_service_panel.find(".application_service_active_configure").hide();
 			application_service_panel.find(".new_application_service_configure").hide();
 			application_service_panel.find(".skip_validation_input").val("1");
 		} else if (type == "new") { 
 			var display_text = "Create new attached service";
-			application_service_panel.find(".new_application_service_configure").slideDown();
+			application_service_panel.find(".new_application_service_configure").show();
 			application_service_panel.find(".application_service_active_configure").hide();
 			application_service_panel.find(".application_service_orphan_configure").hide();
 			application_service_panel.find(".skip_validation_input").val("0");
