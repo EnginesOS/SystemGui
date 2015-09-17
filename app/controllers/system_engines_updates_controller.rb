@@ -18,14 +18,8 @@ class SystemEnginesUpdatesController < ApplicationController
   
   def progress
     if System.engines_updating?
-      
-p :bussssssssssssssssssssssssy
-      
       render text: "busy"
     else
-
-p :donnnnnnnnnnnnnnnnnnnnnnnne
-
       render text: "done"
     end
   end

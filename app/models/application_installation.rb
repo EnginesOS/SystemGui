@@ -9,8 +9,8 @@ class ApplicationInstallation < ActiveRecord::Base
   accepts_nested_attributes_for :application
   
   def install
-p :INSTALLING
-p engine_build_params
+# p :INSTALLING
+# p engine_build_params
     Thread.new do
       result = engines_api.build_engine engine_build_params
       persist_application
