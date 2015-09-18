@@ -2,7 +2,6 @@ class ApplicationUninstallsController < ApplicationController
 
   include Engines::Api
 
-  before_action :authenticate_user!
 
   def show
     @application_uninstall = ApplicationUninstall.new application_name: params[:application_name]

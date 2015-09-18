@@ -1,6 +1,5 @@
 class ApplicationReportsController < ApplicationController
 
-  before_action :authenticate_user!
 
   def show
     @application = Application.find_by(container_name: application_name)

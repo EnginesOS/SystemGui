@@ -1,5 +1,4 @@
 class SystemsController < ApplicationController
-  before_action :authenticate_user!
 
   def show
     @system_info = System.info

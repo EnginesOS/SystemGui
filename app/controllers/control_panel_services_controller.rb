@@ -1,6 +1,5 @@
 class ControlPanelServicesController < ApplicationController
 
-  before_action :authenticate_user!
 
   def show
     @service = Service.load_by_container_name(service_name)

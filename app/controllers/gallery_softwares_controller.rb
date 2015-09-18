@@ -1,5 +1,4 @@
 class GallerySoftwaresController < ApplicationController
-  before_action :authenticate_user!
 
   class PaginatedSoftwares
     attr_accessor :total_pages, :softwares, :current_page, :limit_value

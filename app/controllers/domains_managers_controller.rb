@@ -1,6 +1,5 @@
 class DomainsManagersController < ApplicationController
 
-  before_action :authenticate_user!
 
   def show
     @domain_settings = DomainSettings.load

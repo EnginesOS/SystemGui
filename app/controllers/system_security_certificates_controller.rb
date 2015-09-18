@@ -1,6 +1,5 @@
 class SystemSecurityCertificatesController < ApplicationController
 
-  before_action :authenticate_user!
   
   def download
     content = Engines::ApiLoader.instance.engines_api.get_system_ca

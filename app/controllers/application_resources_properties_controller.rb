@@ -1,6 +1,5 @@
 class ApplicationResourcesPropertiesController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_application_resources_properties
 
   def edit

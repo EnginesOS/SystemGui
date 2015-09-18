@@ -1,44 +1,21 @@
 class ApplicationServicesController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_application_service
 
-  def select_new
-    select_redirect_to_new if @application_service.nothing_to_share
-  end
-  
-  def create_new
-    @application_service.build_new
-    render :new
-  end
-
-  def select_redirect_to_new
-      redirect_to new_application_services_path(
-        application_name: @application_service.application.container_name,
-        application_service: {
-          type_path: @application_service.type_path,
-          publisher_namespace: @application_service.publisher_namespace,
-        }
-      )
-  end
-
   def new
-    @application_service.build_new
+    redirect_to new_application_services_connect_service_path(
+        application_name: application_name,
+        application_service: new_application_service_params
+      ) if @application_service.nothing_to_share
   end
 
   def edit
     # render text: params
-    @application_service.build_edit
+    @application_service.build_for_edit
   end
 
   def create
-    if @application_service.create
-      redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
-        notice: "Successfully connected #{@application_service.title} to #{@application_service.application.container_name}." + 
-                  @application_service.engines_api_error.to_s
-    else
-      render :new
-    end
+    redirect_to new_application_services_connect_service_path(@application_service.new_connect_service_params)
   end
 
   def update
@@ -93,6 +70,10 @@ private
 
   def application_service_params
     params.require(:application_service).permit!
+  end
+
+  def new_application_service_params
+    application_service_params.merge({create_type: 'new'})
   end
 
 end

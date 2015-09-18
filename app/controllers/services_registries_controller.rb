@@ -1,6 +1,5 @@
 class ServicesRegistriesController < ApplicationController
 
-  before_action :authenticate_user!
   
   def show
     @services_tree_by_provider = Service.services_tree_by_provider

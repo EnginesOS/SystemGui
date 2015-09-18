@@ -2,7 +2,6 @@ class InstallFromDockerHubsController < ApplicationController
 
   include ActionController::Live
 
-  before_action :authenticate_user!
 
   def new
     @install_from_docker_hub = InstallFromDockerHub.build_new

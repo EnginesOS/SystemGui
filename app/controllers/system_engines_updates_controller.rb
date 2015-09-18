@@ -1,5 +1,4 @@
 class SystemEnginesUpdatesController < ApplicationController
-  before_action :authenticate_user!
 
   def show
     if !System.engines_updating?

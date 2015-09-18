@@ -1,6 +1,5 @@
 class SystemSecurityKeysController < ApplicationController
 
-  before_action :authenticate_user!
   
   def download
     content = Engines::ApiLoader.instance.engines_api.generate_private_key

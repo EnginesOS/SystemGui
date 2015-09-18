@@ -1,6 +1,5 @@
 class ApplicationDisplayPropertiesController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_application_display_properties
 
   def edit
