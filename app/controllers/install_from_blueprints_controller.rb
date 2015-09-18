@@ -1,6 +1,5 @@
 class InstallFromBlueprintsController < ApplicationController
 
-  before_action :authenticate_user!
 
   def new
     @install_from_blueprint = InstallFromBlueprint.new(install_from_blueprint_params)

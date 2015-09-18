@@ -1,11 +1,13 @@
 <div class="col-sm-12">	
 	
 	<div class="pull-right">
-		<%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', 
-				edit_application_services_path(application_service.identification_params),
+		<% unless application_service.immutable %>
+			<%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', 
+				edit_application_services_path(application_service.handle_params),
 				class: 'btn btn-default btn-noborder btn-lg trigger-response-modal', title: 'Edit record' %>
+		<% end %>
 		<%= link_to content_tag(:i , nil, class: 'fa fa-trash') + ' Delete',
-				application_services_path(application_service.identification_params),
+				application_services_path(application_service.handle_params),
 				method: :delete, class: 'btn btn-default btn-noborder btn-lg',
 				data: { confirmdetail: "Are you sure that you want to delete #{application_service.title}?", confirm: 'Confirm delete' }, title: 'Delete' %>
 		<% if application_service.persistant %>
@@ -108,8 +110,3 @@
 <% else %>
 	Unable to load variables. Check that service is running.
 <% end %>
-
-
-
-<%= ap(application_service.variable_definitions, plain: true, index: false).html_safe %>
-<%= ap(application_service.attached_service_hash, plain: true, index: false).html_safe %>

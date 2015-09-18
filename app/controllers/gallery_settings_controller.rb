@@ -1,6 +1,5 @@
 class GallerySettingsController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_gallery_settings
 
   def edit

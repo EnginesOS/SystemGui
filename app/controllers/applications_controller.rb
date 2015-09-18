@@ -1,6 +1,5 @@
 class ApplicationsController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_application
 
   include EnginesApplicationSystemActions

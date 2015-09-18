@@ -12,6 +12,7 @@ class InstallFromBlueprint < ActiveRecord::Base
 
   def build_new
     assign_attributes(new_application_attributes)
+    template_variables
   end
 
   # def self.new(params)
@@ -90,6 +91,12 @@ class InstallFromBlueprint < ActiveRecord::Base
         }
      }
   end
+  
+  def template_variables
+    application.variables.each do |application_variable|
+      application_variable.value = engines_api.get_resolved_string(application_variable.value)
+    end 
+  end  
 
   def load_application_services_params
     service_configurations = blueprint_software[:service_configurations]
@@ -101,9 +108,7 @@ class InstallFromBlueprint < ActiveRecord::Base
                     type_path: service_configuration[:type_path],
                     create_type: :new
                   }
-        if ApplicationService.new(params).persistant
-          params              
-        end
+        params if ApplicationService.new(params).persistant
       end.compact
     else
       return {}

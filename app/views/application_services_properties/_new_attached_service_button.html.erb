@@ -12,12 +12,12 @@
 		<li>
 			<%= link_to(
 			available_service[:title],
-			select_new_application_services_path(
+			new_application_services_path(
 			application_name: @application_services_properties.application.container_name,
 			application_service: {
-			type_path: available_service[:type_path],
-			publisher_namespace: available_service[:publisher_namespace],
-			}
+					type_path: available_service[:type_path],
+					publisher_namespace: available_service[:publisher_namespace]
+				}
 			),
 			class: "btn-lg trigger-response-modal")
 			%>

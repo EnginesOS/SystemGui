@@ -1,5 +1,4 @@
 class GallerySoftwaresController < ApplicationController
-  before_action :authenticate_user!
 
   class PaginatedSoftwares
     attr_accessor :total_pages, :softwares, :current_page, :limit_value
@@ -16,12 +15,6 @@ class GallerySoftwaresController < ApplicationController
   def show
     @gallery = Gallery.find(params[:gallery_id])
     softwares_params = { search: params[:search], tags: params[:tags], page: params[:page], per_page: 8 }
-    
-    
-p :softwares_params
-p softwares_params    
-    
-    
     softwares = @gallery.softwares softwares_params
     @paginated_softwares = PaginatedSoftwares.new(softwares)
     render layout: false

@@ -3,7 +3,6 @@ class ApplicationInstallationsController < ApplicationController
   include ActionController::Live
   include Engines::Api
 
-  before_action :authenticate_user!
 
   # def new
     # @application_installation = ApplicationInstallation.new(application_installation_params).load_new
@@ -25,6 +24,7 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def installing
+    System.clear_failed_build_flag
     if System.installing?
       @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
     else

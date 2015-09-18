@@ -1,6 +1,5 @@
 class InstallFromRepositoryUrlsController < ApplicationController
 
-  before_action :authenticate_user!
 
   def new
     @install_from_repository_url = InstallFromRepositoryUrl.new()

@@ -1,5 +1,4 @@
 class SystemBaseUpdatesController < ApplicationController
-  before_action :authenticate_user!
 
   def show
     if !System.base_system_updating?

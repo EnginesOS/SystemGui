@@ -1,5 +1,4 @@
 class SettingsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_settings, only: [:index, :update, :edit_default_domain, :edit_default_website, :edit_mail, :edit_wallpaper]
 
   def index

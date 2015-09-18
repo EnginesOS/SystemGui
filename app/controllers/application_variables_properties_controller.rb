@@ -1,6 +1,5 @@
 class ApplicationVariablesPropertiesController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_application_variables_properties
 
 # def show

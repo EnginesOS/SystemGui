@@ -7,7 +7,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
    def build_application_services
       application_services = application.application_services.build(build_application_services_attributes)
       application_services.each do |application_service|
-        application_service.build_show
+        application_service.load_variables
       end
   end
 

@@ -2,7 +2,6 @@ class ServicesController < ApplicationController
 
   include EnginesServicesSystemActions
 
-  before_action :authenticate_user!
   before_action :set_service
 
   def delete_orphaned_attached_service
