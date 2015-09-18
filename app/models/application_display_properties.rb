@@ -58,13 +58,6 @@ class ApplicationDisplayProperties < ActiveRecord::Base
     self.icon = file_from installer_icon_url
   end
 
-  # def reset_icon_to_default
-    # self.icon = file_from_default_icon_url
-    # self.reset_icon = false
-    # self.save
-    # self
-  # end
-
   def icon_url_from_blueprint
     application.blueprint_software_details["icon_url"]
   end

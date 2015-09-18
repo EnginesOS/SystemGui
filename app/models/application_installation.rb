@@ -1,9 +1,6 @@
 class ApplicationInstallation < ActiveRecord::Base
 
-  # require 'json'
   include Engines::Api
-
-  # attr_accessor :repository_url
 
   belongs_to :application
   accepts_nested_attributes_for :application
@@ -27,7 +24,6 @@ p engine_build_params
 
   def engine_build_params
     @engine_build_params ||= {
-      # software_name: default_name,
       engine_name: application.container_name,
       host_name: application.application_network_properties.host_name,
       domain_name: application.application_network_properties.domain_name,

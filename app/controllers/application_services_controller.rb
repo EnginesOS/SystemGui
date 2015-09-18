@@ -10,7 +10,6 @@ class ApplicationServicesController < ApplicationController
   end
 
   def edit
-    # render text: params
     @application_service.build_for_edit
   end
 
@@ -19,8 +18,6 @@ class ApplicationServicesController < ApplicationController
   end
 
   def update
-    # render text: params
-    # render text: @application_service.to_json
     if @application_service.update
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
         notice: "Successfully updated #{@application_service.title} on #{@application_service.application.container_name}." + 
@@ -42,7 +39,6 @@ class ApplicationServicesController < ApplicationController
   end
   
   def action
-    # render text: application_service_params
     if @application_service.perform_action
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
         notice: "Successfully performed #{@application_service.service_action} action on #{@application_service.title}."
