@@ -76,7 +76,6 @@ Rails.application.routes.draw do
   namespace :application_services do
     resource :connect_service
   end
-  # resource :application_service_connection
 
   resource :application_report do
     get :installation_report

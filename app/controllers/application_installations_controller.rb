@@ -3,14 +3,6 @@ class ApplicationInstallationsController < ApplicationController
   include ActionController::Live
   include Engines::Api
 
-
-  # def new
-    # @application_installation = ApplicationInstallation.new(application_installation_params).load_new
-    # redirect_to installer_path,
-      # alert: "Unable to install #{application_installation_params[:software_title]}. Can't load from repository #{params[:repository_url]}." \
-        # if @application_installation.blueprint == false
-  # end
-# 
   def preparing_installation
     @application_name = params[:application_name]
   end
