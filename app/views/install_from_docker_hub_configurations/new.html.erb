@@ -1,0 +1,47 @@
+<div class="col-md-12">
+	<h2><%= image_tag('docker_icon.png', height: '30') %> Install from Docker image</h2>
+</div>
+
+	<%= form_for @install_from_docker_hub, url: install_from_docker_hub_path do |f| %>
+		<%= render 'shared/form/errors', f: f, verb: :installed, label: 'Docker image' %>
+			<%= f.hidden_field :scroll_form_to %>
+			<%= f.hidden_field :docker_image %>
+			<%= f.hidden_field :type %>
+			<%= f.hidden_field :run_as_user %>
+			<%= f.hidden_field :run_command %>
+			<%= f.hidden_field :new_application_service_publisher_namespace %>
+			<%= f.hidden_field :new_application_service_type_path %>
+			<%= f.hidden_field :new_environment_variable %>
+			<%= f.hidden_field :new_eport %>
+			
+			<% #= f.hidden_field :advanced_selected %>
+			<%= render 'shared/form/legend', text: 'Docker image' %>
+			<%= render 'shared/form/text_field', f: f, name: :docker_image, label: 'Source URL' %>		
+			<%#= render 'form_fields_1', f: f %>
+		<%= f.fields_for :application do |ff| %>
+			<%= render 'shared/form/legend', text: 'Engine' %>
+			<%= render partial: 'shared/form/text_field', locals: {name: :container_name, label: 'Name', tooltip: "Give the software installation a unique name.", f: ff, hint: "maximum length is 16 characters"} %>
+		    <%= ff.fields_for :application_network_properties do |fff| %>
+		      	<%= render partial: 'application_network_properties/form_fields', locals: {f: fff} %>
+		    <% end %>
+		  	<%= ff.fields_for :application_resources_properties do |fff| %>
+		    	<%= render partial: 'application_resources_properties/form_fields', locals: {f: fff} %>
+		  	<% end %>
+			<%= render 'application_services', f: ff %>
+			<%= render 'environment_variables', f: ff %>
+			<%= render 'eports', f: ff %>
+			
+				<%#= render 'softwares/form_fields', f: ff %>
+				<%#= render 'networks/form_fields', f: f %>
+				<%#= render 'resources/form_fields', f: ff %>
+				<%#= render 'form_fields_2', f: ff %>
+				<%#= render 'eports/form_fields', f: ff %>
+		<% end %>
+
+
+
+			
+
+		<%= render 'shared/form/legend', html_class: "top-gap" %>
+		<%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..." %>
+	<% end %>

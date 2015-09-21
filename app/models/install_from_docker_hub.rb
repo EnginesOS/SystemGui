@@ -28,14 +28,19 @@ class InstallFromDockerHub < ActiveRecord::Base
     :new_application_service_type_path,
     :new_environment_variable,
     :new_eport,
-    :scroll_form_to,
-    :advanced_selected )
+    :scroll_form_to )
 
   validate :docker_image_validation
 
   def self.build_new
     new.tap do |new_install|
       new_install.type = "Software"
+      new_install.build_application
+    end
+  end
+
+  def self.build_new_configuration
+    new.tap do |new_install|
       new_install.build_application do |new_application|
         new_application.build_application_resources_properties
         new_application.build_application_network_properties(http_protocol: "HTTPS and HTTP")
@@ -44,6 +49,10 @@ class InstallFromDockerHub < ActiveRecord::Base
   end
 
   def ready_to_install?
+    valid?
+  end
+
+  def ready_to_configure?
     !load_new_form_elements && valid?
   end
 
