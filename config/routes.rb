@@ -115,6 +115,7 @@ Rails.application.routes.draw do
   resource :install_from_blueprint
   resource :install_from_repository_url
   resource :install_from_docker_hub
+  resource :install_from_docker_hub_configuration
    # do
     # get :application_service
   # end

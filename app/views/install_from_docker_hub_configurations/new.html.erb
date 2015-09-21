@@ -5,6 +5,10 @@
 	<%= form_for @install_from_docker_hub, url: install_from_docker_hub_path do |f| %>
 		<%= render 'shared/form/errors', f: f, verb: :installed, label: 'Docker image' %>
 			<%= f.hidden_field :scroll_form_to %>
+			<%= f.hidden_field :docker_image %>
+			<%= f.hidden_field :type %>
+			<%= f.hidden_field :run_as_user %>
+			<%= f.hidden_field :run_command %>
 			<%= f.hidden_field :new_application_service_publisher_namespace %>
 			<%= f.hidden_field :new_application_service_type_path %>
 			<%= f.hidden_field :new_environment_variable %>
@@ -37,12 +41,6 @@
 
 
 			
-			
-	<%= render 'shared/form/legend', text: 'Type' %>
-	<%= render 'shared/form/radio_buttons', f: f, name: :type, label: false, select_collection: ['Software', 'Service'] %>
-	<%= render 'shared/form/legend', text: 'Run' %>
-	<%= render 'shared/form/text_field', f: f, name: :run_as_user, label: "User", hint: "valid username or userid within container" %>
-	<%= render 'shared/form/text_field', f: f, name: :run_command, label: "Command", hint: "leave blank to self-start" %>
 
 		<%= render 'shared/form/legend', html_class: "top-gap" %>
 		<%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Install', submitted_message: "Installing..." %>
