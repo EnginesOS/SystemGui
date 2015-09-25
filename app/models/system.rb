@@ -1,26 +1,6 @@
-class System
+module System
 
   extend Engines::Api
-  
-  def self.monitor
-    {
-      memory: engines_api.get_system_memory_info,
-      loading: engines_api.get_system_load_info,
-      old: {
-        snapshot: Vmstat.snapshot,
-        vm2: (sleep(1); Vmstat.memory),
-        cpu: Vmstat.cpu
-      }
-    }
-  end
-
-  def self.info
-    {
-      get_system_memory_info: engines_api.get_system_memory_info,
-      get_memory_statistics: engines_api.get_memory_statistics,
-      cpus: Vmstat.cpu.count.to_s + ' cores'
-    }
-  end
   
   def self.restart
     engines_api.restart_system
