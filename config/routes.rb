@@ -70,12 +70,11 @@ Rails.application.routes.draw do
   resource :application_variables_properties
   resource :application_display_properties
   resource :application_services_properties
-  resource :application_services do
+  resource :application_service do
     get :action
   end
-  namespace :application_services do
-    resource :connect_service
-  end
+  resource :application_service_connector_type
+  resource :application_service_connector_configuration
 
   resource :application_report do
     get :installation_report

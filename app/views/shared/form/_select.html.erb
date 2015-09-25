@@ -11,13 +11,7 @@
     errors ||= f.object.errors[name]
     errors_class = "field_with_errors" if errors.present?
 
-
-# p :select_collection 
-# p select_collection 
-# p :select_collection_class 
-# p select_collection.class 
-    
-    collection_as_array = select_collection # select_collection.class.is_a?(String) ? ActiveSupport::JSON.decode(select_collection) : select_collection
+    collection_as_array = select_collection
     select_class ||= ""
 
     if attach_selectize

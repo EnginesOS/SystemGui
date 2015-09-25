@@ -1,7 +1,7 @@
 class InstallFromDockerHubConfigurationsController < ApplicationController
 
   def new
-    @install_from_docker_hub = InstallFromDockerHub.build_new_configuration
+    @install_from_docker_hub = InstallFromDockerHub.build_configuration(install_from_docker_hub_params)
   end
 
   def create
@@ -24,9 +24,8 @@ class InstallFromDockerHubConfigurationsController < ApplicationController
 
 private
 
-  def install_from_docker_hub_params
-    @software_install_params ||= params.require(:install_from_docker_hub).permit!
+  def install_from_docker_hub_params #_with_configuration_attributes_as_json
+    params.require(:install_from_docker_hub).permit!
   end
 
 end
-

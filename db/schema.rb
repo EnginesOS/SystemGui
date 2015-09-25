@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902033757) do
+ActiveRecord::Schema.define(version: 20150924211343) do
 
   create_table "application_display_properties", force: true do |t|
     t.integer "application_id"
@@ -24,15 +24,23 @@ ActiveRecord::Schema.define(version: 20150902033757) do
     t.string  "installer_icon_url"
   end
 
-  create_table "application_installations", force: true do |t|
-    t.integer "application_id"
-  end
-
   create_table "application_network_properties", force: true do |t|
     t.integer "application_id"
   end
 
   create_table "application_resources_properties", force: true do |t|
+    t.integer "application_id"
+  end
+
+  create_table "application_service_connector_configurations", force: true do |t|
+    t.integer "application_service_connector_id"
+  end
+
+  create_table "application_service_connector_types", force: true do |t|
+    t.integer "application_service_connector_id"
+  end
+
+  create_table "application_service_connectors", force: true do |t|
     t.integer "application_id"
   end
 

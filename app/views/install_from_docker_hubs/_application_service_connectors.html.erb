@@ -1,0 +1,12 @@
+<%= render 'shared/form/legend', text: 'Services' %>
+<%= f.fields_for :application_service_connectors do |ff| %>
+    <div class="application_service_fields">
+		<%= render 'shared/form/hidden_field', name: :_destroy, f: ff, input_class: :destroy_input %>
+		<%= ff.hidden_field :type_path %>
+		<%= ff.hidden_field :publisher_namespace %>
+		<%= ff.fields_for :application_service_connector_type do |fff| %>
+			<%= render 'application_service_connector_type_fields', f: fff, application_service_connector: ff.object %>
+		<% end %>
+	</div>
+<% end %>
+<%= render 'new_application_service_button' %>

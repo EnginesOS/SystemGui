@@ -1,0 +1,12 @@
+<div class="col-sm-12">
+	<h2><i class='fa fa-arrows-v'></i> Connect service to <%= @application_service_connector.application.container_name %></h2>
+	<%= form_for @application_service_connector, url: application_service_connector_type_path(application_name: @application_service_connector.application.container_name) do |f| %>
+		<%= render partial: 'shared/form/errors', locals: {f: f} %>
+		<%= f.hidden_field :type_path %>
+		<%= f.hidden_field :publisher_namespace %>
+		<%= f.fields_for :application_service_connector_type do |ff| %>
+			<%= render 'application_service_connector_type_fields', f: ff, application_service_connector: f.object %>
+		<% end %>
+    	<%= render 'shared/form/cancel_and_submit_buttons', f: f, submit_fa: 'arrow-right', submit_label: 'Next', cancel_path: application_services_properties_path(application_name: @application_service_connector.application.container_name) %>
+	<% end %>
+</div>

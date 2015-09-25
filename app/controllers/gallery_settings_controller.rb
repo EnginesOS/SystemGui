@@ -6,9 +6,6 @@ class GallerySettingsController < ApplicationController
   end
 
   def update
-    # @gallery_settings.assign_attributes gallery_settings_params
-    # @gallery_settings.save
-    # render text: GallerySettings.count
     if @gallery_settings.update(gallery_settings_params)
       redirect_to galleries_path, notice: "Successfully updated gallery settings."
     else

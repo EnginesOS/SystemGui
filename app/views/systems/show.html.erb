@@ -10,8 +10,7 @@
 <div class="col-sm-12 system_info_body">
 	<div class="panel panel-default top-gap">
 	  <div class="panel-body">
-		Memory: <%= @system_info[:memory] %> bytes<br>
-		CPU: <%= @system_info[:cpus] %> cores
+	  	<%= (ap @system_info, plain: true, index: false).html_safe %>
 	  </div>
 	</div>
 </div>

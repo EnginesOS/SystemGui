@@ -1,6 +1,5 @@
 class InstallFromBlueprint < ActiveRecord::Base
 
-  # require 'json'
   include Engines::Api
 
   attr_accessor(:license_terms_and_conditions, :advanced_selected, :repository_url, :installer_icon_url)
@@ -14,10 +13,6 @@ class InstallFromBlueprint < ActiveRecord::Base
     assign_attributes(new_application_attributes)
     template_variables
   end
-
-  # def self.new(params)
-    # super(params).tap{|new_object| new_object.assign_attributes(new_application_attributes)}
-  # end
 
   def icon_url
     installer_icon_url || blueprint_software[:icon_url]
@@ -87,7 +82,7 @@ class InstallFromBlueprint < ActiveRecord::Base
             required_memory: blueprint_software[:required_memory],
             memory: blueprint_software[:recommended_memory] || blueprint_software[:required_memory]
           },
-          application_services_attributes: load_application_services_params || []
+          application_service_connectors_attributes: application_services_connector_params
         }
      }
   end
@@ -98,20 +93,21 @@ class InstallFromBlueprint < ActiveRecord::Base
     end 
   end  
 
-  def load_application_services_params
+  def application_services_connector_params
     service_configurations = blueprint_software[:service_configurations]
     if service_configurations.present?
       return service_configurations.map do |service_configuration|
         service_configuration.symbolize_keys!
-        params =  {
-                    publisher_namespace: service_configuration[:publisher_namespace],
-                    type_path: service_configuration[:type_path],
-                    create_type: :new
-                  }
-        params if ApplicationService.new(params).persistant
-      end.compact
+        {
+          publisher_namespace: service_configuration[:publisher_namespace],
+          type_path: service_configuration[:type_path],
+          application_service_connector_type_attributes: {
+            create_type: :new
+          }
+        }
+      end
     else
-      return {}
+      return []
     end
   end
 
@@ -150,67 +146,9 @@ class InstallFromBlueprint < ActiveRecord::Base
     unique_application_name_candidate
   end
   
-  
   def install
-    valid? && ApplicationInstallation.new(application_installation_params).install
+    valid? && InstallFromBlueprintInstaller.new(self).install
   end
-  
-  def application_installation_params
-    { application_attributes:
-        { container_name: application.container_name,
-          variables_attributes: application_variables_attributes,
-          application_network_properties_attributes:
-            { host_name: application.application_network_properties.host_name,
-              domain_name: application.application_network_properties.domain_name,
-              http_protocol: application.application_network_properties.http_protocol
-            },
-          application_resources_properties_attributes:
-            { memory: application.application_resources_properties.memory },
-          application_display_properties_attributes:
-            { installer_icon_url: installer_icon_url },
-          application_services_attributes: application_services_attributes,
-          install_from_blueprint_attributes:
-            { repository_url: repository_url }
-        }
-     }
-  end
-  
-  def application_variables_attributes
-    application.variables.map{|variable| {name: variable.name, value: variable.value}}
-  end
-
-  def application_services_attributes
-    application.application_services.map do |application_service|
-      { type_path: application_service.type_path,
-        publisher_namespace: application_service.publisher_namespace,
-        # service_container_name: application_service.service_container_name,
-        # service_handle: application_service.service_handle,
-        create_type: application_service.create_type,
-        # container_type: application_service.container_type,
-        # service_action: application_service.service_action,
-        orphan_service: application_service.orphan_service,
-        active_service: application_service.active_service,
-      }
-    end
-  end
-  
-  
-  
-      # {
-      # container_name: unique_application_name,
-      # variables_attributes: blueprint_software[:variables] || [],
-      # application_network_properties_attributes: {
-        # host_name: unique_host_name,
-        # domain_name: DomainSettings.engines_default_domain,
-        # http_protocol: default_http_protocol
-      # },
-      # application_resources_properties_attributes: {
-        # required_memory: blueprint_software[:required_memory],
-        # memory: blueprint_software[:recommended_memory] || blueprint_software[:required_memory]
-      # },
-      # application_services_attributes: load_application_services_params || []
-    # }
-  
 
 end
 

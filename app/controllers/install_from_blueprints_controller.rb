@@ -1,6 +1,5 @@
 class InstallFromBlueprintsController < ApplicationController
 
-
   def new
     @install_from_blueprint = InstallFromBlueprint.new(install_from_blueprint_params)
     @install_from_blueprint.build_new
@@ -18,19 +17,6 @@ class InstallFromBlueprintsController < ApplicationController
     end
   end
 
-
-
-
-  # def new
-    # @application_installation = ApplicationInstallation.new(application_installation_params)
-    # @application_installation.install
-    # redirect_to preparing_installation_application_installation_path(
-      # application_name: @application_installation.application.container_name)
-  # end
-
-
-
-
 private
 
   def install_from_blueprint_params
@@ -38,10 +24,3 @@ private
   end
 
 end
-
-
-  # def self.new_install_from_blueprint(install_from_blueprint_attributes)
-    # new.build_install_from_blueprint(install_from_blueprint_attributes).tap do |install_from_blueprint|
-      # install_from_blueprint.assign_attributes_for_new_application
-    # end
-  # end

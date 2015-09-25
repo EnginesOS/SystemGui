@@ -1,6 +1,5 @@
 class ApplicationServicesPropertiesController < ApplicationController
 
-
   def show
     @application_services_properties = Application.find_by(container_name: application_name).build_application_services_properties
     @application_services_properties.build_application_services

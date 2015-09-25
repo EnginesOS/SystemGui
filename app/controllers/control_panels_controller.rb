@@ -1,6 +1,5 @@
 class ControlPanelsController < ApplicationController
 
-
   def show
     @applications = Application.load_all
   end

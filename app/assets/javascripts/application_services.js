@@ -31,28 +31,28 @@ $(document).ready(function() {
 		};
 	};
 
-	$(".application_service_active_configure_select").change(function() {
-		var application_service_panel = $(this).parents(".panel-body");
-		var service_label = $(this).val();
-		var label_array = service_label.split(" - ");
-		var parent_name = label_array[0];
-		var service_handle = label_array[label_array.length - 1];
-		var display_text = "Use existing active attached service<br>" + service_label;
-		application_service_panel.find(".create_type_input").val("active");
-		application_service_panel.find(".orphan_parent_name_input").val(parent_name);
-		application_service_panel.find(".service_handle_input").val(service_handle);
-	});
-
-	$(".application_service_orphan_configure_select").change(function() {
-		var application_service_panel = $(this).parents(".panel-body");
-		var service_label = $(this).val();
-		var label_array = service_label.split(" - ");
-		var parent_name = label_array[0];
-		var service_handle = label_array[label_array.length - 1];
-		var display_text = "Use existing orphaned attached service<br>" + service_label;
-		application_service_panel.find(".create_type_input").val("orphaned");
-		application_service_panel.find(".orphan_parent_name_input").val(parent_name);
-		application_service_panel.find(".service_handle_input").val(service_handle);
-	});
+	// $(".application_service_active_configure_select").change(function() {
+		// var application_service_panel = $(this).parents(".panel-body");
+		// var service_label = $(this).val();
+		// var label_array = service_label.split(" - ");
+		// var parent_name = label_array[0];
+		// var service_handle = label_array[label_array.length - 1];
+		// var display_text = "Use existing active attached service<br>" + service_label;
+		// application_service_panel.find(".create_type_input").val("active");
+		// application_service_panel.find(".orphan_parent_name_input").val(parent_name);
+		// application_service_panel.find(".service_handle_input").val(service_handle);
+	// });
+// 
+	// $(".application_service_orphan_configure_select").change(function() {
+		// var application_service_panel = $(this).parents(".panel-body");
+		// var service_label = $(this).val();
+		// var label_array = service_label.split(" - ");
+		// var parent_name = label_array[0];
+		// var service_handle = label_array[label_array.length - 1];
+		// var display_text = "Use existing orphaned attached service<br>" + service_label;
+		// application_service_panel.find(".create_type_input").val("orphaned");
+		// application_service_panel.find(".orphan_parent_name_input").val(parent_name);
+		// application_service_panel.find(".service_handle_input").val(service_handle);
+	// });
 
 });

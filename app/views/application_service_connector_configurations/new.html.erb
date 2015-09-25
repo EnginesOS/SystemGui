@@ -1,0 +1,15 @@
+<div class="col-sm-12">
+	<h2><i class='fa fa-arrows-v'></i> Configure service connection for <%= @application_service_connector.application.container_name %></h2>
+	<%= form_for @application_service_connector, url: application_service_connector_configuration_path(
+			application_name: @application_service_connector.application.container_name) do |f| %>
+		<%= render partial: 'shared/form/errors', locals: {f: f} %>
+		<%= f.hidden_field :type_path %>
+		<%= f.hidden_field :publisher_namespace %>
+		<%= f.fields_for :application_service_connector_configuration do |ff| %>
+			<%= ff.hidden_field :create_type %>
+			<%= ff.hidden_field :existing_service %>
+			<%= render partial: 'variables/form_fields', locals: {f: ff} %>
+		<% end %>
+	    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, submit_label: 'Connect', cancel_path: application_services_properties_path(application_name: f.object.application.container_name)} %>
+	<% end %>
+</div>

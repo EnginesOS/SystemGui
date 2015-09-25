@@ -14,8 +14,9 @@
 				link_data = {typepath: available_service[:type_path], publishernamespace: available_service[:publisher_namespace]}
 			%>
 				<li>
+					<% fa_handle = Engines::Services.titles_data[available_service[:service_container].to_sym][:fa_icon] %>
 					<%= link_to(
-					available_service[:title], 'javascript:;',
+					fa(fa_handle) + ' ' + available_service[:title], 'javascript:;',
 					data: link_data,
 					class: "btn-lg trigger-response-modal docker_hub_install_new_attach_services_menu_button")
 					%>

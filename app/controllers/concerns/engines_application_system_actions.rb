@@ -91,10 +91,8 @@ private
       else
         flash_message = @result.result_mesg[0..500]
       end
-      # flash[:error] = message
       render partial: 'control_panel_applications/show', locals: { flash_message: flash_message }   
     end
-    # redirect_to control_panel_path
   end
 
 end

@@ -7,7 +7,6 @@ class DomainSettingsController < ApplicationController
   end
 
   def update
-    # render text: @domain_settings.qwe
     if @domain_settings.update
       redirect_to domains_manager_path, notice: "Successfully updated default settings for domains."
     else
