@@ -16,8 +16,9 @@ class System
 
   def self.info
     {
-      memory: engines_api.get_system_memory_info[:total],
-      cpus: Vmstat.cpu.count
+      get_system_memory_info: engines_api.get_system_memory_info,
+      get_memory_statistics: engines_api.get_memory_statistics,
+      cpus: Vmstat.cpu.count.to_s + ' cores'
     }
   end
   
