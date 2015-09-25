@@ -3,7 +3,6 @@ class GalleriesController < ApplicationController
   def index
     @gallery_settings = GallerySettings.instance
     @galleries = Gallery.all
-    # @unadded_gallery_servers = GalleryInstall.get_unadded_gallery_servers
   end
 
   def new

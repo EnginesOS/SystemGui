@@ -2,7 +2,7 @@ module Engines::Service
 
   include Engines::Api
    
-#loaders
+
   
   def system_service_object
     @system_service_object ||= engines_api.getManagedService container_name
@@ -10,14 +10,16 @@ module Engines::Service
     @system_service_object
   end
 
-#extractors
-  
+  def title_data
+   Engines::Services.titles_data[container_name.to_sym]
+  end
+
   def human_name
-    titles_data[container_name.to_sym].present? ? titles_data[container_name.to_sym][:title] : 'missing'
+    title_data.present? ? title_data[:title] : 'missing'
   end
 
   def fa_icon
-    titles_data[container_name.to_sym].present? ? titles_data[container_name.to_sym][:fa_icon] : 'circle'
+    title_data.present? ? title_data[:fa_icon] : 'circle'
   end
   
   def label
@@ -40,7 +42,7 @@ module Engines::Service
     if system_service_object.blank?
       'no_service'
     else
-      current_task_state = nil #system_service_object.task_at_hand
+      current_task_state = system_service_object.task_at_hand
       if current_task_state.present?
         current_task_state
       else      
@@ -54,16 +56,6 @@ module Engines::Service
     end
   end
 
-#inspectors     
-
-  # def fqdn
-    # service_fqdn = system_service_object.fqdn
-    # if service_fqdn.kind_of?(EnginesOSapiResult)
-      # service_fqdn = "?"
-    # end
-    # service_fqdn   
-  # end
-  
   def web_sites
     system_service_object.blank? ? [] : system_service_object.web_sites
   end
@@ -136,12 +128,7 @@ module Engines::Service
     system_service_object.blank? ? nil : system_service_object.logs_container
   end
 
-
-
-
-
   def network_metrics
-    # system_service_object.blank? ? '?' : system_service_object.memory
     result = engines_api.get_container_network_metrics container_name
     return {} unless result.is_a? Hash
     result
@@ -190,30 +177,11 @@ module Engines::Service
   def configurator_params_for configurator_name
     configurator_params.find{|c| c[:name] == configurator_name }
   end
-
-  
-  # def configurators
-    # configurators_hash.keys
-  # end
   
   def service_configuration_variables_for(configurator_name)
     result = engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
     result.is_a?(EnginesOSapiResult) ? {} : result[:variables]
   end
-
-  # def test(configurator_name)
-#     
-# 
-# p :__call____receive_service_configuration____with_params    
-# p :container_name
-# p container_name
-# p :configurator_name
-# p configurator_name
-# 
-    # engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
-  # end
-
-#instructors  
 
   def stop
     engines_api.stopService container_name
@@ -239,35 +207,4 @@ module Engines::Service
     engines_api.recreateService container_name
   end
 
-private
-
-  def titles_data
-    {
-      backup: {title: 'Backup manager', fa_icon: 'history'},
-      cert_auth: {title: 'Security certificates', fa_icon: 'certificate'},
-      auth: {title: 'Authenticate and authorize', fa_icon: 'key'},
-      dns: {title: 'Local DNS server', fa_icon: 'book'},
-      dyndns: {title: 'Dynamic DNS', fa_icon: 'bullhorn'},
-      ftp: {title: 'Local FTP server', fa_icon: 'upload'},
-      mgmt: {title: 'Engines system manager', fa_icon: 'dashboard'},
-      mongo_server: {title: 'Mongo NoSQL database', fa_icon: 'database'},
-      mysql_server: {title: 'MySQL database', fa_icon: 'database'},
-      nginx: {title: 'Web router', fa_icon: 'random'},
-      cAdvisor: {title: 'Activitiy monitor', fa_icon: 'area-chart'},
-      wwwstats: {title: 'Web statistics', fa_icon: 'bar-chart'},
-      pgsql_server: {title: 'Postgres database', fa_icon: 'database'},
-      smtp: {title: 'Outbound mail', fa_icon: 'send-o'},
-      volmanager: {title: 'File system manager', fa_icon: 'folder-o'},
-      shareservice: {title: 'File system sharing manager', fa_icon: 'share-alt'},
-      couriermail: {title: 'Inbound mail', fa_icon: 'inbox'},
-      cron: {title: 'Job scheduler', fa_icon: 'calendar'},
-      servicemanager: {title: 'Services interaction manager', fa_icon: 'arrows'},
-      awsdb: {title: 'AWS database', fa_icon: 'database'},
-      email: {title: 'Mail server', fa_icon: 'envelope-o'},
-      imap: {title: 'IMAP server', fa_icon: 'envelope-square'},
-      syslog: {title: 'System logging', fa_icon: 'file-text-o'},
-      nfs: {title: 'Network storage', fa_icon: 'hdd-o'},
-    }
-  end
- 
 end

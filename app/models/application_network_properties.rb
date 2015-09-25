@@ -12,14 +12,6 @@ class ApplicationNetworkProperties < ActiveRecord::Base
     length: {minimum: 2, maximum: 50}}
   validates :domain_name, presence: true
 
-  # def domain_name_present
-    # if domain_name.present?
-      # true
-    # else
-      # errors.add(:domain_name, ["Domain name", "can't be blank"])
-    # end
-  # end
-
   def application_name
     application.container_name
   end

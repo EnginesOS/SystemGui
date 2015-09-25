@@ -3,12 +3,9 @@ class Application < ActiveRecord::Base
   include Engines::Application
   extend Engines::Api
 
-  # attr_accessor :remove_all_application_data
-  # after_create :application_setup_display_properties
-
   has_one :application_variables_properties, dependent: :destroy
   has_one :application_services_properties, dependent: :destroy
-  # has_one :application_backup_properties, dependent: :destroy
+  has_many :application_service_connectors, dependent: :destroy
   has_one :application_display_properties, dependent: :destroy
   has_one :application_network_properties, dependent: :destroy
   has_one :application_resources_properties, dependent: :destroy
@@ -20,10 +17,10 @@ class Application < ActiveRecord::Base
   has_one :install_from_docker_hub, dependent: :destroy
 
   accepts_nested_attributes_for :variables
+  accepts_nested_attributes_for :application_service_connectors
   accepts_nested_attributes_for :application_network_properties
   accepts_nested_attributes_for :application_display_properties
   accepts_nested_attributes_for :application_resources_properties
-  accepts_nested_attributes_for :application_services
   accepts_nested_attributes_for :install_from_blueprint
   accepts_nested_attributes_for :eports
 

@@ -1,16 +1,16 @@
 <div class="col-sm-12">	
 	
 	<div class="pull-right">
-		<% unless application_service.immutable %>
+		<% unless application_service.existing_connection.immutable %>
 			<%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', 
-				edit_application_services_path(application_service.handle_params),
+				edit_application_service_path(application_service.edit_connection_params),
 				class: 'btn btn-default btn-noborder btn-lg trigger-response-modal', title: 'Edit record' %>
 		<% end %>
 		<%= link_to content_tag(:i , nil, class: 'fa fa-trash') + ' Delete',
-				application_services_path(application_service.handle_params),
+				application_service_path(application_service.edit_connection_params),
 				method: :delete, class: 'btn btn-default btn-noborder btn-lg',
-				data: { confirmdetail: "Are you sure that you want to delete #{application_service.title}?", confirm: 'Confirm delete' }, title: 'Delete' %>
-		<% if application_service.persistant %>
+				data: { confirmdetail: "Are you sure that you want to delete #{application_service.existing_connection.title}?", confirm: 'Confirm delete' }, title: 'Delete' %>
+		<% if application_service.existing_connection.persistant %>
 		<div class="btn-group dropdown">
 
 			<button class="btn btn-lg btn-default btn-noborder dropdown-toggle" type="button" data-toggle="dropdown">
@@ -21,22 +21,22 @@
 				
 				
 				
-				<% if application_service.available_subservices.present? %>
+				<% if application_service.existing_connection.available_subservices.present? %>
 
-				<% application_service.available_subservices.each do |available_subservice| %>
+				<% application_service.existing_connection.available_subservices.each do |new_subservice_params| %>
 				<li>
 					<%= link_to(
-					available_subservice[:title],
+					new_subservice_params[:title],
 					new_application_subservice_path(
 					application_subservice:
 						{
-						application_name: application_service.application.container_name,
-						parent_service_handle: application_service.service_handle,
-						parent_publisher_namespace: application_service.publisher_namespace,
-						parent_type_path: application_service.type_path,
-						parent_title: application_service.title,
-						type_path: available_subservice[:type_path],
-						publisher_namespace: available_subservice[:publisher_namespace]
+							application_name: application_service.application.container_name,
+							application_service: {
+								connection_params:	application_service.connection_params,
+								subservice: {
+									new_subservice_params: new_subservice_params
+								}
+							}
 						}
 					),
 					class: "btn-lg trigger-response-modal") %>
@@ -56,7 +56,7 @@
 			<%#= application_service.application_subservices.size %>
 		
 		
-			<% application_service.application_subservices.each do |application_subservice| %>
+			<% application_service.existing_connection.existing_subservices.each do |existing_subservice| %>
 				<%= application_subservice.to_json %>
 			<% end %>
 		
@@ -74,15 +74,11 @@
 				<li>
 					<%= link_to(
 					service_action.to_s.titleize,
-					action_application_services_path(
-					application_name: @application_services_properties.application.container_name,
+					action_application_service_path(
+					application_name: application_service.application.container_name,
 					application_service: {
 						service_action: service_action,
-						service_container_name: application_service.service_container_name,
-						type_path: application_service.type_path,
-						publisher_namespace: application_service.publisher_namespace,
-						service_handle: application_service.service_handle,
-						container_type: application_service.container_type
+						connection_params: application_service.connection_params
 						}
 					),
 					class: "btn-lg trigger-response-modal") %>

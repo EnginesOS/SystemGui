@@ -4,9 +4,12 @@ class Eport < ActiveRecord::Base
     :name,
     :internal_port,
     :external_port,
-    :tcp,
-    :udp)
+    :protocol)
 
   belongs_to :install_from_docker_hub
+  
+  enum protocol: [ 'TCP', 'UDP', 'TCP and UDP']
+
+  validates :name, presence: true
 
 end

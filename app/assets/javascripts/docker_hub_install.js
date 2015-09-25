@@ -23,9 +23,10 @@ $(document).ready(function() {
 
 function remove_fields(link) {
 	if ($(link).attr("data-confirm") == undefined) {
-		$(link).prev().val("1");
 		var selector_to_remove = "." + $(link).attr("data-holderclass");
-		$(link).parentsUntil(selector_to_remove).hide();
+		var remove_this = $(link).parents(selector_to_remove);
+		remove_this.find("input.destroy_input").val("1");
+		remove_this.hide();
 	  };
      $('#waiting-for-response-modal').modal('hide');
 };

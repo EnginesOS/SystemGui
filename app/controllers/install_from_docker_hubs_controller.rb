@@ -5,13 +5,12 @@ class InstallFromDockerHubsController < ApplicationController
   end
   
   def create
-    render text: install_from_docker_hub_params
-    # @install_from_docker_hub = InstallFromDockerHub.new(install_from_docker_hub_params)
-    # if @install_from_docker_hub.ready_to_configure?
-      # redirect_to install_from_docker_hub_configuration_path(@install_from_docker_hub.new_configuration_params)
-    # else
-      # render :new
-    # end
+    @install_from_docker_hub = InstallFromDockerHub.new(install_from_docker_hub_params)
+    if @install_from_docker_hub.ready_to_configure?
+      redirect_to new_install_from_docker_hub_configuration_path(@install_from_docker_hub.new_configuration_params)
+    else
+      render :new
+    end
   end
     
 private

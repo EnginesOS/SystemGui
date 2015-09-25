@@ -1,6 +1,5 @@
 class ApplicationInstallationProgress
 
-  # require 'json'
   include Engines::Api
   include ActiveModel::Model
 

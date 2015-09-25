@@ -7,14 +7,12 @@
 				<%= render 'shared/form/text_field', f: f, name: :name %>
 				<%= render 'shared/form/text_field', f: f, name: :internal_port %>
 				<%= render 'shared/form/text_field', f: f, name: :external_port %>
-				<%= render 'shared/form/label', label: "Protocols" %>
-				<%= render 'shared/form/checkbox', f: f, name: :tcp, label: "TCP" %>
-				<%= render 'shared/form/checkbox', f: f, name: :udp, label: "UDP" %>
+				<%= render 'shared/form/radio_buttons', f: f, name: :protocol %>
 
 				<div class="col-sm-12 clearfix">
-					<%= render 'shared/form/hidden_field', name: :_destroy, f: f %>
+					<%= render 'shared/form/hidden_field', name: :_destroy, f: f, input_class: :destroy_input %>
 					<%= link_to content_tag(:i, nil, class:"fa fa-trash"), "javascript:;", onclick: "javascript: remove_fields(this); ",
-					class: "btn btn-default btn-lg pull-right",
+					class: "btn btn-default btn-noborder btn-lg pull-right",
 					data: { confirm: "Confirm", confirmdetail: "Remove external port?", holderclass: "eport_fields" } %>
 				</div>
 			

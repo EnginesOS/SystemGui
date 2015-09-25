@@ -3,50 +3,49 @@
 	<div class="panel panel-default top-gap">
 
 		<div class="panel-heading">
-			<%= f.object.title %>
+			<%= application_service_connector.title %>
 			<small>
 				<br>
-				<%= f.object.description %>
-				(<%= f.object.publisher_namespace.to_s + ":" + f.object.type_path.to_s%>)
+				<%= application_service_connector.description %>
+				(<%= application_service_connector.publisher_namespace.to_s + ":" + application_service_connector.type_path.to_s%>)
 				<br>
 			</small>
 		</div>
 
 		<div class="panel-body">
 			<% select_collection = [ [:new, "Create new application service"] ]
-				if f.object.attachable_active_attached_services.present?
+				if application_service_connector.connectable_active_connected_services.present?
 				  select_collection << [:active, "Use existing active application service"]
 				end
-				if f.object.attachable_orphaned_attached_services.present?
+				if application_service_connector.connectable_orphan_connected_services.present?
 				  select_collection << [:orphan, "Use existing orphaned application service"]
 			    end
 			%>
 			<div class="application_service_select_create_type">
 				<div class="col-sm-12">
-					<%= render 'shared/form/radio_buttons', f: f, name: :create_type, value: f.object.create_type, label: false,
-							select_collection: select_collection, value_method: :first, text_method: :last, default_value: :new,
+					<%= render 'shared/form/radio_buttons', f: f, name: :create_type, label: false,
+							select_collection: select_collection, value_method: :first, text_method: :last,
 							field_class: "application_service_select_create_type_radios" %>
 				</div>
 			</div>
 			
-			<% if f.object.attachable_active_attached_services.present? %>
-
+			<% if application_service_connector.connectable_active_connected_services.present? %>
 				<div class="application_service_active_configure">
 					<div class="col-sm-12">
 						<%= render 'shared/form/select', f: f, name: :active_service, label: "Active application service",
-								select_collection: f.object.attachable_active_attached_services,
+								select_collection: application_service_connector.connectable_active_connected_services,
 								select_class: "application_service_active_configure_select" %>
 					</div>
 				</div>
 				
 			<% end %>
 
-			<% if f.object.attachable_orphaned_attached_services.present? %>
+			<% if application_service_connector.connectable_orphan_connected_services.present? %>
 
 				<div class="application_service_orphan_configure">
 					<div class="col-sm-12">
 						<%= render 'shared/form/select', f: f, name: :orphan_service, label: "Orphaned application service",
-						select_collection: f.object.attachable_orphaned_attached_services,
+						select_collection: application_service_connector.connectable_orphan_connected_services,
 								select_class: "application_service_orphan_configure_select" %> 
 					</div>
 				</div>
@@ -59,9 +58,6 @@
 						class: "btn btn-default btn-lg pull-right application_service_cancel_button" %>
 				</div>
 			</div>
-
-			<%= f.hidden_field :type_path %>
-			<%= f.hidden_field :publisher_namespace %>
 
 		</div>
 	</div>

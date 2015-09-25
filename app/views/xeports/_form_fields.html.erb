@@ -1,0 +1,31 @@
+<%= render 'shared/form/legend', text: 'Eports'%>
+<div class="col-sm-12 clearfix">
+
+	<%= f.fields_for :eports do |ff| %>
+
+		<div class="eport_fields">
+			<div class="panel panel-default top-gap">
+				<div class="panel-body clearfix">
+					<%= render 'shared/form/text_field', name: :name, label: 'Name', f: ff %>
+					<%= render 'shared/form/number_field', name: :internal_port, f: ff %>
+					<%= render 'shared/form/number_field', name: :external_port, f: ff %>
+					<%= render 'shared/form/radio_buttons', name: :protocol, select_collection: [:utp, :ftp], f: ff %>
+					<div class="col-sm-12 clearfix">
+						<%= render 'shared/form/hidden_field', name: :_destroy, f: ff %>
+						<%= link_to content_tag(:i, nil, class:"fa fa-trash"), "javascript:;", onclick: "javascript: remove_fields(this); ",
+						class: "btn btn-default btn-lg pull-right",
+						data: { confirm: "Confirm", confirmdetail: "Are you sure that you want to remove eport?", holderclass: "eport_fields" } %>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<% end %>
+
+	<%= link_to(
+	content_tag(:i, nil, class:"fa fa-plus-circle") + " Add eport", 'javascript:;',
+	class: "btn btn-default btn-lg pull-right trigger-response-modal",
+	id: "docker_hub_install_new_eport_button") %>
+
+</div>
+

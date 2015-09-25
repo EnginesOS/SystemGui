@@ -2,14 +2,10 @@ module Engines::Application
 
   include Engines::Api
 
-#loaders
-      
   def container
     @container ||= engines_api.loadManagedEngine container_name
   end
       
-#extractors
-
   def blueprint_software_details
     blueprint['software']
   end
@@ -18,90 +14,38 @@ module Engines::Application
       blueprint_software_details['name']
   end
 
-  # def volumes(container_name)
-    # volumes_hash(container_name).values
-  # end
-
-  # def consumers(container_name)
-    # consumers_hash(container_name).values
-  # end
-
-  # def backup_tasks(container_name)
-    # EnginesBackupTask.all #.select { |backup_task| backup_task.present? }
-  # end
-
   def services_properties
     @services_properties ||= attached_services_hash
   end  
 
-  # def 
-  
-  # def attached_services_with_nested_subservices
-    # parent_services = []
-    # child_services = []
-    # if attached_services_hash.present?
-      # attached_services_hash.each do |attached_service_definition|
-        # attached_service_definition = attached_service_definition.slice(:publisher_namespace, :type_path, :service_handle, :service_container_name, :parent_service)
-        # if attached_service_definition[:parent_service].nil?
-          # parent_services << attached_service_definition.merge(application_subservices: [])
-        # else
-          # child_services << attached_service_definition
-        # end
-      # end
-      # child_services.each do |child_service|
-        # child_service_params = {
-          # publisher_namespace: child_service[:publisher_namespace],
-          # type_path: child_service[:type_path],
-          # service_handle: child_service[:service_handle]
-        # }
-        # parent_services = parent_services.map do |parent_service|
-          # if parent_service[:publisher_namespace] == child_service[:publisher_namespace] &&
-                # parent_service[:type_path] == child_service[:type_path] &&
-                # parent_service[:service_handle] == child_service[:service_handle]
-             # parent_service[:application_subservices] << child_service_params
-          # end
-          # parent_service   
-        # end
-      # end
-    # end
-    # parent_services
-  # end
-
-
-#inspectors       
-     
-     def state_indicator
-       if is_error?
-         'error'
-       else
-         state
-       end
-     end
-     
-    def state
-      @state ||= load_state
+  def state_indicator
+    if is_error?
+      'error'
+    else
+      state
     end
+  end
+   
+  def state
+    @state ||= load_state
+  end
 
-    def load_state
-        result = container.read_state.to_s
-        if result == 'nocontainer'
-          'unbuilt'
-        else
-          result
-        end
-    end
-
-    # def uri
-      # 'http' + (http_protocol_as_sym == :https_only ? 's' : '') + '://' + fqdn
-    # end
-    
-    def primary_web_site
-      if web_sites.present?
-        web_sites.first
+  def load_state
+      result = container.read_state.to_s
+      if result == 'nocontainer'
+        'unbuilt'
       else
-        nil
+        result
       end
+  end
+  
+  def primary_web_site
+    if web_sites.present?
+      web_sites.first
+    else
+      nil
     end
+  end
 
   {
     active?: 'is_active?',
@@ -113,7 +57,6 @@ module Engines::Application
     http_protocol_as_sym: 'protocol',
     https_only: 'https_only',
     domain_name: 'domain_name',
-    # fqdn: 'fqdn',
     web_sites: 'web_sites',
     default_startup_state: 'setState',
     memory: 'memory',
@@ -166,12 +109,8 @@ module Engines::Application
   def available_services
     available_services_hash[:services]
   end
-
- 
- 
- #instructors
       
-        {
+  {
     stop: 'stopEngine',  
     start: 'startEngine',  
     pause: 'pauseEngine',  
@@ -191,8 +130,5 @@ module Engines::Application
       end
     end
   end
-  
-  
- 
 
 end

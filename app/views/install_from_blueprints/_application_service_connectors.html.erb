@@ -1,0 +1,7 @@
+<div class="col-sm-12">
+		<%= f.hidden_field :type_path %>
+		<%= f.hidden_field :publisher_namespace %>
+		<%= f.fields_for :application_service_connector_type do |ff| %>
+			<%= render 'application_service_connector_types/application_service_connector_type_fields', f: ff, application_service_connector: f.object %>
+		<% end %>
+</div>

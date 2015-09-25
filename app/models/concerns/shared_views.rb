@@ -3,14 +3,10 @@ module SharedViews
   extend ActionView::Helpers::DateHelper
 
   def self.resolve_value_for item, attribute, opts={}
-
     # nest_in = opts[:nest_in] || nil
-
     label_method = 
       if opts[:label_method].present?
         opts[:label_method].to_sym
-      # elsif attribute.present?
-      #   item.attribute
       elsif item.respond_to?(:to_label) || item.send(attribute).respond_to?(:to_label)
         :to_label
       else

@@ -1,0 +1,29 @@
+<%= render 'shared/form/legend', text: 'Services' if f.object.application_service_connectors.present? %>sssss
+<%= f.fields_for :application_service_connectors do |ff| %>
+
+	<%= ff.hidden_field :type_path %>
+	<%= ff.hidden_field :publisher_namespace %>
+	<%= ff.hidden_field :parent_engine_name %>
+
+	<div class="col-sm-12">
+		<div class="panel panel-default top-gap">
+			<div class="panel-heading">
+				<%= ff.object.title %>
+				<small>
+					<br>
+					<%= ff.object.description %>
+					(<%= ff.object.publisher_namespace.to_s + ":" + ff.object.type_path.to_s%>)
+					<br>
+				</small>
+			</div>
+			<div class="panel-body">
+				<%= ff.fields_for :application_service_connector_configuration do |fff| %>
+					<%= fff.hidden_field :create_type %>
+					<%= fff.hidden_field :existing_service %>
+					<%= render partial: 'variables/form_fields', locals: {f: fff} %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+
+<% end %>
