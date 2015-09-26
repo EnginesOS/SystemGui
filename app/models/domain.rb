@@ -100,3 +100,4 @@ class Domain < ActiveRecord::Base
     engines_domains.values.select { |d| d.present? }.map { |d| d.slice(:domain_name, :internal_only, :self_hosted) }
   end
 
+end

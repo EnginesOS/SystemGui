@@ -24,7 +24,7 @@ class ApplicationServiceConnectorType < ActiveRecord::Base
     when :orphan
       orphan_service
     else
-      ''
+      {}.to_json
     end
   end
 

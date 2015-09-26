@@ -28,7 +28,7 @@
           <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= service.state_indicator.humanize %></small>
       </div>
     </button>
-    <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
+    <ul class="dropdown-menu dropdown-menu-lg engine-gadget-dropdown-menu" role="menu">
     	<li><div class="dropdown-title" %><%= service_name %></div></li>
   		<% if service_state == "running" %>
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-play") %> Running</div></li>
