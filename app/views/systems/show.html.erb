@@ -7,10 +7,13 @@
 	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
-<div class="col-sm-12 system_info_body">
-	<div class="panel panel-default top-gap">
-	  <div class="panel-body">
-	  	<%= (ap @system_info, plain: true, index: false).html_safe %>
-	  </div>
+<div class="col-sm-12 top-gap">
+	<legend>Memory usage</legend>
+	<div class="text-center">
+		<%= image_tag('/system/memory_usage_pie_chart') %>
 	</div>
+ 	<%= (ap @system_info.memory_statistics, plain: true, index: false).html_safe %>
 </div>
+
+
+

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 #System
 
   resource :system do
-    get :monitor, :updater, :restart
+    get :monitor, :updater, :restart, :memory_usage_pie_chart
   end
   resource :system_restart do
     get :progress
