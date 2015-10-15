@@ -3,10 +3,6 @@ class Gallery < ActiveRecord::Base
   validates :url, presence: true
   validates :name, presence: true
 
-  # def self.all
-    # super.sort_by{|d| d.name}
-  # end
-  
   def destroy
     super if id != first
   end
@@ -20,15 +16,10 @@ class Gallery < ActiveRecord::Base
   end
 
   def softwares(find_software_params={})
-    @softwares ||= load_gallery_data(softwares_url(find_software_params))
-    @softwares ||= []
+    @softwares ||= ( load_gallery_data(softwares_url(find_software_params)) || [] )
     if @softwares.is_a? Array
       @softwares = {softwares: @softwares, total_pages: 1}
     end
-
-p @softwares
-p @softwares.class
-
     @softwares
   end
   
@@ -36,16 +27,10 @@ p @softwares.class
     @software_tags_list ||= load_gallery_data(software_tags_url)
   end
 
-  # def search_software_titles search_string
-    # if search_string.blank?
-      # softwares
-    # else
-      # softwares.select{|software| software[:title].to_s.downcase.include? search_string.to_s.downcase }
-    # end
-  # end
   
   def softwares_url(find_software_params)
-    "http://" + url + "/api/v0/software?search=#{find_software_params[:search]}&tags=#{find_software_params[:tags]}&page=#{find_software_params[:page]}"
+    search_string = "search=#{find_software_params[:search]}&tags=#{find_software_params[:tags]}&page=#{find_software_params[:page]}&per_page=#{find_software_params[:per_page]}"
+    "http://#{url}/api/v0/software?#{search_string}"
   end
 
   def software_tags_url
@@ -55,16 +40,12 @@ p @softwares.class
 private
 
   def load_gallery_data(gallery_data_url)
-#     
-# p :gallery_data_url
-# p gallery_data_url    
-#     
     gallery_uri = URI(gallery_data_url)
-    return [] if (gallery_uri.host.nil? || gallery_uri.port.nil?)
+    return nil if (gallery_uri.host.nil? || gallery_uri.port.nil?)
     Net::HTTP.start(gallery_uri.host, gallery_uri.port) do |http|
       request = Net::HTTP::Get.new gallery_uri
       http.read_timeout = 10 #Default is 60 seconds
-      response = http.request request
+      response = http.request request 
       if response.code.to_i >= 200 && response.code.to_i < 400 
         JSON.parse(response.body)
       else

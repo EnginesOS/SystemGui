@@ -1,3 +1,6 @@
+<% select_collection = f.object.select_collection 
+  f.object.select_collection = ActiveSupport::JSON.encode(select_collection) if select_collection.class != String %>
+
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :name} %>
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :field_type} %>
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :label} %>
@@ -22,7 +25,7 @@ comment = f.object.comment
 hint = f.object.hint
 tooltip = f.object.tooltip
 value = f.object.value
-collection = f.object.select_collection
+collection = f.object.select_collection == '' ? nil : ActiveSupport::JSON.decode(f.object.select_collection)
 mandatory = f.object.mandatory.to_s
 mandatory = (mandatory == "true")
 placeholder = f.object.placeholder
@@ -30,9 +33,6 @@ errors = f.object.errors[name]
 field_class = mandatory ? "" : "advanced_fields"
 
 %>
-<% if f.object.select_collection.present? %>
-select_collection <%= f.object.select_collection %> present, of class <%= f.object.select_collection.class %>.
-<% end %>
 <div class="row <%= field_class %>">
 
     <div class="">

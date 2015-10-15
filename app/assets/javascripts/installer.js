@@ -59,7 +59,7 @@ $(document).ready(function(){
 				if ($("#installation_report").html().indexOf("Waiting for installation to complete.") > -1 ) {
 					$("#installation_report").html('No report');
 					};
-				if (e.data == 'close') {
+				if (e.data == 'done') {
 					var flash_message = "Done. " + build_progress_log_result_message;
 					evtSource.close();
 					$("#installation_done_button").slideDown();

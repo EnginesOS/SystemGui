@@ -1,7 +1,7 @@
 <%  service = @service
 	flash_message ||= nil
 	flash_alert_class ||= :danger
-	service_state = service.state
+	service_state = service.state.to_s
 	service_name = service.container_name
     if service_state.kind_of?(EnginesOSapiResult)
       service_state = "state_error"
@@ -9,7 +9,6 @@
     indicator_class = "indicator_" + service.state_indicator
     background_class = "engine_" + service.state_indicator
 	web_sites = service.web_sites
-    # service_protocol = service.protocol
  
 %>
 
@@ -29,7 +28,7 @@
           <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= service.state_indicator.humanize %></small>
       </div>
     </button>
-    <ul class="dropdown-menu engine-gadget-dropdown-menu" role="menu">
+    <ul class="dropdown-menu dropdown-menu-lg engine-gadget-dropdown-menu" role="menu">
     	<li><div class="dropdown-title" %><%= service_name %></div></li>
   		<% if service_state == "running" %>
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-play") %> Running</div></li>

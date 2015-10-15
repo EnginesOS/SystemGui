@@ -4,6 +4,10 @@ require 'rails/all'
 
 Bundler.require(*Rails.groups)
 
+# Rails.application.configure do
+  # config.autoload_paths << Rails.root.join('lib')
+# end
+
 
 
 module EnginesSystemGUI
@@ -11,3 +15,6 @@ module EnginesSystemGUI
     GC::Profiler.enable
   end
 end
+
+ActionView::Base.default_form_builder = 'EnginesHelper::Forms::FormBuilder'
+

@@ -2,19 +2,11 @@ class Engines::Repository
 
   def initialize(repository_url)
     @repository_url = repository_url
-    
-# p "@repository_url = "
-# p @repository_url  
-#     
   end
 
   def blueprint
     @blueprint ||= load_blueprint
   end
-
-  # def software_params_from_blueprint repository_params
-  #   blueprint_from_repository(repository_params)[:software]
-  # end
 
 private
 

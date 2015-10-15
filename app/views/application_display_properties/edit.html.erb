@@ -1,12 +1,13 @@
-<div class="col-sm-12 top-gap app_installs">
-  <h2 class=''><i class='fa fa-desktop'></i> Edit display properties for <%= @application_display_properties.application_name %></h2>
-  <%= form_for @application_display_properties,
-					url: application_display_properties_path(
-  					application_name: @application_display_properties.application_name),
-  					method: :patch do |f| %>
-    <%= render partial: 'shared/form/errors', locals: {f: f, label: 'display properties'} %>
-    <%= render partial: 'form_fields', locals: {f: f} %>
-    <%= render partial: 'icon_field', locals: {f: f} %>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
-  <% end %>
-</div>
+<%= h2{fa(:desktop) + ' Edit display properties for ' + @application_display_properties.application_name} %>
+<%= form_for @application_display_properties,
+				url: application_display_properties_path(
+				application_name: @application_display_properties.application_name),
+				method: :patch do |f| %>
+	<%= f.form_errors %>
+	<%#= f.errors_messages_for %>
+	<%= legend 'Labels' %>
+	<%= f.form_input :title, label: 'Title', tooltip: 'The title will display with the icon on the desktop.' %>
+	<%= f.form_input :detail, label: 'Detail', tooltip: 'The detail will show in a tooltip when the user hovers over the icon on the desktop.' %>
+	<%= render partial: 'icon_field', locals: {f: f} %>
+	<%= f.form_submit cancel_url: control_panel_path %>
+<% end %>

@@ -92,8 +92,6 @@ class FirstRun
     
   end
 
-# private
-
   def password_types
     ["Admin", "Console", "MySQL"]
   end

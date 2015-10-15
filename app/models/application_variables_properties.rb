@@ -2,10 +2,7 @@ class ApplicationVariablesProperties < ActiveRecord::Base
 
   include Engines::Api
 
-  # after_initialize :load
-
   belongs_to :application
-  # has_many :variables, as: :variable_consumer, dependent: :destroy
   has_many :variables, through: :application
   accepts_nested_attributes_for :variables
 

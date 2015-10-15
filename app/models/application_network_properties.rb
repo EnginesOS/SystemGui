@@ -4,25 +4,13 @@ class ApplicationNetworkProperties < ActiveRecord::Base
 
   attr_accessor :host_name, :domain_name, :http_protocol, :engines_api_error
 
-  # after_initialize :load
-
   belongs_to :application
 
   name_regex = /^[A-Za-z0-9]*$/
   validates :host_name, {format: { with:name_regex, multiline: true, 
       message: "is invalid (character a-z and digits 0-9 only)" },
     length: {minimum: 2, maximum: 50}}
-  validate :domain_name_present
-  # validate :fqdn_is_unique_on_update?, on: :update
-  # validate :fqdn_is_unique?, on: :create
-
-  def domain_name_present
-    if domain_name.present?
-      true
-    else
-      errors.add(:domain_name, ["Domain name", "can't be blank"])
-    end
-  end
+  validates :domain_name, presence: true
 
   def application_name
     application.container_name
@@ -35,14 +23,6 @@ class ApplicationNetworkProperties < ActiveRecord::Base
       http_protocol: application.http_protocol )
   end
 
-  # def update(network_properties_params)
-    # assign_attributes(network_properties_params) && update_network_properties
-  # end
-
-  def update_engines
-      valid? && commit_update_to_engines
-  end
-
   def new_record?
     false
   end  
@@ -51,7 +31,7 @@ class ApplicationNetworkProperties < ActiveRecord::Base
     {engine_name: application.container_name, domain_name: domain_name, host_name: host_name, http_protocol: http_protocol}
   end
 
-  def commit_update_to_engines
+  def save
     result = engines_api.set_engine_network_properties(engines_update_params)
     if result.was_success
       @engines_api_error = nil

@@ -1,25 +1,6 @@
-class System
+module System
 
   extend Engines::Api
-
-  def self.monitor
-    {
-      memory: engines_api.get_system_memory_info,
-      loading: engines_api.get_system_load_info,
-      old: {
-        snapshot: Vmstat.snapshot,
-        vm2: (sleep(1); Vmstat.memory),
-        cpu: Vmstat.cpu
-      }
-    }
-  end
-
-  def self.info
-    {
-      memory: engines_api.get_system_memory_info[:total],
-      cpus: Vmstat.cpu.count
-    }
-  end
   
   def self.restart
     engines_api.restart_system
@@ -36,6 +17,9 @@ class System
   def self.status
     @status_from_api = engines_api.system_status
     @build_status_from_api = engines_api.build_status
+    if @build_status_from_api[:did_build_fail]
+      ENV['FAILED_BUILD_FLAG'] = 'true'
+    end
     if @status_from_api[:is_rebooting]
       {state: :restarting, message: "Rebooting", message_class: :warning}
     elsif @status_from_api[:is_engines_system_updating]
@@ -43,9 +27,9 @@ class System
     elsif @status_from_api[:is_base_system_updating]
       {state: :base_updating, message: "Updating", message_class: :warning}
     elsif @build_status_from_api[:is_building]
-      {state: :installing, message: "Installing", message_class: :warning}
+      {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing'}
     elsif @status_from_api[:needs_reboot]
-      {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: "/system/restart"}
+      {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: '/system/restart'}
     else
       {state: :ok, message: "OK", message_class: :ok}
     end
@@ -65,7 +49,11 @@ class System
   def self.needs_restart?;                    status[:state] == :needs_restart; end
 
   def self.waiting_for_installation
-    !@build_status_from_api[:is_building] && !@build_status_from_api[:did_build_fail]
+    !@build_status_from_api[:is_building] && !(ENV['FAILED_BUILD_FLAG'] == 'true')
+  end
+  
+  def self.clear_failed_build_flag
+    ENV['FAILED_BUILD_FLAG'] = nil    
   end
 
 end

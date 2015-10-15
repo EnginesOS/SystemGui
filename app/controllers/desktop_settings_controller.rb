@@ -1,6 +1,5 @@
 class DesktopSettingsController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_desktop_settings
 
   def edit

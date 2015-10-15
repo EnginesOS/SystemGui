@@ -1,12 +1,15 @@
 class SystemsController < ApplicationController
-  before_action :authenticate_user!
 
   def show
-    @system_info = System.info
+    @system_info = SystemInfo
+  end
+  
+  def memory_usage_pie_chart
+    send_data(SystemInfo.memory_usage_pie_chart, :filename => "memory_usage_pie_chart.png", :type => 'image/png')
   end
 
   def monitor
-    @system_monitor = System.monitor
+    @system_monitor = SystemInfo.monitor
   end
 
   def updater

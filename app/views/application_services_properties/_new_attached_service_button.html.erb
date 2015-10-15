@@ -10,14 +10,15 @@
 
 		<% available_services.each do |available_service| %>
 		<li>
+		  	<% fa_handle = Engines::Services.titles_data[available_service[:service_container].to_sym][:fa_icon] %>
 			<%= link_to(
-			available_service[:title],
-			new_application_services_path(
-			application_name: @application_services_properties.application.container_name,
-			application_service: {
-			type_path: available_service[:type_path],
-			publisher_namespace: available_service[:publisher_namespace],
-			}
+			fa(fa_handle) + ' ' + available_service[:title],
+			new_application_service_connector_type_path(
+				application_name: @application_services_properties.application.container_name,
+				application_service_connector: {
+					type_path: available_service[:type_path],
+					publisher_namespace: available_service[:publisher_namespace]
+				}
 			),
 			class: "btn-lg trigger-response-modal")
 			%>

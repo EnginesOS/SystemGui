@@ -13,31 +13,28 @@
 	</div>
 </div>
 
-
-
 <div class="installer row">
 	<div class="col-sm-12">
-		<div class="col-md-6 top-gap clearfix pull-right">
+		<div class="col-md-4 top-gap clearfix pull-right">
 		</div>
-		<div class="col-md-6 top-gap">
+		<div class="col-md-8 top-gap">
+
 		    <%= form_tag installer_path(), method: 'get' do %>
 		      <div class="input-group input-group-lg">
-		        <div class="input-group-addon">
-		          <i class=" fa fa-search"></i>
-		        </div>
+	  		<%= render 'library_select' %>
 		        <%= hidden_field_tag :tags, params[:tags] %>
 				<%= hidden_field_tag :gallery_id, @gallery.id %>
-		        <%= text_field_tag :search, params[:search], placeholder: ["search", params[:tags], "software"].compact.join(" "), class: 'form-control',
+		        <%= text_field_tag :search, params[:search], placeholder: "search", class: 'form-control',
 							onfocus: "this.select();", autofocus: true %>
                 <%= submit_tag params[:tags], name: 'tags', class: "trigger-response-modal hidden" %>
 		        <% if false # params[:search].present? %>
 		          <a type="button" href="<%= installer_path(gallery_id: @gallery.id, tags: params[:tags]) %>" class="input-group-addon btn search-clear-button trigger-response-modal" 
-		          	title="Clear search"><i class=" fa fa-times"></i></a>
+		          	title="Clear search"><i class="fa fa-times"></i></a>
 		        <% end %>
 
   	            <div id="installer_find_button" class="input-group-btn">
 	          	  <button type="submit" class="btn btn-default trigger-response-modal">
-		            <i class="fa fa-binoculars"></i> Find
+		            <i class="fa fa-search"></i>
 		          </button>
  	            </div>
 
@@ -46,7 +43,7 @@
                 <div id="find_by_tags_list_loader" class="hidden" data-galleryid="<%= @gallery.id %>"></div>
  	            <div id="find_button_when_tags_present" style="display:none;">
 	          	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		            <i class="fa fa-binoculars"></i> Find by
+		            <i class="fa fa-search"></i> Search by
 		            <span class="caret"></span>
 		          </button>
   	              <ul class="dropdown-menu dropdown-menu-right">

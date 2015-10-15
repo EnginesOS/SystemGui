@@ -2,7 +2,7 @@
     tooltip ||= nil
     default_value ||= nil
     value ||= f.object.send(name); value = default_value if value.blank?
-	select_collection ||= []
+	select_collection ||= ( (f.object.class.send(name.to_s.pluralize).keys if f.object.class.respond_to?(name.to_s.pluralize)) || [] )
 	value_method ||= :to_s
 	text_method ||= :to_s
     hint ||= nil

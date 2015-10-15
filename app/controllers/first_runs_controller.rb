@@ -1,17 +1,11 @@
 class FirstRunsController < ApplicationController
 
-  before_action :authenticate_user!
 
   include Engines::FirstRun
 
   def show
-    Maintenance.full_maintenance
-    if FirstRun.required?
       @first_run = FirstRun.new first_run_params
       render :show, layout: 'empty_navbar'
-    else
-      redirect_to(control_panel_path)
-    end
   end
 
   def create
@@ -26,7 +20,7 @@ class FirstRunsController < ApplicationController
             )
           redirect_to control_panel_path, notice: 'First run parameters were successfully saved.'
         else
-          redirect_to first_runs_path(first_run: first_run_params), alert: 'First run parameters were not saved. ' + result.result_mesg
+          redirect_to first_run_path(first_run: first_run_params), alert: 'First run parameters were not saved. ' + result.result_mesg
         end
       else
         render :show, layout: 'empty_navbar'

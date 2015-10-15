@@ -1,5 +1,4 @@
 class SystemRestartsController < ApplicationController
-  before_action :authenticate_user!
 
   def show
     if !System.restarting?

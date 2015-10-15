@@ -1,53 +1,25 @@
 source 'http://rubygems.org'
+
+gem "puma", group: :development
 gem 'devise'
-
-gem 'file-tail'
-
-gem 'vmstat'
-
-group :development do
-  # gem 'therubyracer'
-  gem "puma"
-end
-
-# gem 'r509'
-gem 'git'
-gem "oink"
 gem 'bootstrap3-rails'
 gem "font-awesome-rails", git: "https://github.com/bokmann/font-awesome-rails.git"
 gem "selectize-rails"
-gem 'newrelic_rpm'
-# gem 'simple_form'
 gem 'twitter-bootstrap-rails-confirm'
-
-# gem "cocoon"
-
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
-
 gem 'rubytree'
-
-# gem 'rubysl-openssl'
-
 gem "paperclip", "~> 4.2"
-# gem "jquery-fileupload-rails"
-gem 'open_uri_redirections'
-
-# gem 'rails_admin'
+gem 'country_select'
 gem 'awesome_print', '~> 1.2.0'
 gem 'ansi_up-rails'
-
-gem 'country_select'
-# gem 'i18n_country_select'
-
-#presentation logic
-gem 'draper', '~> 1.3'
-
-# gem "activerecord-tableless"
-
-# gem 'virtus'
-
-# gem 'activemodel-associations'
+gem 'open_uri_redirections'
+gem 'file-tail'
+gem 'vmstat'
+gem 'git'
+gem "oink"
+gem 'newrelic_rpm'
+gem 'gruff'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'

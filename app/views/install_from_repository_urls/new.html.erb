@@ -1,0 +1,10 @@
+<div class="col-sm-12">
+  <h2><i class="fa fa-git-square"></i> Install from repository</h2>
+
+<%= form_for @install_from_repository_url, url: install_from_repository_url_path  do |f| %>
+  <%= render 'shared/form/errors', f: f %>
+  <%= f.form_input :repository_url, as: :text_field, label: 'URL', tooltip: 'URL to the repository where the blueprint can be found.' %>
+  <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path, submit_label: 'Next' , submit_fa: 'arrow-right' %>
+<% end %>
+
+</div>

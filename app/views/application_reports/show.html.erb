@@ -82,7 +82,7 @@
     <% services = @application.build_application_services_properties.build_application_services %>
     <% if services.is_a? Array %>
         <% services.each do |service|%>
-            <%= (ap service.attached_service_hash, plain: true, index: false).html_safe %>
+            <%= (ap service.existing_connection.api_service_hash, plain: true, index: false).html_safe %>
         <% end %>
     <% else %>
       <pre>None</pre>

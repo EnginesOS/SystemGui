@@ -1,7 +1,7 @@
 <%= render '/systems/wait_for_system',
-		title: 'Updating',
-		wait: 30,
-		wait_message: "Waiting for Engines to update.",
+		title: 'Updating Engines',
+		wait: 10,
+		wait_message: "Waiting for Engines update to commence.",
 		poll_period: 3,
-		poll_message: "Waiting for system to restart.",
-		poll_url: 'system_base_update/progress'  %>
+		poll_message: "Waiting for Engines update to complete.",
+		poll_url: 'system_engines_update/progress'  %>

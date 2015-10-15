@@ -1,6 +1,5 @@
 class ServiceConfigurationsController < ApplicationController
 
-  before_action :authenticate_user!
   
   def show
     @service = Service.where(container_name: params[:service_name]).new

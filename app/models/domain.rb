@@ -19,11 +19,6 @@ class Domain < ActiveRecord::Base
     end
   end
   
-  # def self.load(domain_name)
-    # domain_params = engines_domain_params_for domain_name
-    # new(domain_params)
-  # end
-  
   def self.build_new
     self.new(new_record: true)
   end
@@ -42,18 +37,6 @@ class Domain < ActiveRecord::Base
     self.class.engines_api.remove_domain(domain_name: domain_name)
   end
 
-  # def key
-    # domain_name.gsub('.', '%') if !new_record?
-  # end
-#  
-  # def self.domain_name_to_key(domain_name)
-    # domain_name.gsub('.', '%')
-  # end
-#  
-  # def self.key_to_domain_name(key)
-    # key.gsub('%', '.')
-  # end
-  
   def new_record? 
     self.new_record == true #!domain_name.present?
   end
@@ -102,10 +85,6 @@ class Domain < ActiveRecord::Base
   def self.domain_names_list
     @domain_names_list ||= all_engines_domain_names_details.keys.map(&:to_s).sort
   end
-# 
-  # def domain_name_detail
-    # self.class.domain_names_hash.select{|name, detail| name == domain_name}
-  # end
   
   def engines_domain_params
     @engines_domain_params ||= self.class.all_engines_domain_names_details[domain_name.to_s]
@@ -120,13 +99,5 @@ class Domain < ActiveRecord::Base
     engines_domains[:domain_name] = engines_domains[:name]
     engines_domains.values.select { |d| d.present? }.map { |d| d.slice(:domain_name, :internal_only, :self_hosted) }
   end
-
-  # def self.domain_names_hash
-    # @domain_names_hash ||= engines_api_list_domains
-#     
-    # # .
-    # # {"owen.demo"=>{:domain_name=>"owen.demo", :internal_only=>true, :self_hosted=>true}, "test.this"=>{"domain_name"=>"test.this", "internal_only"=>false, "self_hosted"=>false}}.
-    # # select{|name, detail| name == } #.with_indifferent_access
-  # end
 
 end

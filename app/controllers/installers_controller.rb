@@ -1,9 +1,7 @@
 class InstallersController < ApplicationController
 
-  before_action :authenticate_user!
 
   def show
-    # render text: params
     if gallery_id.blank?
       redirect_to galleries_path, alert: "No galleries. Add a gallery to install software." 
     else

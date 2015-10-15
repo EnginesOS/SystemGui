@@ -1,0 +1,21 @@
+<div class="col-sm-12 eport_fields">
+
+	<div class="panel panel-default top-gap">
+
+		<div class="panel-body">
+
+				<%= render 'shared/form/text_field', f: f, name: :name %>
+				<%= render 'shared/form/text_field', f: f, name: :internal_port %>
+				<%= render 'shared/form/text_field', f: f, name: :external_port %>
+				<%= render 'shared/form/radio_buttons', f: f, name: :protocol %>
+
+				<div class="col-sm-12 clearfix">
+					<%= render 'shared/form/hidden_field', name: :_destroy, f: f, input_class: :destroy_input %>
+					<%= link_to content_tag(:i, nil, class:"fa fa-trash"), "javascript:;", onclick: "javascript: remove_fields(this); ",
+					class: "btn btn-default btn-noborder btn-lg pull-right",
+					data: { confirm: "Confirm", confirmdetail: "Remove external port?", holderclass: "eport_fields" } %>
+				</div>
+			
+		</div>
+	</div>
+</div>

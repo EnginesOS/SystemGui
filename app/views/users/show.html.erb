@@ -1,12 +1,12 @@
 <div class="col-sm-12">
-	<h1><i class="fa fa-user"></i> Admin user</h1>
-	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+	<h2><i class="fa fa-user"></i> Admin user</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_security_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 	<div class="panel panel-default top-gap">
 		<div class="panel-heading clearfix">
 			<div class="col-sm-12">
 				<div class="pull-right">
 			        <%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', edit_user_path(current_user), class: 'btn btn-lg btn-default btn-noborder trigger-response-modal' %>
-					<%= link_to content_tag(:i, '', class: 'fa fa-lock') + ' Change password', edit_user_passwords_path(current_user), class: 'btn btn-lg btn-default btn-noborder trigger-response-modal' %>
+					<%= link_to content_tag(:i, '', class: 'fa fa-lock') + ' Change password', edit_user_password_path(current_user), class: 'btn btn-lg btn-default btn-noborder trigger-response-modal' %>
 				</div>
 			</div>
 		</div>

@@ -1,8 +1,8 @@
 <%= render '/systems/wait_for_system',
 		title: 'Installing ' + @application_name.to_s,
-		wait: 5,
+		wait: 0.2,
 		wait_message: "Waiting for installation to commence.",
-		poll_period: 3,
+		poll_period: 1,
 		poll_message: "Waiting for system to display installation progress.",
 		poll_url: '/application_installation/preparing_installation_progress',
 		redirect_url: '/application_installation/installing'  %>

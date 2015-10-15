@@ -1,6 +1,5 @@
 class DomainSettingsController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_domain_settings, except: :edit
 
   def edit
@@ -8,9 +7,8 @@ class DomainSettingsController < ApplicationController
   end
 
   def update
-    # render text: @domain_settings.qwe
     if @domain_settings.update
-      redirect_to domains_path, notice: "Successfully updated default settings for domains."
+      redirect_to domains_manager_path, notice: "Successfully updated default settings for domains."
     else
       render :edit
     end

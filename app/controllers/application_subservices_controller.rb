@@ -1,6 +1,5 @@
 class ApplicationSubservicesController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_application_subservice
 
   # def edit
@@ -16,7 +15,7 @@ class ApplicationSubservicesController < ApplicationController
 
     # @application_subservice.assign_attributes(application_subservice_params)
     if @application_subservice.create
-        redirect_to application_services_path(application_name: @application_subservice.application_name),
+        redirect_to application_services_properties_path(application_name: @application_subservice.application_name),
           notice: "Successfully attached #{@application_subservice.title} to #{@application_subservice.parent_title} on #{@application_subservice.application_name}."
     else
       render :new

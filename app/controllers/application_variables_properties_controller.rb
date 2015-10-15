@@ -1,13 +1,6 @@
 class ApplicationVariablesPropertiesController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_application_variables_properties
-
-# def show
-      # result = @variables_application_properties.variables
-    # render text: result.map{|r| r.value}
-# end
-
 
   def edit
     load_variables

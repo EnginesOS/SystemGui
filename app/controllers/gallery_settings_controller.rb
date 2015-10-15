@@ -1,15 +1,11 @@
 class GallerySettingsController < ApplicationController
 
-  before_action :authenticate_user!
   before_action :set_gallery_settings
 
   def edit
   end
 
   def update
-    # @gallery_settings.assign_attributes gallery_settings_params
-    # @gallery_settings.save
-    # render text: GallerySettings.count
     if @gallery_settings.update(gallery_settings_params)
       redirect_to galleries_path, notice: "Successfully updated gallery settings."
     else

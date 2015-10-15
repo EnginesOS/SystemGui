@@ -1,0 +1,6 @@
+<%= f.fields_for :eports do |ff| %>
+	<%= ff.hidden_field :name %>
+	<%= ff.hidden_field :internal_port %>
+	<%= ff.hidden_field :external_port %>
+	<%= ff.hidden_field :protocol %>
+<% end %>

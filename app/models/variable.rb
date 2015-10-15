@@ -27,21 +27,15 @@ class Variable < ActiveRecord::Base
   validate :value_confirmation_validation
   validate :value_present_validation
   
-  # def do_validations?
-# 
-# # p name
-# # p :variable_consumer
-# # p variable_consumer
-# # p @docker_hub_installation
-# 
-    # type = variable_consumer.create_type
-    # type != :active && type != :orphan
-  # end
-  # validate :test_vali
-# 
-  # def test_vali
-    # errors.add(name, [label, "oops"])
-  # end
+  def name_value_pair
+    {}.tap do |result|
+      if (field_type.to_sym == :boolean || field_type.to_sym == :checkbox)
+          value = true if value == "1"
+          value = false if value == "0"
+      end
+      result[name.to_sym] = value
+    end
+  end
 
 private
 
