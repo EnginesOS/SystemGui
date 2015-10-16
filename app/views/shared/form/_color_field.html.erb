@@ -15,7 +15,7 @@
 	      <%= label %>
 	    <% end %>
     <% end %>
-    <small><%= comment %></small>
+    <% if comment.present? %><p><small><%= comment %></small></p><% end %>
     <div class="color_field">
     <%= f.color_field name, value: value, title: tooltip, placeholder: placeholder, class: 'form-control input-lg' %>
     </div>

@@ -18,7 +18,7 @@ class ApplicationServiceConnectorConfiguration < ActiveRecord::Base
     existing_service_params[:service_handle]
   end
 
-  def container_type
+  def service_container_type
     existing_service_params[:container_type]
   end
 

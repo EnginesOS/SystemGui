@@ -11,7 +11,6 @@ class ApplicationServiceConnector < ActiveRecord::Base
   accepts_nested_attributes_for :application_service_connector_type
   accepts_nested_attributes_for :application_service_connector_configuration
 
-
   def title
     service_detail[:title] || '?'
   end
@@ -33,8 +32,13 @@ class ApplicationServiceConnector < ActiveRecord::Base
                                                 type_path: type_path)
   end
 
-
   def load_application_service_connector_configuration_variables
+    
+p :application_service_connector_configuration_variables_params
+p application_service_connector_configuration_variables_params    
+p :application_service_connector_configuration_variables_params
+    
+    
     application_service_connector_configuration.variables.build(application_service_connector_configuration_variables_params)
   end
 
@@ -54,11 +58,9 @@ class ApplicationServiceConnector < ActiveRecord::Base
   def mutable_variables_params
     templated_variables_params.reject{|variable_params| variable_params[:immutable] == true}
   end
-
-
   
   def no_existing_connections?
-    connectable_active_connected_services.empty? && connectable_orphan_connected_services.empty?
+    !service_detail[:persistant] || (connectable_active_connected_services.empty? && connectable_orphan_connected_services.empty?)
   end
   
   def connectable_active_connected_services
@@ -146,7 +148,7 @@ class ApplicationServiceConnector < ActiveRecord::Base
       publisher_namespace: publisher_namespace,
       create_type: application_service_connector_configuration.create_type,
       service_handle: application_service_connector_configuration.service_handle,
-      container_type: application_service_connector_configuration.container_type,
+      container_type: application.container_type,
       service_container_name: application_service_connector_configuration.service_container_name,
       variables: application_service_connector_configuration.variable_values_params
     }

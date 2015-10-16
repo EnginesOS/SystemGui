@@ -7,6 +7,7 @@ class ApplicationServiceConnectorConfigurationsController < ApplicationControlle
   end
   
   def create
+    # render text: params
     if @application_service_connector.connect
       redirect_to application_services_properties_path(application_name: @application_service_connector.application.container_name), 
         notice: "Successfully connected #{@application_service_connector.title} to #{@application_service_connector.application.container_name}."
