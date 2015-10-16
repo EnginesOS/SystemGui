@@ -11,7 +11,8 @@ module System
   end
 
   def self.update_engines
-    engines_api.update_engines_system_software 
+    engines_api.update_engines_system_software
+    Maintenance.full_maintenance 
   end
 
   def self.status

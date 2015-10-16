@@ -6,6 +6,6 @@
     <label class="control-label">
       <%= label %>
     </label>
-    <small><%= comment %></small>
+    <% if comment.present? %><p><small><%= comment %></small></p><% end %>
   </div>
 </div>

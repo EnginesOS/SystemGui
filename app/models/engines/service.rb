@@ -180,7 +180,7 @@ module Engines::Service
   
   def service_configuration_variables_for(configurator_name)
     result = engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
-    result.is_a?(EnginesOSapiResult) ? {} : result[:variables]
+    (result.is_a?(EnginesOSapiResult) ? {} : result[:variables]) || {}
   end
 
   def stop

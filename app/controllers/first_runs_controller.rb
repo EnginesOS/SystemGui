@@ -15,6 +15,7 @@ class FirstRunsController < ApplicationController
         result = @first_run.submit
         if result.was_success
           current_user.update(
+            email: first_run_params[:admin_email],
             password: first_run_params[:admin_password],
             password_confirmation: first_run_params[:admin_password_confirmation]
             )

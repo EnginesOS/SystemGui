@@ -52,6 +52,7 @@ module Engines::Application
     is_running: 'is_running?',
     is_error?: 'is_error?',
     has_container?: 'has_container?',
+    container_type: 'ctype',
     host_name: 'hostname',
     http_protocol: 'http_protocol',
     http_protocol_as_sym: 'protocol',
