@@ -7,6 +7,7 @@ class FirstRun
   include Engines::Api
 
   attr_accessor(
+    :admin_email,
     :admin_password,
     :admin_password_confirmation,
     :console_password,
@@ -21,6 +22,8 @@ class FirstRun
     :ssl_organisation_name,
     :ssl_person_name)
 
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :admin_email, presence: true, format: { with: VALID_EMAIL_REGEX }
   validate :password_confirmation_validation
   validate :password_present_and_length_validation
   validate :admin_password_different_to_console_password_validation

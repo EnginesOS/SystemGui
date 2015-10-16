@@ -3,7 +3,7 @@ class ApplicationServicesController < ApplicationController
   before_action :set_application_service
 
   def edit
-    @application_service.existing_connection.build
+    @application_service.existing_connection.build_edit
   end
 
   def update

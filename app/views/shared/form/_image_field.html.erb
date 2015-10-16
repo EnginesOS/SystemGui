@@ -13,7 +13,7 @@
 	      <%= label %>
 	    <% end %>
     <% end %>
-    <small><%= comment %></small>
+    <% if comment.present? %><p><small><%= comment %></small></p><% end %>
     <% if f.object.send(name).present? %>
       <div class='form-image-control'>
         <div class='form-image-centering'>

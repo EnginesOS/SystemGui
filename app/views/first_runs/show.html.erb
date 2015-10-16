@@ -25,9 +25,9 @@
     <div class="col-sm-12">
       <legend>Engines passwords</legend>
     </div>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"], comment: "Password for the account 'admin' on this Engines system.", label: "Admin"} %>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f, hint: "Console password must be different from admin password.", placeholder: ["Enter", "Re-enter"], label: "Console", comment: "Password for accessing the account 'engines' on this Engines system from a console or terminal."} %>
-
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"], comment: "Password for the Engines system administrator. This is the password that you will use to sign in to this application.", label: "Admin"} %>
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f, hint: "Console password must be different from admin password.", placeholder: ["Enter", "Re-enter"], label: "Console", comment: "Password for Engines on the base system."} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :admin_email, f: f, comment: "Password reset instructions will be sent to this email address.", label: "Admin email address"} %>
     <div class="col-sm-12">
       <legend>Database password</legend>
     </div>
@@ -44,7 +44,7 @@
       <legend>SSL</legend>
     </div>
     <%= render partial: 'shared/form/text_field', locals: {name: :ssl_person_name, label: "Person name", f: f} %>
-    <%= render partial: 'shared/form/text_field', locals: {name: :ssl_organisation_name, label: "Organisation name", f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :ssl_organisation_name, label: "Organisation name", f: f, hint: 'enter n/a if not applicable.'} %>
     <%= render partial: 'shared/form/text_field', locals: {name: :ssl_city, label: "City", f: f} %>
     <%= render partial: 'shared/form/text_field', locals: {name: :ssl_state, label: "State", f: f} %>
     <%= render partial: 'shared/form/country_select', locals: {name: :ssl_country, label: "Country", f: f} %>

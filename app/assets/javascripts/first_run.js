@@ -51,10 +51,11 @@ $(document).ready(function() {
 		function first_run_form_validation() {
 			var admin_ok = (first_run_admin_password_validation() && first_run_admin_password_confirmation_validation());
 			var console_ok = (first_run_console_password_validation() && first_run_console_password_confirmation_validation());
+			var email_ok = first_run_admin_email_validation();
 			var mysql_ok = (first_run_mysql_password_validation() && first_run_mysql_password_confirmation_validation());
-			var domain_ok = (first_run_default_domain_validation());
+			var domain_ok = first_run_default_domain_validation();
 			var ssl_ok = first_run_ssl_validation();
-			return (admin_ok && console_ok && mysql_ok && domain_ok && ssl_ok);
+			return (admin_ok && console_ok && email_ok && mysql_ok && domain_ok && ssl_ok);
 		};
 	
 		function show_field_error_message_for(field, message) {
@@ -90,6 +91,19 @@ $(document).ready(function() {
 		 		return false;
 		 	} else {
 		 		return true;
+		 	};
+		};
+
+		function first_run_admin_email_validation() {
+			var admin_email_field = $("#first_run_admin_email");
+			var email_regex = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+	 		clear_field_error_message_for(admin_email_field);
+	 		var email_input_val = admin_email_field.val();
+		 	if ( email_regex.test(email_input_val) ) {
+		 		return true; 
+		 	} else {
+		 		show_field_error_message_for(admin_email_field, "Valid email required.");
+		 		return false;
 		 	};
 		};
 

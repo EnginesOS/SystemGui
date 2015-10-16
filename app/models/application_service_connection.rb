@@ -18,6 +18,10 @@ class ApplicationServiceConnection
     load_variables
   end
   
+  def build_edit
+    load_mutable_variables
+  end
+  
   def connection_params_json
     @application_service.connection_params
   end
@@ -70,6 +74,10 @@ class ApplicationServiceConnection
     @application_service.variables.build(variables_params)
   end
 
+  def load_mutable_variables
+    @application_service.variables.build(variables_params_mutable_only)
+  end
+
   def variables_params
     variables_params_without_values.map do |variable_params|
       variable_params[:value] = variables_values[variable_params[:name].to_sym]
@@ -85,7 +93,11 @@ class ApplicationServiceConnection
   
   def variables_params_without_values
     service_detail[:consumer_params].values
-  end  
+  end
+
+  def variables_params_mutable_only
+    variables_params.reject{|variable| variable[:immutable] == true}
+  end
 
   def update
     result = engines_api.update_attached_service(update_params)

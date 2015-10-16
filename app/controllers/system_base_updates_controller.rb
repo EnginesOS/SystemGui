@@ -7,10 +7,10 @@ class SystemBaseUpdatesController < ApplicationController
         if result.was_success
           @system_status = System.status
         else
-          redirect_to system_update_path, alert: ( "Unable to update base system. " + result.result_mesg )[0,500]
+          redirect_to updater_system_path, alert: ( "Unable to update base system. " + result.result_mesg )[0,500]
         end
       else
-        redirect_to system_update_path, alert: "No result"
+        redirect_to updater_system_path, alert: "No result"
       end
     end
   end
