@@ -24,8 +24,13 @@ Rails.application.routes.draw do
 
 #System
 
+  resource :charts do
+    get :total_system_memory_usage
+    get :total_container_memory_usage
+    get :applications_memory_usage
+  end
   resource :system do
-    get :monitor, :updater, :restart, :memory_usage_pie_chart
+    get :monitor, :updater, :restart
   end
   resource :system_restart do
     get :progress
@@ -41,7 +46,8 @@ Rails.application.routes.draw do
     get :download
   end
   resource :system_security_key do
-    get :download
+    get :new_download
+    post :download
   end
 
 #Domains

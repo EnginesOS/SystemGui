@@ -20,7 +20,15 @@ class ApplicationServiceConnector < ActiveRecord::Base
   end
 
   def service_detail
-    @service_detail ||= engines_api.software_service_definition(
+    if @service_detail_call.is_a? Hash
+      @service_detail_call
+    else
+      {}
+    end
+  end
+    
+  def service_detail_call
+    @service_detail_call ||= engines_api.software_service_definition(
                                       publisher_namespace: publisher_namespace,
                                       type_path: type_path)
   end
@@ -64,8 +72,9 @@ p :application_service_connector_configuration_variables_params
   end
   
   def connectable_active_connected_services
-    @connectable_active_connected_services ||= engines_api.
-          get_registered_against_service(type_path: type_path, publisher_namespace: publisher_namespace).map do |service_definition|
+    result = engines_api.get_registered_against_service(type_path: type_path, publisher_namespace: publisher_namespace)
+    result = [] unless result.is_a? Array
+    result.map do |service_definition|
       service_definition = service_definition_handle_params(service_definition)
       if service_definition[:parent_engine] == service_definition[:service_handle]
         [service_definition[:parent_engine], service_definition.to_json]
@@ -76,8 +85,9 @@ p :application_service_connector_configuration_variables_params
   end
 
   def connectable_orphan_connected_services
-    @connectable_orphan_attached_services ||= engines_api.
-          get_orphaned_services(type_path: type_path, publisher_namespace: publisher_namespace).map do |service_definition|
+    result = engines_api.get_orphaned_services(type_path: type_path, publisher_namespace: publisher_namespace)
+    result = [] unless result.is_a? Array
+    result.map do |service_definition|
       service_definition = service_definition_handle_params(service_definition)
       if service_definition[:parent_engine] == service_definition[:service_handle]
         [service_definition[:parent_engine], service_definition.to_json]

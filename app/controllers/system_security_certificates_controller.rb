@@ -2,8 +2,12 @@ class SystemSecurityCertificatesController < ApplicationController
 
   
   def download
-    content = Engines::ApiLoader.instance.engines_api.get_system_ca
-    send_data content,  :filename => "engines_security_certificate.pem" 
+    result = Engines::ApiLoader.instance.engines_api.get_system_ca
+    if result.is_a? EnginesOSapiResult
+      redirect_to system_security_path, alert: 'Engines API error. ' + (result.result_mesg)
+    else
+      send_data result,  :filename => "engines_security_certificate.pem" 
+    end
   end
 
   def new

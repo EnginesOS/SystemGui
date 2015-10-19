@@ -6,6 +6,8 @@
 
 	<%= form_for @system_security_certificate, url: system_security_certificate_path do |f| %>
 	    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+	    <%= render partial: 'shared/form/text_field', locals: {name: :domain_name, label: "Domain name", f: f} %>
+	    <%= render partial: 'shared/form/text_area', locals: {name: :key, f: f} %>
 	    <%= render partial: 'shared/form/file_upload_field', locals: {name: :certificate, label: false, errors: false, tooltip: "Upload a file", f: f} %>
 	    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: system_security_path, submit_label: 'Upload', submit_fa: 'upload'} %>
 	<% end %>
