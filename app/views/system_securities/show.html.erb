@@ -13,7 +13,7 @@
 			  </button>
 			  <ul class="dropdown-menu">
 			    <li><%= link_to content_tag(:i, "", class: "fa fa-upload") + ' Upload', new_system_security_key_path, class: "btn-lg trigger-response-modal" %></li>
-			    <li><%= link_to content_tag(:i, "", class: "fa fa-download") + ' Download', download_system_security_key_path, class: "btn-lg" %></li>
+			    <li><%= link_to content_tag(:i, "", class: "fa fa-download") + ' Download', new_download_system_security_key_path, class: "btn-lg" %></li>
 			  </ul>
 			</div>
 		</div>
@@ -24,8 +24,8 @@
 			    <span class="caret"></span>
 			  </button>
 			  <ul class="dropdown-menu">
-			    <li><%= link_to content_tag(:i, "", class: "fa fa-upload") + ' Upload', new_system_security_certificate_path, class: "btn-lg trigger-response-modal" %></li>
-			    <li><%= link_to content_tag(:i, "", class: "fa fa-download") + ' Download', download_system_security_certificate_path, class: "btn-lg" %></li>
+			    <li><%= link_to content_tag(:i, "", class: "fa fa-upload") + ' Upload certificate', new_system_security_certificate_path, class: "btn-lg trigger-response-modal" %></li>
+			    <li><%= link_to content_tag(:i, "", class: "fa fa-download") + ' Download CA', download_system_security_certificate_path, class: "btn-lg" %></li>
 			  </ul>
 			</div>
 		</div>
