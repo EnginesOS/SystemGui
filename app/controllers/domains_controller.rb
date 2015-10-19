@@ -6,7 +6,7 @@ class DomainsController < ApplicationController
   end
 
   def create
-    @domain = Domain.new(domain_params)
+   @domain = Domain.new(domain_params)
     if @domain.create
       redirect_to domains_manager_path, notice: "Successfully created #{domain_name}."
     else
