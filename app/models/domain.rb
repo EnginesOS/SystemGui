@@ -24,10 +24,14 @@ class Domain < ActiveRecord::Base
   end
   
   def self.build_edit_for domain_name
-    self.new(new_record: false, domain_name: domain_name).load_domain_properties
+    self.new(new_record: false, domain_name: domain_name, original_domain_name: domain_name).load_domain_properties
   end
   
   def load_domain_properties
+    
+p :engines_domain_params
+p engines_domain_params    
+    
     self.assign_attributes(engines_domain_params)
     self
   end
@@ -38,7 +42,7 @@ class Domain < ActiveRecord::Base
   end
 
   def new_record? 
-    self.new_record == true #!domain_name.present?
+    self.new_record == true || self.new_record == 'true' #!domain_name.present?
   end
   
   def create
@@ -52,7 +56,7 @@ class Domain < ActiveRecord::Base
   def create_domain
     result = self.class.engines_api.add_domain create_domain_params
     if !result.was_success
-      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to create domain. No result message given by engines api. Called 'add_domain(#{create_domain_params})'")
+      @engines_api_error = 'Unable to create domain. ' + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. Called 'add_domain(#{create_domain_params})'")
     end
     result.was_success
   end
@@ -60,7 +64,7 @@ class Domain < ActiveRecord::Base
   def update_domain
     result = self.class.engines_api.update_domain update_domain_params
     if !result.was_success
-      @engines_api_error = (result.result_mesg.present? ? result.result_mesg : "Unable to update domain. No result message given by engines api. #{update_domain_params}")
+      @engines_api_error = 'Unable to update domain. ' + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api. #{update_domain_params}")
     end
     result.was_success
   end
@@ -83,21 +87,15 @@ class Domain < ActiveRecord::Base
   end
 
   def self.domain_names_list
-    @domain_names_list ||= all_engines_domain_names_details.keys.map(&:to_s).sort
-    
-    p :domain_names_list
-    p @domain_names_list
-    
-    @domain_names_list
-    
+    @domain_names_list = all_engines_domain_names_details.keys.map(&:to_s).sort
   end
   
   def engines_domain_params
-    @engines_domain_params ||= self.class.all_engines_domain_names_details[domain_name.to_s]
+    @engines_domain_params = self.class.all_engines_domain_names_details[domain_name.to_s]
   end
 
   def self.all_engines_domain_names_details
-    @all_engines_domain_names_details ||= engines_api.list_domains
+    @all_engines_domain_names_details = engines_api.list_domains
   end
   
   def self.all_engines_domain_names_params
