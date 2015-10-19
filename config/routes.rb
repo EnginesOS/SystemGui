@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get :total_system_memory_usage
     get :total_container_memory_usage
     get :applications_memory_usage
+    get :services_memory_usage
   end
   resource :system do
     get :monitor, :updater, :restart

@@ -20,7 +20,11 @@
 	<div class="text-center">
 		<%= image_tag('/charts/applications_memory_usage') %>
 	</div>
- 	<%= (ap @system_info.memory_statistics, plain: true, index: false).html_safe %>
+	<legend>Services memory usage</legend>
+	<div class="text-center">
+		<%= image_tag('/charts/services_memory_usage') %>
+	</div>
+ 	<% #= (ap @system_info.memory_statistics, plain: true, index: false).html_safe %>
 </div>
 
 
