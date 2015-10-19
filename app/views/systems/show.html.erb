@@ -8,9 +8,17 @@
 </div>
 
 <div class="col-sm-12 top-gap">
-	<legend>Memory usage</legend>
+	<legend>System memory usage</legend>
 	<div class="text-center">
-		<%= image_tag('/system/memory_usage_pie_chart') %>
+		<%= image_tag('/charts/total_system_memory_usage') %>
+	</div>
+	<legend>Container memory usage</legend>
+	<div class="text-center">
+		<%= image_tag('/charts/total_container_memory_usage') %>
+	</div>
+	<legend>Applications memory usage</legend>
+	<div class="text-center">
+		<%= image_tag('/charts/applications_memory_usage') %>
 	</div>
  	<%= (ap @system_info.memory_statistics, plain: true, index: false).html_safe %>
 </div>
