@@ -20,8 +20,8 @@ class ApplicationServiceConnector < ActiveRecord::Base
   end
 
   def service_detail
-    if @service_detail_call.is_a? Hash
-      @service_detail_call
+    if service_detail_call.is_a? Hash
+      service_detail_call
     else
       {}
     end
