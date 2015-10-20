@@ -150,7 +150,6 @@ p :application_service_connector_configuration_variables_params
     result.was_success
   end
 
-
   def connect_params
     {
       parent_engine: application.container_name,
@@ -161,6 +160,18 @@ p :application_service_connector_configuration_variables_params
       container_type: application.container_type,
       service_container_name: application_service_connector_configuration.service_container_name,
       variables: application_service_connector_configuration.variable_values_params
+    }
+  end
+
+  def application_install_connect_params
+    {
+      type_path: type_path,
+      publisher_namespace: publisher_namespace,
+      create_type: application_service_connector_type.create_type,
+      parent_engine: application_service_connector_type.existing_service_params[:parent_engine],
+      container_type: application_service_connector_type.existing_service_params[:container_type],
+      service_handle: application_service_connector_type.existing_service_params[:service_handle],
+      service_container_name: application_service_connector_type.existing_service_params[:service_container_name]
     }
   end
 

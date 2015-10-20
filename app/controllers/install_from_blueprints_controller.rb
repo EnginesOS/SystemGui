@@ -10,6 +10,7 @@ class InstallFromBlueprintsController < ApplicationController
 
   def create
     @install_from_blueprint = InstallFromBlueprint.new(install_from_blueprint_params)
+    # render text: @install_from_blueprint.engine_build_params
     if @install_from_blueprint.install
       redirect_to preparing_installation_application_installation_path(application_name: @install_from_blueprint.application.container_name)
     else
