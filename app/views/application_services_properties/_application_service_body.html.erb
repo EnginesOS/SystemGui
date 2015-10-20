@@ -24,6 +24,9 @@
 				<% if application_service.existing_connection.available_subservices.present? %>
 
 				<% application_service.existing_connection.available_subservices.each do |new_subservice_params| %>
+				
+				<%= new_subservice_params %>
+				
 				<li>
 					<%= link_to(
 					new_subservice_params[:title],
@@ -34,7 +37,7 @@
 							application_service: {
 								connection_params:	application_service.connection_params,
 								subservice: {
-									new_subservice_params: new_subservice_params
+									new_subservice_params: nil #new_subservice_params
 								}
 							}
 						}

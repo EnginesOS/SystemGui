@@ -7,7 +7,8 @@ class ApplicationSubservicesController < ApplicationController
   # end
 
   def new
-    @application_subservice.load
+    render text: params
+    # @application_subservice.load
   end
 
   def create

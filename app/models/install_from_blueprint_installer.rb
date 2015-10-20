@@ -46,7 +46,7 @@ p engine_build_params
 
   def application_service_connectors_params
     @install_from_blueprint.application.application_service_connectors.map do |application_service_connector|
-      JSON.parse(application_service_connector.application_service_connector_type.existing_service_params_json).symbolize_keys
+      application_service_connector.application_install_connect_params
     end
   end
 
