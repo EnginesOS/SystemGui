@@ -38,55 +38,54 @@ module SystemInfo
     }
   end
 
-
   def self.applications_memory_usage_bar_chart
     application_memory_usage = memory_statistics[:containers][:applications]
     application_names = application_memory_usage.keys
     application_count = application_names.count
-
-    g = Gruff::SideStackedBar.new("600x#{50*application_count+ 100}")
     
     application_names = application_memory_usage.keys
     labels = {}
     application_names.each_with_index{ |label, i| p :label; p label; p i; labels[i] = label.to_s }
-    g.labels = labels
+
+    @g = Gruff::SideStackedBar.new("800x#{50*application_count+ 135}")
+    @g.labels = labels
 
     application_usage_values = application_memory_usage.values
     application_in_use_memory_values = Matrix[application_usage_values.map{ |values| values[:current].to_i/1048576 }]
     application_peak_memory_values = Matrix[application_usage_values.map{ |values| values[:maximum].to_i/1048576 }] - application_in_use_memory_values
     application_headroom_values = Matrix[application_usage_values.map{ |values| values[:limit].to_i/1048576 }] - application_peak_memory_values
-    
-    
-p :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-p application_in_use_memory_values.to_a.first
-p application_peak_memory_values.to_a.first
-p application_headroom_values.to_a.first
-    
-    
-    g.data "Currently in use", application_in_use_memory_values.to_a.first
-    g.data "Peak use", application_peak_memory_values.to_a.first
-    g.data "Headroom", application_headroom_values.to_a.first
+    @g.data "In use", application_in_use_memory_values.to_a.first
+    @g.data "Peak", application_peak_memory_values.to_a.first
+    @g.data "Allocated", application_headroom_values.to_a.first
 
+    render_graph
+  end
+  
+  def self.services_memory_usage_bar_chart
+    service_memory_usage = memory_statistics[:containers][:services]
+    service_names = service_memory_usage.keys
+    service_count = service_names.count
+    
+    service_names = service_memory_usage.keys
+    labels = {}
+    service_names.each_with_index{ |label, i| p :label; p label; p i; labels[i] = label.to_s }
 
-    g.theme = {
-      :colors => [
-        '#F0AD4E',  # yellow
-        '#3071A9',  # blue
-        '#72AE6E',  # green
-        '#D1695E',  # red
-        '#8A6EAF',  # purple
-        '#EFAA43',  # orange
-        'white'
-      ],
-      :marker_color => 'white',
-      :font_color => 'black',
-      :background_colors => 'white'
-    }
-    g.to_blob
+    @g = Gruff::SideStackedBar.new("800x#{50*service_count+ 135}")
+    @g.labels = labels
+
+    service_usage_values = service_memory_usage.values
+    service_in_use_memory_values = Matrix[service_usage_values.map{ |values| values[:current].to_i/1048576 }]
+    service_peak_memory_values = Matrix[service_usage_values.map{ |values| values[:maximum].to_i/1048576 }] - service_in_use_memory_values
+    service_headroom_values = Matrix[service_usage_values.map{ |values| values[:limit].to_i/1048576 }] - service_peak_memory_values
+    @g.data "In use", service_in_use_memory_values.to_a.first
+    @g.data "Peak", service_peak_memory_values.to_a.first
+    @g.data "Allocated", service_headroom_values.to_a.first
+
+    render_graph
   end
   
   def self.total_container_memory_usage_bar_chart
-    g = Gruff::StackedBar.new('600x400')
+    @g = Gruff::StackedBar.new('800x400')
 
     application_totals = memory_statistics[:containers][:totals][:applications]
     applications_currently_in_use  = application_totals[:in_use].to_i/1048576
@@ -99,39 +98,29 @@ p application_headroom_values.to_a.first
     services_headroom = ( services_totals[:allocated].to_i - services_totals[:peak_sum].to_i)/1048576
 
     {
-      :"Currently in use" => [ applications_currently_in_use, services_currently_in_use ],
-      :"Peak usage" => [ applications_peak_usage, services_peak_usage ],
-      Headroom: [ applications_headroom, services_headroom ]
-    }.each { |k,v| g.data k, v }
-    g.theme = {
-      :colors => [
-        '#F0AD4E',  # yellow
-        '#3071A9',  # blue
-        '#72AE6E',  # green
-        '#D1695E',  # red
-        '#8A6EAF',  # purple
-        '#EFAA43',  # orange
-        'white'
-      ],
-      :marker_color => 'white',
-      :font_color => 'black',
-      :background_colors => 'white'
-    }
+      :"In use" => [ applications_currently_in_use, services_currently_in_use ],
+      :"Peak" => [ applications_peak_usage, services_peak_usage ],
+      Allocated: [ applications_headroom, services_headroom ]
+    }.each { |k,v| @g.data k, v }
+
+    @g.labels = { 0 => "Applications #{application_totals[:allocated].to_i/1048576} Mb", 1 => "Services #{services_totals[:allocated].to_i/1048576} Mb" };
     
-    g.labels = { 0 => "Applications #{application_totals[:allocated].to_i/1048576} Mb", 1 => "Services #{services_totals[:allocated].to_i/1048576} Mb" };
-    
-    g.to_blob
+    render_graph
   end
 
   def self.total_system_memory_usage_pie_chart
-    g = Gruff::Pie.new('600x400')
-    total_system_memory_usage.each { |k,v| g.data k, v }
-    g.theme = {
+    @g = Gruff::Pie.new('800x400')
+    total_system_memory_usage.each { |k,v| @g.data k, v }
+    render_graph
+  end
+    
+  def self.render_graph
+    @g.theme = {
       :colors => [
-        '#F0AD4E',  # yellow
         '#3071A9',  # blue
-        '#72AE6E',  # green
-        '#D1695E',  # red
+        '#EE4444',  # red
+        '#44AA44',  # green
+        '#F0AD4E',  # yellow
         '#8A6EAF',  # purple
         '#EFAA43',  # orange
         'white'
@@ -140,7 +129,7 @@ p application_headroom_values.to_a.first
       :font_color => 'black',
       :background_colors => 'white'
     }
-    g.to_blob
+    @g.to_blob
   end
   
 end
