@@ -1,7 +1,7 @@
 module SystemInfo
   
   extend Engines::Api
-  require "matrix"
+  # require "matrix"
   
   def self.monitor
     {
@@ -39,11 +39,11 @@ module SystemInfo
   end
 
   def self.applications_memory_usage_bar_chart
-    application_memory_usage = memory_statistics[:containers][:applications]
+    application_memory_usage = memory_statistics[:containers][:applications].select{ |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }
     application_names = application_memory_usage.keys
     application_count = application_names.count
     
-    application_names = application_memory_usage.keys
+    application_names = application_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} Mb" }
     labels = {}
     application_names.each_with_index{ |label, i| p :label; p label; p i; labels[i] = label.to_s }
 
@@ -51,51 +51,51 @@ module SystemInfo
     @g.labels = labels
 
     application_usage_values = application_memory_usage.values
-    application_in_use_memory_values = Matrix[application_usage_values.map{ |values| values[:current].to_i/1048576 }]
-    application_peak_memory_values = Matrix[application_usage_values.map{ |values| values[:maximum].to_i/1048576 }] - application_in_use_memory_values
-    application_headroom_values = Matrix[application_usage_values.map{ |values| values[:limit].to_i/1048576 }] - application_peak_memory_values
-    @g.data "In use", application_in_use_memory_values.to_a.first
-    @g.data "Peak", application_peak_memory_values.to_a.first
-    @g.data "Allocated", application_headroom_values.to_a.first
+    application_in_use_memory_values = application_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
+    application_peak_memory_values = application_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
+    application_headroom_values = application_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
+    @g.data "In use", application_in_use_memory_values
+    @g.data "Peak", application_peak_memory_values
+    @g.data "Allocated", application_headroom_values
 
     render_graph
   end
   
   def self.services_memory_usage_bar_chart
-    service_memory_usage = memory_statistics[:containers][:services]
+    service_memory_usage = memory_statistics[:containers][:services].select{ |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }
     service_names = service_memory_usage.keys
     service_count = service_names.count
     
-    service_names = service_memory_usage.keys
+    service_names = service_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} Mb" }
     labels = {}
-    service_names.each_with_index{ |label, i| p :label; p label; p i; labels[i] = label.to_s }
+    service_names.each_with_index{ |label, i| labels[i] = label.to_s }
 
     @g = Gruff::SideStackedBar.new("800x#{50*service_count+ 135}")
     @g.labels = labels
 
     service_usage_values = service_memory_usage.values
-    service_in_use_memory_values = Matrix[service_usage_values.map{ |values| values[:current].to_i/1048576 }]
-    service_peak_memory_values = Matrix[service_usage_values.map{ |values| values[:maximum].to_i/1048576 }] - service_in_use_memory_values
-    service_headroom_values = Matrix[service_usage_values.map{ |values| values[:limit].to_i/1048576 }] - service_peak_memory_values
-    @g.data "In use", service_in_use_memory_values.to_a.first
-    @g.data "Peak", service_peak_memory_values.to_a.first
-    @g.data "Allocated", service_headroom_values.to_a.first
+    service_in_use_memory_values = service_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
+    service_peak_memory_values = service_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
+    service_headroom_values = service_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
+    @g.data "In use", service_in_use_memory_values
+    @g.data "Peak", service_peak_memory_values
+    @g.data "Allocated", service_headroom_values
 
     render_graph
   end
   
   def self.total_container_memory_usage_bar_chart
-    @g = Gruff::StackedBar.new('800x400')
+    @g = Gruff::SideStackedBar.new('800x235')
 
     application_totals = memory_statistics[:containers][:totals][:applications]
-    applications_currently_in_use  = application_totals[:in_use].to_i/1048576
-    applications_peak_usage = ( application_totals[:peak_sum].to_i - application_totals[:in_use].to_i)/1048576
-    applications_headroom = ( application_totals[:allocated].to_i - application_totals[:peak_sum].to_i)/1048576
+    applications_currently_in_use  = application_totals[:in_use].to_f/application_totals[:allocated].to_f*100
+    applications_peak_usage = ( application_totals[:peak_sum].to_f - application_totals[:in_use].to_f)/application_totals[:allocated].to_f*100
+    applications_headroom = ( application_totals[:allocated].to_f - application_totals[:peak_sum].to_f)/application_totals[:allocated].to_f*100
 
     services_totals = memory_statistics[:containers][:totals][:services]
-    services_currently_in_use  = services_totals[:in_use].to_i/1048576
-    services_peak_usage = ( services_totals[:peak_sum].to_i - services_totals[:in_use].to_i) /1048576
-    services_headroom = ( services_totals[:allocated].to_i - services_totals[:peak_sum].to_i)/1048576
+    services_currently_in_use  = services_totals[:in_use].to_f/services_totals[:allocated].to_f*100
+    services_peak_usage = ( services_totals[:peak_sum].to_f - services_totals[:in_use].to_f) /services_totals[:allocated].to_f*100
+    services_headroom = ( services_totals[:allocated].to_f - services_totals[:peak_sum].to_f)/services_totals[:allocated].to_f*100
 
     {
       :"In use" => [ applications_currently_in_use, services_currently_in_use ],
