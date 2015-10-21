@@ -15,16 +15,19 @@
 	<legend>Container memory usage</legend>
 	<div class="text-center">
 		<%= image_tag('/charts/total_container_memory_usage') %>
+		<%= image_tag('/charts/container_memory_usage') %>
 	</div>
 	<legend>Applications memory usage</legend>
 	<div class="text-center">
+		<%= image_tag('/charts/total_applications_memory_usage') %>
 		<%= image_tag('/charts/applications_memory_usage') %>
 	</div>
 	<legend>Services memory usage</legend>
 	<div class="text-center">
+		<%= image_tag('/charts/total_services_memory_usage') %>
 		<%= image_tag('/charts/services_memory_usage') %>
 	</div>
- 	<% #= (ap @system_info.memory_statistics, plain: true, index: false).html_safe %>
+ 	<%#= (ap @system_info.memory_statistics, plain: true, index: false).html_safe %>
 </div>
 
 

@@ -19,41 +19,26 @@
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				
-				
-				
 				<% if application_service.existing_connection.available_subservices.present? %>
-
-				<% application_service.existing_connection.available_subservices.each do |new_subservice_params| %>
-				
-				<%= new_subservice_params %>
-				
-				<li>
-					<%= link_to(
-					new_subservice_params[:title],
-					new_application_subservice_path(
-					application_subservice:
-						{
-							application_name: application_service.application.container_name,
-							application_service: {
-								connection_params:	application_service.connection_params,
-								subservice: {
-									new_subservice_params: nil #new_subservice_params
-								}
-							}
-						}
-					),
-					class: "btn-lg trigger-response-modal") %>
-
-				</li>
-				<% end %>
+					<% application_service.existing_connection.available_subservices.each do |available_subservice| %>
+						<%= available_subservice.application_service_connection_identification_params_json %>
+						<%= available_subservice.connect_subservice_identification_params_json %>
+						<li>
+							<%= link_to(
+							available_subservice.title,
+							new_application_service_connection_subservice_connector_path(
+								application_service_connection: available_subservice.application_service_connection_identification_params_json,
+								subservice: available_subservice.connect_subservice_identification_params_json
+							),
+							class: "btn-lg trigger-response-modal") %>
+						</li>
+					<% end %>
 				<% else %>
 				<li>
 					<div class="btn-lg">None available</div>
 				</li>
 				<% end %>
-
 			</ul>
-
 		</div>
 		
 			<%#= application_service.application_subservices.size %>
