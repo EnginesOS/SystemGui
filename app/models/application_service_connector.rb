@@ -175,6 +175,4 @@ p :application_service_connector_configuration_variables_params
     }
   end
 
-
-  
 end
