@@ -45,6 +45,18 @@ p :type_path
   def connectable
     service_detail[:shareable] || false
   end
+  
+  def service_container_name
+    service_detail[:service_container].to_sym
+  end
+
+  def title_data
+    @title_data ||= Engines::Services.titles_data[service_container_name]
+  end
+
+  def fa_icon
+    title_data[:fa_icon]
+  end
 
   def variables_params_mutable_only
     variables_params.reject{|variable| variable[:immutable] == true}

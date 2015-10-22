@@ -1,11 +1,11 @@
 class SystemsController < ApplicationController
 
   def show
-    @system_info = SystemInfo
+    # @system_info = SystemInfo
   end
   
   def monitor
-    @system_monitor = SystemInfo.monitor
+
   end
 
   def updater

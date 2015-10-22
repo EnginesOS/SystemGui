@@ -31,38 +31,42 @@ class ApplicationServiceConnection
 #service_detail
 
   def service_detail
-    @service_detail ||= engines_api.software_service_definition(
-                                      publisher_namespace: publisher_namespace,
-                                      type_path: type_path)
-  end
-  
-  def variables_params_without_values
-    service_detail[:consumer_params].values
+    @service_detail ||= ApplicationServiceConnectionServiceDetail.new(type_path, publisher_namespace)
   end
 
-  def title
-    service_detail[:title] || '?'
-  end
-  
-  def description
-    service_detail[:description] || '?'
-  end
-  
-  def persistant
-    service_detail[:persistant] || false
-  end
-  
-  def immutable
-    !mutable
-  end
-  
-  def mutable
-    service_detail[:immutable] != true
-  end
-
-  def connectable
-    service_detail[:shareable] || false
-  end
+  # def service_detail
+    # @service_detail ||= engines_api.software_service_definition(
+                                      # publisher_namespace: publisher_namespace,
+                                      # type_path: type_path)
+  # end
+#   
+  # def variables_params_without_values
+    # service_detail[:consumer_params].values
+  # end
+# 
+  # def title
+    # service_detail[:title] || '?'
+  # end
+#   
+  # def description
+    # service_detail[:description] || '?'
+  # end
+#   
+  # def persistant
+    # service_detail[:persistant] || false
+  # end
+#   
+  # def immutable
+    # !mutable
+  # end
+#   
+  # def mutable
+    # service_detail[:immutable] != true
+  # end
+# 
+  # def connectable
+    # service_detail[:shareable] || false
+  # end
 
   def variables_params_mutable_only
     variables_params.reject{|variable| variable[:immutable] == true}
@@ -90,8 +94,8 @@ class ApplicationServiceConnection
 
 
   def available_subservices
-    engines_api.load_avail_services_for_type(type_path).map do |available_subservice_definition|
-      ApplicationServiceConnectionSubserviceConnector.new(self, available_subservice_definition)
+    @available_subservices ||= engines_api.load_avail_services_for_type(type_path).map do |available_subservice_definition|
+      ApplicationServiceConnectionAvailableSubservice.new(self, available_subservice_definition)
     end
   end
 
@@ -108,7 +112,7 @@ class ApplicationServiceConnection
   end
 
   def variables_params
-    variables_params_without_values.map do |variable_params|
+    @variables_params ||= service_detail.variables_params_without_values.map do |variable_params|
       variable_params[:value] = variables_values[variable_params[:name].to_sym]
       variable_params
     end
@@ -168,16 +172,5 @@ class ApplicationServiceConnection
       end
     end    
   end
-
-  # def connection_identification_params
-    # {
-      # parent_engine: connection_params[:parent_engine],
-      # type_path: connection_params[:type_path],
-      # publisher_namespace: connection_params[:publisher_namespace],
-      # service_handle: connection_params[:service_handle],
-      # container_type: connection_params[:container_type],
-      # service_container_name: connection_params[:service_container_name]
-    # }
-  # end
-    
+   
 end

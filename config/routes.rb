@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 #System
 
   resource :charts do
+    get :system_cpu_usage
+    get :system_cpu_usage_averages
     get :total_system_memory_usage
     get :total_container_memory_usage
     get :container_memory_usage
@@ -92,7 +94,7 @@ Rails.application.routes.draw do
   resource :application_about
   resource :orphaned_application_service
   resource :application_service_connection_subservice_connection
-  resource :application_service_connection_subservice_connector
+  resource :application_service_connection_subservice_connector_configuration
   resource :application_uninstall
   resources :applications do
     collection do

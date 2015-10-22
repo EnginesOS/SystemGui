@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924211343) do
+ActiveRecord::Schema.define(version: 20151022004235) do
 
   create_table "application_display_properties", force: true do |t|
     t.integer "application_id"
@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 20150924211343) do
 
   create_table "application_resources_properties", force: true do |t|
     t.integer "application_id"
+  end
+
+  create_table "application_service_connection_subservice_connector_configurations", force: true do |t|
   end
 
   create_table "application_service_connector_configurations", force: true do |t|

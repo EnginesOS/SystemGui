@@ -1,6 +1,8 @@
 <% active_menu_item = case
     when params[:controller] == 'desktops'
       :desktop
+    when params[:controller] == 'systems', params[:controller] == 'system_securities', params[:controller] == 'system_securities'
+      :system
     else
       :control_panel
     end
@@ -29,6 +31,35 @@
 	        <li class="<%= 'active' if active_menu_item == :control_panel %>">
 	          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path, class: 'trigger-response-modal' %>
 	        </li>
+	        <li class="dropdown <%= 'active' if active_menu_item == :system %>">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> System <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+		    <li>
+		    	<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path,
+					class: 'btn-lg trigger-response-modal' %>
+			</li>
+			<li class="divider"></li>
+		    <li>
+				<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + ' Monitor', monitor_system_path, class: "btn-lg trigger-response-modal" %>
+		    </li>
+			<li class="divider"></li>
+		    <li>
+				<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: "btn-lg trigger-response-modal" %>
+		    </li>
+			<li class="divider"></li>
+		    <li>
+		    	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path,
+					class: 'btn-lg trigger-response-modal' %>
+			</li>
+          </ul>
+        </li>
+	        
+
+
+
+	        
+	        
+	        
 			<li id="status_message_area_when_menu_not_collpased">
 				<% if @system_status[:button_url].present? %>
 	    	  		<a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">

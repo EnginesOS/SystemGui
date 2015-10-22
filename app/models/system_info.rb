@@ -3,17 +3,207 @@ module SystemInfo
   extend Engines::Api
   # require "matrix"
   
-  def self.monitor
-    {
-      memory: engines_api.get_system_memory_info,
-      loading: engines_api.get_system_load_info,
-      old: {
-        snapshot: Vmstat.snapshot,
-        vm2: (sleep(1); Vmstat.memory),
-        cpu: Vmstat.cpu
-      }
-    }
+  def self.monitor_cpu
+    Vmstat.snapshot
+    # engines_api.get_system_load_info
+    # {
+      # memory: engines_api.get_system_memory_info,
+      # loading: engines_api.get_system_load_info,
+      # old: {
+        # snapshot: Vmstat.snapshot,
+        # vm2: (sleep(1); Vmstat.memory),
+        # cpu: Vmstat.cpu
+      # }
+    # }
   end
+
+  def self.cpu_loads
+    monitor_cpu.cpus
+  end
+
+
+# <div class="col-sm-12">
+#     
+  # <div class='well top-gap'>
+#   
+    # <label>CPU usage</label>
+    # <table class="table">
+      # <tr>
+        # <th>CPU</th>
+        # <th>Idle</th>
+        # <th>User</th>
+        # <th>System</th>
+        # <th title="Priority: software with low 'nice' value">Priority</th>
+      # </tr>
+      # <% @system_monitor[:old][:cpu].each do  |cpu|%>
+        # <tr>
+          # <% total = cpu.nice + cpu.idle + cpu.system + cpu.user
+          # idle = cpu.idle.to_f / total.to_f * 100.0
+          # nice = cpu.nice.to_f  / total.to_f * 100.0
+          # system = cpu.system.to_f  / total.to_f * 100.0
+          # user = cpu.user.to_f  / total.to_f * 100.0 %>
+          # <td><%=cpu.num%></td>
+          # <td><%=idle.to_i%>%</td>
+          # <td><%=user.to_i%>%</td>
+          # <td><%=system.to_i%>%</td>
+          # <td><%=nice.to_i%>%</td>
+        # </tr>
+      # <% end %>
+    # </table>
+#   
+    # <label>System load averages</label>
+    # <table class="table">
+      # <tr>
+        # <th>1 min</th>
+        # <th>5 mins</th>
+        # <th>15 mins</th>
+      # </tr>
+      # <tr>
+        # <%
+          # one = @system_monitor[:old][:snapshot].load_average.one_minute
+          # five =  @system_monitor[:old][:snapshot].load_average.five_minutes
+          # fifteen =  @system_monitor[:old][:snapshot].load_average.fifteen_minutes
+        # %>
+        # <td><%= one %></td>
+        # <td><%= five %></td>
+        # <td><%= fifteen %></td>
+      # </tr>
+    # </table>
+#   
+      # <label>Memory</label>
+      # <%
+        # pagesize = (@system_monitor[:old][:snapshot].memory.pagesize)/1024
+        # active =  @system_monitor[:old][:snapshot].memory.active * pagesize
+        # free =   @system_monitor[:old][:snapshot].memory.free * pagesize
+        # inactive =  @system_monitor[:old][:snapshot].memory.inactive * pagesize
+        # wired =  @system_monitor[:old][:snapshot].memory.wired * pagesize
+      # %>
+      # <table class="table">
+        # <tr>
+          # <th>Swap size</th>
+          # <th>Free</th>
+          # <th>Active</th>
+          # <th>Inactive</th>
+          # <th>Wired</th>
+          # <th>Page-ins</th>
+          # <th>Page-outs</th>
+        # </tr>
+        # <tr>
+          # <td>-</td>
+          # <td><%= free %></td>
+          # <td><%= active %></td>
+          # <td><%= inactive %></td>
+          # <td><%= wired %></td>
+          # <% rateout =@system_monitor[:old][:vm2].pageouts - @system_monitor[:old][:snapshot].memory.pageouts %>
+          # <% ratein = @system_monitor[:old][:vm2].pageins - @system_monitor[:old][:snapshot].memory.pageins %>
+          # <td><%= rateout %> </td>
+          # <td><%= ratein %> </td>
+         # </tr>
+      # </table>
+#   
+  # </div>
+
+
+
+
+
+
+
+  def self.system_cpu_usage_bar_chart
+    # services_names = services_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
+    cpu_load_data = cpu_loads
+    cpus_count = cpu_load_data.count
+    labels = {}
+    cpus_count.times.each_with_index{ |label, i| labels[i] = "CPU #{i}" }
+
+    @g = Gruff::SideStackedBar.new("800x#{50*cpus_count+ 135}")
+    @g.labels = labels
+
+    users_cpus_usage = cpu_load_data.map(&:user)
+    system_cpus_usage = cpu_load_data.map(&:system)
+    nice_cpus_usage = cpu_load_data.map(&:nice)
+    idle_cpus_usage = cpu_load_data.map(&:idle)
+    
+    total_cpu_usage = []
+    
+    cpus_count.times.each do |i|
+      total_cpu_usage << users_cpus_usage[i] + system_cpus_usage[i] + nice_cpus_usage[i] + idle_cpus_usage[i]
+    end
+    
+    users_cpus_usage.map!.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+    system_cpus_usage = system_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+    nice_cpus_usage = nice_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+    idle_cpus_usage = idle_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+
+    # cpus_usage_values = cpu_loads
+    # cpus_in_use_memory_values = cpu_load_data.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
+    # cpus_peak_memory_values = cpu_load_data.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
+    # cpus_headroom_values = cpu_load_data.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
+    @g.data "User", users_cpus_usage
+    @g.data "System", system_cpus_usage
+    @g.data "Nice", nice_cpus_usage
+    @g.data "Idle", idle_cpus_usage
+    @g.legend_font_size = 18
+    @g.title_font_size = 18
+    @g.marker_font_size = 16
+    @g.hide_line_numbers = true
+    @g.theme = {
+      :colors => [
+        '#3071A9',  # blue
+        '#F0AD4E',  # orange
+        '#999999',  # grey
+        '#44AA44',  # green
+      ],
+      :marker_color => 'white',
+      :font_color => 'black',
+      :background_colors => 'white'
+    }
+    @g.to_blob
+  end
+  
+
+  def self.system_cpu_usage_averages_bar_chart
+    @g = Gruff::Bar.new("600x300")
+    @g.title = 'Processes waiting to run'
+    cpu_load_data = monitor_cpu
+    # labels = {}
+    # 3.times.each_with_index{ |label, i| labels[i] = i.to_s }
+    # @g.labels = {0=>'One', 1=>'Five', 2=>'Fifteen'}
+
+p :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+p cpu_load_data.load_average.one_minute
+p cpu_load_data.load_average.five_minutes
+p cpu_load_data.load_average.fifteen_minutes
+
+    @g.data "One min #{cpu_load_data.load_average.one_minute}", cpu_load_data.load_average.one_minute*100
+    @g.data "Five mins #{cpu_load_data.load_average.five_minutes}", cpu_load_data.load_average.five_minutes*100
+    @g.data "Fifteen mins #{cpu_load_data.load_average.fifteen_minutes}", cpu_load_data.load_average.fifteen_minutes*100
+    # @g.maximum_value = 100
+    @g.legend_font_size = 24
+    @g.title_font_size = 24
+    @g.marker_font_size = 16
+    @g.hide_line_numbers = true
+    @g.theme = {
+      :colors => [
+        '#3071A9',  # blue
+        '#F0AD4E',  # orange
+        '#999999',  # grey
+        '#44AA44',  # green
+      ],
+      :marker_color => 'white',
+      :font_color => 'black',
+      :background_colors => 'white'
+    }
+    @g.to_blob
+  end
+  
+
+
+
+
+
+
+
 
   def self.memory_statistics
     engines_api.get_memory_statistics
@@ -44,10 +234,11 @@ module SystemInfo
   end
 
   def self.total_system_memory_usage_pie_chart
-    @g = Gruff::Pie.new('800x400')
+    @g = Gruff::Pie.new('800x500')
     total_system_memory_usage.each { |k,v| @g.data k, v }
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
-    @g.hide_legend = true
+    @g.hide_labels_less_than = 5
+    @g.hide_legend = false
     @g.title = "System #{memory_statistics[:system][:total].to_i/1024} MB"
     @g.text_offset_percentage = 0
     render_pie_chart
@@ -59,6 +250,7 @@ module SystemInfo
     services_totals = memory_statistics[:containers][:totals][:services][:allocated].to_i/1048576
     { "Applications #{application_totals} MB" => application_totals, "Services #{services_totals} MB" => services_totals }.each { |k,v| @g.data k, v }
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
+    @g.hide_labels_less_than = 5
     @g.hide_legend = true
     @g.title = "Containers #{application_totals + services_totals} MB"
     @g.text_offset_percentage = 0
@@ -86,7 +278,7 @@ module SystemInfo
 
     @g.labels = { 0 => "Applications #{application_totals[:allocated].to_i/1048576} MB", 1 => "Services #{services_totals[:allocated].to_i/1048576} MB" };
     
-    render_bar_chart
+    render_memory_usage_bar_chart
   end
 
   def self.application_memory_usage
@@ -99,6 +291,7 @@ module SystemInfo
     @g = Gruff::Pie.new('800x400')
     application_memory_usage.each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
+    @g.hide_labels_less_than = 5
     @g.hide_legend = true
     @g.title = "Applications #{memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576} MB"
     @g.text_offset_percentage = 0
@@ -122,7 +315,7 @@ module SystemInfo
     @g.data "Peak", application_peak_memory_values
     @g.data "Headroom", application_headroom_values
     
-    render_bar_chart
+    render_memory_usage_bar_chart
   end
   
   def self.services_memory_usage
@@ -159,10 +352,10 @@ module SystemInfo
     @g.data "Peak", services_peak_memory_values
     @g.data "Headroom", services_headroom_values
 
-    render_bar_chart
+    render_memory_usage_bar_chart
   end
   
-  def self.render_bar_chart
+  def self.render_memory_usage_bar_chart
     @g.title_font_size = 18
     @g.legend_font_size = 18
     @g.marker_font_size = 16
@@ -170,8 +363,8 @@ module SystemInfo
     @g.theme = {
       :colors => [
         '#3071A9',  # blue
-        '#EE4444',  # red
         '#F0AD4E',  # orange
+        '#44AA44',  # green
       ],
       :marker_color => 'white',
       :font_color => 'black',
@@ -179,6 +372,10 @@ module SystemInfo
     }
     @g.to_blob
   end
+
+
+
+
 
   def self.render_pie_chart
     @g.title_font_size = 18
@@ -189,12 +386,19 @@ module SystemInfo
       :colors => [
         '#F0AD4E',  # orange
         '#3071A9',  # blue
-        '#44AA44',  # green
         '#8A6EAF',  # purple
+        '#44AA44',  # green
         '#EFDA43',  # yellow
         '#EE4444',  # red
-        'grey'
-      ],
+        'grey',
+        "#EFCE10", "#E27A1D", "#7F91C3", "#434187", "#228B22", #loads of other colors for the skinny slices
+        "#575597", "#3B256D", "#A63570", "#E6AA19", "#A670B8", "#93BDE7",
+        "#A660AC", "#A650A0", "#1F1D6D", "#80C837", "#ACD62A", "#20B2AA",
+        "#229F6E", "#C11C17", "#60B6CA", "#E0E61A", "#DE5003", "#4CA82B",
+        "#502E72", "#6F6DA7", "#A6358C", "#A2395B"],
+      
+      
+      
       :marker_color => 'white',
       :font_color => 'black',
       :background_colors => 'white'

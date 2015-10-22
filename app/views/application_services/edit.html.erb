@@ -1,5 +1,5 @@
 <div class="col-sm-12">
-	<h2><i class='fa fa-arrows-v'></i> Edit <%= @application_service.existing_connection.title %> on <%= @application_service.application.container_name %></h2>
+	<h2><i class='fa fa-arrows-v'></i> Edit <%= @application_service.existing_connection.service_detail.title %> on <%= @application_service.application.container_name %></h2>
   	<%= form_for @application_service, url: application_service_path(application_name: @application_service.application.container_name), method: :patch do |f| %>
 		<%= render 'form_fields', f: f %>
 	    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: application_services_properties_path(application_name: @application_service.application.container_name)} %>
