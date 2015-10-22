@@ -1,116 +1,55 @@
 module SystemInfo
   
   extend Engines::Api
-  # require "matrix"
   
   def self.monitor_cpu
     Vmstat.snapshot
-    # engines_api.get_system_load_info
-    # {
-      # memory: engines_api.get_system_memory_info,
-      # loading: engines_api.get_system_load_info,
-      # old: {
-        # snapshot: Vmstat.snapshot,
-        # vm2: (sleep(1); Vmstat.memory),
-        # cpu: Vmstat.cpu
-      # }
-    # }
+  end
+  
+  def self.otherstuff
+    {
+      loading: engines_api.get_system_load_info,
+      memory: engines_api.get_memory_statistics,
+      virtual_memory: Vmstat.memory,
+      disks: Vmstat.snapshot.disks,
+      network_interfaces: Vmstat.network_interfaces,
+      cpu: Vmstat.cpu,
+    }
   end
 
   def self.cpu_loads
     monitor_cpu.cpus
   end
 
-
-# <div class="col-sm-12">
-#     
-  # <div class='well top-gap'>
-#   
-    # <label>CPU usage</label>
-    # <table class="table">
-      # <tr>
-        # <th>CPU</th>
-        # <th>Idle</th>
-        # <th>User</th>
-        # <th>System</th>
-        # <th title="Priority: software with low 'nice' value">Priority</th>
-      # </tr>
-      # <% @system_monitor[:old][:cpu].each do  |cpu|%>
-        # <tr>
-          # <% total = cpu.nice + cpu.idle + cpu.system + cpu.user
-          # idle = cpu.idle.to_f / total.to_f * 100.0
-          # nice = cpu.nice.to_f  / total.to_f * 100.0
-          # system = cpu.system.to_f  / total.to_f * 100.0
-          # user = cpu.user.to_f  / total.to_f * 100.0 %>
-          # <td><%=cpu.num%></td>
-          # <td><%=idle.to_i%>%</td>
-          # <td><%=user.to_i%>%</td>
-          # <td><%=system.to_i%>%</td>
-          # <td><%=nice.to_i%>%</td>
-        # </tr>
-      # <% end %>
-    # </table>
-#   
-    # <label>System load averages</label>
-    # <table class="table">
-      # <tr>
-        # <th>1 min</th>
-        # <th>5 mins</th>
-        # <th>15 mins</th>
-      # </tr>
-      # <tr>
-        # <%
-          # one = @system_monitor[:old][:snapshot].load_average.one_minute
-          # five =  @system_monitor[:old][:snapshot].load_average.five_minutes
-          # fifteen =  @system_monitor[:old][:snapshot].load_average.fifteen_minutes
-        # %>
-        # <td><%= one %></td>
-        # <td><%= five %></td>
-        # <td><%= fifteen %></td>
-      # </tr>
-    # </table>
-#   
-      # <label>Memory</label>
-      # <%
-        # pagesize = (@system_monitor[:old][:snapshot].memory.pagesize)/1024
-        # active =  @system_monitor[:old][:snapshot].memory.active * pagesize
-        # free =   @system_monitor[:old][:snapshot].memory.free * pagesize
-        # inactive =  @system_monitor[:old][:snapshot].memory.inactive * pagesize
-        # wired =  @system_monitor[:old][:snapshot].memory.wired * pagesize
-      # %>
-      # <table class="table">
-        # <tr>
-          # <th>Swap size</th>
-          # <th>Free</th>
-          # <th>Active</th>
-          # <th>Inactive</th>
-          # <th>Wired</th>
-          # <th>Page-ins</th>
-          # <th>Page-outs</th>
-        # </tr>
-        # <tr>
-          # <td>-</td>
-          # <td><%= free %></td>
-          # <td><%= active %></td>
-          # <td><%= inactive %></td>
-          # <td><%= wired %></td>
-          # <% rateout =@system_monitor[:old][:vm2].pageouts - @system_monitor[:old][:snapshot].memory.pageouts %>
-          # <% ratein = @system_monitor[:old][:vm2].pageins - @system_monitor[:old][:snapshot].memory.pageins %>
-          # <td><%= rateout %> </td>
-          # <td><%= ratein %> </td>
-         # </tr>
-      # </table>
-#   
-  # </div>
-
-
-
-
-
-
+  def self.memory_statistics
+    engines_api.get_memory_statistics
+  end
+  
+  def self.cpus
+    Vmstat.cpu.count.to_s
+  end
+  
+  def self.total_system_memory_usage
+    other = ( memory_statistics[:system][:total].to_i - 
+                memory_statistics[:system][:active].to_i -
+                memory_statistics[:system][:buffers].to_i -
+                memory_statistics[:system][:file_cache].to_i -
+                memory_statistics[:system][:free].to_i )/1024
+    {
+      "Active #{memory_statistics[:system][:active].to_i/1024} MB" => memory_statistics[:system][:active].to_i/1024,
+      "Buffers #{memory_statistics[:system][:buffers].to_i/1024} MB" => memory_statistics[:system][:buffers].to_i/1024,
+      "File cache #{memory_statistics[:system][:file_cache].to_i/1024} MB" => memory_statistics[:system][:file_cache].to_i/1024,
+      "Free #{memory_statistics[:system][:free].to_i/1024} MB" => memory_statistics[:system][:free].to_i/1024,
+    }.merge(
+      if other > 0
+        {"Other #{other} MB" => other}
+      else
+        {}
+      end      
+    )
+  end
 
   def self.system_cpu_usage_bar_chart
-    # services_names = services_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
     cpu_load_data = cpu_loads
     cpus_count = cpu_load_data.count
     labels = {}
@@ -135,10 +74,6 @@ module SystemInfo
     nice_cpus_usage = nice_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
     idle_cpus_usage = idle_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
 
-    # cpus_usage_values = cpu_loads
-    # cpus_in_use_memory_values = cpu_load_data.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
-    # cpus_peak_memory_values = cpu_load_data.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
-    # cpus_headroom_values = cpu_load_data.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
     @g.data "User", users_cpus_usage
     @g.data "System", system_cpus_usage
     @g.data "Nice", nice_cpus_usage
@@ -166,19 +101,10 @@ module SystemInfo
     @g = Gruff::Bar.new("600x300")
     @g.title = 'Processes waiting to run'
     cpu_load_data = monitor_cpu
-    # labels = {}
-    # 3.times.each_with_index{ |label, i| labels[i] = i.to_s }
-    # @g.labels = {0=>'One', 1=>'Five', 2=>'Fifteen'}
-
-p :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-p cpu_load_data.load_average.one_minute
-p cpu_load_data.load_average.five_minutes
-p cpu_load_data.load_average.fifteen_minutes
 
     @g.data "One min #{cpu_load_data.load_average.one_minute}", cpu_load_data.load_average.one_minute*100
     @g.data "Five mins #{cpu_load_data.load_average.five_minutes}", cpu_load_data.load_average.five_minutes*100
     @g.data "Fifteen mins #{cpu_load_data.load_average.fifteen_minutes}", cpu_load_data.load_average.fifteen_minutes*100
-    # @g.maximum_value = 100
     @g.legend_font_size = 24
     @g.title_font_size = 24
     @g.marker_font_size = 16
@@ -195,42 +121,6 @@ p cpu_load_data.load_average.fifteen_minutes
       :background_colors => 'white'
     }
     @g.to_blob
-  end
-  
-
-
-
-
-
-
-
-
-  def self.memory_statistics
-    engines_api.get_memory_statistics
-  end
-  
-  def self.total_memory
-    memory_statistics[]
-  end
-  
-  def self.cpus
-    Vmstat.cpu.count.to_s
-  end
-  
-  def self.total_system_memory_usage
-    other = ( memory_statistics[:system][:total].to_i - 
-                memory_statistics[:system][:active].to_i -
-                memory_statistics[:system][:buffers].to_i -
-                memory_statistics[:system][:file_cache].to_i -
-                memory_statistics[:system][:free].to_i )/1024
-    {
-      # Used: memory_statistics[:system][:total].to_i - memory_statistics[:system][:free].to_i,
-      "Active #{memory_statistics[:system][:active].to_i/1024} MB" => memory_statistics[:system][:active].to_i/1024,
-      "Buffers #{memory_statistics[:system][:buffers].to_i/1024} MB" => memory_statistics[:system][:buffers].to_i/1024,
-      "File cache #{memory_statistics[:system][:file_cache].to_i/1024} MB" => memory_statistics[:system][:file_cache].to_i/1024,
-      "Free #{memory_statistics[:system][:free].to_i/1024} MB" => memory_statistics[:system][:free].to_i/1024,
-      "Other #{other} MB" => other
-    }
   end
 
   def self.total_system_memory_usage_pie_chart
@@ -373,10 +263,6 @@ p cpu_load_data.load_average.fifteen_minutes
     @g.to_blob
   end
 
-
-
-
-
   def self.render_pie_chart
     @g.title_font_size = 18
     @g.legend_font_size = 18
@@ -389,13 +275,13 @@ p cpu_load_data.load_average.fifteen_minutes
         '#8A6EAF',  # purple
         '#44AA44',  # green
         '#EFDA43',  # yellow
-        '#EE4444',  # red
-        'grey',
-        "#EFCE10", "#E27A1D", "#7F91C3", "#434187", "#228B22", #loads of other colors for the skinny slices
-        "#575597", "#3B256D", "#A63570", "#E6AA19", "#A670B8", "#93BDE7",
-        "#A660AC", "#A650A0", "#1F1D6D", "#80C837", "#ACD62A", "#20B2AA",
+        '#EE9494',  # red
+        '#999999',  #grey
+        "#A630AC", "#3650A0", "#1F1D6D", "#80C837", "#ACD62A", "#20B2AA",
         "#229F6E", "#C11C17", "#60B6CA", "#E0E61A", "#DE5003", "#4CA82B",
-        "#502E72", "#6F6DA7", "#A6358C", "#A2395B"],
+        "#EFCE10", "#E27A1D", "#7F91C3", "#434187", "#228B22", "#502E72", #loads of other colors for the skinny slices
+        "#575597", "#3B256D", "#A63570", "#E6AA19", "#A670B8", "#93BDE7",
+        "#6F6DA7", "#A6358C", "#A2395B"],
       
       
       

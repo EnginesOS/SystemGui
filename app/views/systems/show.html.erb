@@ -7,4 +7,10 @@
 	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
-<%= (ap @system_status, plain: true, index: false).html_safe %>
+<div class="col-sm-12 top-gap">
+	<%= (ap @system_status, plain: true, index: false).html_safe %>
+</div>
+
+<div class="col-sm-12 top-gap">
+	<%= (ap @system_info, plain: true, index: false).html_safe %>
+</div>
