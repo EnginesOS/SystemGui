@@ -1,0 +1,35 @@
+<div class="col-sm-12">
+	<h2><i class='fa fa-arrows-v'></i> New <%= @application_service_connection_subservice_connector_configuration.title %> service connection for <%= @application_service_connection_subservice_connector_configuration.application_service_connection_service_name %> on <%= @application_service_connection_subservice_connector_configuration.application_name %></h2>
+
+	<%= form_for @application_service_connection_subservice_connector_configuration, url: application_service_connection_subservice_connector_configuration_path do |f| %>
+
+		<%= render partial: 'shared/form/errors', locals: {f: f} %>
+		<%= f.hidden_field :application_name %>
+		<%= f.hidden_field :type_path %>
+		<%= f.hidden_field :publisher_namespace %>
+		<%= f.hidden_field :application_service_connection_params, value: f.object.application_service_connection_params.to_json %>
+		<%#= f.text_field :application_service_connection_params, value: f.object.application_service_connection_params.to_json %>
+
+<% #= f.object.application_service_connection_params.to_json %>
+
+		<%= render partial: 'variables/form_fields', locals: {f: f} %>
+
+	    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, submit_label: 'Connect', cancel_path: application_services_properties_path(application_name: f.object.application_name)} %>
+
+<% if false %>
+
+		<%= f.object.application_name %>
+		<%= f.object.type_path %>
+		<%= f.object.publisher_namespace %><br />
+		<%= f.object.application_service_connection_params %>
+
+		<%= f.fields_for :application_service_connector_configuration do |ff| %>
+			<%= ff.hidden_field :create_type %>
+			<%= render partial: 'variables/form_fields', locals: {f: ff} %>
+		<% end %>
+	    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, submit_label: 'Connect', cancel_path: application_services_properties_path(application_name: f.object.application.container_name)} %>
+
+<% end %>
+
+	<% end %>
+</div>

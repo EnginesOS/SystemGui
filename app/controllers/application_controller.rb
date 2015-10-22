@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
-  rescue_from Exception, :with => :render_500
+  rescue_from Exception, :with => :render_500 if Rails.env.production?
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
@@ -14,8 +14,9 @@ class ApplicationController < ActionController::Base
 
   def set_system_status
     return if params[:controller] == 'helps'
-    @system_status = System.status.tap do |system_status|
-      case system_status[:state]
+    if user_signed_in?
+      @system_status = System.status
+      case @system_status[:state]
       when :restarting
         redirect_to system_restart_path,
           alert: 'Please wait for system to reboot.' \
@@ -26,7 +27,7 @@ class ApplicationController < ActionController::Base
           if params[:controller] != 'system_base_updates'
       when :engines_updating
         redirect_to system_engines_update_path,
-          alert: 'Please wait for Engines to update.' \
+          alert: "Please wait for Engines to update." \
           if params[:controller] != 'system_engines_updates'
       when :installing
         redirect_to installing_application_installation_path,
@@ -35,7 +36,7 @@ class ApplicationController < ActionController::Base
               params[:controller] == 'install_from_repository_urls' ||
               params[:controller] == 'install_from_docker_hubs' )
       end
-    end if user_signed_in?
+    end
   end
 
 protected

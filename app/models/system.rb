@@ -12,28 +12,36 @@ module System
 
   def self.update_engines
     engines_api.update_engines_system_software
-    Maintenance.full_maintenance 
+  end
+  
+  def self.system_status_from_api
+    engines_api.system_status
+  end
+  
+  def self.build_status_from_api
+    engines_api.build_status
   end
 
   def self.status
-    @status_from_api = engines_api.system_status
-    @build_status_from_api = engines_api.build_status
+    @status_from_api = system_status_from_api
+    @build_status_from_api = build_status_from_api
     if @build_status_from_api[:did_build_fail]
       ENV['FAILED_BUILD_FLAG'] = 'true'
     end
-    if @status_from_api[:is_rebooting]
-      {state: :restarting, message: "Rebooting", message_class: :warning}
-    elsif @status_from_api[:is_engines_system_updating]
-      {state: :engines_updating, message: "Updating", message_class: :warning}
-    elsif @status_from_api[:is_base_system_updating]
-      {state: :base_updating, message: "Updating", message_class: :warning}
-    elsif @build_status_from_api[:is_building]
-      {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing'}
-    elsif @status_from_api[:needs_reboot]
-      {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: '/system/restart'}
-    else
-      {state: :ok, message: "OK", message_class: :ok}
-    end
+    {system: @status_from_api,builder: @build_status_from_api}.merge(
+      if @status_from_api[:is_rebooting]
+        {state: :restarting, message: "Rebooting", message_class: :warning}
+      elsif @status_from_api[:is_engines_system_updating]
+        {state: :engines_updating, message: "Updating", message_class: :warning}
+      elsif @status_from_api[:is_base_system_updating]
+        {state: :base_updating, message: "Updating", message_class: :warning}
+      elsif @build_status_from_api[:is_building]
+        {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing'}
+      elsif @status_from_api[:needs_reboot]
+        {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: '/system/restart'}
+      else
+        {state: :ok, message: "OK", message_class: :ok}
+      end)
   end
 
   def self.installing_params

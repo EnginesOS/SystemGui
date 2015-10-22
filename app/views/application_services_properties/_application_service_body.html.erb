@@ -1,7 +1,7 @@
 <div class="col-sm-12">	
 	
 	<div class="pull-right">
-		<% unless application_service.existing_connection.immutable %>
+		<% unless application_service.existing_connection.service_detail.immutable %>
 			<%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', 
 				edit_application_service_path(application_service.edit_connection_params),
 				class: 'btn btn-default btn-noborder btn-lg trigger-response-modal', title: 'Edit record' %>
@@ -9,8 +9,8 @@
 		<%= link_to content_tag(:i , nil, class: 'fa fa-trash') + ' Delete',
 				application_service_path(application_service.edit_connection_params),
 				method: :delete, class: 'btn btn-default btn-noborder btn-lg',
-				data: { confirmdetail: "Are you sure that you want to delete #{application_service.existing_connection.title}?", confirm: 'Confirm delete' }, title: 'Delete' %>
-		<% if application_service.existing_connection.persistant %>
+				data: { confirmdetail: "Are you sure that you want to delete #{application_service.existing_connection.service_detail.title}?", confirm: 'Confirm delete' }, title: 'Delete' %>
+		<% if application_service.existing_connection.service_detail.persistant %>
 		<div class="btn-group dropdown">
 
 			<button class="btn btn-lg btn-default btn-noborder dropdown-toggle" type="button" data-toggle="dropdown">
@@ -19,41 +19,30 @@
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				
-				
-				
 				<% if application_service.existing_connection.available_subservices.present? %>
-
-				<% application_service.existing_connection.available_subservices.each do |new_subservice_params| %>
-				
-				<%= new_subservice_params %>
-				
-				<li>
-					<%= link_to(
-					new_subservice_params[:title],
-					new_application_subservice_path(
-					application_subservice:
-						{
-							application_name: application_service.application.container_name,
-							application_service: {
-								connection_params:	application_service.connection_params,
-								subservice: {
-									new_subservice_params: nil #new_subservice_params
+					<% application_service.existing_connection.available_subservices.each do |available_subservice| %>
+						<%#= available_subservice.application_service_connection.connection_params %>
+						<%#= available_subservice.new_subservice_connection_params %>
+						<li>
+							<%= link_to(
+							fa(available_subservice.fa_icon) + ' ' + available_subservice.title,
+							new_application_service_connection_subservice_connector_configuration_path(
+								application_service_connection_subservice_connector_configuration: {
+									application_name: application_service.application.container_name,
+									application_service_connection_params: available_subservice.application_service_connection.connection_params,
+									type_path: available_subservice.type_path,
+									publisher_namespace: available_subservice.publisher_namespace
 								}
-							}
-						}
-					),
-					class: "btn-lg trigger-response-modal") %>
-
-				</li>
-				<% end %>
+							),
+							class: "btn-lg trigger-response-modal") %>
+						</li>
+					<% end %>
 				<% else %>
 				<li>
 					<div class="btn-lg">None available</div>
 				</li>
 				<% end %>
-
 			</ul>
-
 		</div>
 		
 			<%#= application_service.application_subservices.size %>

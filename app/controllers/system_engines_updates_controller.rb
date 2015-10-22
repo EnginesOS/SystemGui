@@ -20,6 +20,7 @@ class SystemEnginesUpdatesController < ApplicationController
       render text: "busy"
     else
       render text: "done"
+      Maintenance.full_maintenance 
     end
   end
 

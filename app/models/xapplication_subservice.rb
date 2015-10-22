@@ -46,7 +46,7 @@ class ApplicationSubservice < ActiveRecord::Base
     result.was_success
   end
 
-  def to_json
+  def subservice_handle_params
     {parent_engine: application_name,
     type_path: type_path,
     parent_service: {
@@ -54,8 +54,7 @@ class ApplicationSubservice < ActiveRecord::Base
       publisher_namespace: parent_publisher_namespace,
       type_path: parent_type_path
       },
-    publisher_namespace: publisher_namespace,
-    variables: varaibles_params}
+    publisher_namespace: publisher_namespace}
   end 
  
   def varaibles_params

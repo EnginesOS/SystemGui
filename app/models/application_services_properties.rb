@@ -17,7 +17,16 @@ class ApplicationServicesProperties < ActiveRecord::Base
   
   def existing_connections_params
     properties_from_system.map do |existing_connection_params|
-      {connection_params: existing_connection_params.to_json}
+      {
+        connection_params: {
+          parent_engine: existing_connection_params[:parent_engine],
+          type_path: existing_connection_params[:type_path],
+          publisher_namespace: existing_connection_params[:publisher_namespace],
+          service_handle: existing_connection_params[:service_handle],
+          container_type: existing_connection_params[:container_type],
+          service_container_name: existing_connection_params[:service_container_name]
+        }.to_json
+      }
     end
   end
 

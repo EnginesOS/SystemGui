@@ -1,26 +1,28 @@
 module SystemInfo
   
   extend Engines::Api
-  # require "matrix"
   
-  def self.monitor
+  def self.monitor_cpu
+    Vmstat.snapshot
+  end
+  
+  def self.otherstuff
     {
-      memory: engines_api.get_system_memory_info,
       loading: engines_api.get_system_load_info,
-      old: {
-        snapshot: Vmstat.snapshot,
-        vm2: (sleep(1); Vmstat.memory),
-        cpu: Vmstat.cpu
-      }
+      memory: engines_api.get_memory_statistics,
+      virtual_memory: Vmstat.memory,
+      disks: Vmstat.snapshot.disks,
+      network_interfaces: Vmstat.network_interfaces,
+      cpu: Vmstat.cpu,
     }
+  end
+
+  def self.cpu_loads
+    monitor_cpu.cpus
   end
 
   def self.memory_statistics
     engines_api.get_memory_statistics
-  end
-  
-  def self.total_memory
-    memory_statistics[]
   end
   
   def self.cpus
@@ -28,62 +30,123 @@ module SystemInfo
   end
   
   def self.total_system_memory_usage
+    other = ( memory_statistics[:system][:total].to_i - 
+                memory_statistics[:system][:active].to_i -
+                memory_statistics[:system][:buffers].to_i -
+                memory_statistics[:system][:file_cache].to_i -
+                memory_statistics[:system][:free].to_i )/1024
     {
-      # Used: memory_statistics[:system][:total].to_i - memory_statistics[:system][:free].to_i,
-      "Active #{memory_statistics[:system][:active].to_i/1024} Mb" => memory_statistics[:system][:active].to_i,
-      "Inactive #{memory_statistics[:system][:inactive].to_i/1024} Mb" => memory_statistics[:system][:inactive].to_i,
-      "Buffers #{memory_statistics[:system][:buffers].to_i/1024} Mb" => memory_statistics[:system][:buffers].to_i,
-      "File cache #{memory_statistics[:system][:file_cache].to_i/1024} Mb" => memory_statistics[:system][:file_cache].to_i,
-      "Free #{memory_statistics[:system][:free].to_i/1024} Mb" => memory_statistics[:system][:free].to_i
+      "Active #{memory_statistics[:system][:active].to_i/1024} MB" => memory_statistics[:system][:active].to_i/1024,
+      "Buffers #{memory_statistics[:system][:buffers].to_i/1024} MB" => memory_statistics[:system][:buffers].to_i/1024,
+      "File cache #{memory_statistics[:system][:file_cache].to_i/1024} MB" => memory_statistics[:system][:file_cache].to_i/1024,
+      "Free #{memory_statistics[:system][:free].to_i/1024} MB" => memory_statistics[:system][:free].to_i/1024,
+    }.merge(
+      if other > 0
+        {"Other #{other} MB" => other}
+      else
+        {}
+      end      
+    )
+  end
+
+  def self.system_cpu_usage_bar_chart
+    cpu_load_data = cpu_loads
+    cpus_count = cpu_load_data.count
+    labels = {}
+    cpus_count.times.each_with_index{ |label, i| labels[i] = "CPU #{i}" }
+
+    @g = Gruff::SideStackedBar.new("800x#{50*cpus_count+ 135}")
+    @g.labels = labels
+
+    users_cpus_usage = cpu_load_data.map(&:user)
+    system_cpus_usage = cpu_load_data.map(&:system)
+    nice_cpus_usage = cpu_load_data.map(&:nice)
+    idle_cpus_usage = cpu_load_data.map(&:idle)
+    
+    total_cpu_usage = []
+    
+    cpus_count.times.each do |i|
+      total_cpu_usage << users_cpus_usage[i] + system_cpus_usage[i] + nice_cpus_usage[i] + idle_cpus_usage[i]
+    end
+    
+    users_cpus_usage.map!.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+    system_cpus_usage = system_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+    nice_cpus_usage = nice_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+    idle_cpus_usage = idle_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
+
+    @g.data "User", users_cpus_usage
+    @g.data "System", system_cpus_usage
+    @g.data "Nice", nice_cpus_usage
+    @g.data "Idle", idle_cpus_usage
+    @g.legend_font_size = 18
+    @g.title_font_size = 18
+    @g.marker_font_size = 16
+    @g.hide_line_numbers = true
+    @g.theme = {
+      :colors => [
+        '#3071A9',  # blue
+        '#F0AD4E',  # orange
+        '#999999',  # grey
+        '#44AA44',  # green
+      ],
+      :marker_color => 'white',
+      :font_color => 'black',
+      :background_colors => 'white'
     }
-  end
-
-  def self.applications_memory_usage_bar_chart
-    application_memory_usage = memory_statistics[:containers][:applications].select{ |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }
-    application_names = application_memory_usage.keys
-    application_count = application_names.count
-    
-    application_names = application_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} Mb" }
-    labels = {}
-    application_names.each_with_index{ |label, i| p :label; p label; p i; labels[i] = label.to_s }
-
-    @g = Gruff::SideStackedBar.new("800x#{50*application_count+ 135}")
-    @g.labels = labels
-
-    application_usage_values = application_memory_usage.values
-    application_in_use_memory_values = application_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
-    application_peak_memory_values = application_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
-    application_headroom_values = application_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
-    @g.data "In use", application_in_use_memory_values
-    @g.data "Peak", application_peak_memory_values
-    @g.data "Allocated", application_headroom_values
-
-    render_graph
+    @g.to_blob
   end
   
-  def self.services_memory_usage_bar_chart
-    service_memory_usage = memory_statistics[:containers][:services].select{ |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }
-    service_names = service_memory_usage.keys
-    service_count = service_names.count
-    
-    service_names = service_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} Mb" }
-    labels = {}
-    service_names.each_with_index{ |label, i| labels[i] = label.to_s }
 
-    @g = Gruff::SideStackedBar.new("800x#{50*service_count+ 135}")
-    @g.labels = labels
+  def self.system_cpu_usage_averages_bar_chart
+    @g = Gruff::Bar.new("600x300")
+    @g.title = 'Processes waiting to run'
+    cpu_load_data = monitor_cpu
 
-    service_usage_values = service_memory_usage.values
-    service_in_use_memory_values = service_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
-    service_peak_memory_values = service_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
-    service_headroom_values = service_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
-    @g.data "In use", service_in_use_memory_values
-    @g.data "Peak", service_peak_memory_values
-    @g.data "Allocated", service_headroom_values
-
-    render_graph
+    @g.data "One min #{cpu_load_data.load_average.one_minute}", cpu_load_data.load_average.one_minute*100
+    @g.data "Five mins #{cpu_load_data.load_average.five_minutes}", cpu_load_data.load_average.five_minutes*100
+    @g.data "Fifteen mins #{cpu_load_data.load_average.fifteen_minutes}", cpu_load_data.load_average.fifteen_minutes*100
+    @g.legend_font_size = 24
+    @g.title_font_size = 24
+    @g.marker_font_size = 16
+    @g.hide_line_numbers = true
+    @g.theme = {
+      :colors => [
+        '#3071A9',  # blue
+        '#F0AD4E',  # orange
+        '#999999',  # grey
+        '#44AA44',  # green
+      ],
+      :marker_color => 'white',
+      :font_color => 'black',
+      :background_colors => 'white'
+    }
+    @g.to_blob
   end
-  
+
+  def self.total_system_memory_usage_pie_chart
+    @g = Gruff::Pie.new('800x500')
+    total_system_memory_usage.each { |k,v| @g.data k, v }
+    @g.label_formatter = Proc.new { |data_row| data_row[0] }
+    @g.hide_labels_less_than = 5
+    @g.hide_legend = false
+    @g.title = "System #{memory_statistics[:system][:total].to_i/1024} MB"
+    @g.text_offset_percentage = 0
+    render_pie_chart
+  end
+    
+  def self.total_container_memory_usage_pie_chart
+    @g = Gruff::Pie.new('800x400')
+    application_totals = memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576
+    services_totals = memory_statistics[:containers][:totals][:services][:allocated].to_i/1048576
+    { "Applications #{application_totals} MB" => application_totals, "Services #{services_totals} MB" => services_totals }.each { |k,v| @g.data k, v }
+    @g.label_formatter = Proc.new { |data_row| data_row[0] }
+    @g.hide_labels_less_than = 5
+    @g.hide_legend = true
+    @g.title = "Containers #{application_totals + services_totals} MB"
+    @g.text_offset_percentage = 0
+    render_pie_chart
+  end
+    
   def self.total_container_memory_usage_bar_chart
     @g = Gruff::SideStackedBar.new('800x235')
 
@@ -98,32 +161,100 @@ module SystemInfo
     services_headroom = ( services_totals[:allocated].to_f - services_totals[:peak_sum].to_f)/services_totals[:allocated].to_f*100
 
     {
-      :"In use" => [ applications_currently_in_use, services_currently_in_use ],
+      :"Current" => [ applications_currently_in_use, services_currently_in_use ],
       :"Peak" => [ applications_peak_usage, services_peak_usage ],
-      Allocated: [ applications_headroom, services_headroom ]
+      :"Headroom" => [ applications_headroom, services_headroom ]
     }.each { |k,v| @g.data k, v }
 
-    @g.labels = { 0 => "Applications #{application_totals[:allocated].to_i/1048576} Mb", 1 => "Services #{services_totals[:allocated].to_i/1048576} Mb" };
+    @g.labels = { 0 => "Applications #{application_totals[:allocated].to_i/1048576} MB", 1 => "Services #{services_totals[:allocated].to_i/1048576} MB" };
     
-    render_graph
+    render_memory_usage_bar_chart
   end
 
-  def self.total_system_memory_usage_pie_chart
+  def self.application_memory_usage
+    memory_statistics[:containers][:applications].
+      select { |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }.
+      sort.to_h.sort_by { |keys, values| 1.0/values[:limit].to_i }.to_h
+  end
+
+  def self.total_applications_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x400')
-    total_system_memory_usage.each { |k,v| @g.data k, v }
-    render_graph
+    application_memory_usage.each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
+    @g.label_formatter = Proc.new { |data_row| data_row[0] }
+    @g.hide_labels_less_than = 5
+    @g.hide_legend = true
+    @g.title = "Applications #{memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576} MB"
+    @g.text_offset_percentage = 0
+    render_pie_chart
   end
     
-  def self.render_graph
+  def self.applications_memory_usage_bar_chart
+    application_names = application_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
+    application_count = application_names.count
+    labels = {}
+    application_names.each_with_index{ |label, i| p :label; p label; p i; labels[i] = label.to_s }
+
+    @g = Gruff::SideStackedBar.new("800x#{50*application_count+ 135}")
+    @g.labels = labels
+
+    application_usage_values = application_memory_usage.values
+    application_in_use_memory_values = application_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
+    application_peak_memory_values = application_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
+    application_headroom_values = application_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
+    @g.data "Current", application_in_use_memory_values
+    @g.data "Peak", application_peak_memory_values
+    @g.data "Headroom", application_headroom_values
+    
+    render_memory_usage_bar_chart
+  end
+  
+  def self.services_memory_usage
+    memory_statistics[:containers][:services].
+      select{ |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }.
+      sort.to_h.sort_by { |keys, values| 1.0/values[:limit].to_i }.to_h
+  end
+
+  def self.total_services_memory_usage_pie_chart
+    @g = Gruff::Pie.new('800x400')
+    services_memory_usage.each { |key, value| @g.data "#{key}", value[:limit].to_i }
+    @g.hide_labels_less_than = 5
+    @g.label_formatter = Proc.new { |data_row| data_row[0] }
+    @g.hide_legend = true
+    @g.title = "Services #{memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576} MB"
+    @g.text_offset_percentage = 0
+    render_pie_chart
+  end
+    
+  def self.services_memory_usage_bar_chart
+    services_names = services_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
+    services_count = services_names.count
+    labels = {}
+    services_names.each_with_index{ |label, i| labels[i] = label.to_s }
+
+    @g = Gruff::SideStackedBar.new("800x#{50*services_count+ 135}")
+    @g.labels = labels
+
+    services_usage_values = services_memory_usage.values
+    services_in_use_memory_values = services_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
+    services_peak_memory_values = services_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
+    services_headroom_values = services_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
+    @g.data "Current", services_in_use_memory_values
+    @g.data "Peak", services_peak_memory_values
+    @g.data "Headroom", services_headroom_values
+
+    render_memory_usage_bar_chart
+  end
+  
+  def self.render_memory_usage_bar_chart
+    @g.title_font_size = 18
+    @g.legend_font_size = 18
+    @g.marker_font_size = 16
+    @g.hide_line_numbers = true
     @g.theme = {
       :colors => [
         '#3071A9',  # blue
-        '#EE4444',  # red
+        '#F0AD4E',  # orange
         '#44AA44',  # green
-        '#F0AD4E',  # yellow
-        '#8A6EAF',  # purple
-        '#EFAA43',  # orange
-        'white'
       ],
       :marker_color => 'white',
       :font_color => 'black',
@@ -131,5 +262,34 @@ module SystemInfo
     }
     @g.to_blob
   end
-  
+
+  def self.render_pie_chart
+    @g.title_font_size = 18
+    @g.legend_font_size = 18
+    @g.marker_font_size = 16
+    @g.hide_line_numbers = true
+    @g.theme = {
+      :colors => [
+        '#F0AD4E',  # orange
+        '#3071A9',  # blue
+        '#8A6EAF',  # purple
+        '#44AA44',  # green
+        '#EFDA43',  # yellow
+        '#EE9494',  # red
+        '#999999',  #grey
+        "#A630AC", "#3650A0", "#1F1D6D", "#80C837", "#ACD62A", "#20B2AA",
+        "#229F6E", "#C11C17", "#60B6CA", "#E0E61A", "#DE5003", "#4CA82B",
+        "#EFCE10", "#E27A1D", "#7F91C3", "#434187", "#228B22", "#502E72", #loads of other colors for the skinny slices
+        "#575597", "#3B256D", "#A63570", "#E6AA19", "#A670B8", "#93BDE7",
+        "#6F6DA7", "#A6358C", "#A2395B"],
+      
+      
+      
+      :marker_color => 'white',
+      :font_color => 'black',
+      :background_colors => 'white'
+    }
+    @g.to_blob
+  end
+
 end
