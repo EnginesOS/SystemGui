@@ -35,21 +35,22 @@
 	        <li class="dropdown <%= 'active' if active_menu_item == :system %>">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> System <span class="caret"></span></a>
           <ul class="dropdown-menu">
-		    <li>
-				<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + ' Monitor', monitor_system_path, class: "btn-lg trigger-response-modal" %>
-		    </li>
-		    <li>
-				<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: "btn-lg trigger-response-modal" %>
-		    </li>
         	<li>
 			  <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) %>
 			  <%= link_to link_body, domains_manager_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
+		    <li>
+				<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: "btn-lg trigger-response-modal" %>
+		    </li>
       	    <li>
 			  <a href=<%= edit_desktop_settings_path %> class="btn-lg trigger-response-modal">
 			    <i class="fa fa-desktop"></i> Desktop settings
 			  </a>
 			</li>
+			<li class="divider"></li>
+		    <li>
+				<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + ' Monitor', monitor_system_path, class: "btn-lg trigger-response-modal" %>
+		    </li>
 			<li class="divider"></li>
 		    <li>
 		    	<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path,

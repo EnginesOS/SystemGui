@@ -4,11 +4,22 @@
 </div>
 
 <div class="col-sm-12 top-gap">
-	<legend>CPU</legend>
+	<legend>CPUs</legend>
 	<div class="text-center">
 		<%= image_tag('/charts/system_cpu_usage') %>
 		<%= image_tag('/charts/system_cpu_usage_averages') %>
 	</div>
+	<legend>Disks</legend>
+	<div class="text-center">
+  	  <%= SystemInfo.otherstuff[:disks].map{ |d| "<p>#{d.type} '#{d.mount}' #{100 - d.available_blocks*100/d.total_blocks}% used</p>" }.join.html_safe %>
+  	</div>
+	<legend>Nethwork interfaces</legend>
+	<div class="text-center">
+		<% SystemInfo.otherstuff[:network_interfaces].reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }.map do |ni| %>
+			<p><%= ni[:name] %> in/out: <%= "#{ni.in_bytes}/#{ni.out_bytes} bytes" %></p>
+		<% end %>
+  	</div>
+	
 	<legend>System memory</legend>
 	<div class="text-center">
 		<%= image_tag('/charts/total_system_memory_usage') %>

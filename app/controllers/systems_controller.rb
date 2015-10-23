@@ -1,7 +1,6 @@
 class SystemsController < ApplicationController
 
   def show
-    @system_info = SystemInfo.otherstuff
   end
   
   def monitor
