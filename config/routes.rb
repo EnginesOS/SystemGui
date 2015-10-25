@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resource :control_panel_applications
   resource :control_panel_services
   resource :services_registry
-
+  
 #System
 
   resource :charts do
@@ -34,7 +34,10 @@ Rails.application.routes.draw do
     get :applications_memory_usage
     get :total_services_memory_usage
     get :services_memory_usage
+    get :disk_usage
+    get :network_usage
   end
+  
   resource :system do
     get :monitor, :updater, :restart
   end
@@ -47,6 +50,13 @@ Rails.application.routes.draw do
   resource :system_base_update do
     get :progress
   end
+  resource :system_restart_mgmt do
+    get :progress
+  end
+  resource :system_restart_registry do
+    get :progress
+  end
+  
   resource :system_security
   resource :system_security_certificate do
     get :download
@@ -96,26 +106,22 @@ Rails.application.routes.draw do
   resource :application_service_connection_subservice_connection
   resource :application_service_connection_subservice_connector_configuration
   resource :application_uninstall
-  resources :applications do
-    collection do
-      get(
-        :start, :stop, :pause, :unpause, :restart,
-        :create_container, :destroy_container,
-        :reinstall, :delete_image,
-        :build, :recreate, :open)
-    end
+  resource :applications do
+    get(
+      :start, :stop, :pause, :unpause, :restart,
+      :create_container, :destroy_container,
+      :reinstall, :delete_image,
+      :build, :recreate, :open)
   end
 
 #Services
 
   resource :service_report
   resource :service_configuration
-  resources :services do
-    collection do
-      get(
-        :pause, :unpause, :start, :stop,
-        :restart, :recreate, :create_container ) # :show,
-    end
+  resource :services do
+    get(
+      :pause, :unpause, :start, :stop,
+      :restart, :recreate, :create_container) # :show,
   end
 
 #Installer
@@ -138,7 +144,6 @@ Rails.application.routes.draw do
   resource :first_run do
     get :cancel
   end
-  # get 'first_runs', to: "first_runs#show" #first_runs deprecated in favour of first_run
 
 #Help
 

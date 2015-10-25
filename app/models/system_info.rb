@@ -2,32 +2,40 @@ module SystemInfo
   
   extend Engines::Api
   
-  def self.monitor_cpu
-    Vmstat.snapshot
-  end
+  # def self.monitor_cpu
+    # Vmstat.snapshot
+  # end
   
-  def self.otherstuff
-    {
-      loading: engines_api.get_system_load_info,
-      memory: engines_api.get_memory_statistics,
-      virtual_memory: Vmstat.memory,
-      disks: Vmstat.snapshot.disks,
-      network_interfaces: Vmstat.network_interfaces,
-      cpu: Vmstat.cpu,
-    }
+  # def self.otherstuff
+    # {
+      # loading: engines_api.get_system_load_info,
+      # memory: engines_api.get_memory_statistics,
+      # virtual_memory: Vmstat.memory,
+      # disks: Vmstat.snapshot.disks,
+      # network_interfaces: Vmstat.network_interfaces,
+      # cpu: Vmstat.cpu,
+    # }
+  # end
+
+  def self.disk_usage_data
+    Vmstat.snapshot.disks
+  end
+
+  def self.network_interfaces_data
+    Vmstat.network_interfaces.reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }
   end
 
   def self.cpu_loads
-    monitor_cpu.cpus
+    Vmstat.snapshot.cpus
   end
 
   def self.memory_statistics
     engines_api.get_memory_statistics
   end
   
-  def self.cpus
-    Vmstat.cpu.count.to_s
-  end
+  # def self.cpus
+    # Vmstat.cpu.count.to_s
+  # end
   
   def self.total_system_memory_usage
     other = ( memory_statistics[:system][:total].to_i - 
@@ -95,16 +103,16 @@ module SystemInfo
     }
     @g.to_blob
   end
-  
 
   def self.system_cpu_usage_averages_bar_chart
     @g = Gruff::Bar.new("600x300")
-    @g.title = 'Processes waiting to run'
+    @g.title = 'Queue (processes waiting to run)'
     cpu_load_data = monitor_cpu
 
-    @g.data "One min #{cpu_load_data.load_average.one_minute}", cpu_load_data.load_average.one_minute*100
-    @g.data "Five mins #{cpu_load_data.load_average.five_minutes}", cpu_load_data.load_average.five_minutes*100
-    @g.data "Fifteen mins #{cpu_load_data.load_average.fifteen_minutes}", cpu_load_data.load_average.fifteen_minutes*100
+    @g.data "One min #{cpu_load_data.load_average.one_minute}", cpu_load_data.load_average.one_minute
+    @g.data "Five mins #{cpu_load_data.load_average.five_minutes}", cpu_load_data.load_average.five_minutes
+    @g.data "Fifteen mins #{cpu_load_data.load_average.fifteen_minutes}", cpu_load_data.load_average.fifteen_minutes
+    @g.minimum_value = 0
     @g.legend_font_size = 24
     @g.title_font_size = 24
     @g.marker_font_size = 16
@@ -122,6 +130,95 @@ module SystemInfo
     }
     @g.to_blob
   end
+  
+  def self.disk_usage_bar_chart
+    disk_data = disk_usage_data
+
+    available_disk_data = disk_data.map{ |d| d.available_blocks*100/d.total_blocks}
+    used_disk_data = available_disk_data.map{ |d| 100 - d}
+
+    labels = {}
+    disk_data.each_with_index.map{ |d, i| labels[i] = "#{d.type} #{d.mount}" }
+
+    disk_count = disk_data.count
+
+    @g = Gruff::SideStackedBar.new("800x#{50*disk_count+ 135}")
+    @g.labels = labels
+
+    @g.data "Used", used_disk_data
+    @g.data "Available", available_disk_data
+    @g.legend_font_size = 18
+    @g.title_font_size = 18
+    @g.marker_font_size = 16
+    @g.hide_line_numbers = true
+    @g.theme = {
+      :colors => [
+        '#3071A9',  # blue
+        '#F0AD4E',  # orange
+        '#999999',  # grey
+        '#44AA44',  # green
+      ],
+      :marker_color => 'white',
+      :font_color => 'black',
+      :background_colors => 'white'
+    }
+    @g.to_blob
+  end
+
+    # <legend>Disks</legend>
+  # <div class="text-center">
+      # <%= SystemInfo.otherstuff[:disks].map{ |d| "<p><strong>:#{d.type} '#{d.mount}'</strong> #{100 - d.available_blocks*100/d.total_blocks}% used</p>" }.join.html_safe %>
+    # </div>
+  # <legend>Nethwork interfaces</legend>
+  # <div class="text-center">
+    # <% SystemInfo.otherstuff[:network_interfaces].reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }.map do |ni| %>
+      # <p><strong>:<%= ni[:name] %></strong> <%= "#{ni.in_bytes}/#{ni.out_bytes} bytes i/o" %></p>
+    # <% end %>
+    # </div>
+    
+  def self.network_usage_bar_chart
+    network_data = network_interfaces_data
+    network_count = network_data.count
+    @g = Gruff::SideBar.new("800x#{50*network_count+ 155}")
+
+    in_data = network_data.map{ |n| n.in_bytes }
+    out_data = network_data.map{ |n| n.out_bytes }
+
+    max_value = [ in_data.max, out_data.max ].max
+    max_value_length = max_value.to_s.length.to_i-1
+    max_value_order_of_magnitude = max_value_length/3
+    network_traffic_scale = 1000**max_value_order_of_magnitude
+    unit = {0=>"",1=>"k",2=>"M",3=>"G",4=>"T",5=>"P",6=>"E",7=>"Z",8=>"Y"}
+    @g.title = 'Network traffic (' + unit[max_value_order_of_magnitude].to_s + 'B)'
+
+    in_data = network_data.map{ |n| n.in_bytes/network_traffic_scale }
+    out_data = network_data.map{ |n| n.out_bytes/network_traffic_scale }
+
+    labels = {}
+    network_data.each_with_index.map{ |n, i| labels[i] = n.name.to_s }
+    @g.labels = labels
+
+    @g.data "In", in_data
+    @g.data "Out", out_data
+
+    @g.legend_font_size = 18
+    @g.title_font_size = 18
+    @g.marker_font_size = 16
+    @g.theme = {
+      :colors => [
+        '#3071A9',  # blue
+        '#F0AD4E',  # orange
+        '#999999',  # grey
+        '#44AA44',  # green
+      ],
+      :marker_color => 'white',
+      :font_color => 'black',
+      :background_colors => 'white'
+    }
+    @g.to_blob
+  end
+
+
 
   def self.total_system_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x500')

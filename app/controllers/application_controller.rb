@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       when :restarting
         redirect_to system_restart_path,
           alert: 'Please wait for system to reboot.' \
-          if params[:controller] == 'system_restarts'
+          if params[:controller] != 'system_restarts'
       when :base_updating
         redirect_to system_base_update_path,
           alert: 'Please wait for system to update.' \
@@ -29,12 +29,21 @@ class ApplicationController < ActionController::Base
         redirect_to system_engines_update_path,
           alert: "Please wait for Engines to update." \
           if params[:controller] != 'system_engines_updates'
+      when :mgmt_updating
+        redirect_to system_restart_mgmt_path,
+          alert: "Please wait for the Engines system manager to restart." \
+          if params[:controller] != 'system_restart_mgmts'
+      when :registry_updating
+        redirect_to system_registry_restart_path,
+          alert: "Please wait for registry to restart." \
+          if params[:controller] != 'system_registry_restarts'
       when :installing
         redirect_to installing_application_installation_path,
-          alert: 'Please wait for current installation to complete before starting a new one.' \
+          alert: 'Please wait for current installation to complete.' \
           if ( params[:controller] == 'install_from_blueprints' ||
               params[:controller] == 'install_from_repository_urls' ||
-              params[:controller] == 'install_from_docker_hubs' )
+              params[:controller] == 'install_from_docker_hubs' ||
+              params[:controller] == 'system_restarts' )
       end
     end
   end
