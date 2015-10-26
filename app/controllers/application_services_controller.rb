@@ -10,7 +10,7 @@ class ApplicationServicesController < ApplicationController
     # render text: @application_service.existing_connection.update_params
     if @application_service.update
       redirect_to application_services_properties_path(application_name: @application_service.application.container_name), 
-        notice: "Successfully updated #{@application_service.application.container_name} #{@application_service.existing_connection.title}." + 
+        notice: "Successfully updated #{@application_service.application.container_name} #{@application_service.existing_connection.service_detail.title}." + 
                   @application_service.engines_api_error.to_s
     else
       render :edit

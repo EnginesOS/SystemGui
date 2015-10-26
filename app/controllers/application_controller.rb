@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   require 'awesome_print'
 
   before_action :set_system_status
+  before_action :set_page_title
 
   def set_system_status
     return if params[:controller] == 'helps'
@@ -46,6 +47,10 @@ class ApplicationController < ActionController::Base
               params[:controller] == 'system_restarts' )
       end
     end
+  end
+
+  def set_page_title
+    @page_title = "System #{@system_status[:state].upcase}"
   end
 
 protected
