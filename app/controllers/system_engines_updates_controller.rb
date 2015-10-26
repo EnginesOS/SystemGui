@@ -1,7 +1,7 @@
 class SystemEnginesUpdatesController < ApplicationController
 
   def show
-    if !System.engines_updating?
+    if @system_status[:state] != :engines_updating
       result = System.update_engines
       if result.kind_of?(EnginesOSapiResult)
         if result.was_success
@@ -16,7 +16,7 @@ class SystemEnginesUpdatesController < ApplicationController
   end
   
   def progress
-    if System.engines_updating?
+    if @system_status[:state] == :engines_updating
       render text: "busy"
     else
       render text: "done"

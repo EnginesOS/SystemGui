@@ -4,11 +4,19 @@
 </div>
 
 <div class="col-sm-12 top-gap">
-	<legend>CPU</legend>
+	<legend>CPUs</legend>
 	<div class="text-center">
 		<%= image_tag('/charts/system_cpu_usage') %>
 		<%= image_tag('/charts/system_cpu_usage_averages') %>
 	</div>
+	<legend>Disks</legend>
+	<div class="text-center">
+		<%= image_tag('/charts/disk_usage') %>
+  	</div>
+	<legend>Network</legend>
+	<div class="text-center">
+		<%= image_tag('/charts/network_usage') %>
+  	</div>
 	<legend>System memory</legend>
 	<div class="text-center">
 		<%= image_tag('/charts/total_system_memory_usage') %>
@@ -28,5 +36,4 @@
 		<%= image_tag('/charts/total_services_memory_usage') %>
 		<%= image_tag('/charts/services_memory_usage') %>
 	</div>
-
 </div>

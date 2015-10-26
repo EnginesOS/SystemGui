@@ -55,9 +55,7 @@ $(document).ready(function() {
 				if (response.status == 500) {
 					document.write(response.responseText);
 				} else {
- 				    var msg = 'An error has occurred.';
-				    $(".wait_for_system_progress_bar_message").text(msg);
-				    $(".wait_for_system_progress_bar").hide();
+				    wait_for_system_polling();
 				};
 			},
 

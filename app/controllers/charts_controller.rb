@@ -36,4 +36,12 @@ class ChartsController < ApplicationController
     send_data(SystemInfo.services_memory_usage_bar_chart, :filename => "engines_system_chart.png", :type => 'image/png')
   end
 
+  def disk_usage
+    send_data(SystemInfo.disk_usage_bar_chart, :filename => "engines_system_chart.png", :type => 'image/png')
+  end
+
+  def network_usage
+    send_data(SystemInfo.network_usage_bar_chart, :filename => "engines_system_chart.png", :type => 'image/png')
+  end
+
 end

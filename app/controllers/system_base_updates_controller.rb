@@ -1,7 +1,7 @@
 class SystemBaseUpdatesController < ApplicationController
 
   def show
-    if !System.base_system_updating?
+    if @system_status[:state] != :base_updating
       result = System.update_base
       if result.kind_of?(EnginesOSapiResult)
         if result.was_success
@@ -16,7 +16,7 @@ class SystemBaseUpdatesController < ApplicationController
   end
   
   def progress
-    if System.base_system_updating?
+    if @system_status[:state] == :base_updating
       render text: "busy"
     else
       render text: "done"
