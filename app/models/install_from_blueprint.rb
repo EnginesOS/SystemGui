@@ -149,6 +149,10 @@ class InstallFromBlueprint < ActiveRecord::Base
   def install
     valid? && InstallFromBlueprintInstaller.new(self).install
   end
+  
+  def engine_build_params
+    InstallFromBlueprintInstaller.new(self).engine_build_params
+  end
 
 end
 

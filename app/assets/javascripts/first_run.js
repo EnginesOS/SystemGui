@@ -175,8 +175,7 @@ $(document).ready(function() {
 			var field = $("#first_run_default_domain");
 	 		clear_field_error_message_for(field);
 		 	if ( field.val().length == 0 ) {
-		 		show_field_error_message_for(field, "Domain name can't be blank.");
-		 		return false;
+		 		return true;
 			} else if (is_invalid_domain_name(field.val())) {
 		 		show_field_error_message_for(field, "Domain name is not valid.");
 		 		return false;

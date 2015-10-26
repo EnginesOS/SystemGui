@@ -1,5 +1,26 @@
 class Variable < ActiveRecord::Base
 
+def debug
+    [name,
+    value,
+    value_confirmation,
+    label,
+    field_type,
+    select_collection,
+    tooltip,
+    hint,
+    placeholder,
+    comment,
+    regex_validator,
+    regex_invalid_message,
+    mandatory,
+    ask_at_build_time,
+    build_time_only,
+    immutable,
+    missing_from_definition,
+    skip_validations].to_s
+end
+
   attr_accessor(
     :name,
     :value,
@@ -28,13 +49,11 @@ class Variable < ActiveRecord::Base
   validate :value_present_validation
   
   def name_value_pair
-    {}.tap do |result|
-      if (field_type.to_sym == :boolean || field_type.to_sym == :checkbox)
-          value = true if value == "1"
-          value = false if value == "0"
-      end
-      result[name.to_sym] = value
+    if (field_type.to_sym == :boolean || field_type.to_sym == :checkbox)
+        self.value = true if value == "1"
+        self.value = false if value == "0"
     end
+    { name.to_sym => value }
   end
 
 private

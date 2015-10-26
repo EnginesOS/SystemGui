@@ -1,0 +1,8 @@
+<%= render '/systems/wait_for_system',
+		title: 'Restarting Engines system manager',
+		wait: 10,
+		wait_message: "Waiting for Engines system manager restart to commence.",
+		poll_period: 3,
+		poll_message: "Waiting for Engines sysyem manager to restart.",
+		poll_url: 'system_restart_mgmt/progress',
+		redirect_url: services_control_panel_path  %>

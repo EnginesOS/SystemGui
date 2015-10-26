@@ -33,7 +33,7 @@ $(document).ready(function() {
 				if (response.status == 500) {
 					document.write(response.responseText);
 				} else {
- 				    var msg = 'Try reloading the page.';
+ 				    var msg = '<i class="fa fa-thumbs-down"></i>';
 				    obj.find(modal_body_id).html(msg);
 				};
 			}
@@ -68,7 +68,7 @@ $(document).ready(function() {
 				if (response.status == 500) {
 					document.write(response.responseText);
 				} else {
- 				    var msg = 'Try reloading the page.';
+ 				    var msg = '<i class="fa fa-thumbs-down"></i>';
 				    obj.find(".control_panel_object_placeholder").html(msg);
 				};
 			}
@@ -101,7 +101,7 @@ $(document).ready(function() {
 				if (response.status == 500) {
 					document.write(response.responseText);
 				} else {
-					var msg = ['<i class="fa fa-warning"></i> Load error', error].join(' ') + '.<br>Try reloading the page.';
+					var msg = '<i class="fa fa-thumbs-down"></i>';
 					parent_obj.find(".control_panel_object_placeholder").html(msg);
 				};
 			}

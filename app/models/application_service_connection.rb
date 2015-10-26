@@ -5,6 +5,75 @@ class ApplicationServiceConnection
   def initialize(application_service)
     @application_service = application_service
   end
+  
+  def connection_params_json
+    @application_service.connection_params
+  end
+  
+  def connection_params
+    
+    p "trying to hashify..."
+    p connection_params_json
+    p "trying to hashify..."
+    
+    
+    JSON.parse(connection_params_json).symbolize_keys
+  end
+  
+  def type_path
+    connection_params[:type_path]
+  end
+  
+  def publisher_namespace
+    connection_params[:publisher_namespace]
+  end
+
+#service_detail
+
+  def service_detail
+    @service_detail ||= ApplicationServiceConnectionServiceDetail.new(type_path, publisher_namespace)
+  end
+
+  # def service_detail
+    # @service_detail ||= engines_api.software_service_definition(
+                                      # publisher_namespace: publisher_namespace,
+                                      # type_path: type_path)
+  # end
+#   
+  # def variables_params_without_values
+    # service_detail[:consumer_params].values
+  # end
+# 
+  # def title
+    # service_detail[:title] || '?'
+  # end
+#   
+  # def description
+    # service_detail[:description] || '?'
+  # end
+#   
+  # def persistant
+    # service_detail[:persistant] || false
+  # end
+#   
+  # def immutable
+    # !mutable
+  # end
+#   
+  # def mutable
+    # service_detail[:immutable] != true
+  # end
+# 
+  # def connectable
+    # service_detail[:shareable] || false
+  # end
+
+  def variables_params_mutable_only
+    variables_params.reject{|variable| variable[:immutable] == true}
+  end
+
+
+#connection detail
 
   def variables_values
     @variables_values ||= api_service_hash[:variables]
@@ -22,48 +91,12 @@ class ApplicationServiceConnection
     load_mutable_variables
   end
   
-  def connection_params_json
-    @application_service.connection_params
-  end
-  
-  def connection_params
-    JSON.parse(connection_params_json).symbolize_keys
-  end
-  
-  def type_path
-    connection_params[:type_path]
-  end
-  
-  def publisher_namespace
-    connection_params[:publisher_namespace]
-  end
 
-  def title
-    service_detail[:title] || '?'
-  end
-  
-  def description
-    service_detail[:description] || '?'
-  end
-  
-  def persistant
-    service_detail[:persistant] || false
-  end
-  
-  def immutable
-    !mutable
-  end
-  
-  def mutable
-    service_detail[:immutable] != true
-  end
-
-  def connectable
-    service_detail[:shareable] || false
-  end
 
   def available_subservices
-    engines_api.load_avail_services_for_type(type_path)
+    @available_subservices ||= engines_api.load_avail_services_for_type(type_path).map do |available_subservice_definition|
+      ApplicationServiceConnectionAvailableSubservice.new(self, available_subservice_definition)
+    end
   end
 
   def existing_subservices
@@ -79,26 +112,12 @@ class ApplicationServiceConnection
   end
 
   def variables_params
-    variables_params_without_values.map do |variable_params|
+    @variables_params ||= service_detail.variables_params_without_values.map do |variable_params|
       variable_params[:value] = variables_values[variable_params[:name].to_sym]
       variable_params
     end
   end
   
-  def service_detail
-    @service_detail ||= engines_api.software_service_definition(
-                                      publisher_namespace: publisher_namespace,
-                                      type_path: type_path)
-  end
-  
-  def variables_params_without_values
-    service_detail[:consumer_params].values
-  end
-
-  def variables_params_mutable_only
-    variables_params.reject{|variable| variable[:immutable] == true}
-  end
-
   def update
     result = engines_api.update_attached_service(update_params)
     if !result.was_success
@@ -153,5 +172,5 @@ class ApplicationServiceConnection
       end
     end    
   end
-  
+   
 end

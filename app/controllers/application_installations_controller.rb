@@ -17,7 +17,7 @@ class ApplicationInstallationsController < ApplicationController
 
   def installing
     System.clear_failed_build_flag
-    if System.installing?
+    if @system_status[:state] == :installing
       @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
     else
       redirect_to control_panel_path, alert: "Not installing."

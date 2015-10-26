@@ -5,11 +5,10 @@
 		  <i class="fa fa-cog"></i> <span class="caret"></span>
 		</button>
 	</div>
-	<% fa_handle = Engines::Services.titles_data[application_service.existing_connection.service_detail[:service_container].to_sym][:fa_icon] %>
-	<%= fa(fa_handle) + ' ' + application_service.existing_connection.title %>
+	<%= fa(application_service.existing_connection.service_detail.fa_icon) + ' ' + application_service.existing_connection.service_detail.title %>
 
 	<p><small>
-		<%= application_service.existing_connection.description %>
+		<%= application_service.existing_connection.service_detail.description %>
 		(<%= application_service.existing_connection.publisher_namespace.to_s + " " + application_service.existing_connection.type_path.to_s%>)
 	</small></p>
 
