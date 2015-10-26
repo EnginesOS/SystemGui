@@ -10,8 +10,14 @@ class ApplicationController < ActionController::Base
   require 'git'
   require 'awesome_print'
 
-  before_action :set_system_status
-  before_action :set_page_title
+  before_action :setup
+  
+protected
+
+  def setup
+    set_system_status
+    set_page_title
+  end
 
   def set_system_status
     return if params[:controller] == 'helps'
@@ -47,13 +53,12 @@ class ApplicationController < ActionController::Base
               params[:controller] == 'system_restarts' )
       end
     end
+    
   end
 
   def set_page_title
-    @page_title = "System #{@system_status[:state].upcase}"
+    @page_title = "#{System.unit_name} Engines"
   end
-
-protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }

@@ -12,6 +12,10 @@
 			<%= render "application_service", application_service: application_service, index: index %>
 		<% end %>
 	</div>
-		<% #= ap(@application_services_properties.application.services_properties, plain: true, index: false).html_safe %>
+		<%#= ap(@application_services_properties.application.services_properties, plain: true, index: false).html_safe %>
+
+<legend>Straight from api</legend>
+<%= ap(@x, plain: true, index: false).html_safe %>
+
 
 </div>

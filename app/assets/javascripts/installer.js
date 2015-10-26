@@ -82,6 +82,8 @@ $(document).ready(function(){
 	
 			evtSource.addEventListener("error", function(e) {
 				evtSource.close();
+				alert("Connection error");
+				window.location.href = '/control_panel';
 			});
 		};
    };

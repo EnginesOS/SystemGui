@@ -29,6 +29,15 @@ module System
   def self.restart_registry
     engines_api.restart_registry
   end
+  
+  def self.unit_name
+    execute_command('hostname')[:stdout].strip || 'Engines - unknown hostname'
+  end
+
+  def self.execute_command(command)  
+    SystemUtils.execute_command(command)
+  end
+
 
   def self.status
     @status_from_api = system_status_from_api
@@ -40,7 +49,7 @@ module System
       if @status_from_api[:is_rebooting]
         {state: :restarting, message: "Rebooting", message_class: :warning}
       elsif @status_from_api[:is_mgmt_restarting]
-        {state: :mgmt_restarting, message: "Mgmt restarting", message_class: :warning}
+        {state: :mgmt_restarting, message: "System manager restarting", message_class: :warning}
       elsif @status_from_api[:is_registry_restarting]
         {state: :registry_restarting, message: "Registry restarting", message_class: :warning}
       elsif @status_from_api[:is_engines_system_updating]

@@ -2,9 +2,9 @@ module SystemInfo
   
   extend Engines::Api
   
-  # def self.monitor_cpu
-    # Vmstat.snapshot
-  # end
+  def self.monitor_cpu
+    Vmstat.snapshot
+  end
   
   # def self.otherstuff
     # {
@@ -25,9 +25,9 @@ module SystemInfo
     Vmstat.network_interfaces.reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }
   end
 
-  def self.cpu_loads
-    Vmstat.snapshot.cpus
-  end
+  # def self.cpu_loads
+    # Vmstat.snapshot.cpus
+  # end
 
   def self.memory_statistics
     engines_api.get_memory_statistics
@@ -36,7 +36,7 @@ module SystemInfo
   # def self.cpus
     # Vmstat.cpu.count.to_s
   # end
-  
+#   
   def self.total_system_memory_usage
     other = ( memory_statistics[:system][:total].to_i - 
                 memory_statistics[:system][:active].to_i -
@@ -58,7 +58,7 @@ module SystemInfo
   end
 
   def self.system_cpu_usage_bar_chart
-    cpu_load_data = cpu_loads
+    cpu_load_data = monitor_cpu.cpus
     cpus_count = cpu_load_data.count
     labels = {}
     cpus_count.times.each_with_index{ |label, i| labels[i] = "CPU #{i}" }
@@ -138,12 +138,13 @@ module SystemInfo
     used_disk_data = available_disk_data.map{ |d| 100 - d}
 
     labels = {}
-    disk_data.each_with_index.map{ |d, i| labels[i] = "#{d.type} #{d.mount}" }
+    disk_data.each_with_index.map{ |d, i| labels[i] = "#{d.type} #{d.mount}\n#{d.total_blocks}" }
 
     disk_count = disk_data.count
 
-    @g = Gruff::SideStackedBar.new("800x#{50*disk_count+ 135}")
+    @g = Gruff::SideStackedBar.new("800x#{50*disk_count+ 155}")
     @g.labels = labels
+    @g.title = 'Disk mounts (blocks)'
 
     @g.data "Used", used_disk_data
     @g.data "Available", available_disk_data
@@ -164,17 +165,6 @@ module SystemInfo
     }
     @g.to_blob
   end
-
-    # <legend>Disks</legend>
-  # <div class="text-center">
-      # <%= SystemInfo.otherstuff[:disks].map{ |d| "<p><strong>:#{d.type} '#{d.mount}'</strong> #{100 - d.available_blocks*100/d.total_blocks}% used</p>" }.join.html_safe %>
-    # </div>
-  # <legend>Nethwork interfaces</legend>
-  # <div class="text-center">
-    # <% SystemInfo.otherstuff[:network_interfaces].reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }.map do |ni| %>
-      # <p><strong>:<%= ni[:name] %></strong> <%= "#{ni.in_bytes}/#{ni.out_bytes} bytes i/o" %></p>
-    # <% end %>
-    # </div>
     
   def self.network_usage_bar_chart
     network_data = network_interfaces_data
