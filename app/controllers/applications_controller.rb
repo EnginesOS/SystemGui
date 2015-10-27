@@ -11,7 +11,7 @@ class ApplicationsController < ApplicationController
 private
 
   def set_application
-    @application = Application.find_by(container_name: application_name)
+    @application = Application.where(container_name: application_name).first_or_create
   end
 
   def application_name
