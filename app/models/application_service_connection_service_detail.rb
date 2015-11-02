@@ -8,11 +8,6 @@ class ApplicationServiceConnectionServiceDetail
   end
 
   def service_detail
-    
-p :publisher_namespace
-p @publisher_namespace
-p @type_path
-p :type_path   
     @service_detail ||= engines_api.software_service_definition(
                                       publisher_namespace: @publisher_namespace,
                                       type_path: @type_path)

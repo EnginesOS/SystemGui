@@ -59,7 +59,11 @@ module System
       elsif @build_status_from_api[:is_building]
         {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing'}
       elsif @status_from_api[:needs_reboot]
-        {state: :needs_restart ,message: "Needs reboot", message_class: :danger, button_url: '/system/restart'}
+        {state: :needs_restart ,message: "Reboot required", message_class: :danger, button_url: '/system/restart'}
+      elsif @status_from_api[:needs_engines_update]
+        {state: :needs_engines_update ,message: "Engines update required", message_class: :danger, button_url: '/system/updater'}
+      elsif @status_from_api[:needs_base_update]
+        {state: :needs_base_update ,message: "Base update required", message_class: :danger, button_url: '/system/updater'}
       else
         {state: :ok, message: "OK", message_class: :ok}
       end)

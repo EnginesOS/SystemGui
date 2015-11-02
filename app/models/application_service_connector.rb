@@ -41,12 +41,6 @@ class ApplicationServiceConnector < ActiveRecord::Base
   end
 
   def load_application_service_connector_configuration_variables
-    
-p :application_service_connector_configuration_variables_params
-p application_service_connector_configuration_variables_params    
-p :application_service_connector_configuration_variables_params
-    
-    
     application_service_connector_configuration.variables.build(application_service_connector_configuration_variables_params)
   end
 
