@@ -8,10 +8,8 @@
 
 	<div>
 		<% @application_services_properties.application.application_services.each_with_index do |application_service, index| %>
-			<%#= ap(application_service, plain: true, index: false).html_safe %>
 			<%= render "application_service", application_service: application_service, index: index %>
 		<% end %>
 	</div>
-		<% #= ap(@application_services_properties.application.services_properties, plain: true, index: false).html_safe %>
 
 </div>

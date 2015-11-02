@@ -1,6 +1,7 @@
 <% cancel_path ||= f.object.new_record? ? eval(f.object.class.model_name.plural + '_path') : eval(f.object.class.model_name.to_s.underscore + '_path(@' + f.object.class.model_name.to_s.underscore + ')')
   submit_label ||= (f.object.new_record? ? 'Create' : 'Update')
    submit_fa ||= 'check'
+   submit_id ||= nil
   submitted_message ||= "Submitting..."
   cancelled_message ||= "Cancelling..." %>
 
@@ -11,7 +12,7 @@
         <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), cancel_path, class: "btn btn-lg btn-warning form-button-cancel") %>
         </div>
         <div class="btn-group pull-right">
-          <%= button_tag(type: "submit", class: "btn btn-lg btn-primary form-button-submit") do %>
+          <%= button_tag(type: "submit", id: submit_id, class: "btn btn-lg btn-primary form-button-submit") do %>
             <%= content_tag(:i, "", class: "fa fa-#{submit_fa}") + ' ' + submit_label %>
           <% end %>
         </div>

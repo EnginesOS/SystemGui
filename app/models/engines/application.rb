@@ -15,7 +15,7 @@ module Engines::Application
   end
 
   def services_properties
-    @services_properties ||= attached_services_hash
+    @services_properties = attached_services_hash
   end  
 
   def state_indicator
@@ -52,6 +52,7 @@ module Engines::Application
     is_running: 'is_running?',
     is_error?: 'is_error?',
     has_container?: 'has_container?',
+    container_type: 'ctype',
     host_name: 'hostname',
     http_protocol: 'http_protocol',
     http_protocol_as_sym: 'protocol',
@@ -99,11 +100,11 @@ module Engines::Application
   end
  
   def attached_services_hash
-    @attached_services_hash ||= engines_api.list_attached_services_for('ManagedEngine', container_name)
+    @attached_services_hash = engines_api.list_attached_services_for('ManagedEngine', container_name)
   end
  
    def available_services_hash
-    @available_services_hash ||= engines_api.list_avail_services_for container
+    @available_services_hash = engines_api.list_avail_services_for container
   end
 
   def available_services

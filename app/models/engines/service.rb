@@ -164,7 +164,8 @@ module Engines::Service
     @configurator_params ||= configurator_params_without_values.map do |c|
       variables_values = service_configuration_variables_for(c[:name])
       c[:variables_attributes].compact.each do |v|
-        v[:value] = variables_values[v[:name].to_sym]
+        variable_name = v[:name].to_sym
+        v[:value] = variables_values.present? ? variables_values[variable_name] : nil
       end
       c
     end
@@ -180,7 +181,7 @@ module Engines::Service
   
   def service_configuration_variables_for(configurator_name)
     result = engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
-    result.is_a?(EnginesOSapiResult) ? {} : result[:variables]
+    (result.is_a?(EnginesOSapiResult) ? {} : result[:variables]) || {}
   end
 
   def stop

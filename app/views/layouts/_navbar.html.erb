@@ -1,6 +1,9 @@
 <% active_menu_item = case
-    when params[:controller] == 'desktops'
+  when params[:controller] == 'desktops', params[:controller] == 'desktop_settings'
       :desktop
+    when params[:controller] == 'systems', params[:controller] == 'system_securities', params[:controller] == 'system_securities',
+    		params[:controller] == 'domains_managers', params[:controller] == 'desktop_settings'
+      :system
     else
       :control_panel
     end
@@ -20,14 +23,61 @@
 
 	    </div>
 	
-	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="main-navbar-collapse">
 	      <ul class="nav navbar-nav">
-	        <li class="<%= 'active' if active_menu_item == :desktop %>">
-	          <%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Desktop", desktop_path, title: 'Desktop', class: 'trigger-response-modal' %>
+	        <li class="dropdown <%= 'active' if active_menu_item == :desktop %>">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-desktop") %> Desktop <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+			    <li>
+					<%= link_to content_tag(:i, "", class: "fa fa-th") + " Show", desktop_path, title: 'Desktop', class: 'trigger-response-modal' %>
+			    </li>
+				<li class="divider"></li>
+	      	    <li>
+				  <a href=<%= edit_desktop_settings_path %> class="trigger-response-modal">
+				    <i class="fa fa-gear"></i> Settings
+				  </a>
+				</li>
+	          </ul>
 	        </li>
-	        <li class="<%= 'active' if active_menu_item == :control_panel %>">
-	          <%= link_to content_tag(:i, "", class: "fa fa-cogs") + " Control panel", control_panel_path, class: 'trigger-response-modal' %>
+	        <li class="dropdown <%= 'active' if active_menu_item == :control_panel %>">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-cogs") %> Control panel <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+			    <li>
+		       	  <%= link_to content_tag(:i, "", class: "fa fa-tablet") + " Applications", control_panel_path, class: 'trigger-response-modal' %>
+			    </li>
+			    <li>
+		       	  <%= link_to content_tag(:i, "", class: "fa fa-server") + " Services", services_control_panel_path, class: 'trigger-response-modal' %>
+			    </li>
+				<li class="divider"></li>
+			    <li>
+		       	  <%= link_to content_tag(:i, "", class: "fa fa-play-circle-o") + " Installer", installer_path, class: 'trigger-response-modal' %>
+			    </li>
+	          </ul>	        	
+	        </li>
+	        <li class="dropdown <%= 'active' if active_menu_item == :system %>">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> System <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+			    <li>
+					<%= link_to content_tag(:i, "", class: "fa fa-info") + ' Info', system_path, class: "trigger-response-modal" %>
+			    </li>
+	        	<li>
+				  <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) %>
+				  <%= link_to link_body, domains_manager_path, class: 'trigger-response-modal' %>
+		        </li>
+			    <li>
+					<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: "trigger-response-modal" %>
+			    </li>
+				<li class="divider"></li>
+			    <li>
+			    	<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path,
+						class: 'trigger-response-modal' %>
+				</li>
+				<li class="divider"></li>
+			    <li>
+			    	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path,
+						class: 'trigger-response-modal' %>
+				</li>
+	          </ul>
 	        </li>
 			<li id="status_message_area_when_menu_not_collpased">
 				<% if @system_status[:button_url].present? %>

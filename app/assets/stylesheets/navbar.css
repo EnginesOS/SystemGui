@@ -35,9 +35,9 @@
 
 
 
-#navbar_user_menu_toggle:hover {
+/*#navbar_user_menu_toggle:hover {
   background-color: rgba(0,0,0,0.1);
-}
+}*/
 
 .navbar_user_icon {
 	color: #f0582a;
@@ -60,13 +60,17 @@
   margin-top: 50px;
 }
 
-.navbar-default .navbar-nav > li > a.dropdown-toggle {
-  background-color: #fff;
-}
+/*.dropdown-menu li a {
+	color: #777;
+}*/
 
-.navbar-default .navbar-nav > li > a.dropdown-toggle:hover {
+/*.navbar-default .navbar-nav > li > a.dropdown-toggle {
   background-color: #fff;
-}
+}*/
+
+/*.navbar-default .navbar-nav > li > a.dropdown-toggle:hover {
+  background-color: #fff;
+}*/
 
 .navbar-default {
 	background-color: #fff;
@@ -84,9 +88,9 @@
 	border-color: rgba(255,255,255,0);
 }
 
-.navbar li a.dropdown-toggle:hover {
+/*.navbar li a.dropdown-toggle:hover {
   background-color: rgba(0,0,0,0.1);
-}
+}*/
 
  .desktop-signin .dropdown-menu {
 	margin-top: 5px;

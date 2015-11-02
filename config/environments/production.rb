@@ -1,6 +1,6 @@
 Rails.application.configure do
 
-  BUG_REPORTS_SERVER = "http://engines.onl"
+  ENV['BUG_REPORTS_SERVER'] = "http://buglog.engines.onl"
 
   # Code is not reloaded between requests.
   config.cache_classes = true

@@ -1,44 +1,64 @@
 class ApplicationController < ActionController::Base
 
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :reset_session
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
-  rescue_from Exception, :with => :render_500
+  rescue_from Exception, :with => :render_500 if Rails.env.production?
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
   require 'awesome_print'
 
-  before_action :set_system_status
+  before_action :setup
+  
+protected
+
+  def setup
+    set_system_status
+    set_page_title
+  end
 
   def set_system_status
     return if params[:controller] == 'helps'
-    @system_status = System.status.tap do |system_status|
-      case system_status[:state]
+    if user_signed_in?
+      @system_status = System.status
+      case @system_status[:state]
       when :restarting
         redirect_to system_restart_path,
           alert: 'Please wait for system to reboot.' \
-          if params[:controller] == 'system_restarts'
+          if params[:controller] != 'system_restarts'
       when :base_updating
         redirect_to system_base_update_path,
           alert: 'Please wait for system to update.' \
           if params[:controller] != 'system_base_updates'
       when :engines_updating
         redirect_to system_engines_update_path,
-          alert: 'Please wait for Engines to update.' \
+          alert: "Please wait for Engines to update." \
           if params[:controller] != 'system_engines_updates'
+      when :mgmt_updating
+        redirect_to system_restart_mgmt_path,
+          alert: "Please wait for the Engines system manager to restart." \
+          if params[:controller] != 'system_restart_mgmts'
+      when :registry_updating
+        redirect_to system_registry_restart_path,
+          alert: "Please wait for registry to restart." \
+          if params[:controller] != 'system_registry_restarts'
       when :installing
         redirect_to installing_application_installation_path,
-          alert: 'Please wait for current installation to complete before starting a new one.' \
+          alert: 'Please wait for current installation to complete.' \
           if ( params[:controller] == 'install_from_blueprints' ||
               params[:controller] == 'install_from_repository_urls' ||
-              params[:controller] == 'install_from_docker_hubs' )
+              params[:controller] == 'install_from_docker_hubs' ||
+              params[:controller] == 'system_restarts' )
       end
-    end if user_signed_in?
+    end
+    
   end
 
-protected
+  def set_page_title
+    @page_title = "#{System.unit_name} Engines"
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }

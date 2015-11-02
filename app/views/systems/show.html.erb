@@ -3,17 +3,16 @@
 </div>
 
 <div class="col-sm-6">
-	<h2><%= content_tag(:i, "", class: "fa fa-hdd-o") %> System</h2>
+	<h2><%= content_tag(:i, "", class: "fa fa-info") %> System info</h2>
 	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
 <div class="col-sm-12 top-gap">
-	<legend>Memory usage</legend>
-	<div class="text-center">
-		<%= image_tag('/system/memory_usage_pie_chart') %>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+			<% SystemInfo.summary.each do |key, value| %>
+				<%= render 'shared/show/label_and_text', label: key, text: value %>
+			<% end %>
+		</div>
 	</div>
- 	<%= (ap @system_info.memory_statistics, plain: true, index: false).html_safe %>
 </div>
-
-
-

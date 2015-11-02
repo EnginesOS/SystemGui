@@ -19,7 +19,8 @@ gem 'vmstat'
 gem 'git'
 gem "oink"
 gem 'newrelic_rpm'
-gem 'gruff'
+gem 'gruff', git: 'https://github.com/jds13/gruff.git'
+gem 'rest-client'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'

@@ -7,6 +7,7 @@ class FirstRun
   include Engines::Api
 
   attr_accessor(
+    :admin_email,
     :admin_password,
     :admin_password_confirmation,
     :console_password,
@@ -14,6 +15,7 @@ class FirstRun
     :mysql_password,
     :mysql_password_confirmation,
     :default_domain,
+    :system_hostname,
     :default_domain_config,
     :ssl_country,
     :ssl_state,
@@ -21,6 +23,8 @@ class FirstRun
     :ssl_organisation_name,
     :ssl_person_name)
 
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :admin_email, presence: true, format: { with: VALID_EMAIL_REGEX }
   validate :password_confirmation_validation
   validate :password_present_and_length_validation
   validate :admin_password_different_to_console_password_validation
@@ -101,9 +105,11 @@ class FirstRun
       admin_password: admin_password,
       console_password: console_password.crypt('$1$' + SecureRandom.hex(6)),
       mysql_password: mysql_password,
-      default_domain: default_domain,
-      default_domain_internal_only: default_domain_config == 'Private',
-      default_domain_self_hosted: (default_domain_config == 'Private' || default_domain_config.include?('self-hosted DNS') ),
+      hostname: system_hostname,
+      testr: "hi",
+      default_domain: (default_domain.present? ? default_domain : 'engines.server'),
+      default_domain_internal_only: (default_domain_config == 'Private' || default_domain.blank?),
+      default_domain_self_hosted: (default_domain_config == 'Private' || default_domain_config.include?('self-hosted DNS') || default_domain.blank? ),
       ssl_person_name: ssl_person_name,
       ssl_organisation_name: ssl_organisation_name,
       ssl_city: ssl_city,

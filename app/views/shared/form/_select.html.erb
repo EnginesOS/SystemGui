@@ -27,7 +27,7 @@
 	      <%= label %>
 	    <% end %>
     <% end %>
-    <small><%= comment %></small>
+    <% if comment.present? %><p><small><%= comment %></small></p><% end %>
     <%= f.select name, collection_as_array, {selected: value, include_blank: include_blank}, {title: tooltip, prompt: placeholder, class: select_class, id: id} %>
     <% if errors.present? %>
       <div class='form-field-errors'>

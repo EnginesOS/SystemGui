@@ -9,6 +9,7 @@
 
 <% flash.each do |name, msg| %>
   <% if msg.present? %>
-	 <%= content_tag :div, nil, class:"flash_message_data", data: {alertclass: name.to_s == 'notice' ? 'success' : 'danger', messagebody: msg} %>
+  	 <% next unless msg.is_a?(String) %>
+	 <%= content_tag :div, nil, class:"flash_message_data", data: {alertclass: name.to_s == 'notice' ? 'success' : 'danger', messagebody: msg.to_s} %>
   <% end %>
 <% end %>

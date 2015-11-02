@@ -12,7 +12,7 @@
 	      <%= label %>
 	    <% end %>
     <% end %>
-    <small><%= comment %></small>
+    <% if comment.present? %><p><small><%= comment %></small></p><% end %>
     <%= f.file_field name, class: 'choose_file_form_control top-gap' %>
     <% if errors.present? %>
       <div class='form-field-errors'>

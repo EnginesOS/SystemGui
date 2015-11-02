@@ -2,7 +2,7 @@ class InstallFromBlueprint < ActiveRecord::Base
 
   include Engines::Api
 
-  attr_accessor(:license_terms_and_conditions, :advanced_selected, :repository_url, :installer_icon_url)
+  attr_accessor(:license_terms_and_conditions, :advanced_selected, :repository_url, :installer_icon_url, :engines_api_error)
     
   belongs_to :application
   accepts_nested_attributes_for :application
@@ -27,7 +27,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def license_label
-    blueprint_software[:license_label] || blueprint_software[:license_name]
+    blueprint_software[:license_label] || blueprint_software[:license_name] || '?'
   end
 
   def license_sourceurl
@@ -147,7 +147,20 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
   
   def install
-    valid? && InstallFromBlueprintInstaller.new(self).install
+    valid? && send_install
+  end
+  
+  def send_install
+    result = InstallFromBlueprintInstaller.new(self).install
+    if result.was_success
+      true
+    else
+      @engines_api_error = "Install failed. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api.")
+    end
+  end
+  
+  def engine_build_params
+    InstallFromBlueprintInstaller.new(self).engine_build_params
   end
 
 end

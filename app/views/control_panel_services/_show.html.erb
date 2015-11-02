@@ -32,7 +32,10 @@
     	<li><div class="dropdown-title" %><%= service_name %></div></li>
   		<% if service_state == "running" %>
   			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-play") %> Running</div></li>
-  			<% if service_name != 'mgmt' %>
+  			<% if service_name.to_sym == :mgmt %>
+  			 	<li><%= link_to (content_tag(:i, nil,class: "fa fa-refresh") + " Restart"), system_restart_mgmt_path, 
+  			 			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the Engines system manager?" } %></li>
+  			<% else %>
 				<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "Stopping", url: stop_services_path(service_name: service_name) } %></li>
             	<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "Pausing", url: pause_services_path(service_name: service_name) } %></li>
         	<% end %>
@@ -61,13 +64,13 @@
 			<% end %>
   			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "Creating", url: create_container_services_path(service_name: service_name) } %></li> 
       <% else %>
-         <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> State error<br>(should be <%= service.state_indicator %>)</div></li>
+         <li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> State error<br></div></li>
       <%  end %>
 		<li class="divider"></li>
       <% if @service.is_configurable? %>
 		<% if service_state == "running" %>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Configuration", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
+				<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Configure", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
 			</li>
 		<% else %>
 			<li class="disabled">

@@ -1,6 +1,6 @@
 Rails.application.configure do
 
-  BUG_REPORTS_SERVER = "http://localhost:4567"
+  ENV['BUG_REPORTS_SERVER'] = "http://localhost:4567"
 
   Paperclip.options[:command_path] = "/usr/bin/"
 
