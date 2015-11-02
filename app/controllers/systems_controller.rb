@@ -5,6 +5,22 @@ class SystemsController < ApplicationController
   
   def monitor
   end
+# 
+  # def monitor_memory
+  # end
+# 
+  # def monitor_processors
+  # end
+# 
+  # def monitor_io
+  # end
+  
+  def logs
+    
+  end
+
+  def base_system
+  end
 
   def updater
   end

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   end
   
   resource :system do
-    get :monitor, :updater, :restart
+    get :monitor, :logs, :base_system, :updater, :restart # :monitor_io, :monitor_memory, :monitor_processing, 
   end
   resource :system_restart do
     get :progress
