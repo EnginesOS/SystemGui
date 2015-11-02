@@ -1,0 +1,8 @@
+<div class="col-sm-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-file-text-o") %> Systems logs</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+</div>
+
+<div class="col-sm-12 top-gap">
+	<pre class="log_viewer"><%= SystemInfo.logs %></pre>
+</div>

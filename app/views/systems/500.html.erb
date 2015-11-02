@@ -20,7 +20,7 @@ Full trace:
 <% end %>
 	</pre>
 
-<%= form_tag BUG_REPORTS_SERVER + '/api/v0/contact/bug_reports', id: 'submit_bug_report_form' do |f| %>
+<%= form_tag ENV['BUG_REPORTS_SERVER'] + '/api/v0/contact/bug_reports', id: 'submit_bug_report_form' do |f| %>
 
 		  <%= hidden_field_tag :message, exception_message %>
 		  <%= hidden_field_tag :backtrace, full_trace %>
