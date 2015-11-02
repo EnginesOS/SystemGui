@@ -214,7 +214,7 @@ module SystemInfoCharts
     application_names = SystemInfo.application_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
     application_count = application_names.count
     labels = {}
-    application_names.each_with_index{ |label, i| p :label; p label; p i; labels[i] = label.to_s }
+    application_names.each_with_index{ |label, i| labels[i] = label.to_s }
 
     @g = Gruff::SideStackedBar.new("800x#{50*application_count+ 135}")
     @g.labels = labels

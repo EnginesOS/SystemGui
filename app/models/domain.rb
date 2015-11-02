@@ -27,11 +27,7 @@ class Domain < ActiveRecord::Base
     self.new(new_record: false, domain_name: domain_name, original_domain_name: domain_name).load_domain_properties
   end
   
-  def load_domain_properties
-    
-p :engines_domain_params
-p engines_domain_params    
-    
+  def load_domain_properties 
     self.assign_attributes(engines_domain_params)
     self
   end
