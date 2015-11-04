@@ -5,7 +5,11 @@ class ApplicationsController < ApplicationController
   include EnginesApplicationSystemActions
 
   def open
-    redirect_to @application.primary_web_site, target: @application.container_name
+    if @application.primary_web_site.present?
+      redirect_to @application.primary_web_site, target: @application.container_name
+    else
+      render text: "No website URL for #{@application.container_name}", target: @application.container_name
+    end
   end
 
 private

@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     get :new_download
     post :download
   end
+  resource :system_bug_reports
 
 #Domains
 

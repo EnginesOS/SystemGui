@@ -10,8 +10,8 @@
 <div class="col-sm-12 top-gap">
 	<div class='panel panel-default'>
 		<div class='panel-body'>
-			<% SystemInfo.summary.each do |key, value| %>
-				<%= render 'shared/show/label_and_text', label: key, text: value %>
+			<% SystemInfo.summary.merge(@system_status[:system]).merge(@system_status[:builder]).each do |key, value| %>
+				<%= render 'shared/show/label_and_text', label: key.to_s.humanize, text: SharedViews.value_as_html(value) %>
 			<% end %>
 		</div>
 	</div>

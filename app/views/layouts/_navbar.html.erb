@@ -46,11 +46,14 @@
 		       	  <%= link_to content_tag(:i, "", class: "fa fa-tablet") + " Applications", control_panel_path, class: 'trigger-response-modal' %>
 			    </li>
 			    <li>
-		       	  <%= link_to content_tag(:i, "", class: "fa fa-server") + " Services", services_control_panel_path, class: 'trigger-response-modal' %>
+		       	  <%= link_to content_tag(:i, "", class: "fa fa-play-circle-o") + " Installer", installer_path, class: 'trigger-response-modal' %>
 			    </li>
 				<li class="divider"></li>
 			    <li>
-		       	  <%= link_to content_tag(:i, "", class: "fa fa-play-circle-o") + " Installer", installer_path, class: 'trigger-response-modal' %>
+		       	  <%= link_to content_tag(:i, "", class: "fa fa-server") + " Services", services_control_panel_path, class: 'trigger-response-modal' %>
+			    </li>
+			    <li>
+		       	  <%= link_to content_tag(:i, "", class: "fa fa-arrows") + " Registry", services_registry_path, class: 'trigger-response-modal' %>
 			    </li>
 	          </ul>	        	
 	        </li>

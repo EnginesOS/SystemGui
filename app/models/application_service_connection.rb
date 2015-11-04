@@ -11,12 +11,6 @@ class ApplicationServiceConnection
   end
   
   def connection_params
-    
-    p "trying to hashify..."
-    p connection_params_json
-    p "trying to hashify..."
-    
-    
     JSON.parse(connection_params_json).symbolize_keys
   end
   
