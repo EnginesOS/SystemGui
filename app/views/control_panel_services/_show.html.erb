@@ -68,7 +68,7 @@
       <%  end %>
 		<li class="divider"></li>
       <% if @service.is_configurable? %>
-		<% if service_state == "running" %>
+		<% if true #service_state == "running" %>
 			<li>
 				<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Configure", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
 			</li>
