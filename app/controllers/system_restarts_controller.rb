@@ -1,7 +1,7 @@
 class SystemRestartsController < ApplicationController
 
   def show
-    if !System.restarting?
+    if @system_status[:state] != :restarting
       result = System.restart
       if result.kind_of?(EnginesOSapiResult)
         if result.was_success
@@ -16,7 +16,7 @@ class SystemRestartsController < ApplicationController
   end
 
   def progress
-    if System.restarting?
+    if @system_status[:state] == :restarting
       render text: "busy"
     else
       render text: "done"
