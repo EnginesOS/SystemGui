@@ -52,10 +52,10 @@ $(document).ready(function() {
 				};
 			}, 
 			error: function(response, status, error){
-				if (response.status == 500) {
-					document.write(response.responseText);
+				if (response.status == 0) {
+				    setTimeout(function() {wait_for_system_polling();}, poll_period * 1000);
 				} else {
-				    wait_for_system_polling();
+					document.write(response.responseText);
 				};
 			},
 
