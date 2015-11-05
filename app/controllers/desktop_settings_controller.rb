@@ -10,7 +10,7 @@ class DesktopSettingsController < ApplicationController
 
   def update
     if @desktop_settings.update desktop_settings_params
-      redirect_to control_panel_path, notice: "Successfully updated desktop settings."
+      redirect_to desktop_path, notice: "Successfully updated desktop settings."
     else
       render :edit
     end
