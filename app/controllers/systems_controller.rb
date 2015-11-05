@@ -4,6 +4,7 @@ class SystemsController < ApplicationController
   end
   
   def monitor
+    # render text: Vmstat.methods
   end
 # 
   # def monitor_memory

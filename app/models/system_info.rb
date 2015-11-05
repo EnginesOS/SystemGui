@@ -2,8 +2,18 @@ module SystemInfo
   
   extend Engines::Api
   
+  def self.system_stats_from_api
+    #engines_api.system_vmstats
+    {
+      cpu: Vmstat.snapshot,
+      disks: Vmstat.snapshot.disks,
+      network_interfaces: Vmstat.network_interfaces.reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }
+    }
+  end
+  
+  
   def self.monitor_cpu
-    Vmstat.snapshot
+    system_stats_from_api[:cpu]
   end
   
   # def self.otherstuff
@@ -18,11 +28,11 @@ module SystemInfo
   # end
 
   def self.disk_usage_data
-    Vmstat.snapshot.disks
+    system_stats_from_api[:disks] #
   end
 
   def self.network_interfaces_data
-    Vmstat.network_interfaces.reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }
+    system_stats_from_api[:network_interfaces]
   end
 
   # def self.cpu_loads
