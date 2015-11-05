@@ -47,8 +47,8 @@ module SharedViews
     end
   end
 
-  def self.awesome_print value
-    (ap JSON.parse(value.to_json), plain: true, index: false).html_safe
-  end
+  # def self.awesome_print value
+    # (ap JSON.parse(value.to_json), plain: true, index: false).html_safe
+  # end
 
 end

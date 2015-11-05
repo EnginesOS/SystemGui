@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :reset_session
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
@@ -20,7 +20,18 @@ protected
   end
 
   def set_system_status
-    return if params[:controller] == 'helps'
+    return if params[:controller] == 'helps' || 
+              params[:controller] == 'applications' ||
+              params[:controller] == 'services' || 
+              params[:controller] == 'control_panel_applications' ||
+              params[:controller] == 'control_panel_services' || 
+              params[:controller] == 'desktop_applications' || 
+              params[:controller] == 'application_reports' || 
+              params[:controller] == 'service_reports' || 
+              params[:controller] == 'application_abouts' || 
+              params[:controller] == 'service_abouts' || 
+              params[:controller] == 'gallery_softwares' || 
+              params[:controller] == 'charts'
     if user_signed_in?
       @system_status = System.status
       case @system_status[:state]
@@ -57,7 +68,7 @@ protected
   end
 
   def set_page_title
-    @page_title = "#{System.unit_name} Engines"
+    @page_title = "#{System.unit_name.to_s.humanize} Engines"
   end
 
   def configure_permitted_parameters

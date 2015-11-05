@@ -1,39 +1,22 @@
 <div class="col-sm-12">
-	<h2><%= content_tag(:i, "", class: "fa fa-pie-chart") %> Monitor system</h2>
-	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+	<h2><%= content_tag(:i, "", class: "fa fa-dashboard") %> Monitor system</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
 <div class="col-sm-12 top-gap">
-	<legend>CPUs</legend>
-	<div class="text-center">
-		<%= image_tag('/charts/system_cpu_usage') %>
-		<%= image_tag('/charts/system_cpu_usage_averages') %>
-	</div>
-	<legend>Disks</legend>
-	<div class="text-center">
-		<%= image_tag('/charts/disk_usage') %>
-  	</div>
-	<legend>Network</legend>
-	<div class="text-center">
-		<%= image_tag('/charts/network_usage') %>
-  	</div>
-	<legend>System memory</legend>
-	<div class="text-center">
-		<%= image_tag('/charts/total_system_memory_usage') %>
-	</div>
-	<legend>Container memory</legend>
-	<div class="text-center">
-		<%= image_tag('/charts/total_container_memory_usage') %>
-		<%= image_tag('/charts/container_memory_usage') %>
-	</div>
-	<legend>Applications memory</legend>
-	<div class="text-center">
-		<%= image_tag('/charts/total_applications_memory_usage') %>
-		<%= image_tag('/charts/applications_memory_usage') %>
-	</div>
-	<legend>Services memory</legend>
-	<div class="text-center">
-		<%= image_tag('/charts/total_services_memory_usage') %>
-		<%= image_tag('/charts/services_memory_usage') %>
-	</div>
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#system" aria-controls="home" role="tab" data-toggle="tab">System</a></li>
+    <li role="presentation"><a href="#containers" aria-controls="profile" role="tab" data-toggle="tab">Containers</a></li>
+    <li role="presentation"><a href="#applications" aria-controls="messages" role="tab" data-toggle="tab">Applications</a></li>
+    <li role="presentation"><a href="#services" aria-controls="settings" role="tab" data-toggle="tab">Services</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="system"><%= render 'monitor_system' %></div>
+    <div role="tabpanel" class="tab-pane" id="containers"><%= render 'monitor_containers' %></div>
+    <div role="tabpanel" class="tab-pane" id="applications"><%= render 'monitor_applications' %></div>
+    <div role="tabpanel" class="tab-pane" id="services"><%= render 'monitor_services' %></div>
+  </div>
+	
 </div>

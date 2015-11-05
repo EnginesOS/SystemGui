@@ -1,0 +1,14 @@
+<div class="col-sm-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-linux") %> Base operating system</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+</div>
+
+<div class="col-sm-12 top-gap">
+	<div class='panel'>
+		<div class='panel-body'>
+			<% SystemInfo.base_os_data.each do |key, value| %>
+				<%= render 'shared/show/label_and_text', label: key.humanize, text: value %>
+			<% end %>
+		</div>
+	</div>
+</div>
