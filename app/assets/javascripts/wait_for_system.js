@@ -55,7 +55,8 @@ $(document).ready(function() {
 				if (response.status == 500) {
 					document.write(response.responseText);
 				} else {
-				    wait_for_system_polling();
+					alert("response status: " + response.status);
+				    setTimeout(function() {wait_for_system_polling();}, poll_period * 1000);
 				};
 			},
 
