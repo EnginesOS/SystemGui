@@ -19,7 +19,7 @@ class FirstRunsController < ApplicationController
             password: first_run_params[:admin_password],
             password_confirmation: first_run_params[:admin_password_confirmation]
             )
-          redirect_to control_panel_path, notice: 'First run parameters were successfully saved.'
+          redirect_to done_first_run_path
         else
           redirect_to first_run_path(first_run: first_run_params), alert: 'First run parameters were not saved. ' + result.result_mesg
         end
@@ -34,6 +34,10 @@ class FirstRunsController < ApplicationController
   def cancel
     sign_out current_user
     redirect_to desktop_path
+  end
+  
+  def done
+    render layout: 'empty_navbar'
   end
 
 private
