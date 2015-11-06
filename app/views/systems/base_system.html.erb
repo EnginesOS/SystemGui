@@ -4,7 +4,7 @@
 </div>
 
 <div class="col-sm-12 top-gap">
-	<div class='panel'>
+	<div class='panel panel-default'>
 		<div class='panel-body'>
 			<% SystemInfo.base_os_data.each do |key, value| %>
 				<%= render 'shared/show/label_and_text', label: key.humanize, text: value %>

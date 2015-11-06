@@ -61,7 +61,7 @@ module Engines::Application
         when :pause
           {label: 'Pausing'}
         when :unpause
-          {label: 'Unspausing'}
+          {label: 'Unpausing'}
         else
           {label: "#{current_task_state.to_s}-ing"}
       end.merge({state: :working, task_at_hand: current_task_state})
@@ -71,7 +71,7 @@ module Engines::Application
   def application_container_state
     application_state = container.read_state
     if application_state == 'nocontainer'
-      {state: :no_container, label: 'No container'}
+      {state: :no_container, label: 'Unbuilt'}
     else
       {state: application_state.to_sym, label: application_state.to_s.humanize}
     end

@@ -23,7 +23,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def title
-    blueprint_software[:short_title]
+    blueprint_software[:short_title] || blueprint_software[:full_title] || default_name
   end
 
   def license_label

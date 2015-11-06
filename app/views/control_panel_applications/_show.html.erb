@@ -38,7 +38,7 @@ web_sites = application.web_sites
 				<%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.application_display_properties.title %><br>
 			    <div class='object_status'>
 			  		<% if application_state[:state] == :working %>
-			          <%= content_tag(:i, "", class: "fa fa-spinner fa-pulse indicator " + indicator_class) %> <small><%= application_state[:label] %></small>
+			          <%= content_tag(:i, "", class: "fa fa-spinner fa-spin indicator " + indicator_class) %> <small><%= application_state[:label] %></small>
 					<% else %>
 					  <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= application_state[:label] %></small>
 					<% end %>
@@ -46,164 +46,169 @@ web_sites = application.web_sites
 			</div>
 		</button>
 
-		<ul class="dropdown-menu dropdown-menu-lg engine-gadget-dropdown-menu" role="menu">
-			<li>
-				<div class="dropdown-title">
-					<%= application_name %>
-				</div>
-			</li>
-			<% if application_state[:state] == :running %>
-				<li>
-					<div class="<%= indicator_class %> dropdown-title">
-						<%= content_tag(:i, "", class: "fa fa-play") %> Running
-					</div>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Restart", "javascript:void(0);", class: 'object_action', data: { action: "restart", url: restart_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "pause", url: pause_applications_path(application_name: application_name) } %>
-				</li>
-			<% elsif application_state[:state] == :paused %>
-				<li>
-					<div class="<%= indicator_class %> dropdown-title">
-						<%= content_tag(:i, "", class: "fa fa-pause") %> Paused
-					</div>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "unpause", url: unpause_applications_path(application_name: application_name) } %>
-				</li>
-			<% elsif application_state[:state] == :stopped %>
-				<li>
-					<div class="<%= indicator_class %> dropdown-title">
-						<%= content_tag(:i, "", class: "fa fa-stop") %> Stopped
-					</div>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "start", url: start_applications_path(application_name: application_name) } %>
-				</li>
-				<li class="divider"></li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Unbuild", "javascript:void(0);", class: 'object_action', data: { action: "unbuild", url: destroy_container_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "recreate", url: recreate_applications_path(application_name: application_name) } %>
-				</li>
-				<li class="divider"></li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
-				</li>
-			<% elsif  application_state[:state] == :unbuilt %>
-				<li>
-					<div class="<%= indicator_class %> dropdown-title">
-						<%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt
-					</div>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", "javascript:void(0);", class: 'object_action', data: { action: "build", url: create_container_applications_path(application_name: application_name) } %>
-				</li>
-				<li class="divider"></li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
-				</li>
+		<% if application_state[:state] != :working %>
 
-			<% elsif application_state[:state] == :error %>
+			<ul class="dropdown-menu dropdown-menu-lg engine-gadget-dropdown-menu" role="menu">
 				<li>
-					<div class="<%= indicator_class %> dropdown-title">
-						<%= content_tag(:i, "", class: "fa fa-warning") %> Error
+					<div class="dropdown-title">
+						<%= application_name %>
 					</div>
 				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "start", url: start_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Restart", "javascript:void(0);", class: 'object_action', data: { action: "restart", url: restart_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "pause", url: pause_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "unpause", url: unpause_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Unbuild", "javascript:void(0);", class: 'object_action', data: { action: "unbuild", url: destroy_container_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "recreate", url: recreate_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
-				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
-				</li>
-			<% elsif application_state[:state] == :working %>
-    	    	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-spinner fa-pulse") %> <%= application_state[:label] %></div></li>
-			<% else %>
-				<li>
-					<div class="<%= indicator_class %> dropdown-title">
-						<%= content_tag(:i, "", class: "fa fa-warning") %> State error
-					</div>
-				</li>
-			<%  end %>
-			<li class="divider"></li>
-			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Display properties", edit_application_display_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
-			</li>
-			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_application_network_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
-			</li>
-			<% if engine_active == true %>
-				<li class="disabled">
-					<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources properties", "javascript:void(0);" %>
-				</li>
-			<% else %>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources properties", edit_application_resources_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
-				</li>
-			<% end %>
-			<% if engine_active == true %>
-				<li class="disabled">
-					<%= link_to content_tag(:i, "", class: "fa fa-question-circle") + " Variables properties", "javascript:void(0);" %>
-				</li>
-			<% else %>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-question") + " Variables properties", edit_application_variables_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
-				</li>
-			<% end %>
-			<li class="divider"></li>
-			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-arrows-v") + " Connected services", application_services_properties_path(application_name: application_name),  class: "trigger-response-modal" %>
-			</li>
-			<li class="divider"></li>
-			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced details", "#", data: {toggle: "modal", target: ("#modal_advanced_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
-			</li>
-			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-info-circle") + " About", "#", data: {toggle: "modal", target: ("#modal_about_" + application_name), url: application_about_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
-			</li>
-			<% if web_sites.present? %>
-				<li class="divider"></li>
-				<% web_sites.each do |web_site| %>
+				<% if application_state[:state] == :running %>
 					<li>
-						<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: application_name %>
+						<div class="<%= indicator_class %> dropdown-title">
+							<%= content_tag(:i, "", class: "fa fa-play") %> Running
+						</div>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Restart", "javascript:void(0);", class: 'object_action', data: { action: "restart", url: restart_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "pause", url: pause_applications_path(application_name: application_name) } %>
+					</li>
+				<% elsif application_state[:state] == :paused %>
+					<li>
+						<div class="<%= indicator_class %> dropdown-title">
+							<%= content_tag(:i, "", class: "fa fa-pause") %> Paused
+						</div>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "unpause", url: unpause_applications_path(application_name: application_name) } %>
+					</li>
+				<% elsif application_state[:state] == :stopped %>
+					<li>
+						<div class="<%= indicator_class %> dropdown-title">
+							<%= content_tag(:i, "", class: "fa fa-stop") %> Stopped
+						</div>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "start", url: start_applications_path(application_name: application_name) } %>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Unbuild", "javascript:void(0);", class: 'object_action', data: { action: "unbuild", url: destroy_container_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "recreate", url: recreate_applications_path(application_name: application_name) } %>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
+					</li>
+				<% elsif  application_state[:state] == :no_container %>
+					<li>
+						<div class="<%= indicator_class %> dropdown-title">
+							<%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt
+						</div>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", "javascript:void(0);", class: 'object_action', data: { action: "build", url: create_container_applications_path(application_name: application_name) } %>
+					</li>
+					<li class="divider"></li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
+					</li>
+	
+				<% elsif application_state[:state] == :error %>
+					<li>
+						<div class="<%= indicator_class %> dropdown-title">
+							<%= content_tag(:i, "", class: "fa fa-warning") %> Error
+						</div>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "start", url: start_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Restart", "javascript:void(0);", class: 'object_action', data: { action: "restart", url: restart_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Pause", "javascript:void(0);", class: 'object_action', data: { action: "pause", url: pause_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "unpause", url: unpause_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-ban") + " Unbuild", "javascript:void(0);", class: 'object_action', data: { action: "unbuild", url: destroy_container_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "recreate", url: recreate_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
+					</li>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
+					</li>
+				<% elsif application_state[:state] == :working %>
+	    	    	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> <%= application_state[:label] %></div></li>
+				<% else %>
+					<li>
+						<div class="<%= indicator_class %> dropdown-title">
+							<%= content_tag(:i, "", class: "fa fa-warning") %> State error
+						</div>
+					</li>
+				<%  end %>
+				<li class="divider"></li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-desktop") + " Display properties", edit_application_display_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-sitemap") + " Network properties", edit_application_network_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+				</li>
+				<% if engine_active == true %>
+					<li class="disabled">
+						<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources properties", "javascript:void(0);" %>
+					</li>
+				<% else %>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-pie-chart") + " Resources properties", edit_application_resources_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
 					</li>
 				<% end %>
-			<% end %>
-		</ul>
+				<% if engine_active == true %>
+					<li class="disabled">
+						<%= link_to content_tag(:i, "", class: "fa fa-question-circle") + " Variables properties", "javascript:void(0);" %>
+					</li>
+				<% else %>
+					<li>
+						<%= link_to content_tag(:i, "", class: "fa fa-question") + " Variables properties", edit_application_variables_properties_path(application_name: application_name), class: 'trigger-response-modal' %>
+					</li>
+				<% end %>
+				<li class="divider"></li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-arrows-v") + " Connected services", application_services_properties_path(application_name: application_name),  class: "trigger-response-modal" %>
+				</li>
+				<li class="divider"></li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-list-alt") + " Advanced details", "#", data: {toggle: "modal", target: ("#modal_advanced_" + application_name), url: application_report_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-info-circle") + " About", "#", data: {toggle: "modal", target: ("#modal_about_" + application_name), url: application_about_path(application_name: application_name) }, role: "button", class: "modal_menu_item" %>
+				</li>
+				<% if web_sites.present? %>
+					<li class="divider"></li>
+					<% web_sites.each do |web_site| %>
+						<li>
+							<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: application_name %>
+						</li>
+					<% end %>
+				<% end %>
+			</ul>
+
+		<% end %>
+
 	</div>
 </div>
 
@@ -218,7 +223,7 @@ web_sites = application.web_sites
 			</div>
 			<div class="modal-body" id="modal_advanced_<%= application_name %>_body">
 				<div class="loading_spinner">
-					<%= content_tag(:i, "", class: "fa fa-spinner fa-pulse") %>
+					<%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %>
 				</div>
 				<div class="modal_body_content"></div>
 			</div>
@@ -242,7 +247,7 @@ web_sites = application.web_sites
 			</div>
 			<div class="modal-body" id="modal_about_<%= application_name %>_body">
 				<div class="loading_spinner">
-					<%= content_tag(:i, "", class: "fa fa-spinner fa-pulse") %>
+					<%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %>
 				</div>
 				<div class="modal_body_content"></div>
 			</div>

@@ -72,7 +72,7 @@ module Engines::Service
   def service_container_state
     service_state = system_service_object.read_state
     if service_state == 'nocontainer'
-      {state: :no_container, label: 'No container'}
+      {state: :no_container, label: 'Unbuilt'}
     else
       {state: service_state.to_sym, label: service_state.to_s.humanize}
     end

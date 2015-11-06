@@ -4,6 +4,10 @@ module EnginesApplicationSystemActions
     do_service_action :create_container
   end
 
+  def destroy_container
+    do_service_action :destroy_container
+  end
+
   def recreate
     do_service_action :recreate
   end
@@ -14,6 +18,10 @@ module EnginesApplicationSystemActions
 
   def start
     do_service_action :start
+  end
+
+  def restart
+    do_service_action :restart
   end
 
   def pause
