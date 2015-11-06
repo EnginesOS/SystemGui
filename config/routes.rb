@@ -144,6 +144,7 @@ Rails.application.routes.draw do
 
   resource :first_run do
     get :cancel
+    get :done
   end
 
 #Help

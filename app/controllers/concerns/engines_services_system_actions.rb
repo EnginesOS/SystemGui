@@ -1,64 +1,53 @@
 module EnginesServicesSystemActions
 
-  def create_container
-    @result = @service.create_container
-    set_flash_messages_and_redirect
-  end
+  # def create_container
+    # do_service_action :create_container
+  # end
 
   def recreate
-    @result = @service.recreate
-    set_flash_messages_and_redirect
+    do_service_action :recreate
   end
 
   def stop
-    @result = @service.stop
-    set_flash_messages_and_redirect
+    do_service_action :stop
   end
 
   def start
-    @result = @service.start
-    set_flash_messages_and_redirect
+    do_service_action :start
   end
 
   def pause
-    @result = @service.pause
-    set_flash_messages_and_redirect
+    do_service_action :pause
   end
 
   def unpause
-    @result = @service.unpause
-    set_flash_messages_and_redirect
+    do_service_action :unpause
   end
 
   def register_website
-    @result = @service.register_website
-    set_flash_messages_and_redirect
+    do_service_action :register_website
   end
 
   def deregister_website
-    @result = @service.deregister_website
-    set_flash_messages_and_redirect
+    do_service_action :deregister_website
   end
 
   def register_dns
-    @result = @service.register_dns
-    set_flash_messages_and_redirect
+    do_service_action :register_dns
   end
 
   def deregister_dns
-    @result = @service.deregister_dns
-    set_flash_messages_and_redirect
+    do_service_action :deregister_dns
   end
 
 private
 
-  def set_flash_messages_and_redirect
-    if @result.was_success == true
-      flash_message = nil #@result.result_mesg[0..500] || "Success!"
-    else
-      flash_message = @result.result_mesg[0..500] || "Error. (No message in result object.)"
+  def do_service_action(action)
+    Thread.new do 
+      @service.send(action)
     end
-    render partial: 'control_panel_services/show', locals: { flash_message: flash_message }   
+    sleep(0.1)
+    render partial: 'control_panel_services/show'
   end
 
 end

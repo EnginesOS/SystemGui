@@ -11,11 +11,11 @@
 	<div class='row'>
 		<% if @applications.present? %>
 			<% @applications.each do |application| %>
-				<div class="application control_panel_object", id="<%= application.container_name %>", data-url="<%= control_panel_applications_path(application_name: application.container_name) %>">
+				<div class="application load_control_panel_object", id="<%= application.container_name %>", data-url="<%= control_panel_applications_path(application_name: application.container_name) %>">
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
   						<div class="control_panel_object_placeholder">
   							<%= application.container_name %><br>
-							<%= content_tag(:i, nil, class: "fa fa-spinner fa-spin") %>
+							<%= content_tag(:i, nil, class: "fa fa-spinner fa-pulse") %>
 						</div>
 					</div>
 				</div>

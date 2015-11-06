@@ -18,26 +18,66 @@ module Engines::Application
     @services_properties = attached_services_hash
   end  
 
-  def state_indicator
-    if is_error?
-      'error'
-    else
-      state
-    end
-  end
-   
+  # def state_indicator
+    # if is_error?
+      # 'error'
+    # else
+      # state
+    # end
+  # end
+#    
+  # def state
+    # @state ||= load_state
+  # end
+# 
+  # def load_state
+      # result = container.read_state.to_s
+      # if result == 'nocontainer'
+        # 'unbuilt'
+      # else
+        # result
+      # end
+  # end
+
   def state
-    @state ||= load_state
+    return {state: :no_service, label: 'No service'} if container.blank?
+    return error_state if is_error?
+    return task_at_hand_state if task_at_hand_state.present?
+    application_container_state
   end
 
-  def load_state
-      result = container.read_state.to_s
-      if result == 'nocontainer'
-        'unbuilt'
-      else
-        result
-      end
+  def error_state
+    {state: :error, label: "#{application_container_state[:label]} (Error)"}
   end
+
+  def task_at_hand_state
+    current_task_state = container.task_at_hand
+    if current_task_state.present?
+      case current_task_state
+        when :stop
+          {label: 'Stopping'}
+        when :start
+          {label: 'Starting'}
+        when :pause
+          {label: 'Pausing'}
+        when :unpause
+          {label: 'Unspausing'}
+        else
+          {label: "#{current_task_state.to_s}-ing"}
+      end.merge({state: :working, task_at_hand: current_task_state})
+    end
+  end
+
+  def application_container_state
+    application_state = container.read_state
+    if application_state == 'nocontainer'
+      {state: :no_container, label: 'No container'}
+    else
+      {state: application_state.to_sym, label: application_state.to_s.humanize}
+    end
+  end
+
+
   
   def primary_web_site
     if web_sites.present?
