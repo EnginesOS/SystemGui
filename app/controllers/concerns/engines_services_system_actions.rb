@@ -1,8 +1,8 @@
 module EnginesServicesSystemActions
 
-  # def create_container
-    # do_service_action :create_container
-  # end
+  def create_container
+    do_service_action :create_container
+  end
 
   def recreate
     do_service_action :recreate

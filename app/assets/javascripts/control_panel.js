@@ -19,7 +19,6 @@ $(document).ready(function() {
 		};
 	};
 	
-
 	function load_modal_content(obj) {
 
 		modal_id = obj.attr("data-target");
@@ -42,6 +41,9 @@ $(document).ready(function() {
 			error: function(response, status, error){
 				if (response.status == 500) {
 					document.write(response.responseText);
+				} else if (response.status == 401) {
+					alert(response.responseText);
+					window.location.reload();
 				} else {
  				    var msg = '<i class="fa fa-thumbs-down"></i>';
 				    obj.find(modal_body_id).html(msg);
@@ -63,19 +65,21 @@ $(document).ready(function() {
 	function load_control_panel_object(obj) {
 		var url = obj.attr("data-url");
 		// obj.next().html(obj.html());
-
 		$.ajax({
 			url : url,
 			cache : false,
 			timeout: 180000,
 			success : function(html) {
-				obj.html(html);
-				do_flash_messages();
-				bind_control_panel_object_events(obj);			
+					obj.html(html);
+					do_flash_messages();
+					bind_control_panel_object_events(obj);		
 			},
 			error: function(response, status, error){
 				if (response.status == 500) {
 					document.write(response.responseText);
+				} else if (response.status == 401) {
+					alert(response.responseText);
+					window.location.reload();
 				} else {
  				    var msg = '<i class="fa fa-thumbs-down"></i>';
 				    obj.find(".control_panel_object_placeholder").html(msg);
@@ -107,9 +111,12 @@ $(document).ready(function() {
 			error: function(response, status, error){
 				if (response.status == 500) {
 					document.write(response.responseText);
+				} else if (response.status == 401) {
+					alert(response.responseText);
+					window.location.reload();
 				} else {
-					var msg = '<i class="fa fa-thumbs-down"></i> error ' + response.status.toString();
-					parent_obj.find(".control_panel_object_placeholder").html(msg);
+					var msg = '<i class="fa fa-thumbs-down"></i><small> ' + status.toString() + ' error</small>';
+					parent_obj.find(".object_status").html(msg);
 				};
 			}
 		});
