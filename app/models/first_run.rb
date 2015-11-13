@@ -40,7 +40,7 @@ class FirstRun
   end
 
   def default_domain_is_valid
-    domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
+    domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,6})$/
     if default_domain.blank?
       errors.add(:default_domain, ["Default domain", "can't be blank"])
     elsif !default_domain.match(domain_name_regex)

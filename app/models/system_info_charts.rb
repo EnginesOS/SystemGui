@@ -232,7 +232,7 @@ module SystemInfoCharts
   
   def self.total_services_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x400')
-    SystemInfo.services_memory_usage.each { |key, value| @g.data "#{key}", value[:limit].to_i }
+    SystemInfo.services_memory_usage.each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
     @g.hide_labels_less_than = 5
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
     @g.hide_legend = true

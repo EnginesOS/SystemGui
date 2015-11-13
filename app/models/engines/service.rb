@@ -26,33 +26,55 @@ module Engines::Service
     "#{container_name} - #{human_name}"
   end
 
-  def state_indicator
-    if is_error?
-      'error'
-    else
-      if state.to_s == "no_container"
-        "disabled"
-      else
-        state
-      end
+  # def state_indicator
+    # if is_error?
+      # 'error'
+    # else
+      # if state.to_s == "no_container"
+        # "disabled"
+      # else
+        # state
+      # end
+    # end
+  # end
+
+    # if service_state.kind_of?(EnginesOSapiResult)
+      # service_state = "state_error"
+    # end
+    # indicator_class = "indicator_" + service.state_indicator.to_s
+    # background_class = "engine_" + service.state_indicator.to_s
+
+  def state
+    return {state: :no_service, label: 'No service'} if system_service_object.blank?
+    return {state: :error, label: 'Error'} if is_error?
+    return task_at_hand_state if task_at_hand_state.present?
+    service_container_state
+  end
+
+  def task_at_hand_state
+    current_task_state = system_service_object.task_at_hand
+    if current_task_state.present?
+      case current_task_state
+        when :stop
+          {label: 'Stopping'}
+        when :start
+          {label: 'Starting'}
+        when :pause
+          {label: 'Pausing'}
+        when :unpause
+          {label: 'Unspausing'}
+        else
+          {label: "#{current_task_state.to_s}-ing"}
+      end.merge({state: :working, task_at_hand: current_task_state})
     end
   end
 
-  def state
-    if system_service_object.blank?
-      'no_service'
+  def service_container_state
+    service_state = system_service_object.read_state
+    if service_state == 'nocontainer'
+      {state: :no_container, label: 'Unbuilt'}
     else
-      current_task_state = system_service_object.task_at_hand
-      if current_task_state.present?
-        current_task_state
-      else      
-        service_state = system_service_object.read_state
-        if service_state == 'nocontainer'
-          'no_container'
-        else
-          service_state
-        end
-      end
+      {state: service_state.to_sym, label: service_state.to_s.humanize}
     end
   end
 

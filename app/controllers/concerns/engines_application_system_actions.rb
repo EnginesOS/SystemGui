@@ -1,98 +1,87 @@
 module EnginesApplicationSystemActions
 
-  def stop
-    @result = @application.stop
-    set_flash_messages_and_redirect
-  end
-  
-  def start   
-    @result = @application.start
-    set_flash_messages_and_redirect
-  end
-  
-  def pause
-    @result = @application.pause
-    set_flash_messages_and_redirect
-  end
-  
-  def unpause
-    @result = @application.unpause
-    set_flash_messages_and_redirect
-  end
-   
-  def destroy_container
-    @result = @application.destroy_container
-    set_flash_messages_and_redirect
-  end 
-  
-  def delete_image
-    @result = @application.delete_image remove_all_application_data: params[:remove_all_application_data]
-    set_flash_messages_and_redirect
-  end
-  
-  def restart
-    @result = @application.restart
-    set_flash_messages_and_redirect
-  end
-  
   def create_container
-    @result = @application.create_container
-    set_flash_messages_and_redirect
+    do_service_action :create_container
+  end
+
+  def destroy_container
+    do_service_action :destroy_container
   end
 
   def recreate
-    @result = @application.recreate
-    set_flash_messages_and_redirect
+    do_service_action :recreate
   end
 
-  def reinstall
-    @result = @application.reinstall_software
-    set_flash_messages_and_redirect
+  def stop
+    do_service_action :stop
   end
 
-  def monitor
-    @result = @application.monitor
-    set_flash_messages_and_redirect
+  def start
+    do_service_action :start
   end
-  
-  def demonitor
-    @result = @application.demonitor
-    set_flash_messages_and_redirect
+
+  def restart
+    do_service_action :restart
   end
-  
+
+  def pause
+    do_service_action :pause
+  end
+
+  def unpause
+    do_service_action :unpause
+  end
+
   def register_website
-    @result = @application.register_website
-    set_flash_messages_and_redirect
+    do_service_action :register_website
   end
-  
+
   def deregister_website
-    @result = @application.deregister_website
-    set_flash_messages_and_redirect
+    do_service_action :deregister_website
   end
-  
+
   def register_dns
-    @result = @application.register_dns
-    set_flash_messages_and_redirect
+    do_service_action :register_dns
   end
-  
+
   def deregister_dns
-    @result = @application.deregister_dns
-    set_flash_messages_and_redirect
+    do_service_action :deregister_dns
+  end
+
+  def deregister_dns
+    do_service_action :destroy_container
+  end
+
+  def deregister_dns
+    do_service_action :delete_image
+  end
+
+  def deregister_dns
+    do_service_action :restart
+  end
+
+  def deregister_dns
+    do_service_action :reinstall
+  end
+
+  def deregister_dns
+    do_service_action :monitor
+  end
+
+  def deregister_dns
+    do_service_action :demonitor
   end
 
 private
 
-  def set_flash_messages_and_redirect
-    if @result.was_success == true
-      render partial: 'control_panel_applications/show'   
-    else
-      if @result.result_mesg.blank?
-        flash_message = 'Failed with unknown error. (No message in API result object.)'
-      else
-        flash_message = @result.result_mesg[0..500]
-      end
-      render partial: 'control_panel_applications/show', locals: { flash_message: flash_message }   
+  def do_service_action(action)
+    Thread.new do 
+      @application.send(action)
     end
+    sleep(0.1)
+    render partial: 'control_panel_applications/show'
   end
+
+
 
 end
