@@ -84,7 +84,7 @@
 	        </li>
 			<li id="status_message_area_when_menu_not_collpased">
 				<% if @system_status[:button_url].present? %>
-	    	  		<a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">
+	    	  		<a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %> trigger-response-modal">
 				  		<span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><i class="fa fa-heartbeat"></i> <%= @system_status[:message] %></span>
     	  	  		</a>
     	  	  	<% else %>

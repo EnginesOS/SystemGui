@@ -19,19 +19,25 @@ protected
     set_page_title
   end
 
+  def excluded_controller?
+    [
+      'helps',
+      'applications',
+      'services', 
+      'control_panel_applications',
+      'control_panel_services', 
+      'desktop_applications', 
+      'application_reports', 
+      'service_reports', 
+      'application_abouts', 
+      'service_abouts', 
+      'gallery_softwares', 
+      'charts'
+    ].include? params[:controller]
+  end
+
   def set_system_status
-    return if params[:controller] == 'helps' || 
-              params[:controller] == 'applications' ||
-              params[:controller] == 'services' || 
-              params[:controller] == 'control_panel_applications' ||
-              params[:controller] == 'control_panel_services' || 
-              params[:controller] == 'desktop_applications' || 
-              params[:controller] == 'application_reports' || 
-              params[:controller] == 'service_reports' || 
-              params[:controller] == 'application_abouts' || 
-              params[:controller] == 'service_abouts' || 
-              params[:controller] == 'gallery_softwares' || 
-              params[:controller] == 'charts'
+    return if excluded_controller?
     if user_signed_in?
       @system_status = System.status
       case @system_status[:state]
@@ -78,12 +84,17 @@ protected
   end
 
   def authorize
-     params[:controller] == 'desktops' || params[:controller] == 'desktop_applications' || devise_controller? || authenticate
+     params[:controller] == 'desktops' ||
+     params[:controller] == 'desktop_applications' ||
+     params[:controller] == 'helps' ||
+     devise_controller? ||
+     authenticate
   end
 
   def authenticate
-    if user_signed_in?
-      authenticate_user!
+    return authenticate_user! if user_signed_in?
+    if excluded_controller?
+      render text: "Your session expired. Please sign in again to continue.", status: 401
     else
       redirect_to desktop_path
     end

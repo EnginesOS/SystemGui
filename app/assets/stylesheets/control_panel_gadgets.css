@@ -18,7 +18,7 @@
   color: #66b;
 }
 
-.indicator_disabled {
+.indicator_no_container {
   color: #bbb;
 }
 
@@ -30,27 +30,27 @@
   color: #666;
 }
 
-.engine_running {
+.background_running {
   background-color: #fff;
 }
 
-.engine_unbuilt{
+.background_unbuilt{
   background-color: #eee;
 }
 
-.engine_paused {
+.background_paused {
   background-color: #ffffe0;
 }
 
-.engine_error {
+.background_error {
   background-color: #fff0f0;
 }
 
-.engine_stopped {
+.background_stopped {
   background-color: #f0f0ff;
 }
 
-.engine_disabled {
+.background_no_container {
   background-color: #f9f9f9;
 }
 
