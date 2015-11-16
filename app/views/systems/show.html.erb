@@ -1,18 +1,21 @@
 <div class="col-sm-6 pull-right">
-	<%= render 'system_actions' %>
+	<%#= render 'system_actions' %>
 </div>
 
 <div class="col-sm-6">
-	<h2><%= content_tag(:i, "", class: "fa fa-info") %> System info</h2>
+	<h2><%= content_tag(:i, "", class: "fa fa-cog") %> System settings</h2>
 	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
 <div class="col-sm-12 top-gap">
-	<div class='panel panel-default'>
-		<div class='panel-body'>
-			<% SystemInfo.summary.merge(@system_status[:system]).merge(@system_status[:builder]).each do |key, value| %>
-				<%= render 'shared/show/label_and_text', label: key.to_s.humanize, text: SharedViews.value_as_html(value) %>
-			<% end %>
-		</div>
-	</div>
+	<div class="btn-group top-gap">
+	    <%= link_to (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe), domains_manager_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div><br>
+	<div class="btn-group top-gap">
+		<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop', edit_desktop_settings_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div><br>
+	<div class="btn-group top-gap">
+		<%= link_to content_tag(:i, "", class: "fa fa-bug") + ' Bug reports', edit_system_bug_reports_path, class: "btn btn-default btn-lg trigger-response-modal" %>
+	</div><br>
 </div>

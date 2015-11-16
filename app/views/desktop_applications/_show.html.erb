@@ -7,7 +7,7 @@
 			</div>
 	  	</div>
 		<div class="launcher-label" style="color: <%= @desktop_settings.icon_text_color %>;">
-			<%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if @application.state != "running" %>
+			<%= content_tag(:i, "", class: "fa fa-exclamation-triangle indicator_stopped") if @application.state[:state] != :running %>
 			<%= @application.application_display_properties.title || @application.container_name %>
 		</div>
 	</div> </a>

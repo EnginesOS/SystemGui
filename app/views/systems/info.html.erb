@@ -1,0 +1,31 @@
+<div class="col-sm-6 pull-right">
+	<%#= render 'system_actions' %>
+</div>
+
+<div class="col-sm-6">
+	<h2><%= content_tag(:i, "", class: "fa fa-info") %> System info</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+</div>
+
+<div class="col-sm-12 top-gap">
+	<div class="btn-group top-gap">
+		<%= link_to content_tag(:i, "", class: "fa fa-dashboard") + ' Monitor', monitor_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-file-text-o") + ' Logs', logs_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-heartbeat") + ' Status', status_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+
+	<div class="dropdown top-gap">
+	  <button class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+	    <strong>v </strong>Engines release
+	    <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+	    <li class='panel-body'>
+			<%= SystemInfo.summary[:engines_release] %>
+		</li>
+	  </ul>
+	</div>
+
+  <%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Base OS', base_system_system_path, class: 'btn btn-default btn-lg trigger-response-modal  top-gap' %>
+
+</div>

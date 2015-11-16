@@ -21,7 +21,6 @@ p result
   def persist_application
     Application.where(container_name: @install_from_blueprint.application.container_name).first_or_create.tap do |application|
       application.assign_attributes(application_display_properties_attributes: { installer_icon_url: @install_from_blueprint.installer_icon_url })
-      application.application_display_properties.set_defaults
       application.save
     end
   end

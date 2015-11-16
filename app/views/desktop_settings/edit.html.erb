@@ -11,6 +11,6 @@
     <legend>Colors</legend>
     <%= render partial: 'shared/form/color_field', locals: {name: :icon_text_color, label: 'Text', f: f} %>
     <%= render partial: 'shared/form/color_field', locals: {name: :background_color, label: 'Background', f: f} %>
-    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: control_panel_path} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: system_path} %>
   <% end %>
 </div>

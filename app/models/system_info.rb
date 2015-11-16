@@ -90,12 +90,14 @@ module SystemInfo
   def self.summary
     {
       # CPUs: monitor_cpu.cpus.count,
-      'Engines system release' => engines_api.get_engines_system_release,
+      engines_release: engines_api.get_engines_system_release
+    }
+  end
+
+  def self.settings_summary 
+    {
       'Send system bug reports' => engines_api.is_remote_exception_logging?
     }
   end
-  
-  
-  
 
 end

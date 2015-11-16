@@ -4,10 +4,6 @@ module EnginesApplicationSystemActions
     do_service_action :create_container
   end
 
-  def destroy_container
-    do_service_action :destroy_container
-  end
-
   def recreate
     do_service_action :recreate
   end
@@ -48,29 +44,34 @@ module EnginesApplicationSystemActions
     do_service_action :deregister_dns
   end
 
-  def deregister_dns
+  def destroy_container
     do_service_action :destroy_container
   end
 
-  def deregister_dns
+  def delete_image
     do_service_action :delete_image
   end
 
-  def deregister_dns
+  def restart
     do_service_action :restart
   end
 
-  def deregister_dns
+  def reinstall
     do_service_action :reinstall
   end
 
-  def deregister_dns
+  def monitor
     do_service_action :monitor
   end
 
-  def deregister_dns
+  def deminitor
     do_service_action :demonitor
   end
+
+  def reload
+    render partial: 'control_panel_applications/show'
+  end
+
 
 private
 
