@@ -3,7 +3,7 @@ class SystemSecurityCertificate < ActiveRecord::Base
   include Engines::Api
 
   has_attached_file :certificate
-  attr_accessor :domain_name, :key
+  attr_accessor :domain_name, :key, :set_as_default
 
   validates_attachment_content_type :certificate, :content_type => /\Aapplication\/.*\Z/
   validates_attachment_presence :certificate
@@ -26,7 +26,8 @@ class SystemSecurityCertificate < ActiveRecord::Base
     {
       domain_name: domain_name,
       key: key,
-      certificate: file_content
+      certificate: file_content,
+      set_as_default: set_as_default
     }
   end
 

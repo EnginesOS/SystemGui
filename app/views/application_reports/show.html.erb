@@ -6,7 +6,7 @@
       <tr><td><label>Name</label></td><td><%= @application.container_name %></td></tr> 
       <tr><td><label>Websites</label></td><td>
       	<% @application.web_sites.each do |web_site| %>
-      		<a href=http://<%= web_site %>><%= web_site %></a>
+      		<a href=<%= web_site %>><%= web_site %></a>
         <% end %>
       </td></tr> 
       <tr><td><label>Current state</label></td><td><%= state %></td></tr>
