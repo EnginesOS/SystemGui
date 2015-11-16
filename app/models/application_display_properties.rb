@@ -26,6 +26,11 @@ class ApplicationDisplayProperties < ActiveRecord::Base
     self.detail = application.blueprint_software_details["long_title"]
     self.save
     url_for_new_icon = installer_icon_url.present? ? installer_icon_url : icon_url_from_blueprint
+    
+p :url_for_new_icon
+p url_for_new_icon    
+
+    
     self.icon = file_from(url_for_new_icon)
     self.save
   end

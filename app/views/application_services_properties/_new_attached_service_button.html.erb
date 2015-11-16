@@ -11,8 +11,8 @@
 		<% available_services.each do |available_service| %>
 		<li>
 		  	<% title_data = Engines::Services.titles_data[available_service[:service_container].to_sym] %>
-		  	<% fa_icon = title_data[:fa_icon] %>
-		  	<% title = title_data[:title] %>
+		  	<% fa_icon = title_data.present? ? title_data[:fa_icon] : 'circle' %>
+		  	<% title = title_data.present? ? title_data[:title] : 'No title' %>
 			<%= link_to(
 			fa(fa_icon) + ' ' + available_service[:title] + ' - ' + title,
 			new_application_service_connector_type_path(

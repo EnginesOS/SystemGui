@@ -3,6 +3,10 @@ class SystemsController < ApplicationController
   def show
   end
   
+  def settings
+    
+  end
+  
   def monitor
     # render text: Vmstat.methods
   end

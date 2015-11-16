@@ -46,7 +46,7 @@ module Engines::Service
 
   def state
     return {state: :no_service, label: 'No service'} if system_service_object.blank?
-    return {state: :error, label: 'Error'} if is_error?
+    return {state: :error, label: service_container_state[:label] + ' - Error', detail: status_detail} if is_error?
     return task_at_hand_state if task_at_hand_state.present?
     service_container_state
   end
@@ -62,7 +62,7 @@ module Engines::Service
         when :pause
           {label: 'Pausing'}
         when :unpause
-          {label: 'Unspausing'}
+          {label: 'Unpausing'}
         else
           {label: "#{current_task_state.to_s}-ing"}
       end.merge({state: :working, task_at_hand: current_task_state})
@@ -72,10 +72,15 @@ module Engines::Service
   def service_container_state
     service_state = system_service_object.read_state
     if service_state == 'nocontainer'
-      {state: :no_container, label: 'Unbuilt'}
+      {state: :no_container, label: 'Unbuilt', detail: status_detail}
     else
-      {state: service_state.to_sym, label: service_state.to_s.humanize}
+      {state: service_state.to_sym, label: service_state.to_s.humanize, detail: status_detail}
     end
+  end
+  
+  def status_detail
+    return 'Rebuild required' if rebuild_required?
+    return 'Restart required' if restart_required?
   end
 
   def web_sites
@@ -92,6 +97,14 @@ module Engines::Service
 
   def is_error?
     system_service_object.blank? ? true : system_service_object.is_error?
+  end
+  
+  def restart_required?
+    system_service_object.blank? ? false : system_service_object.restart_required?
+  end
+  
+  def rebuild_required?
+    system_service_object.blank? ? false : system_service_object.rebuild_required?
   end
 
   def framework

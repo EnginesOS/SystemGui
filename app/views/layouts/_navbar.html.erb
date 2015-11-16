@@ -63,6 +63,9 @@
 			    <li>
 					<%= link_to content_tag(:i, "", class: "fa fa-info") + ' Info', system_path, class: "trigger-response-modal" %>
 			    </li>
+			    <li>
+					<%= link_to content_tag(:i, "", class: "fa fa-cog") + ' Settings', system_settings_path, class: "trigger-response-modal" %>
+			    </li>
 	        	<li>
 				  <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) %>
 				  <%= link_to link_body, domains_manager_path, class: 'trigger-response-modal' %>

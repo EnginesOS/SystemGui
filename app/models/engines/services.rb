@@ -27,6 +27,7 @@ module Engines::Services
       imap: {title: 'IMAP server', fa_icon: 'envelope-square'},
       syslog: {title: 'System logging', fa_icon: 'file-text-o'},
       nfs: {title: 'Network storage', fa_icon: 'hdd-o'},
+      avahi: {title: 'Service discovery', fa_icon: 'torch'}
     }
   end
   

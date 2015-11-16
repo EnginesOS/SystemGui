@@ -1,0 +1,23 @@
+<div class="col-sm-6 pull-right">
+	<%= render 'system_actions' %>
+</div>
+
+<div class="col-sm-6">
+	<h2><%= content_tag(:i, "", class: "fa fa-cog") %> System settings</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+</div>
+
+<div class="col-sm-12 top-gap">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+		<%= link_to content_tag(:i, "", class: "fa fa-bug") + ' Bug reports', edit_system_bug_reports_path, class: "btn-lg trigger-response-modal" %>
+
+		</div>
+	</div>
+
+	<%= render 'shared/form/legend', text: 'Status' %>
+			<% @system_status[:system].merge(@system_status[:builder]).each do |key, value| %>
+				<%= render 'shared/show/label_and_text', label: key.to_s.humanize, text: SharedViews.value_as_html(value) %>
+			<% end %>
+</div>

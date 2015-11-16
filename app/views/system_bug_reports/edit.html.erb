@@ -6,7 +6,7 @@
   </div>
   <%= form_for @system_bug_reports, url: system_bug_reports_path, method: :patch do |f| %>
     <%= render 'shared/form/checkbox', name: :enable, label: 'Send reports', f: f %>
-    <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: system_path %>
+    <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: system_settings_path %>
   <% end %>
 
 
