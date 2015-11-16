@@ -47,7 +47,7 @@ module Engines::Application
   end
 
   def error_state
-    {state: :error, label: "#{application_container_state[:label]} (Error)"}
+    {state: :error, label: "#{application_container_state[:label]} - Error", detail: status_detail}
   end
 
   def task_at_hand_state
@@ -62,6 +62,10 @@ module Engines::Application
           {label: 'Pausing'}
         when :unpause
           {label: 'Unpausing'}
+        when :destroy
+          {label: 'Unbuilding'}
+        when :create
+          {label: 'Building'}
         else
           {label: "#{current_task_state.to_s}-ing"}
       end.merge({state: :working, task_at_hand: current_task_state})
@@ -73,11 +77,14 @@ module Engines::Application
     if application_state == 'nocontainer'
       {state: :no_container, label: 'Unbuilt'}
     else
-      {state: application_state.to_sym, label: application_state.to_s.humanize}
+      {state: application_state.to_sym, label: application_state.to_s.humanize, detail: status_detail}
     end
   end
 
-
+  def status_detail
+    return 'Reinstall required' if reinstall_required?
+    return 'Restart required' if restart_required?
+  end
   
   def primary_web_site
     if web_sites.present?
@@ -90,6 +97,8 @@ module Engines::Application
   {
     active?: 'is_active?',
     is_running: 'is_running?',
+    reinstall_required?: 'rebuild_required?',
+    restart_required?: 'restart_required?',
     is_error?: 'is_error?',
     has_container?: 'has_container?',
     container_type: 'ctype',

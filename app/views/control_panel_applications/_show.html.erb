@@ -30,20 +30,29 @@ web_sites = application.web_sites
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 	<div class="engine-gadget application btn-group" title='<%= [@application.application_display_properties.title, @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
 		<button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
-			<div class="icon_holder">
-				<%= image_tag(application.application_display_properties.icon_url, class: "engine_icon", alt: "") -%>
-			</div>
-			<div class="text_holder">
-				<%= content_tag(:strong, application_name) %><br>
-				<%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.application_display_properties.title %><br>
-			    <div class='object_status'>
-			  		<% if application_state[:state] == :working %>
-			          <%= content_tag(:i, "", class: "fa fa-spinner fa-spin indicator " + indicator_class) %> <small><%= application_state[:label] %></small>
-					<% else %>
-					  <%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %> <small><%= application_state[:label] %></small>
-					<% end %>
+			<div class="status_area">
+		      <div class="icon_holder">
+  		        <div class="icon">
+		      	  <%= image_tag(application.application_display_properties.icon_url, class: "engine_icon", alt: "") -%>
+		        </div>
+		      </div>
+		      <div class="text_holder">
+		      	  <%= content_tag(:strong, application_name) %><br>
+				  <%= content_tag(:i, "", class: "fa fa-bookmark-o") + ' ' + application.application_display_properties.title %><br>
+		    	  <div class='object_status'>
+				      <div class='object_status_indicator'>
+				  		  <% if application_state[:state] == :working %>
+				            <%= content_tag(:i, "", class: "fa fa-spinner fa-spin indicator " + indicator_class) %>
+						  <% else %>
+						  	<%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %>
+						  <% end %>
+					  </div>
+				      <div class='object_status_text'>
+					  	<%= [application_state[:label], application_state[:detail]].compact.join('<br>').html_safe %>
+					  </div>
 				  </div>
-			</div>
+		      </div>
+	        </div>
 		</button>
 
 		<% if application_state[:state] != :working %>
@@ -60,6 +69,7 @@ web_sites = application.web_sites
 							<%= content_tag(:i, "", class: "fa fa-play") %> Running
 						</div>
 					</li>
+			  		<li><div class="indicator_error dropdown-title"><%= application_state[:detail] %></div></li>
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
 					</li>
@@ -75,6 +85,7 @@ web_sites = application.web_sites
 							<%= content_tag(:i, "", class: "fa fa-pause") %> Paused
 						</div>
 					</li>
+			  		<li><div class="indicator_error dropdown-title"><%= application_state[:detail] %></div></li>
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
 					</li>
@@ -87,6 +98,7 @@ web_sites = application.web_sites
 							<%= content_tag(:i, "", class: "fa fa-stop") %> Stopped
 						</div>
 					</li>
+			  		<li><div class="indicator_error dropdown-title"><%= application_state[:detail] %></div></li>
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "start", url: start_applications_path(application_name: application_name) } %>
 					</li>
@@ -107,6 +119,7 @@ web_sites = application.web_sites
 							<%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt
 						</div>
 					</li>
+			  		<li><div class="indicator_error dropdown-title"><%= application_state[:detail] %></div></li>
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-wrench") + " Build", "javascript:void(0);", class: 'object_action', data: { action: "build", url: create_container_applications_path(application_name: application_name) } %>
 					</li>
@@ -124,6 +137,7 @@ web_sites = application.web_sites
 							<%= content_tag(:i, "", class: "fa fa-warning") %> Error
 						</div>
 					</li>
+			  		<li><div class="indicator_error dropdown-title"><%= application_state[:detail] %></div></li>
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_applications_path(application_name: application_name) } %>
 					</li>
@@ -205,6 +219,10 @@ web_sites = application.web_sites
 						</li>
 					<% end %>
 				<% end %>
+				<li class="divider"></li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-refresh") + " Reload", "javascript:void(0);", class: 'object_action', data: { action: "reload", url: reload_applications_path(application_name: application_name) } %>
+				</li>
 			</ul>
 
 		<% end %>

@@ -116,10 +116,10 @@
      <% end %>
   
      <label>Processes</label>
-     <% res = @service.ps_container %>
-     <% if @service.last_result.present? %>
+     <% processes = @service.ps_container %>
+     <% if processes.is_a? Array %>
        <pre><table>
-         <% @service.last_result.each_line do |line | 
+         <% processes.each_line do |line | 
            vals = line.split %>
            <tr>
              <% vals.each do |v| %>  
@@ -133,9 +133,9 @@
      <% end %>
 
     <label>Logs</label>
-    <% res = @service.logs_container%>
-    <% if @service.last_result.present? %>
-      <pre><%= @service.last_result %></pre>
+    <% logs = @service.logs_container%>
+    <% if logs.present? %>
+      <pre><%= logs %></pre>
     <% else %>
       <pre>None</pre>
      <% end %>
