@@ -1,5 +1,5 @@
 <div class="col-sm-6 pull-right">
-	<%= render 'system_actions' %>
+	<%#= render 'system_actions' %>
 </div>
 
 <div class="col-sm-6">
@@ -8,16 +8,24 @@
 </div>
 
 <div class="col-sm-12 top-gap">
-	<div class='panel panel-default'>
-		<div class='panel-body'>
-			<% SystemInfo.summary.each do |key, value| %>
-				<%= render 'shared/show/label_and_text', label: key.to_s.humanize, text: SharedViews.value_as_html(value) %>
-			<% end %>
-		</div>
+	<div class="btn-group top-gap">
+		<%= link_to content_tag(:i, "", class: "fa fa-dashboard") + ' Monitor', monitor_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-file-text-o") + ' Logs', logs_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-heartbeat") + ' Status', status_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 	</div>
 
-	<%= render 'shared/form/legend', text: 'Status' %>
-			<% @system_status[:system].merge(@system_status[:builder]).each do |key, value| %>
-				<%= render 'shared/show/label_and_text', label: key.to_s.humanize, text: SharedViews.value_as_html(value) %>
-			<% end %>
+	<div class="dropdown top-gap">
+	  <button class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+	    <strong>v </strong>Engines release
+	    <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+	    <li class='panel-body'>
+			<%= SystemInfo.summary[:engines_release] %>
+		</li>
+	  </ul>
+	</div>
+
+  <%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Base OS', base_system_system_path, class: 'btn btn-default btn-lg trigger-response-modal  top-gap' %>
+
 </div>

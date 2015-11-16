@@ -2,9 +2,11 @@ class SystemsController < ApplicationController
 
   def show
   end
-  
-  def settings
-    
+
+  def info
+  end
+
+  def status
   end
   
   def monitor
