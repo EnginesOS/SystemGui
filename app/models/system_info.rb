@@ -90,7 +90,7 @@ module SystemInfo
   def self.summary
     {
       # CPUs: monitor_cpu.cpus.count,
-      'Engines system release' => engines_api.get_engines_system_release
+      engines_release: engines_api.get_engines_system_release
     }
   end
 

@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
 protected
 
   def setup
+    return if excluded_controller?
     set_system_status
     set_page_title
   end
@@ -37,7 +38,6 @@ protected
   end
 
   def set_system_status
-    return if excluded_controller?
     if user_signed_in?
       @system_status = System.status
       case @system_status[:state]
