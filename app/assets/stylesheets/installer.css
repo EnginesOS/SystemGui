@@ -35,6 +35,14 @@
   overflow: hidden;
 }
 
+#installer_find_button .btn{
+	width: 100%;
+}
+
+#installer_library_select .btn{
+	width: 100%;
+}
+
 @media (max-width:991px) {
 	
 	.installer .engine-install-name {
@@ -44,6 +52,16 @@
 	.installer .engine-install-detail {
 		height: 39px;
 	}
+
+	#installer_find_button .btn{
+		width: inherit;
+	}
+	
+	#installer_library_select .btn{
+		width: inherit;
+	}
+
+
 }
 
 
@@ -53,6 +71,10 @@
   color: #666;
 }
 
+.installer #search{
+	min-width: 100px;
+}
+
 #new_app_install_form_advanced_fields{
   display: none;
 }
@@ -60,6 +82,8 @@
 #installation_status pre {
   height: 500px;
 }
+
+
 
 .find_by_dropdown_submit_button{
 	padding: 3px 20px;
