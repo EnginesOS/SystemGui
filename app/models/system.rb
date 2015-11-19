@@ -76,14 +76,6 @@ module System
      domain_name: stored_build_params[:domain_name] }
   end
 
-  # def self.restarting?;                       status[:state] == :restarting; end
-  # def self.mgmt_restarting?;                  status[:state] == :mgmt_restarting; end
-  # def self.registry_restarting?;              status[:state] == :registry_restarting; end
-  # def self.engines_updating?;                 status[:state] == :engines_updating; end
-  # def self.base_system_updating?;             status[:state] == :base_updating; end
-  # def self.installing?;                       status[:state] == :installing; end
-  # def self.needs_restart?;                    status[:state] == :needs_restart; end
-
   def self.waiting_for_installation
     !@build_status_from_api[:is_building] && ENV['FAILED_BUILD_FLAG'] != 'true'
   end
