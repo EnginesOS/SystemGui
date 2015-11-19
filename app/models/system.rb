@@ -47,15 +47,15 @@ module System
     end
     {system: @status_from_api,builder: @build_status_from_api}.merge(
       if @status_from_api[:is_rebooting]
-        {state: :restarting, message: "Rebooting", message_class: :warning}
+        {state: :restarting, message: "System rebooting", message_class: :warning}
       elsif @status_from_api[:is_mgmt_restarting]
         {state: :mgmt_restarting, message: "System manager restarting", message_class: :warning}
       elsif @status_from_api[:is_registry_restarting]
-        {state: :registry_restarting, message: "Registry restarting", message_class: :warning}
+        {state: :registry_restarting, message: "Restarting registry", message_class: :warning}
       elsif @status_from_api[:is_engines_system_updating]
-        {state: :engines_updating, message: "Updating", message_class: :warning}
+        {state: :engines_updating, message: "Updating Engines", message_class: :warning}
       elsif @status_from_api[:is_base_system_updating]
-        {state: :base_updating, message: "Updating", message_class: :warning}
+        {state: :base_updating, message: "Updating base", message_class: :warning}
       elsif @build_status_from_api[:is_building]
         {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing'}
       elsif @status_from_api[:needs_reboot]
@@ -63,9 +63,9 @@ module System
       elsif @status_from_api[:needs_engines_update]
         {state: :needs_engines_update ,message: "Engines update required", message_class: :danger, button_url: '/system/updater'}
       elsif @status_from_api[:needs_base_update]
-        {state: :needs_base_update ,message: "Base update required", message_class: :danger, button_url: '/system/updater'}
+        {state: :needs_base_update ,message: "Base OS update required", message_class: :danger, button_url: '/system/updater'}
       else
-        {state: :ok, message: "OK", message_class: :ok}
+        {state: :ok, message: "System OK", message_class: :ok}
       end)
   end
 
