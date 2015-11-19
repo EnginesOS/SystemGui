@@ -1,21 +1,8 @@
-
-
 .application_detail .loading_spinner {
   text-align: center;
   font-size: 48px;
   color: #999;
 }
-
-/*.wtf {
-  color: #e33;
-}*/
-
-
-/*.control-panel-title {
-  margin-bottom: 5px;
-  margin-top: 5px;
-  color: #777;
-}*/
 
 .application_detail pre {
   max-height: 500px;
@@ -27,9 +14,7 @@
   width: 90%;
 }
 
-/*.application_detail.advanced_detail .modal-dialog {
-  width: 90%;
-}*/
+
 .application_detail.about_detail .modal-dialog {
   width: 400px;
 }

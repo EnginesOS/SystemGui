@@ -1,9 +1,3 @@
-/*
-.settings .btn-group {
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-*/
 .settings .btn {
   text-align: left;
 }
@@ -12,16 +6,6 @@
   min-width: 100%;
 }
 
-/*.settings .btn img {
-  margin-left: 4px;
-}
-*/
 .settings_btn_detail {
   font-size: 0.8em;
 }
-
-/*.form-control.input-lg.choose_file_form_control {
-  padding: 8px;
-}
-
-*/
