@@ -1,16 +1,14 @@
 <div class="installer row">
-	<div class="col-sm-12">
 
+		<div class="col-sm-6 top-gap bring-forward pull-right">
+			<%= render 'installer_actions' %>
+		</div>
+	
 		<div class="col-sm-6">
 			<h2> <%= content_tag(:i, "", class: "fa fa-play-circle-o") %> Installer</h2>
 			<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 		</div>
 
-		<div class="col-sm-6 top-gap bring-forward">
-			<%= render 'installer_actions' %>
-		</div>
-	
-	</div>
 </div>
 
 <div class="installer row">

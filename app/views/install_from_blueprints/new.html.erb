@@ -1,22 +1,27 @@
 <div class="software_installation_form">
 
-	<div class="col-sm-12">
-		<h2><%= content_tag(:i, "", class: "fa fa-play-circle-o") %> Install <%= @install_from_blueprint.title %></h2>
-		<div class="col-sm-2 top-gap">
-			<%= render 'shared/form/image', url: @install_from_blueprint.icon_url %>
-		</div>
+	<div class="col-sm-6 top-gap bring-forward pull-right">
 
-		<div class="btn-group-vertical top-gap pull-right">
+		<div class="btn-group-vertical pull-right">
 			<button type="button" class="btn btn-default btn-lg" id="show_advanced_fields_button">
 				<%= content_tag(:i, '', class: 'fa fa-sliders') %> Advanced
 			</button>
 		</div>
-		<div class="advanced_fields btn-group-vertical top-gap pull-right">
+		<div class="advanced_fields btn-group-vertical pull-right">
 	        <a class="btn btn-default btn-lg" data-toggle="modal" data-target="#blueprint_modal">
 	          <i class="fa fa-file-text"></i> Blueprint
 	        </a>
 		</div>
+
 	</div>
+
+	<div class="col-sm-6">
+		<h2><%= content_tag(:i, "", class: "fa fa-play-circle-o") %> Install <%= @install_from_blueprint.title %></h2>
+		<div class="col-sm-2 top-gap">
+			<%= render 'shared/form/image', url: @install_from_blueprint.icon_url %>
+		</div>
+	</div>
+
 
 		<%= form_for @install_from_blueprint, url: install_from_blueprint_path(title: @install_from_blueprint.title) do |f| %>
 			<%= f.hidden_field :advanced_selected %>
