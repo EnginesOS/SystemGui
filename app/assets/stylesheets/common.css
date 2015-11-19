@@ -4,6 +4,11 @@
 	height: 100%;
 }
 
+.bring-forward{
+	position: relative;
+	z-index: 999;	
+}
+
 .alert {
   margin: 0px;
   border: none;
