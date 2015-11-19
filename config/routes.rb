@@ -4,9 +4,13 @@ Rails.application.routes.draw do
 
 #Users
 
-  resource :user
-  resource :user_password
-  devise_for :users, :skip => :registrations
+  devise_for :users, skip: :registrations
+  resource :user, only: :show
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user'
+    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  end
+  # resource :user_password
 
 #Desktop
 
