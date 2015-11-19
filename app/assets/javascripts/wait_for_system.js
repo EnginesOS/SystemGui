@@ -9,9 +9,8 @@ $(document).ready(function() {
 	var redirect_url = $("#wait_for_system").data('redirecturl');
 
 	function set_progress_bar_width(width) {
-		var total_width = $(".wait_for_system_progress_bar_done").parent().width();
-		var done_width = (total_width * width/100).toString() + 'px';
-		$(".wait_for_system_progress_bar_done").width(done_width);
+		width = width.toString() + '%';
+		$(".wait_for_system_progress_bar .progress-bar").width(width);
 	};
 
 	function initial_wait_for_system() {

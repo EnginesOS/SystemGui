@@ -1,7 +1,0 @@
-<%= f.fields_for :display do |ff| %>
-  <div class="col-sm-12">
-    <legend>Display</legend>
-  </div>
-  <%= render partial: 'shared/form/text_field', locals: {name: :display_name, label: 'Name', tooltip: "Give the software a name.", f: ff} %>
-  <%= render partial: 'shared/form/text_field', locals: {name: :display_description, label: 'Description', tooltip: "Give the software a description.", f: ff} %>
-<% end %>

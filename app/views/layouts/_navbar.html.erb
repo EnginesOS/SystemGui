@@ -1,10 +1,6 @@
 <% active_menu_item = case
-  when params[:controller] == 'desktops', params[:controller] == 'desktop_settings'
+  when params[:controller] == 'desktops'
       :desktop
-    when params[:controller] == 'systems', params[:controller] == 'system_securities', params[:controller] == 'system_securities',
-    		params[:controller] == 'domains_managers', params[:controller] == 'desktop_settings', params[:controller] == 'system_settings',
-    		params[:controller] == 'system_engines_update'
-      :system
     else
       :control_panel
     end
@@ -18,7 +14,7 @@
 	        <span class="sr-only">Toggle navigation</span>
 	        <i class="fa fa-caret-down"></i>
 	      </button>
-	      <%= link_to image_tag("engines_logo.png", class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
+	      <%= link_to image_tag("engines_icon.png", class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
 		  <div id="status_message_area_when_menu_collpased">
     	  </div>
 
@@ -30,7 +26,7 @@
 				<%= link_to content_tag(:i, "", class: "fa fa-desktop"), desktop_path, title: 'Desktop', class: 'trigger-response-modal' %>
 	        </li>
 	        <li class="dropdown <%= 'active' if active_menu_item == :control_panel %>">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-cogs") %> Control panel <span class="caret"></span></a>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-cogs") %> <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
 			    <li>
 		       	  <%= link_to content_tag(:i, "", class: "fa fa-tablet") + " Applications", control_panel_path, class: 'trigger-response-modal' %>
@@ -45,11 +41,7 @@
 			    <li>
 		       	  <%= link_to content_tag(:i, "", class: "fa fa-arrows") + " Registry", services_registry_path, class: 'trigger-response-modal' %>
 			    </li>
-	          </ul>	        	
-	        </li>
-	        <li class="dropdown <%= 'active' if active_menu_item == :system %>">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= content_tag(:i, "", class: "fa fa-hdd-o") %> System <span class="caret"></span></a>
-	          <ul class="dropdown-menu">
+				<li class="divider"></li>
 			    <li>
 					<%= link_to content_tag(:i, "", class: "fa fa-cog") + ' Settings', system_path, class: "trigger-response-modal" %>
 			    </li>
@@ -61,28 +53,24 @@
 			    	<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path,
 						class: 'trigger-response-modal' %>
 				</li>
-				<li class="divider"></li>
 			    <li>
 			    	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path,
 						class: 'trigger-response-modal' %>
 				</li>
-	          </ul>
+	          </ul>	        	
 	        </li>
-			<li id="status_message_area_when_menu_not_collpased">
-				<% if @system_status[:button_url].present? %>
-	    	  		<a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %> trigger-response-modal">
-				  		<span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><i class="fa fa-heartbeat"></i> <%= @system_status[:message] %></span>
-    	  	  		</a>
-    	  	  	<% else %>
-	    	  		<div id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">
-				  		<span id="system_status_navbar_message" class="<%= @system_status[:message_class] %>"><i class="fa fa-heartbeat"></i> <%= @system_status[:message] %></span>
-    	  	  		</div>
-    	  	  	<% end %>
-			</li>
+
+
+	        <li id="status_message_area_when_menu_not_collpased" class="<%= @system_status[:message_class] %>">
+	          <a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="trigger-response-modal <%= @system_status[:message_class] %>">
+	          	<div id="system_status_navbar_message_icon"><%= content_tag(:i, "", class: "fa fa-heartbeat") %></div><div id="system_status_navbar_message_text"><div id="system_status_navbar_message_text_vertical_align"><%= @system_status[:message] %></div></div>
+	          </a>
+	        </li>
+
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
 			<li>
-				  <% link_body = (content_tag(:i, '', class: 'fa fa-question') + ' Help').html_safe %>
+				  <% link_body = content_tag(:i, '', class: 'fa fa-question').html_safe %>
 				  <%= link_to link_body, help_path(lookup: "#{params[:controller]}.#{params[:action]}.help"), data: {toggle: 'modal', target: '#help_modal'} %>				  
 			</li>
 	        <li class="dropdown">

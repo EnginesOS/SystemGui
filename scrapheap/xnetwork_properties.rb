@@ -1,5 +1,0 @@
-module Engines::NetworkProperties
-
-
-
-end
