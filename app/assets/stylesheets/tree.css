@@ -36,10 +36,7 @@
 .tree li span {
     margin-top: 0px;
 }
-/*.tree li.parent_li>span {
-    cursor:pointer
-}
-*/
+
 .tree>ul>li::before, .tree>ul>li::after {
     border:0;
 }

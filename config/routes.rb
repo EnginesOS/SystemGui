@@ -4,9 +4,13 @@ Rails.application.routes.draw do
 
 #Users
 
-  resource :user
-  resource :user_password
-  devise_for :users, :skip => :registrations
+  devise_for :users, skip: :registrations
+  resource :user, only: :show
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user'
+    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  end
+  # resource :user_password
 
 #Desktop
 
@@ -39,9 +43,8 @@ Rails.application.routes.draw do
   end
   
   resource :system do
-    get :monitor, :status, :info, :logs, :base_system, :updater, :restart # :monitor_io, :monitor_memory, :monitor_processing, 
+    get :monitor, :status, :info, :logs, :base_system, :updater, :restart
   end
-  # resource :system_settings
   resource :system_restart do
     get :progress
   end
@@ -136,10 +139,6 @@ Rails.application.routes.draw do
   resource :install_from_repository_url
   resource :install_from_docker_hub
   resource :install_from_docker_hub_configuration
-   # do
-    # get :application_service
-  # end
-  # resource :docker_hub_installation_application_services
 
 #First run
 

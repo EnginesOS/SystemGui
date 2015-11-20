@@ -1,5 +1,0 @@
-<%= form_for @user do |f| %>
-  <%= render partial: 'shared/form/errors', locals: {f: f, label: 'user password'} %>
-  <%= render partial: 'shared/form/text_field', locals: {name: :email, label: 'e-mail', f: f} %>
-  <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: user_path} %>
-<% end %>

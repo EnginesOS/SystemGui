@@ -1,0 +1,25 @@
+<% cancel_path ||= f.object.new_record? ? eval(f.object.class.model_name.plural.underscore + '_path') : eval(f.object.class.model_name.to_s.underscore + '_path(@' + f.object.class.model_name.to_s.underscore + ')')
+  submit_label ||= (f.object.new_record? ? 'Create' : 'Update')
+  submitted_message ||= "Submitting..."
+  cancelled_message ||= "Cancelling..." %>
+
+  <div class="form-buttons">
+    <div class="form-group ">
+      <div class="btn-group top-gap pull-left"> 
+        <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), cancel_path, class: "btn btn-lg btn-warning form-button-cancel") %>
+        </div>
+        <div class="btn-group top-gap pull-right">
+          <%= button_tag(type: "submit", name: 'commit', class: "btn btn-lg btn-primary") do %>
+            <%= content_tag(:i, "", class: "fa fa-check") + ' ' + submit_label %>
+          <% end %>
+        </div>
+      </div>
+  </div>
+  <div class="text-center" style="margin-top: 20px;">
+    <div class="submit-message" style="display: none;">
+      <i class="fa fa-check"></i> <%= submitted_message %>
+    </div>
+    <div class="cancel-message" style="display: none;">
+      <i class="fa fa-times"></i> <%= cancelled_message %>
+    </div>
+  </div>
