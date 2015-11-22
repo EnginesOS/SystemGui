@@ -38,8 +38,8 @@ $(document).ready(function(){
 			
 			var progress_listener = function(e) {
 				new_line = e.data;
-				if (new_line.substring(0, 13) == "Build Result:") {
-					build_progress_log_result_message = new_line.substring(13);
+				if (new_line.substring(0, 14) == "Build Result::") {
+					build_progress_log_result_message = new_line.substring(14);
 				};
 
 				var new_html = ansi_up.ansi_to_html(new_line);
@@ -60,7 +60,7 @@ $(document).ready(function(){
 					$("#installation_report").html('No report');
 					};
 				if (e.data == 'done') {
-					var flash_message = "Done. " + build_progress_log_result_message;
+					var flash_message = "Done. " + build_progress_log_result_message.replace('"', "'");
 					evtSource.close();
 					$("#installation_done_button").slideDown();
 					if ((/^ERROR/).test(flash_message)) {
@@ -68,8 +68,9 @@ $(document).ready(function(){
 					} else {
 						var flash_alert_class = 'success';
 					};
-					var flash_message_data_html = '<div class="flash_message_data" data-messagebody="' + flash_message + '" data-alertclass="' + flash_alert_class + '" >';
+					var flash_message_data_html = '<div class="hidden flash_message_data" data-alertclass="' + flash_alert_class + '" >' + flash_message + '</div>';
 					$("body").append(flash_message_data_html);
+					// $("body").append(flash_message);
 					do_flash_messages();
 					$("#installation_report_tab_button").click();
 					$("#report_tab_buttons").show();
