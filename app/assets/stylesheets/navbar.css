@@ -109,6 +109,7 @@
 #system_status_navbar_message_text_vertical_align {
 	display: inline-block;
 	vertical-align: middle;
+	text-align: center;
 }
 
 #system_status_navbar_message_button.notice {

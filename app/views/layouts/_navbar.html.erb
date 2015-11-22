@@ -70,10 +70,8 @@
 				</li>
 	          </ul>
 	        </li>
-	        <li id="status_message_area_when_menu_not_collpased" title='System status' class="<%= @system_status[:message_class] %>">
-	          <a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="trigger-response-modal <%= @system_status[:message_class] %>">
-	          	<div id="system_status_navbar_message_icon"><%= content_tag(:i, "", class: "fa fa-heartbeat") %></div><div id="system_status_navbar_message_text"><div id="system_status_navbar_message_text_vertical_align"><%= @system_status[:message] %></div></div>
-	          </a>
+	        <li id="status_message_area_when_menu_not_collpased" title='System status'>
+	        	<%= render 'layouts/navbar_system_status' %>
 	        </li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
