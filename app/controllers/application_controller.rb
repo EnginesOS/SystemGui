@@ -40,6 +40,7 @@ protected
   def set_system_status
     if user_signed_in?
       @system_status = System.status
+      return if params[:controller] == 'navbar_system_statuses'
       case @system_status[:state]
       when :restarting
         redirect_to system_restart_path,

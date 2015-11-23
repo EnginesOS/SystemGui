@@ -41,6 +41,7 @@
 
 #installer_library_select .btn{
 	width: 100%;
+	overflow: hidden;
 }
 
 @media (max-width:991px) {

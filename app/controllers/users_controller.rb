@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def update
     @user = User.first
     if @user.update user_params
-      redirect_to user_path, notice: 'Successfully updated email address.'
+      redirect_to user_path, notice: 'Successfully updated admin.'
     else
       render 'edit'
     end

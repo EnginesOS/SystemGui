@@ -51,7 +51,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def blueprint_software
-    @blueprint_software ||= if blueprint
+    @blueprint_software ||= if blueprint.is_a?(Hash) && blueprint[:software].present?
                               blueprint[:software].symbolize_keys
                             else
                               {}
@@ -59,7 +59,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def default_http_protocol
-    blueprint_protocol = blueprint_software[:http_protocol].to_s.downcase.sub('only', '').sub('and', '').strip.gsub(/[ ]./, '_').to_sym
+    blueprint_protocol = blueprint_software[:http_protocol].to_s.downcase.sub('only', '').sub('and', '').gsub('_',' ').strip.gsub(' ', '_').to_sym
     blueprint_protocol = :http_https if blueprint_protocol == :https_http
     [:http, :https, :http_https].include?(blueprint_protocol) ? blueprint_protocol : :http_https
   end

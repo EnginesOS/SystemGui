@@ -2,11 +2,19 @@ Rails.application.routes.draw do
 
   root to: "desktops#show"
 
+#Navbar
+
+  resource :navbar_system_status
+
 #Users
 
-  resource :user
-  resource :user_password
-  devise_for :users, :skip => :registrations
+  devise_for :users, skip: :registrations
+  resource :user, only: :show
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user'
+    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  end
+  # resource :user_password
 
 #Desktop
 
@@ -122,14 +130,14 @@ Rails.application.routes.draw do
   resource :services do
     get(
       :pause, :unpause, :start, :stop,
-      :restart, :recreate, :create_container) # :show,
+      :restart, :recreate, :create_container, :reload) # :show,
   end
 
 #Installer
 
   resource :installer
   resource :application_installation do
-    get(:preparing_installation, :preparing_installation_progress, :installing, :progress)
+    get(:preparing_installation, :preparing_installation_progress, :installing, :progress, :cancel)
   end
   resource :install_from_blueprint
   resource :install_from_repository_url

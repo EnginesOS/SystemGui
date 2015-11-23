@@ -60,16 +60,17 @@ $(document).ready(function(){
 					$("#installation_report").html('No report');
 					};
 				if (e.data == 'done') {
-					var flash_message = "Done. " + build_progress_log_result_message;
+					var flash_message = build_progress_log_result_message;
 					evtSource.close();
 					$("#installation_done_button").slideDown();
-					if ((/^ERROR/).test(flash_message)) {
+					if (build_progress_log_result_message.substring(0, 5) == "Error") {
 						var flash_alert_class = 'danger';
 					} else {
 						var flash_alert_class = 'success';
 					};
-					var flash_message_data_html = '<div class="flash_message_data" data-messagebody="' + flash_message + '" data-alertclass="' + flash_alert_class + '" >';
+					var flash_message_data_html = '<div class="hidden flash_message_data" data-alertclass="' + flash_alert_class + '" >' + flash_message + '</div>';
 					$("body").append(flash_message_data_html);
+					// $("body").append(flash_message);
 					do_flash_messages();
 					$("#installation_report_tab_button").click();
 					$("#report_tab_buttons").show();

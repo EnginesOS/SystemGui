@@ -12,7 +12,7 @@
  
 %>
 <% if flash_message.present? %>
-	<%= content_tag(:div, nil, class: "flash_message_data", data: {messagebody: flash_message, alertclass: flash_alert_class}) %>
+	<%= content_tag(:div, flash_message, class: "hidden flash_message_data", data: {alertclass: flash_alert_class}) %>
 <% end %>
 
 <% if service_state[:state] == :working %>
@@ -112,7 +112,11 @@
 				</li>
 			  <% end %> 	  
 		  <% end %> 	  
-	      </ul>
+		  <li class="divider"></li>
+		  <li>
+			<%= link_to content_tag(:i, "", class: "fa fa-refresh") + " Reload", "javascript:void(0);", class: 'object_action', data: { action: "reload", url: reload_services_path(service_name: service_name) } %>
+		  </li>
+	    </ul>
 	  <% end %> 	  
   </div>
 </div>

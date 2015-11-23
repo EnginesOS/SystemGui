@@ -69,6 +69,7 @@ module EnginesApplicationSystemActions
   end
 
   def reload
+    sleep(0.1)
     render partial: 'control_panel_applications/show'
   end
 
