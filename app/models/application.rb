@@ -44,6 +44,9 @@ class Application < ActiveRecord::Base
   def self.load_by_container_name(container_name)
     application = where(container_name: container_name).first_or_create
     if application.application_display_properties.blank?
+      application.build_application_display_properties
+    end
+    unless application.application_display_properties.defaults_set
       application.build_application_display_properties.set_defaults
     end
     application

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022004235) do
+ActiveRecord::Schema.define(version: 20151122235720) do
 
   create_table "application_display_properties", force: true do |t|
     t.integer "application_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20151022004235) do
     t.integer "icon_file_size"
     t.string  "icon_updated_at"
     t.string  "installer_icon_url"
+    t.boolean "defaults_set",       default: false
   end
 
   create_table "application_network_properties", force: true do |t|
