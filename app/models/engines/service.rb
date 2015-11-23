@@ -81,6 +81,7 @@ module Engines::Service
   def status_detail
     return 'Rebuild required' if rebuild_required?
     return 'Restart required' if restart_required?
+    return last_error if is_error?
   end
 
   def web_sites

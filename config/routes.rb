@@ -130,14 +130,14 @@ Rails.application.routes.draw do
   resource :services do
     get(
       :pause, :unpause, :start, :stop,
-      :restart, :recreate, :create_container) # :show,
+      :restart, :recreate, :create_container, :reload) # :show,
   end
 
 #Installer
 
   resource :installer
   resource :application_installation do
-    get(:preparing_installation, :preparing_installation_progress, :installing, :progress)
+    get(:preparing_installation, :preparing_installation_progress, :installing, :progress, :cancel)
   end
   resource :install_from_blueprint
   resource :install_from_repository_url
