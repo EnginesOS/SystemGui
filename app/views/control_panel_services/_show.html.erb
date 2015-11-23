@@ -12,7 +12,7 @@
  
 %>
 <% if flash_message.present? %>
-	<%= content_tag(:div, nil, class: "flash_message_data", data: {messagebody: flash_message, alertclass: flash_alert_class}) %>
+	<%= content_tag(:div, flash_message, class: "hidden flash_message_data", data: {alertclass: flash_alert_class}) %>
 <% end %>
 
 <% if service_state[:state] == :working %>

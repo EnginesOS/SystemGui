@@ -1,7 +1,6 @@
 class InstallFromBlueprintsController < ApplicationController
 
   def new
-    # render text: install_from_blueprint_params
     @install_from_blueprint = InstallFromBlueprint.new(install_from_blueprint_params)
     @install_from_blueprint.build_new
     redirect_to installer_path,

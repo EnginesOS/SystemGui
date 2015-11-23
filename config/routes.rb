@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
   root to: "desktops#show"
 
+#Navbar
+
+  resource :navbar_system_status
+
 #Users
 
   devise_for :users, skip: :registrations

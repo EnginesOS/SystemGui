@@ -47,17 +47,17 @@ module System
     end
     {system: @status_from_api,builder: @build_status_from_api}.merge(
       if @status_from_api[:is_rebooting]
-        {state: :restarting, message: "System rebooting", message_class: :warning}
+        {state: :restarting, message: "System rebooting", message_class: :warning, reload: true}
       elsif @status_from_api[:is_mgmt_restarting]
-        {state: :mgmt_restarting, message: "System manager restarting", message_class: :warning}
+        {state: :mgmt_restarting, message: "System manager restarting", message_class: :warning, reload: true}
       elsif @status_from_api[:is_registry_restarting]
-        {state: :registry_restarting, message: "Restarting registry", message_class: :warning}
+        {state: :registry_restarting, message: "Restarting registry", message_class: :warning, reload: true}
       elsif @status_from_api[:is_engines_system_updating]
-        {state: :engines_updating, message: "Updating Engines", message_class: :warning}
+        {state: :engines_updating, message: "Updating Engines", message_class: :warning, reload: true}
       elsif @status_from_api[:is_base_system_updating]
-        {state: :base_updating, message: "Updating base", message_class: :warning}
+        {state: :base_updating, message: "Updating base", message_class: :warning, reload: true}
       elsif @build_status_from_api[:is_building]
-        {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing'}
+        {state: :installing, message: "Installing", message_class: :warning, button_url: '/application_installation/installing', reload: true}
       elsif @status_from_api[:needs_reboot]
         {state: :needs_restart ,message: "Reboot required", message_class: :danger, button_url: '/system/restart'}
       elsif @status_from_api[:needs_engines_update]
