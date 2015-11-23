@@ -39,6 +39,10 @@ module EnginesServicesSystemActions
   def deregister_dns
     do_service_action :deregister_dns
   end
+  
+  def reload
+    render partial: 'control_panel_services/show'
+  end
 
 private
 

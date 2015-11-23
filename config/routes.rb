@@ -130,7 +130,7 @@ Rails.application.routes.draw do
   resource :services do
     get(
       :pause, :unpause, :start, :stop,
-      :restart, :recreate, :create_container) # :show,
+      :restart, :recreate, :create_container, :reload) # :show,
   end
 
 #Installer
