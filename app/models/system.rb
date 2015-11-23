@@ -30,6 +30,10 @@ module System
     engines_api.restart_registry
   end
   
+  def self.cancel_installation
+    engines_api.abort_build
+  end
+  
   def self.unit_name
     execute_command('hostname')[:stdout].strip || 'Engines - unknown hostname'
   end

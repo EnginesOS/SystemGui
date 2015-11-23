@@ -38,8 +38,8 @@ $(document).ready(function(){
 			
 			var progress_listener = function(e) {
 				new_line = e.data;
-				if (new_line.substring(0, 14) == "Build Result::") {
-					build_progress_log_result_message = new_line.substring(14);
+				if (new_line.substring(0, 13) == "Build Result:") {
+					build_progress_log_result_message = new_line.substring(13);
 				};
 
 				var new_html = ansi_up.ansi_to_html(new_line);
@@ -60,10 +60,10 @@ $(document).ready(function(){
 					$("#installation_report").html('No report');
 					};
 				if (e.data == 'done') {
-					var flash_message = "Done. " + build_progress_log_result_message.replace('"', "'");
+					var flash_message = build_progress_log_result_message;
 					evtSource.close();
 					$("#installation_done_button").slideDown();
-					if ((/^ERROR/).test(flash_message)) {
+					if (build_progress_log_result_message.substring(0, 5) == "Error") {
 						var flash_alert_class = 'danger';
 					} else {
 						var flash_alert_class = 'success';

@@ -7,6 +7,7 @@ class InstallFromBlueprintInstaller
   end
   
   def install
+    System.clear_failed_build_flag
 p :INSTALLING
 p engine_build_params
     result = engines_api.build_engine engine_build_params
