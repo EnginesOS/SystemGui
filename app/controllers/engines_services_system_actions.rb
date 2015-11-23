@@ -41,6 +41,7 @@ module EnginesServicesSystemActions
   end
   
   def reload
+    sleep(0.1)
     render partial: 'control_panel_services/show'
   end
 
