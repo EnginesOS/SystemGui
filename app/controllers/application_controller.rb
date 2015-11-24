@@ -101,7 +101,7 @@ protected
 
   def authenticate
     return authenticate_user! if user_signed_in?
-    if excluded_controller?
+    if no_status_or_page_title
       render text: "Your session expired. Please sign in again to continue.", status: 401
     else
       redirect_to desktop_path
