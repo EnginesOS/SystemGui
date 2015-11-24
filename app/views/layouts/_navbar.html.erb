@@ -4,7 +4,7 @@
     when params[:controller] == 'systems', params[:controller] == 'system_securities', params[:controller] == 'system_securities',
     		params[:controller] == 'domains', params[:controller] == 'domain_settings', params[:controller] == 'domains_managers',
     		params[:controller] == 'desktop_settings', params[:controller] == 'system_settings', params[:controller] == 'system_engines_update',
-    		params[:controller] == 'system_bug_reports', params[:controller] == 'desktop_settings',
+    		params[:controller] == 'system_bug_reports', params[:controller] == 'desktop_settings', params[:controller] == 'services_registries',
     		params[:controller] == 'system_security_keys', params[:controller] == 'system_security_certificates', params[:controller] == 'users'   
       :system
     else
@@ -44,33 +44,53 @@
 			    <li>
 		       	  <%= link_to content_tag(:i, "", class: "fa fa-server") + " Services", services_control_panel_path, class: 'trigger-response-modal' %>
 			    </li>
-			    <li>
-		       	  <%= link_to content_tag(:i, "", class: "fa fa-arrows") + " Registry", services_registry_path, class: 'trigger-response-modal' %>
-			    </li>
 	          </ul>	        	
 	        </li>
 	        <li class="dropdown <%= 'active' if active_menu_item == :system %>">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" title='System'><%= content_tag(:i, "", class: "fa fa-hdd-o") %> System <span class="caret"></span></a>
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" title='System'><%= content_tag(:i, "", class: "fa fa-cloud") %> System <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-			    <li>
-					<%= link_to content_tag(:i, "", class: "fa fa-cog") + ' Settings', system_path, class: "trigger-response-modal" %>
-			    </li>
-			    <li>
-					<%= link_to content_tag(:i, "", class: "fa fa-info") + ' Info', info_system_path, class: "trigger-response-modal" %>
-			    </li>
-				<li class="divider"></li>
-			    <li>
-			    	<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path,
-						class: 'trigger-response-modal' %>
+				<li>
+					<%= link_to content_tag(:i, '', class: 'fa fa-globe') + ' Domains', domains_manager_path, class: 'trigger-response-modal' %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: 'trigger-response-modal' %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-th") + ' Libraries', galleries_path, class: 'trigger-response-modal' %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop settings', edit_desktop_settings_path, class: 'trigger-response-modal' %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-bug") + ' Bug reports', edit_system_bug_reports_path, class: "trigger-response-modal" %>
 				</li>
 				<li class="divider"></li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-dashboard") + ' Monitor', monitor_system_path, class: 'trigger-response-modal' %>
+				</li>
 			    <li>
-			    	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path,
-						class: 'trigger-response-modal' %>
+		       	  	<%= link_to content_tag(:i, "", class: "fa fa-arrows") + " Registry", services_registry_path, class: 'trigger-response-modal' %>
+			    </li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-file-text-o") + ' Logs', logs_system_path, class: 'trigger-response-modal' %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-heartbeat") + ' Status', status_system_path, class: 'trigger-response-modal' %>
+				</li>
+				<li class="divider"></li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Base OS', base_system_system_path, class: 'trigger-response-modal' %>
+				</li>
+				<li class="divider"></li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path, class: 'trigger-response-modal' %>
+				</li>
+				<li>
+					<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path, class: 'trigger-response-modal' %>
 				</li>
 	          </ul>
 	        </li>
-	        <li id="status_message_area_when_menu_not_collpased" title='System status'>
+	        <li id="status_message_area_when_menu_not_collpased">
 	        	<%= render 'layouts/navbar_system_status' %>
 	        </li>
 	      </ul>
