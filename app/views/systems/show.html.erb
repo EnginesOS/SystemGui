@@ -1,21 +1,141 @@
-<div class="col-sm-6 pull-right bring-forward">
-	<%= render 'system_actions' %>
+<div class="col-md-6 pull-right bring-forward">
+	<% #= render 'system_actions' %>
 </div>
 
-<div class="col-sm-6">
-	<h2><%= content_tag(:i, "", class: "fa fa-cog") %> System settings</h2>
+<div class="col-md-6">
+	<h2><%= content_tag(:i, "", class: "fa fa-cloud") %> System</h2>
 	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
-<div class="col-sm-12 top-gap">
-	<div class="btn-group top-gap">
-	    <%= link_to (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe), domains_manager_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+<div class='row'>
+	<%= render 'shared/form/legend', text: 'Settings', fa: :cog, html_class: 'top-gap' %>
+</div>
+<div class='row'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe), domains_manager_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Manage domain names and set the default domain and default site.
+		</p></small>
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
 		<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
-	</div><br>
-	<div class="btn-group top-gap">
-		<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop', edit_desktop_settings_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
-	</div><br>
-	<div class="btn-group top-gap">
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Manage system security certificates, access keys and the admin user.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-th") + ' Libraries', galleries_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Manage software libraries for the installer.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop settings', edit_desktop_settings_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Change desktop colours and wallpaper image.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
 		<%= link_to content_tag(:i, "", class: "fa fa-bug") + ' Bug reports', edit_system_bug_reports_path, class: "btn btn-default btn-lg trigger-response-modal" %>
-	</div><br>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Control system bug reporting.
+		</p></small>	    
+	</div>
+  </div>
+</div>
+
+<div class='row'>
+	<%= render 'shared/form/legend', text: 'Info', fa: :info, html_class: 'top-gap' %>
+</div>
+<div class='row'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-dashboard") + ' Monitor', monitor_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Monitor system resources, disk and memory usage and CPU load.
+		</p></small>
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to (content_tag(:i, nil,class: "fa fa-arrows") + " Registry"), services_registry_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  View the system registry.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-file-text-o") + ' Logs', logs_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  View system logs.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-heartbeat") + ' Status', status_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  View system status detail.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Base OS', base_system_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  About the base operating system.
+		</p></small>	    
+	</div>
+</div>
+
+<div class='row'>
+	<%= render 'shared/form/legend', text: 'Actions', fa: :crosshairs, html_class: 'top-gap' %>
+</div>
+<div class='row'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Update utility for Engines and the base operating system.
+		</p></small>
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+		<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Reboot the system.
+		</p></small>	    
+	</div>
 </div>
