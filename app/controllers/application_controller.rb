@@ -15,12 +15,18 @@ class ApplicationController < ActionController::Base
 protected
 
   def setup
-    return if excluded_controller?
+    return if no_status_or_page_title
     set_system_status
+    return if no_page_title
     set_page_title
   end
 
-  def excluded_controller?
+  def no_page_title
+    ['navbar_system_statuses'].include?(params[:controller]) ||
+    ['progress'].include?(params[:action])
+  end
+
+  def no_status_or_page_title
     [
       'helps',
       'applications',
@@ -75,7 +81,8 @@ protected
   end
 
   def set_page_title
-    @page_title = "#{System.unit_name.to_s.humanize} Engines"
+    @@page_title ||= "#{System.unit_name.to_s.humanize} Engines"
+    @page_title = @@page_title
   end
 
   def configure_permitted_parameters
@@ -112,7 +119,6 @@ protected
 
   def render_500(exception)
     SystemUtils.log_exception exception
-    @page_title = 'Engines error (500)'
     @exception = exception
     render 'systems/500', :status => 500, layout: 'empty_navbar'
   end
