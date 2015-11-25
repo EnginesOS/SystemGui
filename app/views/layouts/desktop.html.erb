@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <% if @desktop_settings.wallpaper.exists? %>
-  <html style="<%= "background-color: " + @desktop_settings.background_color + "; background: url(" + @desktop_settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: 100% 100%;" %>">
+  <html style="<%= "background: " + @desktop_settings.background_color + " url(" + @desktop_settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: 100% 100%;" %>">
 <% else %>
   <html style="background-color: <%= @desktop_settings.background_color %>">
 <% end %>

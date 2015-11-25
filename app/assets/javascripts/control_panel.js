@@ -45,7 +45,7 @@ $(document).ready(function() {
 					alert(response.responseText);
 					window.location.reload();
 				} else {
- 				    var msg = '<i class="fa fa-thumbs-down"></i>';
+ 				    var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' load error</small>';
 				    obj.find(modal_body_id).html(msg);
 				};
 			}
@@ -63,12 +63,14 @@ $(document).ready(function() {
 	load_control_panel_objects();
 
 	function load_control_panel_object(obj) {
+
+
 		var url = obj.attr("data-url");
 		// obj.next().html(obj.html());
 		$.ajax({
 			url : url,
 			cache : false,
-			timeout: 180000,
+			timeout: 10000,
 			success : function(html) {
 					obj.html(html);
 					do_flash_messages();
@@ -80,9 +82,15 @@ $(document).ready(function() {
 				} else if (response.status == 401) {
 					alert(response.responseText);
 					window.location.reload();
+				} else if (response.status == 0) {
+					var msg = '<small><i class="fa fa-spinner fa-spin"></i> Response error. Reloading</small>';
+					obj.find(".object_status").html(msg);
+					setTimeout(function(){
+						load_control_panel_object(obj);
+					}, 5000);
 				} else {
- 				    var msg = '<i class="fa fa-thumbs-down"></i>';
-				    obj.find(".control_panel_object_placeholder").html(msg);
+ 				    var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' load error</small>';
+				    obj.find(".object_status").html(msg);
 				};
 			}
 		});
@@ -97,7 +105,7 @@ $(document).ready(function() {
 		var action = obj.attr("data-action");
 		var placeholder = parent_obj.find(".text_holder").find(".object_status");
 
-		placeholder.html('<small><i class="fa fa-spinner fa-pulse"></i> Preparing to ' + action + '</small>');
+		placeholder.html('<small><i class="fa fa-spinner fa-spin"></i> Preparing to ' + action + '</small>');
 		
 		$.ajax({
 			url : url,
@@ -114,8 +122,14 @@ $(document).ready(function() {
 				} else if (response.status == 401) {
 					alert(response.responseText);
 					window.location.reload();
+				} else if (response.status == 0) {
+					var msg = '<small><i class="fa fa-spinner fa-spin"></i> Response error. Reloading</small>';
+					parent_obj.find(".object_status").html(msg);
+					setTimeout(function(){
+						load_control_panel_object(parent_obj);
+					}, 5000);
 				} else {
-					var msg = '<i class="fa fa-thumbs-down"></i><small> ' + status.toString() + ' error</small>';
+					var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' action error</small>';
 					parent_obj.find(".object_status").html(msg);
 				};
 			}

@@ -63,6 +63,9 @@ $(document).ready(function(){
 					var flash_message = build_progress_log_result_message;
 					evtSource.close();
 					$("#installation_done_button").slideDown();
+					$("#installation_cancel_button").hide();
+					$("#report_tab_buttons").show();
+					$("#installation_report_tab_button").click();
 					if (build_progress_log_result_message.substring(0, 5) == "Error") {
 						var flash_alert_class = 'danger';
 					} else {
@@ -70,10 +73,7 @@ $(document).ready(function(){
 					};
 					var flash_message_data_html = '<div class="hidden flash_message_data" data-alertclass="' + flash_alert_class + '" >' + flash_message + '</div>';
 					$("body").append(flash_message_data_html);
-					// $("body").append(flash_message);
 					do_flash_messages();
-					$("#installation_report_tab_button").click();
-					$("#report_tab_buttons").show();
 				};
 			};
 			

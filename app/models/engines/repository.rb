@@ -1,17 +1,42 @@
 class Engines::Repository
 
-  def initialize(repository_url)
-    @repository_url = repository_url
+  require 'net/http'
+
+  def initialize(url)
+    @url = url
   end
 
   def blueprint
-    @blueprint ||= load_blueprint
+    @blueprint ||= if is_git_repo?
+                     load_blueprint_from_git
+                   else
+                     load_blueprint_with_http_get
+                   end
   end
 
 private
 
-  def load_blueprint
-    buildname = File.basename(@repository_url)
+  def is_git_repo?
+    Git.ls_remote(@url).present?
+  rescue
+    false
+  end
+  
+  def load_blueprint_with_http_get
+    url = URI.parse(@url)
+    
+p :url
+p url
+
+    request = Net::HTTP::Get.new(url.to_s)
+    result = Net::HTTP.start(url.host, url.port) {|http|
+      http.request(request)
+    }
+    JSON.parse(result.body).symbolize_keys!
+  end
+
+  def load_blueprint_from_git
+    buildname = File.basename(@url)
     segments = buildname.split('.')
     buildname = segments[0]
     clone_repo buildname
@@ -25,11 +50,11 @@ private
 
   def clone_repo(buildname)
     backup_lastbuild
-    Git.clone(@repository_url, buildname, path: SystemConfig.DeploymentDir)
+    Git.clone(@url, buildname, path: SystemConfig.DeploymentDir, depth: 1)
   end
 
   def backup_lastbuild
-    buildname = File.basename(@repository_url)
+    buildname = File.basename(@url)
     segments = buildname.split('.')   
     buildname = segments[0]
     dir = SystemConfig.DeploymentDir + "/" + buildname
