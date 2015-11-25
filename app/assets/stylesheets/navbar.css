@@ -11,7 +11,7 @@
     line-height: 0;
     padding: 0;
     height: 50.35px;
-    width: 100px;
+    width: 75px;
 }
 
 #navbar_user_menu_toggle {
@@ -82,31 +82,45 @@
 
 .signedout-navbar-header {}
 
-#system_status_navbar_message_button {
+#system_status_area {
 	display: inline-block;
-	color: #777;
-	padding: 5px;
 	vertical-align: middle;
+	margin-top: 9px;
+	margin-left: 5px;
+}
+
+#system_status_navbar_message_button {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+	border-color: #CCC;
+	padding: 8px;
+	color: #777;
 	text-decoration: none;
+}
+
+a#system_status_navbar_message_button:hover {
+	background-color: #E6E6E6;
+	cursor: pointer;
 }
 
 #system_status_navbar_message_icon {
 	display: inline-block;
 	line-height: 20px;
-	padding: 10px;
+	padding: 5px;
 }
 
 #system_status_navbar_message_text {
 	display: inline-block;
 	line-height: 12px;
 	font-size: 12px;
-	max-width: 80px;
 	height: 100%;
 	margin-right: 10px;
 	vertical-align: middle;
 }
 
 #system_status_navbar_message_text_vertical_align {
+	width: 80px;
 	display: inline-block;
 	vertical-align: middle;
 	text-align: center;
@@ -124,14 +138,23 @@
 	background-color: rgb(242, 222, 222); 
 }
 
-#system_status_navbar_message.notice {
+#system_status_navbar_message_button.notice {
 	color: inherit;
 }
 
-#system_status_navbar_message.danger {
+#system_status_navbar_message_button.danger {
 	color: #A94442;
 }
 
-#system_status_navbar_message.warning {
+#system_status_navbar_message_button.warning {
 	color: #8A6D3B;
 }
+
+#system_status_navbar_message_button.danger:hover {
+	background-color: #E3BCBC;
+}
+
+#system_status_navbar_message_button.warning:hover {
+	background-color: #ECE8D3;
+}
+

@@ -3,7 +3,7 @@ class DesktopSettingsController < ApplicationController
   before_action :set_desktop_settings
 
   def edit
-    DesktopSettings.delete_all
+    # DesktopSettings.delete_all
     # set_desktop_settings
     # @desktop_settings.delete
   end

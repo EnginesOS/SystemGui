@@ -3,12 +3,14 @@ class ApplicationDisplayProperties < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   attr_accessor :set_icon
+
   has_attached_file :icon, dependent: :destroy,
       styles: {
-        small: "64x64^",
-        medium: "128x128^",
-        large: "256x256^" }
+        small: "64x64>",
+        medium: "128x128>",
+        large: "256x256>" }
   validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
+  # validates :icon, image_dimensions: { width: 128, height: 128 }
 
   belongs_to :application
 
