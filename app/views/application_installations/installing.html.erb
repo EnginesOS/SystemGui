@@ -6,7 +6,7 @@
 	  		class: "btn btn-primary btn-lg trigger-response-modal", id: "installation_done_button", style: "display: none;" %>
 	<%= link_to content_tag(:i, "", class: "fa fa-times") + ' Cancel', cancel_application_installation_path, data: { 
 		  confirm: "Are you sure?", confirmdetail: "Are you sure that you want to cancel the #{params[:title]} installation?"
-		  } , class: 'btn btn-lg btn-danger pull-right', id: "installation_cancel_button", style: "display: none;" %>
+		  } , class: 'btn btn-lg btn-danger pull-right', id: "installation_cancel_button", style: "display:none;" %>
 	
 	<p class="top-gap">
 	    <%= @application_installation_progress.host_name %>.<%= @application_installation_progress.domain_name %>
