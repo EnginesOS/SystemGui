@@ -69,10 +69,9 @@ module EnginesApplicationSystemActions
   end
 
   def reload
-    sleep(0.1)
+    sleep(0.2)
     render partial: 'control_panel_applications/show'
   end
-
 
 private
 
@@ -80,7 +79,7 @@ private
     Thread.new do 
       @application.send(action)
     end
-    sleep(0.1)
+    sleep(1)
     render partial: 'control_panel_applications/show'
   end
 

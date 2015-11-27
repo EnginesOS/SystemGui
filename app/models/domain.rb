@@ -10,7 +10,7 @@ class Domain < ActiveRecord::Base
     :new_record,
     :engines_api_error)
 
-  domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+([a-zA-Z0-9]{2,5})$/
+  domain_name_regex = /^([a-zA-Z0-9][-a-zA-Z0-9]*[a-zA-Z0-9]\.)+(?!local)([a-zA-Z0-9]{2,5})$|^local$/
   validates :domain_name, presence: true, format: { with: domain_name_regex, :multiline => true  }
 
   def self.load_all
@@ -38,7 +38,7 @@ class Domain < ActiveRecord::Base
   end
 
   def new_record? 
-    self.new_record == true || self.new_record == 'true' #!domain_name.present?
+    self.new_record.to_s == 'true'
   end
   
   def create

@@ -8,18 +8,18 @@ module System
   
   def self.update_base
     result = engines_api.update_system
-    set_system_update_status_from_api
+    cache_system_update_status
     result
   end
 
   def self.update_engines
     result = engines_api.update_engines_system_software
-    set_system_update_status_from_api
+    cache_system_update_status
     result
   end
   
   def self.system_status_from_api
-    set_system_update_status_from_api if (defined?(@@system_update_status_from_api).nil?)
+    cache_system_update_status if (defined?(@@system_update_status_from_api).nil?)
     engines_api.system_status.merge(@@system_update_status_from_api)
   end
   
@@ -27,8 +27,8 @@ module System
     engines_api.build_status
   end
   
-  def self.set_system_update_status_from_api
-    @@system_update_status_from_api = (p :expensive_call_to_system_update_status; SystemStatus.system_update_status)
+  def self.cache_system_update_status
+    @@system_update_status_from_api = (SystemStatus.system_update_status)
   end
 
   def self.restart_mgmt
@@ -44,7 +44,9 @@ module System
   end
   
   def self.unit_name
-    execute_command('hostname')[:stdout].strip || 'Engines - unknown hostname'
+    engines_api.system_hostname
+  rescue
+    "system_hostname api method missing"
   end
 
   def self.execute_command(command)  
@@ -52,12 +54,7 @@ module System
   end
 
   def self.status
-    
     @status_from_api = system_status_from_api
-    
-p :status_from_api
-p @status_from_api    
-    
     @build_status_from_api = build_status_from_api
     if @build_status_from_api[:did_build_fail]
       ENV['FAILED_BUILD_FLAG'] = 'true'

@@ -76,3 +76,7 @@ hr {
 	color: #ccc;
 }
 
+.dropdown_help {
+  padding: 10px;
+  min-width: 200px;
+}

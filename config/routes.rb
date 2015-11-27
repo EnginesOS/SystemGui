@@ -80,7 +80,8 @@ Rails.application.routes.draw do
   resource :domains_manager
   resource :domain
   resource :domain_certificate
-  resource :domain_settings
+  resource :domain_default_name
+  resource :domain_default_site
 
 #Desktop settings
   

@@ -51,6 +51,7 @@ private
         if line.start_with?('Build Finished')
           break
         end
+
       end
     end
   end
