@@ -77,7 +77,6 @@ protected
               params[:controller] == 'system_restarts' )
       end
     end
-    
   end
 
   def set_page_title
@@ -110,6 +109,7 @@ protected
   
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
+    System.cache_system_update_status
     if FirstRun.required?
       first_run_path
     else
