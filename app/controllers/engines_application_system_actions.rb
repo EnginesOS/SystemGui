@@ -76,11 +76,12 @@ module EnginesApplicationSystemActions
 private
 
   def do_service_action(action)
-    Thread.new do 
-      @application.send(action)
-    end
-    sleep(1)
-    render partial: 'control_panel_applications/show'
+    result = @application.send(action)
+    if result.was_success
+      render partial: 'control_panel_applications/show'
+    else
+      render partial: 'control_panel_applications/show', alert: "Error. #{result.result_mesg[0..500]}"
+    end      
   end
 
 
