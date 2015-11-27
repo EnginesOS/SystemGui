@@ -84,7 +84,11 @@ module Engines::Application
   def status_detail
     return 'Reinstall required' if reinstall_required?
     return 'Restart required' if restart_required?
-    return last_error if is_error?
+    # return last_error if is_error?
+    err = last_error if is_error?
+    p :error
+    p err
+    err
   end
   
   def primary_web_site
