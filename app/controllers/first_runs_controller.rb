@@ -21,7 +21,7 @@ class FirstRunsController < ApplicationController
             )
           redirect_to done_first_run_path
         else
-          flash[:alert] =  'There was a problem with the setup wizard. ' + result.result_mesg
+          flash[:alert] =  'There was a problem with the setup wizard. ' + result.result_mesg[0..500]
           redirect_to first_run_path(first_run: first_run_params)
         end
       else
