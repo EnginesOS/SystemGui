@@ -1,0 +1,9 @@
+<div class="col-sm-12">
+  <h2><i class="fa fa-globe"></i> Domain settings</h2>
+  <%= form_for @domain_settings, url: domain_settings_path, method: :patch do |f| %>
+    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+    <%= render partial: 'shared/form/select', locals: {name: :default_domain, f: f, collection: Domain.domain_names_list} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :default_site, f: f} %>
+    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: domains_manager_path} %>
+  <% end %>
+</div>
