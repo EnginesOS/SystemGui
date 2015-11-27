@@ -1,8 +1,13 @@
 <%  label = label.nil? ? name.to_s.humanize.capitalize : label
     value ||= f.object.send(name); value = nil if value.blank?
     select_collection ||= collection || []
-	value_method ||= :to_s
-	text_method ||= :to_s
+    if select_collection.first.is_a? Array
+		value_method ||= :first
+		text_method ||= :last
+	else
+		value_method ||= :to_s
+		text_method ||= :to_s
+	end
     id ||= ''
     attach_selectize ||= false
     tooltip ||= nil
