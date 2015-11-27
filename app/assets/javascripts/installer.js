@@ -41,7 +41,14 @@ $(document).ready(function(){
 				if (new_line.substring(0, 13) == "Build Result:") {
 					build_progress_log_result_message = new_line.substring(13);
 				};
-
+				if (new_line.substring(0, 15) == "Cancelable:true") {
+					$("#installation_cancel_button").slideDown();
+					return;
+				};
+				if (new_line.substring(0, 15) == "Cancelable:false") {
+					$("#installation_cancel_button").slideUp();
+					return;
+				};
 				var new_html = ansi_up.ansi_to_html(new_line);
 				$("#installation_progress").prepend(new_html + '\n');
 			};
