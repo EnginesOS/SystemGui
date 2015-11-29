@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
-  rescue_from Exception, :with => :render_500 if Rails.env.production?
+  rescue_from Exception, :with => :render_500 if ( !Rails.env.production? ) # && System.send_bug_reports_enabled? )
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
@@ -15,18 +15,37 @@ class ApplicationController < ActionController::Base
 protected
 
   def setup
-    return if no_status_or_page_title
+
+ # p :send_bug_reports_pre
+ # p ENV['SEND_BUG_REPORTS']
+# 
+
+
+    # check_send_bug_reports_flag_is_cached
+    return if status_and_page_title_not_needed?
     set_system_status
-    return if no_page_title
+    return if status_needed_and_page_title_not_needed?
     set_page_title
   end
+  
+  def check_send_bug_reports_flag_is_cached
+    
+#     
+    # System.check_send_bug_reports_flag_is_cached
 
-  def no_page_title
+ # p :send_bug_reports_post
+ # p ENV['SEND_BUG_REPORTS']
+
+
+
+  end
+
+  def status_needed_and_page_title_not_needed?
     ['navbar_system_statuses'].include?(params[:controller]) ||
     ['progress'].include?(params[:action])
   end
 
-  def no_status_or_page_title
+  def status_and_page_title_not_needed?
     [
       'helps',
       'applications',
@@ -100,7 +119,7 @@ protected
 
   def authenticate
     return authenticate_user! if user_signed_in?
-    if no_status_or_page_title
+    if status_and_page_title_not_needed? || status_needed_and_page_title_not_needed?
       render text: "Your session expired. Please sign in again to continue.", status: 401
     else
       redirect_to desktop_path
