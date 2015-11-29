@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
-  rescue_from Exception, :with => :render_500 if ( !Rails.env.production? ) # && System.send_bug_reports_enabled? )
+  rescue_from Exception, :with => :render_500 if ( !Rails.env.production? && System.send_bug_reports_enabled? )
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
@@ -16,12 +16,12 @@ protected
 
   def setup
 
- # p :send_bug_reports_pre
- # p ENV['SEND_BUG_REPORTS']
-# 
+ p :send_bug_reports_pre
+ p ENV['SEND_BUG_REPORTS']
 
 
-    # check_send_bug_reports_flag_is_cached
+
+    check_send_bug_reports_flag_is_cached
     return if status_and_page_title_not_needed?
     set_system_status
     return if status_needed_and_page_title_not_needed?
@@ -30,11 +30,11 @@ protected
   
   def check_send_bug_reports_flag_is_cached
     
-#     
-    # System.check_send_bug_reports_flag_is_cached
+    
+    System.check_send_bug_reports_flag_is_cached
 
- # p :send_bug_reports_post
- # p ENV['SEND_BUG_REPORTS']
+ p :send_bug_reports_post
+ p ENV['SEND_BUG_REPORTS']
 
 
 
