@@ -2,41 +2,45 @@
 	<%= render 'actions' %>
 </div>
 
-<h2><%= content_tag(:i, "", class: "fa fa-arrows") %> Registry</h2>
+<div class="col-sm-6">
+  <h2><%= content_tag(:i, "", class: "fa fa-arrows") %> Registry</h2>
+</div>
 
+<div class="col-sm-12">
 
-<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
-
-<div role="tabpanel">
-
-  <ul class="nav nav-tabs top-gap">
-    <li role="presentation" class="active"><a href="#services_tree_by_engines" data-toggle="tab">Engines</a></li>
-    <li role="presentation"><a href="#services_tree_by_service_providers"data-toggle="tab">Providers</a></li>
-    <li role="presentation"><a href="#services_tree_of_orphaned_services"data-toggle="tab">Orphans</a></li>
-    <li role="presentation"><a href="#services_tree_by_configurations"data-toggle="tab">Configurations</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="services_tree_by_engines">
-      <div class="tree">
-        <%= render 'tree_node', node: @services_tree_by_engine %>
-      </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="services_tree_by_service_providers">
-      <div class="tree">
-        <%= render 'tree_node', node: @services_tree_by_provider %>
-      </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="services_tree_of_orphaned_services">
-      <div class="tree">
-        <%= render 'tree_node', node: @services_tree_of_orphaned_services, delete: true %>
-      </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="services_tree_by_configurations">
-      <div class="tree">
-        <%= render 'tree_node', node: @services_tree_by_configurations %>
-      </div>
-    </div>
-  </div>
-
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+	
+	<div role="tabpanel">
+	
+	  <ul class="nav nav-tabs top-gap">
+	    <li role="presentation" class="active"><a href="#services_tree_by_engines" data-toggle="tab">Engines</a></li>
+	    <li role="presentation"><a href="#services_tree_by_service_providers"data-toggle="tab">Providers</a></li>
+	    <li role="presentation"><a href="#services_tree_of_orphaned_services"data-toggle="tab">Orphans</a></li>
+	    <li role="presentation"><a href="#services_tree_by_configurations"data-toggle="tab">Configurations</a></li>
+	  </ul>
+	
+	  <div class="tab-content">
+	    <div role="tabpanel" class="tab-pane active" id="services_tree_by_engines">
+	      <div class="tree">
+	        <%= render 'tree_node', node: @services_tree_by_engine %>
+	      </div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane" id="services_tree_by_service_providers">
+	      <div class="tree">
+	        <%= render 'tree_node', node: @services_tree_by_provider %>
+	      </div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane" id="services_tree_of_orphaned_services">
+	      <div class="tree">
+	        <%= render 'tree_node', node: @services_tree_of_orphaned_services, delete: true %>
+	      </div>
+	    </div>
+	    <div role="tabpanel" class="tab-pane" id="services_tree_by_configurations">
+	      <div class="tree">
+	        <%= render 'tree_node', node: @services_tree_by_configurations %>
+	      </div>
+	    </div>
+	  </div>
+	
+	</div>
 </div>
