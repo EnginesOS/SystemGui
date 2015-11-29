@@ -16,11 +16,11 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def installing
-    if @system_status[:state] == :installing
-      @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
-    else
-      redirect_to control_panel_path, alert: "Not installing."
-    end
+    # if @system_status[:state] == :installing
+      @application_installation_progress = ApplicationInstallationProgress.load
+    # else
+      # redirect_to control_panel_path, alert: "Not installing."
+    # end
   end
   
   def cancel
