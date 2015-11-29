@@ -19,8 +19,8 @@ module System
   end
   
   def self.system_status_from_api
-    cache_system_update_status if (defined?(@@system_update_status_from_api).nil?)
-    engines_api.system_status.merge(@@system_update_status_from_api)
+    cache_system_update_status if defined?(@@system_update_status_from_api).nil?
+    engines_api.system_status.merge @@system_update_status_from_api
   end
   
   def self.build_status_from_api
@@ -28,7 +28,7 @@ module System
   end
   
   def self.cache_system_update_status
-    @@system_update_status_from_api = (SystemStatus.system_update_status)
+    @@system_update_status_from_api = SystemStatus.system_update_status
   end
 
   def self.restart_mgmt
@@ -49,6 +49,20 @@ module System
     "system_hostname api method missing"
   end
 
+  def self.cache_send_bug_reports_enabled 
+    ENV['SEND_BUG_REPORTS'] = ( engines_api.is_remote_exception_logging? == true ).to_s
+  end
+
+  def self.check_send_bug_reports_flag_is_cached 
+    # cache_send_bug_reports_enabled if ENV['SEND_BUG_REPORTS'].nil?
+    true
+  end
+  
+  def self.send_bug_reports_enabled?
+    return true if ENV['SEND_BUG_REPORTS'].nil?
+    ENV['SEND_BUG_REPORTS'] == 'true'
+  end
+
   def self.execute_command(command)  
     SystemUtils.execute_command(command)
   end
@@ -57,7 +71,7 @@ module System
     @status_from_api = system_status_from_api
     @build_status_from_api = build_status_from_api
     if @build_status_from_api[:did_build_fail]
-      ENV['FAILED_BUILD_FLAG'] = 'true'
+      @@failed_build_flag = true
     end
     {system: @status_from_api,builder: @build_status_from_api}.merge(
       if @status_from_api[:is_rebooting]
@@ -83,19 +97,31 @@ module System
       end)
   end
 
+  def self.current_build_params
+    @current_build_params ||= engines_api.current_build_params
+  end
+
+  def self.last_build_params
+    @last_build_params ||= engines_api.last_build_params
+  end
+  
+  def self.build_params
+    return current_build_params if current_build_params.present?
+    last_build_params
+  end
+
   def self.installing_params
-    stored_build_params = engines_api.current_build_params
-    {application_name: stored_build_params[:engine_name],
-     host_name: stored_build_params[:host_name],
-     domain_name: stored_build_params[:domain_name] }
+    {application_name: build_params[:engine_name],
+     host_name: build_params[:host_name],
+     domain_name: build_params[:domain_name] }
   end
 
   def self.waiting_for_installation
-    !@build_status_from_api[:is_building] && ENV['FAILED_BUILD_FLAG'] != 'true'
+    !@build_status_from_api[:is_building] && @@failed_build_flag != true
   end
   
   def self.clear_failed_build_flag
-    ENV['FAILED_BUILD_FLAG'] = nil    
+    @@failed_build_flag = false    
   end
 
 end
