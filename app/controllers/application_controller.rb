@@ -4,40 +4,22 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
-  rescue_from Exception, :with => :render_500 if ( !Rails.env.production? && System.send_bug_reports_enabled? )
+  rescue_from Exception, :with => :render_500 #if ( Rails.env.production? && System.send_bug_reports_enabled? )
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
   require 'awesome_print'
 
   before_action :setup
-  
+
 protected
 
   def setup
-
- p :send_bug_reports_pre
- p ENV['SEND_BUG_REPORTS']
-
-
-
-    check_send_bug_reports_flag_is_cached
+    System.check_send_bug_reports_flag_is_cached
     return if status_and_page_title_not_needed?
     set_system_status
     return if status_needed_and_page_title_not_needed?
     set_page_title
-  end
-  
-  def check_send_bug_reports_flag_is_cached
-    
-    
-    System.check_send_bug_reports_flag_is_cached
-
- p :send_bug_reports_post
- p ENV['SEND_BUG_REPORTS']
-
-
-
   end
 
   def status_needed_and_page_title_not_needed?
@@ -49,15 +31,15 @@ protected
     [
       'helps',
       'applications',
-      'services', 
+      'services',
       'control_panel_applications',
-      'control_panel_services', 
-      'desktop_applications', 
-      'application_reports', 
-      'service_reports', 
-      'application_abouts', 
-      'service_abouts', 
-      'gallery_softwares', 
+      'control_panel_services',
+      'desktop_applications',
+      'application_reports',
+      'service_reports',
+      'application_abouts',
+      'service_abouts',
+      'gallery_softwares',
       'charts'
     ].include? params[:controller]
   end
@@ -125,7 +107,7 @@ protected
       redirect_to desktop_path
     end
   end
-  
+
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
     System.cache_system_update_status

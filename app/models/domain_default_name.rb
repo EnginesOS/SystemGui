@@ -23,13 +23,13 @@ class DomainDefaultName # < ActiveRecord::Base
   def update_default_domain
     result = self.class.engines_api.set_default_domain(default_domain: default_domain)
     if !result.was_success
-      @engines_api_error = [ @engines_api_error.to_s, "Unable to update domain.",  
+      @engines_api_error = [ @engines_api_error.to_s, "Unable to update domain.",
                             (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api."),
                             "Called 'update_default_domain' with default_domain: #{default_domain}" ].join(' ')
     end
     result.was_success
   end
-  
+
   def new_record?
     false
   end

@@ -1,18 +1,18 @@
 <div class="col-md-12">
 
 	<h2><i class="fa fa-play-circle-o"></i> Installing <%= @application_installation_progress.application_name %></h2>
-	
-	<%= link_to content_tag(:i, "", class: "fa fa-check") + ' Done', control_panel_path, 
+
+	<%= link_to content_tag(:i, "", class: "fa fa-check") + ' Done', control_panel_path,
 	  		class: "btn btn-primary btn-lg trigger-response-modal", id: "installation_done_button", style: "display: none;" %>
-	<%= link_to content_tag(:i, "", class: "fa fa-times") + ' Cancel', cancel_application_installation_path, data: { 
+	<%= link_to content_tag(:i, "", class: "fa fa-times") + ' Cancel', cancel_application_installation_path, data: {
 		  confirm: "Are you sure?", confirmdetail: "Are you sure that you want to cancel the #{params[:title]} installation?"
 		  } , class: 'btn btn-lg btn-danger pull-right', id: "installation_cancel_button", style: "display:none;" %>
-	
+
 	<p class="top-gap">
 	    <%= @application_installation_progress.host_name %>.<%= @application_installation_progress.domain_name %>
 	</p>
 
-	<%= content_tag :div, class: 'top-gap', id: "installation_status", data: { 
+	<%= content_tag :div, class: 'top-gap', id: "installation_status", data: {
 				progresspath: progress_application_installation_path(application_name: @application_installation_progress.application_name)
 			} do %>
 	  <ul class="nav nav-tabs" role="tablist">
@@ -25,7 +25,7 @@
 	    	<div class="row" id="report_tab_buttons" style="display: none;">
 	    		<div class="btn-toolbar pull-right">
 		    		<%= link_to content_tag(:i, "", class: "fa fa-external-link") + ' Open application',
-		    				open_applications_path(application_name: @application_installation_progress.application_name),
+		    				open_first_run_applications_path(application_name: @application_installation_progress.application_name),
 							class: 'btn btn-lg btn-default top-gap',
 							target: @application_installation_progress.application_name %>
 		    		<%= link_to content_tag(:i, "", class: "fa fa-level-up") + ' Popup report',
@@ -41,4 +41,3 @@
 	  </div>
 	<% end %>
 </div>
-

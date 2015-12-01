@@ -13,10 +13,10 @@
   </ul>
 
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="system"><%= render 'monitor_system' %></div>
-    <div role="tabpanel" class="tab-pane" id="containers"><%= render 'monitor_containers' %></div>
-    <div role="tabpanel" class="tab-pane" id="applications"><%= render 'monitor_applications' %></div>
-    <div role="tabpanel" class="tab-pane" id="services"><%= render 'monitor_services' %></div>
+    <div role="tabpanel" class="tab-pane active" id="system"><%= render 'system_monitor_charts/system' %></div>
+    <div role="tabpanel" class="tab-pane" id="containers"><%= render 'system_monitor_charts/containers' %></div>
+    <div role="tabpanel" class="tab-pane" id="applications"><%= render 'system_monitor_charts/applications' %></div>
+    <div role="tabpanel" class="tab-pane" id="services"><%= render 'system_monitor_charts/services' %></div>
   </div>
-	
+
 </div>

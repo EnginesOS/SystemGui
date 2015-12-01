@@ -3,11 +3,15 @@ module Engines::Application
   include Engines::Api
 
   def container
-    @container ||= engines_api.loadManagedEngine container_name
+    @container ||= load_container_api_call.is_a?(EnginesOSapiResult) ? nil : load_container_api_call
   end
-      
+
+  def load_container_api_call
+    @load_container_api_call ||= engines_api.loadManagedEngine(container_name)
+  end
+
   def blueprint_software_details
-    blueprint['software']
+    blueprint['software'] || {}
   end
 
   def blueprint_software_name
@@ -16,31 +20,10 @@ module Engines::Application
 
   def services_properties
     @services_properties = attached_services_hash
-  end  
-
-  # def state_indicator
-    # if is_error?
-      # 'error'
-    # else
-      # state
-    # end
-  # end
-#    
-  # def state
-    # @state ||= load_state
-  # end
-# 
-  # def load_state
-      # result = container.read_state.to_s
-      # if result == 'nocontainer'
-        # 'unbuilt'
-      # else
-        # result
-      # end
-  # end
+  end
 
   def state
-    return {state: :no_service, label: 'No service'} if container.blank?
+    return {state: :error, label: 'Cannot load - Error'} if container.blank?
     return error_state if is_error?
     return task_at_hand_state if task_at_hand_state.present?
     application_container_state
@@ -90,13 +73,17 @@ module Engines::Application
     p err
     err
   end
-  
+
   def primary_web_site
     if web_sites.present?
       web_sites.first
     else
       nil
     end
+  end
+
+  def first_run_web_site
+    blueprint['first_run_url'] || primary_web_site
   end
 
   {
@@ -133,30 +120,30 @@ module Engines::Application
   }.
   each do |method, instruction|
     define_method(method) do
-      container.send(instruction)
+      container.send(instruction) if container.present?
     end
   end
 
   def blueprint
-    @blueprint ||= engines_api.get_engine_blueprint(container_name)
+    @blueprint ||= engines_api.get_engine_blueprint(container_name).tap{|result| result = {} if result.is_a? EnginesOSapiResult}
   end
 
   def network_metrics
-    engines_api.get_container_network_metrics(container_name)
+    engines_api.get_container_network_metrics(container_name).tap{|result| result = {} if result.is_a? EnginesOSapiResult}
   end
-  
+
   def memory_statistics
-    engines_api.get_engine_memory_statistics(container_name)
+    engines_api.get_engine_memory_statistics(container_name).tap{|result| result = {} if result.is_a? EnginesOSapiResult}
   end
- 
+
   def installation_report
-    engines_api.get_engine_build_report(container_name)
+    engines_api.get_engine_build_report(container_name).tap{|result| result = '' if result.is_a? EnginesOSapiResult}
   end
- 
+
   def attached_services_hash
     @attached_services_hash = engines_api.list_attached_services_for('ManagedEngine', container_name)
   end
- 
+
    def available_services_hash
     @available_services_hash = engines_api.list_avail_services_for container
   end
@@ -164,15 +151,15 @@ module Engines::Application
   def available_services
     available_services_hash[:services]
   end
-      
+
   {
-    stop: 'stopEngine',  
-    start: 'startEngine',  
-    pause: 'pauseEngine',  
-    unpause: 'unpauseEngine',   
+    stop: 'stopEngine',
+    start: 'startEngine',
+    pause: 'pauseEngine',
+    unpause: 'unpauseEngine',
     destroy_container: 'destroyEngine',
-    reinstall_software: 'reinstall_engine',  
-    restart: 'restartEngine',  
+    reinstall_software: 'reinstall_engine',
+    restart: 'restartEngine',
     create_container: 'createEngine',
     recreate: 'recreateEngine'
   }.
