@@ -40,7 +40,8 @@ protected
       'application_abouts',
       'service_abouts',
       'gallery_softwares',
-      'charts'
+      'system_monitor_charts',
+      'first_runs'
     ].include? params[:controller]
   end
 
