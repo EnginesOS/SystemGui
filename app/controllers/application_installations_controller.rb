@@ -16,13 +16,13 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def installing
-    if @system_status[:state] == :installing
-      @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
-    else
-      redirect_to control_panel_path, alert: "Not installing."
-    end
+    # if @system_status[:state] == :installing
+      @application_installation_progress = ApplicationInstallationProgress.load
+    # else
+      # redirect_to control_panel_path, alert: "Not installing."
+    # end
   end
-  
+
   def cancel
     System.cancel_installation
     redirect_to control_panel_path, alert: "Installation cancelled."
@@ -33,8 +33,8 @@ class ApplicationInstallationsController < ApplicationController
     send_event :installation_progress, "Starting build...\n"
     send_installation_progress
     send_installation_report
-  ensure
     send_event :message, 'done'
+  ensure
     response.stream.close
   end
 
@@ -51,6 +51,7 @@ private
         if line.start_with?('Build Finished')
           break
         end
+
       end
     end
   end

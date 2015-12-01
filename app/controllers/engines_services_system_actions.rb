@@ -41,18 +41,19 @@ module EnginesServicesSystemActions
   end
   
   def reload
-    sleep(0.1)
+    sleep(0.2)
     render partial: 'control_panel_services/show'
   end
 
 private
 
   def do_service_action(action)
-    Thread.new do 
-      @service.send(action)
+    result = @service.send(action)
+    if result.was_success
+      render partial: 'control_panel_services/show'
+    else
+      render partial: 'control_panel_services/show', alert: "Error. #{result.result_mesg[0..500]}"
     end
-    sleep(0.1)
-    render partial: 'control_panel_services/show'
   end
 
 end

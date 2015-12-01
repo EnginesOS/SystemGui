@@ -3,8 +3,13 @@
     default_value ||= nil
     value ||= f.object.send(name); value = default_value if value.blank?
 	select_collection ||= ( (f.object.class.send(name.to_s.pluralize).keys if f.object.class.respond_to?(name.to_s.pluralize)) || [] )
-	value_method ||= :to_s
-	text_method ||= :to_s
+    if select_collection.first.is_a? Array
+		value_method ||= :first
+		text_method ||= :last
+	else
+		value_method ||= :to_s
+		text_method ||= :to_s
+	end
     hint ||= nil
     placeholder ||= nil
     comment ||= nil

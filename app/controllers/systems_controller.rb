@@ -8,22 +8,23 @@ class SystemsController < ApplicationController
 
   def status
   end
-  
+
   def monitor
+    System.cache_system_monitor_data
     # render text: Vmstat.methods
   end
-# 
+#
   # def monitor_memory
   # end
-# 
+#
   # def monitor_processors
   # end
-# 
+#
   # def monitor_io
   # end
-  
+
   def logs
-    
+
   end
 
   def base_system
@@ -31,7 +32,7 @@ class SystemsController < ApplicationController
 
   def updater
   end
-  
+
   def restart
   end
 

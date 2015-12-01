@@ -59,14 +59,14 @@
 					<%= link_to content_tag(:i, "", class: "fa fa-th") + ' Libraries', galleries_path, class: 'trigger-response-modal' %>
 				</li>
 				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop settings', edit_desktop_settings_path, class: 'trigger-response-modal' %>
+					<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop', edit_desktop_settings_path, class: 'trigger-response-modal' %>
 				</li>
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-bug") + ' Bug reports', edit_system_bug_reports_path, class: "trigger-response-modal" %>
 				</li>
 				<li class="divider"></li>
 				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-dashboard") + ' Monitor', monitor_system_path, class: 'trigger-response-modal' %>
+					<%= link_to content_tag(:i, "", class: "fa fa-bar-chart") + ' Monitor', monitor_system_path, class: 'trigger-response-modal' %>
 				</li>
 			    <li>
 		       	  	<%= link_to content_tag(:i, "", class: "fa fa-arrows") + " Registry", services_registry_path, class: 'trigger-response-modal' %>
@@ -77,7 +77,6 @@
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-heartbeat") + ' Status', status_system_path, class: 'trigger-response-modal' %>
 				</li>
-				<li class="divider"></li>
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Base OS', base_system_system_path, class: 'trigger-response-modal' %>
 				</li>
@@ -85,9 +84,9 @@
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-repeat") + ' Update', updater_system_path, class: 'trigger-response-modal' %>
 				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path, class: 'trigger-response-modal' %>
-				</li>
+			  	<li>
+			      <%= link_to (content_tag(:i, nil,class: "fa fa-refresh") + " Restart"), restart_system_path %>
+			  	</li>
 	          </ul>
 	        </li>
 	        <li id="status_message_area_when_menu_not_collpased">

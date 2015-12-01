@@ -9,7 +9,7 @@
     indicator_class = "indicator_" + service_state[:state].to_s
     background_class = "background_" + service_state[:state].to_s
 	web_sites = service.web_sites
- 
+
 %>
 <% if flash_message.present? %>
 	<%= content_tag(:div, flash_message, class: "hidden flash_message_data", data: {alertclass: flash_alert_class}) %>
@@ -53,7 +53,7 @@
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-play") %> Running</div></li>
 			  	<li><div class="indicator_error dropdown-title"><%= service_state[:detail] %></div></li>
 	  			<% if service_name.to_sym == :mgmt %>
-	  			 	<li><%= link_to (content_tag(:i, nil,class: "fa fa-refresh") + " Restart"), system_restart_mgmt_path, 
+	  			 	<li><%= link_to (content_tag(:i, nil,class: "fa fa-refresh") + " Restart"), system_restart_mgmt_path,
 	  			 			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the Engines system manager?" } %></li>
 	  			<% else %>
 					<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_services_path(service_name: service_name) } %></li>
@@ -73,12 +73,18 @@
 	  			<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> Error</div></li>
 			  	<li><div class="indicator_error dropdown-title"><%= service_state[:detail] %></div></li>
 				<li><%= link_to content_tag(:i, "", class: "fa fa-stop") + " Stop", "javascript:void(0);", class: 'object_action', data: { action: "stop", url: stop_services_path(service_name: service_name) } %></li>
-	  		    <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "rebuild", url: recreate_services_path(service_name: service_name) } %> </li>
-	  			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "create", url: create_container_services_path(service_name: service_name) } %></li> 
-	  		<% elsif  service_state[:state] == :no_container %>   
-	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-ban") %> Disabled</div></li>
+					<% if service_name.to_sym == :mgmt %>
+						<li><%= link_to (content_tag(:i, nil,class: "fa fa-refresh") + " Restart"), system_restart_mgmt_path,
+							data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the Engines system manager?" } %></li>
+					<% end %>
+					<li><%= link_to content_tag(:i, "", class: "fa fa-pause") + " Unpause", "javascript:void(0);", class: 'object_action', data: { action: "unpause", url: unpause_services_path(service_name: service_name) } %></li>
+					<li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "start", url: start_services_path(service_name: service_name) } %></li>
+	  		  <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "rebuild", url: recreate_services_path(service_name: service_name) } %> </li>
+	  			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "create", url: create_container_services_path(service_name: service_name) } %></li>
+	  		<% elsif  service_state[:state] == :no_container %>
+	        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-ban") %> Disabled</div></li>
 			  	<li><div class="indicator_error dropdown-title"><%= service_state[:detail] %></div></li>
-	  			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "create", url: create_container_services_path(service_name: service_name) } %></li> 
+	  			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "create", url: create_container_services_path(service_name: service_name) } %></li>
 			<% elsif service_state[:state] == :working %>
 	        	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> <%= service_state[:label] %></div></li>
 	      	<% else %>
@@ -110,14 +116,14 @@
 				<li>
 			  		<%= link_to content_tag(:i, "", class: "fa fa-globe") + " " + web_site, web_site, target: service_name %>
 				</li>
-			  <% end %> 	  
-		  <% end %> 	  
+			  <% end %>
+		  <% end %>
 		  <li class="divider"></li>
 		  <li>
 			<%= link_to content_tag(:i, "", class: "fa fa-refresh") + " Reload", "javascript:void(0);", class: 'object_action', data: { action: "reload", url: reload_services_path(service_name: service_name) } %>
 		  </li>
 	    </ul>
-	  <% end %> 	  
+	  <% end %>
   </div>
 </div>
 
@@ -130,7 +136,7 @@
       </div>
       <div class="modal-body" id="modal_<%= service_name %>_body">
         <div class="loading_spinner">
-          <%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> 
+          <%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %>
         </div>
 		<div class="modal_body_content"></div>
       </div>
@@ -140,6 +146,3 @@
     </div>
   </div>
 </div>
-
-     
-

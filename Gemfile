@@ -22,6 +22,12 @@ gem 'newrelic_rpm'
 gem 'gruff', git: 'https://github.com/jds13/gruff.git'
 gem 'rest-client'
 
+# Faster json
+gem 'yajl-ruby'
+
+# Support local Docker socket
+gem 'net_http_unix'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 # Use sqlite3 as the database for Active Record

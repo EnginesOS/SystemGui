@@ -13,7 +13,41 @@ $(document).ready(function() {
 			submit_button_area.hide();
 			bind_first_form_submit_validation_button_events();
 			bind_field_change_events();
+			first_run_animate_setup_domain();
+			bind_domain_name_type_events();
 		};
+		
+		function bind_domain_name_type_events() {
+			$('#first_run_networking').click( function() {first_run_animate_setup_domain();} );
+		};
+		
+		function first_run_animate_setup_domain() {
+			if ($('#first_run_networking_zeroconf').prop('checked')) {
+				$('#first_run_networking_zeroconf_message').fadeIn();
+				$('#first_run_networking_domain_name_field').hide();
+			} else {
+				$('#first_run_networking_zeroconf_message').hide();
+			};
+			if ($('#first_run_networking_external_dns').prop('checked') || $('#first_run_networking_self_hosted_dns').prop('checked')) {
+				$('#first_run_networking_domain_name_field').fadeIn();
+			};
+			if ($('#first_run_networking_self_hosted_dns').prop('checked')) {
+				$('#first_run_networking_dns_local_only_field').fadeIn();
+			} else {
+				$('#first_run_networking_dns_local_only_field').hide();
+			};
+			
+			
+			
+			
+			if ($('#first_run_networking_dynamic_dns').prop('checked')) {
+				$('#first_run_networking_domain_name_field').show();
+				$('#first_run_networking_dynamic_dns_fields').fadeIn();
+			} else {
+				$('#first_run_networking_dynamic_dns_fields').hide();
+			};
+		};
+		
 	
 		function bind_first_form_submit_validation_button_events() {
 
@@ -53,14 +87,15 @@ $(document).ready(function() {
 			var console_ok = (first_run_console_password_validation() && first_run_console_password_confirmation_validation());
 			var email_ok = first_run_admin_email_validation();
 			var mysql_ok = (first_run_mysql_password_validation() && first_run_mysql_password_confirmation_validation());
-			var domain_ok = first_run_default_domain_validation();
+			var domain_ok = (first_run_domain_name_validation() && first_run_dynamic_dns_validation());
 			var ssl_ok = first_run_ssl_validation();
 			return (admin_ok && console_ok && email_ok && mysql_ok && domain_ok && ssl_ok);
 		};
 	
-		function show_field_error_message_for(field, message) {
+		function show_field_error_message_for(field, message, position) {
+			position = position || 1;
 			var template = $("#first_run_field_error_template").html();
-			var field_area = $(field).parent().parent();
+			var field_area = $(field).parents().eq(position);
 			field_area.before(template);
 			var error_area = field_area.prev();
 			var field_id = $(field).attr('id');
@@ -69,8 +104,9 @@ $(document).ready(function() {
 			error_area.find('.first_run_error_message').text(message);
 		};
 	
-		function clear_field_error_message_for(field) {
-			var field_area = $(field).parent().parent();
+		function clear_field_error_message_for(field, position) {
+			position = position || 1;
+			var field_area = $(field).parents().eq(position);
 			var error_area = field_area.prev().children('.alert').parent();
 			if (error_area.length > 0) {
 				error_area.remove();
@@ -171,17 +207,72 @@ $(document).ready(function() {
 		 	};
 		};
 
-		function first_run_default_domain_validation() {
-			var field = $("#first_run_default_domain");
+		function first_run_domain_name_validation() {
+			var field = $("#first_run_domain_name");
 	 		clear_field_error_message_for(field);
-		 	if ( field.val().length == 0 ) {
-		 		return true;
-			} else if (is_invalid_domain_name(field.val())) {
-		 		show_field_error_message_for(field, "Domain name is not valid.");
-		 		return false;
+		 	if ( !$('#first_run_networking_zeroconf').prop('checked') ) {
+		 		if ( field.val().length == 0 ) {
+			 		show_field_error_message_for(field, "Domain name required.");
+		 			return false;
+				} else if (is_invalid_domain_name(field.val())) {
+			 		show_field_error_message_for(field, "Domain name is not valid.");
+		 			return false;
+			 	} else {
+			 		return true;
+		 		};
 		 	} else {
 		 		return true;
-		 	};
+	 		};
+		};
+
+		function first_run_dynamic_dns_validation() {
+			var result = (first_run_dynamic_dns_provider_validation() && first_run_dynamic_dns_username_validation() && first_run_dynamic_dns_password_validation());
+			return result;
+		};
+
+		function first_run_dynamic_dns_provider_validation() {
+			var field = $("select[name='first_run[dynamic_dns_provider]']");
+	 		clear_field_error_message_for(field);
+		 	if ( $('#first_run_networking_dynamic_dns').prop('checked') ) {
+		 		if ( $("select[name='first_run[dynamic_dns_provider]']").val() == '' ) {
+			 		show_field_error_message_for(field, "Please select a Dymanic DNS provider.");
+		 			return false;
+			 	} else {
+			 		return true;
+		 		};
+		 	} else {
+		 		return true;
+	 		};
+		};
+
+		function first_run_dynamic_dns_username_validation() {
+			var field = $("#first_run_dynamic_dns_username");
+	 		clear_field_error_message_for(field);
+		 	if ( $('#first_run_networking_dynamic_dns').prop('checked') ) {
+		 		if ( field.val().length == 0 ) {
+			 		show_field_error_message_for(field, "Please enter a username.");
+		 			return false;
+			 	} else {
+			 		return true;
+		 		};
+		 	} else {
+		 		return true;
+	 		};
+		};
+
+		function first_run_dynamic_dns_password_validation() {
+			var field = $("#first_run_dynamic_dns_password");
+	 		clear_field_error_message_for(field);
+		 	if ( $('#first_run_networking_dynamic_dns').prop('checked') ) {
+		 		if ( field.val().length == 0 ) {
+			 		show_field_error_message_for(field, "Please enter a password.");
+		 			return false;
+			 	} else {
+			 		return true;
+		 		};
+		 	} else {
+		 		return true;
+	 		};
 		};
 
 		function is_invalid_domain_name(domain_name) {
@@ -197,13 +288,13 @@ $(document).ready(function() {
 		 		show_field_error_message_for(first_field, "Person name can't be blank.");
 		 		return false;
 			} else if ( $('#first_run_ssl_organisation_name').val().length == 0 ) {
-		 		show_field_error_message_for(first_field, "Organisation name can't be blank.");
+		 		show_field_error_message_for(first_field, "Organisation name can't be blank. Enter n/a if not applicable.");
 		 		return false;
 			} else if ( $('#first_run_ssl_city').val().length == 0 ) {
 		 		show_field_error_message_for(first_field, "City can't be blank.");
 		 		return false;
 			} else if ( $('#first_run_ssl_state').val().length == 0 ) {
-		 		show_field_error_message_for(first_field, "State can't be blank.");
+		 		show_field_error_message_for(first_field, "State can't be blank. Enter n/a if not applicable.");
 		 		return false;
 			} else if ( $('#first_run_ssl_country').val().length == 0 ) {
 		 		show_field_error_message_for(first_field, "Country can't be blank.");
@@ -218,25 +309,25 @@ $(document).ready(function() {
 	
 			 $("#first_run_admin_password").change( function() {
 			 	if ($('#first_run_admin_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.admin_password').text()) {
-					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #31708f');
+					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #31708f, text-decoration:inherit');
 				} else {
-					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #B7CDD8');
+					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #B7CDD8; text-decoration:line-through');
 				};
 			 });
 			
 			 $("#first_run_console_password").change( function() {
 			 	if ($('#first_run_console_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.console_password').text()) {
-					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #31708f');
+					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #31708f, text-decoration:inherit');
 				} else {
-					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #B7CDD8');
+					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #B7CDD8; text-decoration:line-through');
 				};
 			 });
 			
 			 $("#first_run_mysql_password").change( function() {
 			 	if ($('#first_run_mysql_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.mysql_password').text()) {
-					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #31708f');
+					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #31708f, text-decoration:inherit');
 				} else {
-					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #B7CDD8');
+					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #B7CDD8; text-decoration:line-through');
 				};
 			 });
 		

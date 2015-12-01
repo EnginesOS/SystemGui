@@ -10,31 +10,29 @@
     font-size: 48px;
     line-height: 0;
     padding: 0;
-    height: 50.35px;
+    height: 50px;
     width: 75px;
 }
 
 #navbar_user_menu_toggle {
 	width: 100px;
 	text-align: center;
-    line-height: 0;
-	font-size: 32px;
     padding: 10px;
-    height: 50.5px;
 }
-
 
 .in #navbar_user_menu_toggle {
 	width: 100%;
 	text-align: left;
     line-height: 0;
-	font-size: 24px;
-    padding: 8.25px 15px;
-    height: 40.5px;
 }
 
-.navbar_user_icon {
+i.fa.navbar_user_icon {
+	font-size: 30px;
 	color: #f0582a;
+}
+
+.in i.fa.navbar_user_icon {
+	font-size: inherit;
 }
 
 .navbar-brand {
@@ -90,10 +88,6 @@
 }
 
 #system_status_navbar_message_button {
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
-	border-color: #CCC;
 	padding: 8px;
 	color: #777;
 	text-decoration: none;
@@ -131,11 +125,11 @@ a#system_status_navbar_message_button:hover {
 }
 
 #system_status_navbar_message_button.warning {
-	background-color: #FCF8E3; 
+	background-color: #FCF8E3;
 }
 
 #system_status_navbar_message_button.danger {
-	background-color: rgb(242, 222, 222); 
+	background-color: rgb(242, 222, 222);
 }
 
 #system_status_navbar_message_button.notice {
@@ -157,4 +151,3 @@ a#system_status_navbar_message_button:hover {
 #system_status_navbar_message_button.warning:hover {
 	background-color: #ECE8D3;
 }
-
