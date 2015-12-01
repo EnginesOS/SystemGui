@@ -1,16 +1,13 @@
 <div class="panel panel-default top-gap">
-  <div class="panel-heading clearfix">
-    <div class="col-sm-12">
+  <div class="panel-body">
+    <div class='col-sm-12'>
       <div class="pull-right">
         <%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', edit_domain_path(domain_name: domain.domain_name), class: 'btn btn-default btn-noborder btn-lg trigger-response-modal', title: 'Edit record' %>
         <%= link_to content_tag(:i , nil, class: 'fa fa-trash') + ' Delete', domain_path(domain_name: domain.domain_name), method: :delete, class: 'btn btn-default btn-noborder btn-lg', data: { confirmdetail: "Are you sure that you want to delete #{domain.domain_name}?", confirm: 'Confirm delete' }, title: 'Delete' %>
       </div>
     </div>
-  </div>
-  <div class="panel-body">
-      <%= render 'shared/show/text_field', object: domain, field: :domain_name  %>
-      <%= render 'shared/show/text_field', object: domain, field: :self_hosted  %>
-      <span class="<%= domain.self_hosted == false ? "inactive_attribute" : "" %>"><%= render 'shared/show/text_field', object: domain, field: :internal_only  %></span>
-
+    <%= render 'shared/show/text_field', object: domain, field: :domain_name  %>
+    <%= render 'shared/show/text_field', object: domain, field: :self_hosted, label: 'Self-hosted'  %>
+    <span class="<%= domain.self_hosted == false ? "inactive_attribute" : "" %>"><%= render 'shared/show/text_field', object: domain, field: :internal_only  %></span>
   </div>
 </div>

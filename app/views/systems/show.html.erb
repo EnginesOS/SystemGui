@@ -67,7 +67,7 @@
 </div>
 <div class='row'>
 	<div class="col-md-3 col-md-offset-2">
-		<%= link_to content_tag(:i, "", class: "fa fa-dashboard") + ' Monitor', monitor_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-bar-chart") + ' Monitor', monitor_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 	</div>
 	<div class="col-md-7">
 		<p><small>
@@ -125,17 +125,17 @@
 	</div>
 	<div class="col-md-7">
 		<p><small>
-		  Update utility for Engines and the base operating system.
+		  Update Engines or the base operating system.
 		</p></small>
 	</div>
 </div>
 <div class='row top-gap'>
 	<div class="col-md-3 col-md-offset-2">
-		<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-refresh") + ' Restart', restart_system_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 	</div>
 	<div class="col-md-7">
 		<p><small>
-		  Reboot the system.
+		  Restart the management inteface or registry, or reboot the system.
 		</p></small>	    
 	</div>
 </div>

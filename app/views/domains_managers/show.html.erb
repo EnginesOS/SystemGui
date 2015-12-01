@@ -10,13 +10,13 @@
 		<legend class="top-gap">Domain names</legend>
 		<%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_domain_path, class: "btn btn-lg btn-primary trigger-response-modal" %>
 		<% if @domains.present? %>
-		<% @domains.each do |domain| %>
-		<%= render partial: "domain", locals: { domain: domain } %>
-		<% end %>
+			<% @domains.each do |domain| %>
+				<%= render partial: "domain", locals: { domain: domain } %>
+			<% end %>
 		<% else %>
-		<p class='top-gap'>
-			No domains.
-		</p>
+			<p class='top-gap'>
+				No domains.
+			</p>
 		<% end %>
 	</div>
 

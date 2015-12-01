@@ -4,42 +4,44 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
-  rescue_from Exception, :with => :render_500 if Rails.env.production?
+  rescue_from Exception, :with => :render_500 #if ( Rails.env.production? && System.send_bug_reports_enabled? )
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
   require 'awesome_print'
 
   before_action :setup
-  
+
 protected
 
   def setup
-    return if no_status_or_page_title
+    System.check_send_bug_reports_flag_is_cached
+    return if status_and_page_title_not_needed?
     set_system_status
-    return if no_page_title
+    return if status_needed_and_page_title_not_needed?
     set_page_title
   end
 
-  def no_page_title
+  def status_needed_and_page_title_not_needed?
     ['navbar_system_statuses'].include?(params[:controller]) ||
     ['progress'].include?(params[:action])
   end
 
-  def no_status_or_page_title
+  def status_and_page_title_not_needed?
     [
       'helps',
       'applications',
-      'services', 
+      'services',
       'control_panel_applications',
-      'control_panel_services', 
-      'desktop_applications', 
-      'application_reports', 
-      'service_reports', 
-      'application_abouts', 
-      'service_abouts', 
-      'gallery_softwares', 
-      'charts'
+      'control_panel_services',
+      'desktop_applications',
+      'application_reports',
+      'service_reports',
+      'application_abouts',
+      'service_abouts',
+      'gallery_softwares',
+      'system_monitor_charts',
+      'first_runs'
     ].include? params[:controller]
   end
 
@@ -100,13 +102,13 @@ protected
 
   def authenticate
     return authenticate_user! if user_signed_in?
-    if no_status_or_page_title
+    if status_and_page_title_not_needed? || status_needed_and_page_title_not_needed?
       render text: "Your session expired. Please sign in again to continue.", status: 401
     else
       redirect_to desktop_path
     end
   end
-  
+
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
     System.cache_system_update_status

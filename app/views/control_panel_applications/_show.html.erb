@@ -130,7 +130,7 @@ web_sites = application.web_sites
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
 					</li>
-	
+
 				<% elsif application_state[:state] == :error %>
 					<li>
 						<div class="<%= indicator_class %> dropdown-title">
@@ -277,7 +277,3 @@ web_sites = application.web_sites
 		</div>
 	</div>
 </div>
-
-
-
-
