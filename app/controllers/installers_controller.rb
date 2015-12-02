@@ -1,7 +1,8 @@
 class InstallersController < ApplicationController
 
   def show
-    if DomainSettings.engines_default_domain.empty? || DomainSettings.engines_default_domain == 'unset'
+    default_domain = DomainDefaultName.engines_default_domain
+    if default_domain.empty? || default_domain == 'unset'
       redirect_to control_panel_path, alert: "Please set a default domain before installing software." 
     else
       @gallery = Gallery.find(gallery_id)

@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 function do_flash_messages() {
 	$(".flash_message_data").each( function () {
-		var message = $(this).attr('data-messagebody');
+		var message = $(this).text();
 		var alertClass = $(this).attr('data-alertclass');
 		show_flash_message(message, alertClass);
 		$(this).remove();

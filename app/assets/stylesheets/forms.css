@@ -1,23 +1,3 @@
-/*.label-lg{
-  font-size: 1em;
-  color: #555;
-  font-weight: normal;
-}*/
-
-/*input[type="radio"] {
-  width: 1.1em;
-  height: 1.1em;
-}
-
-input[type="checkbox"] {
-  width: 1.1em;
-  height: 1.1em;
-}*/
-
-/*legend {
-  padding-top: 20px;
-}
-*/
 .form-field-hint {
   padding-left: 10px;
   color: #428bca;
@@ -89,38 +69,3 @@ input[type="checkbox"] {
 .color_field .form-control.input-lg{
 	padding: 3px;
 }
-
-
-
-/*.radio_button_collection_item{
-  display: block;
-  margin-bottom: 5px;
-}
-
-.radio_button_collection_item label{
-  vertical-align: top;
-  padding-left: 5px;
-}
-
-input[type="radio"], input[type="checkbox"] {
-  vertical-align: top;
-  margin-top: 0px;
-}
-
-
-
-label {
-  color: #777;
-  margin-right: 5px;
-  margin-bottom: 0px;
-}
-
-
-fieldset {
-  margin-top: 20px;
-}
-
-
-
-
-*/

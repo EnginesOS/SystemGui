@@ -16,7 +16,7 @@
 	<div id="display_properties_existing_icon" class='form-image-control'>
 		<div class='form-image-centering'>
 			<% if f.object.icon.exists? %>
-				<%= image_tag(f.object.send(:icon).url, class: 'form-image', alt: 'Unable to load image.') %>
+				<%= image_tag(f.object.send(:icon_url), class: 'form-image', alt: 'Unable to load image.') %>
 			<% else %>
 				<%= image_tag(url_for("placeholder_for_missing_icon.jpg"), class: 'form-image') %>
 		    <% end %>

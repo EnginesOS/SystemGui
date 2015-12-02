@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151022004235) do
+ActiveRecord::Schema.define(version: 20151122235720) do
 
-  create_table "application_display_properties", force: true do |t|
+  create_table "application_display_properties", force: :cascade do |t|
     t.integer "application_id"
     t.string  "title"
     t.text    "detail"
@@ -22,54 +22,55 @@ ActiveRecord::Schema.define(version: 20151022004235) do
     t.integer "icon_file_size"
     t.string  "icon_updated_at"
     t.string  "installer_icon_url"
+    t.boolean "defaults_set",       default: false
   end
 
-  create_table "application_network_properties", force: true do |t|
+  create_table "application_network_properties", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "application_resources_properties", force: true do |t|
+  create_table "application_resources_properties", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "application_service_connection_subservice_connector_configurations", force: true do |t|
+  create_table "application_service_connection_subservice_connector_configurations", force: :cascade do |t|
   end
 
-  create_table "application_service_connector_configurations", force: true do |t|
+  create_table "application_service_connector_configurations", force: :cascade do |t|
     t.integer "application_service_connector_id"
   end
 
-  create_table "application_service_connector_types", force: true do |t|
+  create_table "application_service_connector_types", force: :cascade do |t|
     t.integer "application_service_connector_id"
   end
 
-  create_table "application_service_connectors", force: true do |t|
+  create_table "application_service_connectors", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "application_services", force: true do |t|
+  create_table "application_services", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "application_services_properties", force: true do |t|
+  create_table "application_services_properties", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "application_subservices", force: true do |t|
+  create_table "application_subservices", force: :cascade do |t|
     t.integer "application_service_id"
   end
 
-  create_table "application_variables_properties", force: true do |t|
+  create_table "application_variables_properties", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "applications", force: true do |t|
+  create_table "applications", force: :cascade do |t|
     t.string  "container_name"
     t.integer "application_installation_id"
     t.integer "docker_hub_installation_id"
   end
 
-  create_table "desktop_settings", force: true do |t|
+  create_table "desktop_settings", force: :cascade do |t|
     t.string   "wallpaper_file_name"
     t.string   "wallpaper_content_type"
     t.integer  "wallpaper_file_size"
@@ -78,7 +79,7 @@ ActiveRecord::Schema.define(version: 20151022004235) do
     t.string   "icon_text_color"
   end
 
-  create_table "domain_certificates", force: true do |t|
+  create_table "domain_certificates", force: :cascade do |t|
     t.string  "certificate"
     t.string  "certificate_file_file_name"
     t.string  "certificate_file_content_type"
@@ -86,55 +87,55 @@ ActiveRecord::Schema.define(version: 20151022004235) do
     t.string  "certificate_file_updated_at"
   end
 
-  create_table "domain_settings", force: true do |t|
+  create_table "domain_settings", force: :cascade do |t|
   end
 
-  create_table "domains", force: true do |t|
+  create_table "domains", force: :cascade do |t|
   end
 
-  create_table "eports", force: true do |t|
+  create_table "eports", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "galleries", force: true do |t|
+  create_table "galleries", force: :cascade do |t|
     t.string "url"
     t.string "name"
   end
 
-  create_table "gallery_settings", force: true do |t|
+  create_table "gallery_settings", force: :cascade do |t|
     t.integer "default_gallery_id"
   end
 
-  create_table "install_from_blueprints", force: true do |t|
+  create_table "install_from_blueprints", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "install_from_docker_hubs", force: true do |t|
+  create_table "install_from_docker_hubs", force: :cascade do |t|
     t.integer "application_id"
   end
 
-  create_table "service_configurations", force: true do |t|
+  create_table "service_configurations", force: :cascade do |t|
   end
 
-  create_table "services", force: true do |t|
+  create_table "services", force: :cascade do |t|
     t.string "container_name"
   end
 
-  create_table "system_security_certificates", force: true do |t|
+  create_table "system_security_certificates", force: :cascade do |t|
     t.string   "certificate_file_name"
     t.string   "certificate_content_type"
     t.integer  "certificate_file_size"
     t.datetime "certificate_updated_at"
   end
 
-  create_table "system_security_keys", force: true do |t|
+  create_table "system_security_keys", force: :cascade do |t|
     t.string   "public_key_file_name"
     t.string   "public_key_content_type"
     t.integer  "public_key_file_size"
     t.datetime "public_key_updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -155,7 +156,7 @@ ActiveRecord::Schema.define(version: 20151022004235) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 
-  create_table "variables", force: true do |t|
+  create_table "variables", force: :cascade do |t|
     t.integer "variable_consumer_id"
     t.string  "variable_consumer_type"
   end

@@ -1,9 +1,44 @@
-<div class="col-sm-12">
-	<h2><%= content_tag(:i, "", class: "fa fa-power-off") %> System reboot</h2>
-	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
-  	<%= link_to 'Reboot', system_restart_path,
-			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the Engines system?" },
-			class: 'btn btn-danger btn-lg pull-right' %>
+<div class="col-md-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-refresh") %> Restart</h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
+<div class='row'>
+</div>
 
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+  		<%= link_to (content_tag(:i, nil,class: "fa fa-arrows") + " Registry"), system_restart_registry_path, 
+		 data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the registry?" },
+		 class: 'btn btn-default btn-lg' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Restart the registry.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+      <%= link_to (content_tag(:i, nil,class: "fa fa-dashboard") + " Management"), system_restart_mgmt_path, 
+		 data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart mgmt?" },
+		 class: 'btn btn-default btn-lg' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Restart the management interface (mgmt).
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+	  	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', system_restart_path,
+			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to restart the Engines system?" },
+			class: 'btn btn-danger btn-lg' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Reboot the system.
+		</p></small>
+	</div>
+</div>

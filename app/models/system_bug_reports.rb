@@ -14,7 +14,7 @@ class SystemBugReports
   end
 
   def load
-    self.enable = engines_api.is_remote_exception_logging?
+    self.enable = System.send_bug_reports_enabled?
     self
   end
 
@@ -24,6 +24,7 @@ class SystemBugReports
     else
       engines_api.disable_remote_exception_logging
     end.was_success
+    System.cache_send_bug_reports_enabled
   end
   
   def new_record?

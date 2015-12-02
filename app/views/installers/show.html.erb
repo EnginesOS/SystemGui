@@ -1,70 +1,62 @@
 <div class="installer row">
-	<div class="col-sm-12">
 
+		<div class="col-sm-6 top-gap bring-forward pull-right">
+			<%= render 'installer_actions' %>
+		</div>
+	
 		<div class="col-sm-6">
 			<h2> <%= content_tag(:i, "", class: "fa fa-play-circle-o") %> Installer</h2>
 			<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 		</div>
 
-		<div class="col-sm-6 top-gap">
-			<%= render 'installer_actions' %>
-		</div>
-	
-	</div>
 </div>
 
 <div class="installer row">
-	<div class="col-sm-12">
-		<div class="col-md-4 top-gap clearfix pull-right">
-		</div>
-		<div class="col-md-8 top-gap">
 
-		    <%= form_tag installer_path(), method: 'get' do %>
-		      <div class="input-group input-group-lg">
+    <%= form_tag installer_path(), method: 'get' do %>
+        <%= hidden_field_tag :tags, params[:tags] %>
+	    <%= hidden_field_tag :gallery_id, @gallery.id %>
+
+		<div class="col-md-3 top-gap">
 	  		<%= render 'library_select' %>
-		        <%= hidden_field_tag :tags, params[:tags] %>
-				<%= hidden_field_tag :gallery_id, @gallery.id %>
-		        <%= text_field_tag :search, params[:search], placeholder: "search", class: 'form-control',
-							onfocus: "this.select();", autofocus: true %>
-                <%= submit_tag params[:tags], name: 'tags', class: "trigger-response-modal hidden" %>
-		        <% if false # params[:search].present? %>
-		          <a type="button" href="<%= installer_path(gallery_id: @gallery.id, tags: params[:tags]) %>" class="input-group-addon btn search-clear-button trigger-response-modal" 
-		          	title="Clear search"><i class="fa fa-times"></i></a>
-		        <% end %>
+		</div>
+		<div class="col-md-1 top-gap">
+            <div id="installer_find_button" class="">
+          	  <button type="submit" class="hidden">
+	            <i class="fa fa-search"></i>
+	          </button>
+            </div>
 
-  	            <div id="installer_find_button" class="input-group-btn">
-	          	  <button type="submit" class="btn btn-default trigger-response-modal">
-		            <i class="fa fa-search"></i>
+            <div id="find_by_tags_list_loader" class="hidden" data-galleryid="<%= @gallery.id %>"></div>
+            <div id="find_button_when_tags_present" style="display:none;">
+            	<div class="dropdown">
+	          	  <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">
+		            <i class="fa fa-filter"></i>
 		          </button>
- 	            </div>
-
-		      </div>
-
-                <div id="find_by_tags_list_loader" class="hidden" data-galleryid="<%= @gallery.id %>"></div>
- 	            <div id="find_button_when_tags_present" style="display:none;">
-	          	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		            <i class="fa fa-search"></i> Search by
-		            <span class="caret"></span>
-		          </button>
-  	              <ul class="dropdown-menu dropdown-menu-right">
+	              <ul class="dropdown-menu">
 	                <li>
 	                  <%= submit_tag 'All', class: "btn-lg trigger-response-modal find_by_dropdown_submit_button" %>
 	                </li>
 	                <div id="find_by_tags_list_holder"></div>
 	              </ul>
 				</div>
- 	            <div id="search_result_summary_when_tags_present" style="display:none;">
-			  		<%= params[:tags] %> software <%= (" - search '#{params[:search]}'") if params[:search].present? %>
-			    </div>
+			</div>
 
- 	          
-		    <% end %>
+	    </div>
+		<div class="col-md-8 top-gap">
+	        <%= text_field_tag :search, params[:search], placeholder: "search", class: 'form-control input-lg',
+							onfocus: "this.select();", autofocus: true %>
 		</div>
-			
-	</div>
+          
+	<% end %>
 	
 	<div class="col-sm-12">
 		<% if (params[:tags] != 'All' || params[:search].present?) %>
+
+            <div id="search_result_summary_when_tags_present" style="display:none;">
+		  		<%= params[:tags] %> software <%= (" - search '#{params[:search]}'") if params[:search].present? %>
+		    </div>
+		    
 			<div class="col-sm-12">
 			  	<h3>
 					<span id="search_result_summary">
@@ -83,7 +75,7 @@
 				<%= content_tag(:i, nil, class: "fa fa-spinner fa-spin text-center") + " Loading..."%>
 			</div>
 		</div>
-		<div id="gallery_software_holder"></div>
+		<div class="col-sm-12" id="gallery_software_holder"></div>
 	</div>
 
 </div>

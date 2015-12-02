@@ -1,8 +1,8 @@
 <div class='control_panel'>
 	
 	<div class='row'>
-		<div class="col-sm-6 pull-right">
-			<%= render 'control_panel_service_actions' %>
+		<div class="col-sm-6 pull-right bring-forward">
+			<%#= render 'control_panel_service_actions' %>
 		</div>
 		<div class="col-sm-6">
 			<h2><%= content_tag(:i, "", class: "fa fa-server") %> Services</h2>
@@ -11,14 +11,16 @@
 	</div>
 	
 	<div class='row'>
-		<% if @services.present? %>
-			<% @services.each do |service| %>
+		<% if @service_names.present? %>
+			<% @service_names.each do |service_name| %>
 
-				<div class="service load_control_panel_object", id="<%= service.container_name %>", data-url="<%= control_panel_services_path(service_name: service.container_name) %>">
+				<div class="service load_control_panel_object", id="<%= service_name %>", data-url="<%= control_panel_services_path(service_name: service_name) %>">
 					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
   						<div class="control_panel_object_placeholder">
-  							<%= service.container_name %><br>
-							<%= content_tag(:i, nil, class: "fa fa-spinner fa-spin") %>
+  							<%= service_name %>
+							<div class="object_status">
+								<small><%= content_tag(:i, nil, class: "fa fa-spinner fa-spin") %></small>
+							</div>
 						</div>
 					</div>
 				</div>

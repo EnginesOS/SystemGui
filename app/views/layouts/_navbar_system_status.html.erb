@@ -1,0 +1,35 @@
+<div id='system_status_area' class="<%= @system_status[:message_class] %>" data-reload="<%= @system_status[:reload] %>" title="<%= @system_status[:title] %>">
+	<% if @system_status[:state] == :ok %>
+	  
+	<% elsif @system_status[:button_url].nil? %>
+	  <span id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">
+	  	<div id="system_status_navbar_message_icon">
+			<% if @system_status[:reload] %>
+				<%= content_tag(:i, nil, class: 'fa fa-spinner fa-spin') %>
+			<% else %>
+				<%= content_tag(:i, nil, class: "fa fa-heartbeat") %>
+			<% end %>
+	  	</div>
+	  	<div id="system_status_navbar_message_text">
+			<div id="system_status_navbar_message_text_vertical_align">
+				<%= @system_status[:message] %>
+			</div>
+		</div>
+	  </span>
+	<% else %>
+	  <a href="<%= @system_status[:button_url] %>" id="system_status_navbar_message_button" class="trigger-response-modal <%= @system_status[:message_class] %>">
+	  	<div id="system_status_navbar_message_icon">
+			<% if @system_status[:reload] %>
+				<%= content_tag(:i, nil, class: 'fa fa-spinner fa-spin') %>
+			<% else %>
+				<%= content_tag(:i, nil, class: "fa fa-heartbeat") %>
+			<% end %>
+	  	</div>
+	  	<div id="system_status_navbar_message_text">
+			<div id="system_status_navbar_message_text_vertical_align">
+				<%= @system_status[:message] %>
+			</div>
+		</div>
+	  </a>
+	<% end %>
+</div>

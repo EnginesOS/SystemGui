@@ -1,6 +1,13 @@
 <%  label = label.nil? ? name.to_s.humanize.capitalize : label
     value ||= f.object.send(name); value = nil if value.blank?
     select_collection ||= collection || []
+    if select_collection.first.is_a? Array
+		value_method ||= :first
+		text_method ||= :last
+	else
+		value_method ||= :to_s
+		text_method ||= :to_s
+	end
     id ||= ''
     attach_selectize ||= false
     tooltip ||= nil
@@ -11,7 +18,6 @@
     errors ||= f.object.errors[name]
     errors_class = "field_with_errors" if errors.present?
 
-    collection_as_array = select_collection
     select_class ||= ""
 
     if attach_selectize
@@ -28,7 +34,7 @@
 	    <% end %>
     <% end %>
     <% if comment.present? %><p><small><%= comment %></small></p><% end %>
-    <%= f.select name, collection_as_array, {selected: value, include_blank: include_blank}, {title: tooltip, prompt: placeholder, class: select_class, id: id} %>
+    <%= f.collection_select name, select_collection, value_method, text_method, {selected: value, include_blank: include_blank}, {title: tooltip, prompt: placeholder, class: select_class, id: id} %>
     <% if errors.present? %>
       <div class='form-field-errors'>
         <% errors.each do |error| %>

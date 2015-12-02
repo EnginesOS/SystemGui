@@ -1,12 +1,12 @@
 class ControlPanelsController < ApplicationController
 
   def show
-    @applications = Application.load_all
+    @application_names = Application.application_container_names_list
     # render text: BuildController.new(1).methods
   end
-  
+
   def services
-    @services = Service.load_all
+    @service_names = Service.service_container_names_list
   end
 
 end

@@ -2,11 +2,19 @@ Rails.application.routes.draw do
 
   root to: "desktops#show"
 
+#Navbar
+
+  resource :navbar_system_status
+
 #Users
 
-  resource :user
-  resource :user_password
-  devise_for :users, :skip => :registrations
+  devise_for :users, skip: :registrations
+  resource :user, only: :show
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user'
+    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  end
+  # resource :user_password
 
 #Desktop
 
@@ -21,10 +29,10 @@ Rails.application.routes.draw do
   resource :control_panel_applications
   resource :control_panel_services
   resource :services_registry
-  
+
 #System
 
-  resource :charts do
+  resource :system_monitor_charts do
     get :system_cpu_usage
     get :system_cpu_usage_averages
     get :total_system_memory_usage
@@ -37,11 +45,12 @@ Rails.application.routes.draw do
     get :disk_usage
     get :network_usage
   end
-  
+
+  resource :system_monitor_charts
+
   resource :system do
-    get :monitor, :status, :info, :logs, :base_system, :updater, :restart # :monitor_io, :monitor_memory, :monitor_processing, 
+    get :monitor, :status, :info, :logs, :base_system, :updater, :restart
   end
-  # resource :system_settings
   resource :system_restart do
     get :progress
   end
@@ -57,7 +66,7 @@ Rails.application.routes.draw do
   resource :system_restart_registry do
     get :progress
   end
-  
+
   resource :system_security
   resource :system_security_certificate do
     get :download
@@ -73,10 +82,11 @@ Rails.application.routes.draw do
   resource :domains_manager
   resource :domain
   resource :domain_certificate
-  resource :domain_settings
+  resource :domain_default_name
+  resource :domain_default_site
 
 #Desktop settings
-  
+
   resource :desktop_settings
 
 #Libraries
@@ -113,7 +123,7 @@ Rails.application.routes.draw do
       :start, :stop, :pause, :unpause, :restart,
       :create_container, :destroy_container,
       :reinstall, :delete_image,
-      :build, :recreate, :open, :reload)
+      :build, :recreate, :open_first_run, :reload)
   end
 
 #Services
@@ -123,23 +133,19 @@ Rails.application.routes.draw do
   resource :services do
     get(
       :pause, :unpause, :start, :stop,
-      :restart, :recreate, :create_container) # :show,
+      :restart, :recreate, :create_container, :reload) # :show,
   end
 
 #Installer
 
   resource :installer
   resource :application_installation do
-    get(:preparing_installation, :preparing_installation_progress, :installing, :progress)
+    get(:preparing_installation, :preparing_installation_progress, :installing, :progress, :cancel)
   end
   resource :install_from_blueprint
   resource :install_from_repository_url
   resource :install_from_docker_hub
   resource :install_from_docker_hub_configuration
-   # do
-    # get :application_service
-  # end
-  # resource :docker_hub_installation_application_services
 
 #First run
 
@@ -151,5 +157,5 @@ Rails.application.routes.draw do
 #Help
 
   resource :help
-  
+
 end

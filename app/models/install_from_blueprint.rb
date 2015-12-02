@@ -51,7 +51,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def blueprint_software
-    @blueprint_software ||= if blueprint
+    @blueprint_software ||= if blueprint.is_a?(Hash) && blueprint[:software].present?
                               blueprint[:software].symbolize_keys
                             else
                               {}
@@ -59,7 +59,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def default_http_protocol
-    blueprint_protocol = blueprint_software[:http_protocol].to_s.downcase.sub('only', '').sub('and', '').strip.gsub(/[ ]./, '_').to_sym
+    blueprint_protocol = blueprint_software[:http_protocol].to_s.downcase.sub('only', '').sub('and', '').gsub('_',' ').strip.gsub(' ', '_').to_sym
     blueprint_protocol = :http_https if blueprint_protocol == :https_http
     [:http, :https, :http_https].include?(blueprint_protocol) ? blueprint_protocol : :http_https
   end
@@ -75,7 +75,7 @@ class InstallFromBlueprint < ActiveRecord::Base
           variables_attributes: blueprint_software[:variables] || [],
           application_network_properties_attributes: {
             host_name: unique_host_name,
-            domain_name: DomainSettings.engines_default_domain,
+            domain_name: DomainDefaultName.engines_default_domain,
             http_protocol: default_http_protocol
           },
           application_resources_properties_attributes: {
@@ -121,7 +121,7 @@ class InstallFromBlueprint < ActiveRecord::Base
     default_host_name = default_name
     unique_host_name_candidate = default_host_name
     index = 2
-    while existing_host_names.include? "#{unique_host_name_candidate.to_s}.#{DomainSettings.engines_default_domain.to_s}" do
+    while existing_host_names.include? "#{unique_host_name_candidate.to_s}.#{DomainDefaultName.engines_default_domain.to_s}" do
       unique_host_name_candidate = default_host_name + index.to_s
       index += 1
     end

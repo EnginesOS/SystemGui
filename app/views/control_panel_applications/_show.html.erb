@@ -20,7 +20,7 @@ web_sites = application.web_sites
 %>
 
 <% if flash_message.present? %>
-	<%= content_tag(:div, nil, class: "flash_message_data", data: {messagebody: flash_message, alertclass: flash_alert_class})%>
+	<%= content_tag(:div, flash_message, class: "hidden flash_message_data", data: {alertclass: flash_alert_class})%>
 <% end %>
 
 <% if application_state[:state] == :working %>
@@ -33,7 +33,7 @@ web_sites = application.web_sites
 			<div class="status_area">
 		      <div class="icon_holder">
   		        <div class="icon">
-		      	  <%= image_tag(application.application_display_properties.icon_url, class: "engine_icon", alt: "") -%>
+		      	  <%= image_tag(application.application_display_properties.icon_url(:small), class: "engine_icon", alt: "") -%>
 		        </div>
 		      </div>
 		      <div class="text_holder">
@@ -130,7 +130,7 @@ web_sites = application.web_sites
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
 					</li>
-	
+
 				<% elsif application_state[:state] == :error %>
 					<li>
 						<div class="<%= indicator_class %> dropdown-title">
@@ -277,7 +277,3 @@ web_sites = application.web_sites
 		</div>
 	</div>
 </div>
-
-
-
-

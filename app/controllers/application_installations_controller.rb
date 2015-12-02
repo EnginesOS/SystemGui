@@ -16,12 +16,16 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def installing
-    System.clear_failed_build_flag
-    if @system_status[:state] == :installing
-      @application_installation_progress = ApplicationInstallationProgress.new(System.installing_params)
-    else
-      redirect_to control_panel_path, alert: "Not installing."
-    end
+    # if @system_status[:state] == :installing
+      @application_installation_progress = ApplicationInstallationProgress.load
+    # else
+      # redirect_to control_panel_path, alert: "Not installing."
+    # end
+  end
+
+  def cancel
+    System.cancel_installation
+    redirect_to control_panel_path, alert: "Installation cancelled."
   end
 
   def progress
@@ -29,15 +33,14 @@ class ApplicationInstallationsController < ApplicationController
     send_event :installation_progress, "Starting build...\n"
     send_installation_progress
     send_installation_report
-  ensure
     send_event :message, 'done'
+  ensure
     response.stream.close
   end
 
 private
 
   def send_installation_progress
-    error = false
     previous_line = ''
     File.open('/home/engines/deployment/deployed/build.out') do |f|
       f.extend(File::Tail)
@@ -46,10 +49,9 @@ private
       f.tail do |line|
         send_event :installation_progress, line
         if line.start_with?('Build Finished')
-          error = true if previous_line.start_with?('ERROR')
           break
         end
-        previous_line = line
+
       end
     end
   end

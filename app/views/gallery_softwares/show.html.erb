@@ -2,8 +2,8 @@
 
 	<% @paginated_softwares.softwares.each do |software|  %>
 
-	  <%  gallery_title = software[:label] || software[:title]
-		  gallery_detail = software[:detail]
+	  <%  software_title = [software[:label], software[:title], software[:name], 'No name'].compact.reject(&:blank?).first
+		  software_detail = software[:detail]
 		  library_page_url = software[:library_page_url]
 		  image_url =
 			  if software[:icon_url_from_gallery].present?
@@ -21,19 +21,20 @@
 								software_title: software[:title], 
 		  						tags: params[:tags],
 								search: params[:search],
-								page: params[:page]) 
+								page: params[:page],
+								gallery_id: params[:gallery_id]) 
 		%>
 
 			<div class="col-md-3 install-software-panel">
-		    	<a href="<%= install_url %>" class="btn btn-default btn-noborder btn-lg trigger-response-modal" title="Install <%= gallery_title %>">
+		    	<a href="<%= install_url %>" class="btn btn-default btn-noborder btn-lg trigger-response-modal" title="Install <%= software_title %>">
 				    <div class="engine-install-icon-area">
 				        <div class="helper-to-vertical-align-middle"></div><img src="<%= image_url %>" class="engine-install-icon" alt="">
 				    </div>
-				    <% if gallery_title.present? %>
-				        <div class="engine-install-name"><%= gallery_title %></div>
+				    <% if software_title.present? %>
+				        <div class="engine-install-name"><%= software_title %></div>
 				    <% end %>
-				    <% if gallery_detail.present? %>
-				        <div class="engine-install-detail"><%= gallery_detail %></div>
+				    <% if software_detail.present? %>
+				        <div class="engine-install-detail"><%= software_detail %></div>
 				    <% end %>
 		    	</a>
 			</div>

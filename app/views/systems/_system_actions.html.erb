@@ -3,24 +3,12 @@
     <i class="fa fa-bars"></i>&nbsp<span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-	<li>
-	  <% link_body = (content_tag(:i, '', class: 'fa fa-globe') + ' Domains'.html_safe) %>
-	  <%= link_to link_body, domains_manager_path, class: 'btn-lg trigger-response-modal' %>
-    </li>
     <li>
-		<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop', edit_desktop_settings_path, class: "btn-lg trigger-response-modal" %>
-    </li>
-    <li>
-		<%= link_to content_tag(:i, "", class: "fa fa-user-secret") + ' Security', system_security_path, class: "btn-lg trigger-response-modal" %>
-    </li>
-	<li>
-		<%= link_to content_tag(:i, "", class: "fa fa-dashboard") + ' Monitor', monitor_system_path, class: "btn-lg trigger-response-modal" %>
-	</li>
-	<li>
-		<%= link_to content_tag(:i, "", class: "fa fa-file-text-o") + ' Logs', logs_system_path, class: "btn-lg trigger-response-modal" %>
-	</li>
-    <li>
-		<%= link_to content_tag(:i, "", class: "fa fa-heartbeat") + ' Status', status_system_path, class: "btn-lg trigger-response-modal" %>
+      <% if params[:action] == 'info' %>
+		<%= link_to content_tag(:i, "", class: "fa fa-cog") + ' Settings', system_path, class: "btn-lg trigger-response-modal" %>
+	  <% else %>
+		<%= link_to content_tag(:i, "", class: "fa fa-info") + ' Info', info_system_path, class: "btn-lg trigger-response-modal" %>
+	  <% end %>
     </li>
 	<li class="divider"></li>
     <li>
@@ -30,10 +18,6 @@
     <li>
     	<%= link_to content_tag(:i, "", class: "fa fa-power-off") + ' Reboot', restart_system_path, class: 'btn-lg trigger-response-modal' %>
 	</li>
-	<li class="divider"></li>
-    <li>
-		<%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Base OS', base_system_system_path, class: "btn-lg trigger-response-modal" %>
-    </li>
 
   </ul>
 </div>

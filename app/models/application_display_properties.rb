@@ -3,8 +3,14 @@ class ApplicationDisplayProperties < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   attr_accessor :set_icon
-  has_attached_file :icon, dependent: :destroy
+
+  has_attached_file :icon, dependent: :destroy,
+      styles: {
+        small: "64x64>",
+        medium: "128x128>",
+        large: "256x256>" }
   validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
+  # validates :icon, image_dimensions: { width: 128, height: 128 }
 
   belongs_to :application
 
@@ -15,15 +21,15 @@ class ApplicationDisplayProperties < ActiveRecord::Base
     application.container_name
   end
 
-  def icon_url
-    icon.exists? ? icon.url : ""
+  def icon_url(size=nil)
+    icon.exists? ? icon.url(size) : ""
   end
 
   def set_defaults
     title_from_blueprint = application.blueprint_software_details["short_title"]
-    self.title = title_from_blueprint.present? ? title_from_blueprint : application.container_name.humanize
-    self.save
+    self.title = title_from_blueprint.present? ? title_from_blueprint : application.container_name
     self.detail = application.blueprint_software_details["long_title"]
+    self.defaults_set = true
     self.save
     url_for_new_icon = installer_icon_url.present? ? installer_icon_url : icon_url_from_blueprint
     

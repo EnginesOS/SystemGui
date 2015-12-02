@@ -4,42 +4,51 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
 
-  rescue_from Exception, :with => :render_500 if Rails.env.production?
+  rescue_from Exception, :with => :render_500 #if ( Rails.env.production? && System.send_bug_reports_enabled? )
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
   require 'awesome_print'
 
   before_action :setup
-  
+
 protected
 
   def setup
-    return if excluded_controller?
+    System.check_send_bug_reports_flag_is_cached
+    return if status_and_page_title_not_needed?
     set_system_status
+    return if status_needed_and_page_title_not_needed?
     set_page_title
   end
 
-  def excluded_controller?
+  def status_needed_and_page_title_not_needed?
+    ['navbar_system_statuses'].include?(params[:controller]) ||
+    ['progress'].include?(params[:action])
+  end
+
+  def status_and_page_title_not_needed?
     [
       'helps',
       'applications',
-      'services', 
+      'services',
       'control_panel_applications',
-      'control_panel_services', 
-      'desktop_applications', 
-      'application_reports', 
-      'service_reports', 
-      'application_abouts', 
-      'service_abouts', 
-      'gallery_softwares', 
-      'charts'
+      'control_panel_services',
+      'desktop_applications',
+      'application_reports',
+      'service_reports',
+      'application_abouts',
+      'service_abouts',
+      'gallery_softwares',
+      'system_monitor_charts',
+      'first_runs'
     ].include? params[:controller]
   end
 
   def set_system_status
     if user_signed_in?
       @system_status = System.status
+      return if params[:controller] == 'navbar_system_statuses'
       case @system_status[:state]
       when :restarting
         redirect_to system_restart_path,
@@ -70,11 +79,11 @@ protected
               params[:controller] == 'system_restarts' )
       end
     end
-    
   end
 
   def set_page_title
-    @page_title = "#{System.unit_name.to_s.humanize} Engines"
+    @@page_title ||= "#{System.unit_name.to_s.humanize} Engines"
+    @page_title = @@page_title
   end
 
   def configure_permitted_parameters
@@ -93,15 +102,16 @@ protected
 
   def authenticate
     return authenticate_user! if user_signed_in?
-    if excluded_controller?
+    if status_and_page_title_not_needed? || status_needed_and_page_title_not_needed?
       render text: "Your session expired. Please sign in again to continue.", status: 401
     else
       redirect_to desktop_path
     end
   end
-  
+
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
+    System.cache_system_update_status
     if FirstRun.required?
       first_run_path
     else
@@ -111,7 +121,6 @@ protected
 
   def render_500(exception)
     SystemUtils.log_exception exception
-    @page_title = 'Engines error (500)'
     @exception = exception
     render 'systems/500', :status => 500, layout: 'empty_navbar'
   end

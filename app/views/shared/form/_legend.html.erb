@@ -1,6 +1,7 @@
 <%  text ||= nil
-    html_class ||= nil %>
+    html_class ||= nil
+    fa ||= nil %>
 
 <div class="col-sm-12 <%= html_class %>">
-  <legend><%= text %></legend>
+  <legend><%= content_tag(:i, nil, class: "fa fa-#{fa}") if fa %> <%= text %></legend>
 </div>

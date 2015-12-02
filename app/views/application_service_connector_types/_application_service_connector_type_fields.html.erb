@@ -35,6 +35,7 @@
 					<div class="col-sm-12">
 						<%= render 'shared/form/select', f: f, name: :active_service, label: "Active application service",
 								select_collection: application_service_connector.connectable_active_connected_services,
+								value_method: :last, text_method: :first,
 								select_class: "application_service_active_configure_select" %>
 					</div>
 				</div>
@@ -47,6 +48,7 @@
 					<div class="col-sm-12">
 						<%= render 'shared/form/select', f: f, name: :orphan_service, label: "Orphaned application service",
 						select_collection: application_service_connector.connectable_orphan_connected_services,
+								value_method: :last, text_method: :first,
 								select_class: "application_service_orphan_configure_select" %> 
 					</div>
 				</div>

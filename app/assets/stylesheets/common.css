@@ -4,6 +4,11 @@
 	height: 100%;
 }
 
+.bring-forward{
+	position: relative;
+	z-index: 999;	
+}
+
 .alert {
   margin: 0px;
   border: none;
@@ -71,3 +76,7 @@ hr {
 	color: #ccc;
 }
 
+.dropdown_help {
+  padding: 10px;
+  min-width: 200px;
+}
