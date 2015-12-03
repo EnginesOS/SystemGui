@@ -16,11 +16,10 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def installing
-    # if @system_status[:state] == :installing
-      @application_installation_progress = ApplicationInstallationProgress.load
-    # else
-      # redirect_to control_panel_path, alert: "Not installing."
-    # end
+    @application_installation_progress = ApplicationInstallationProgress.load
+    redirect_to control_panel_path,
+        alert: "Last install not available." if
+          @application_installation_progress.application_name.blank?
   end
 
   def cancel
@@ -32,8 +31,8 @@ class ApplicationInstallationsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     send_event :installation_progress, "Starting build...\n"
     send_installation_progress
-    send_installation_report
     send_event :message, 'done'
+    send_installation_report
   ensure
     response.stream.close
   end

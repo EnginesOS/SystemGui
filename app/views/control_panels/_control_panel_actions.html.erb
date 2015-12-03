@@ -7,7 +7,7 @@
 	        <li>
 	          <%= link_to content_tag(:i, "", class: "fa fa-play-circle-o") + " Installer", installer_path, class: 'btn-lg trigger-response-modal' %>
 	        </li>
-        	<li class="<%= 'disabled' unless System.build_params.present? %>">
+        	<li>
 				<%= link_to (content_tag(:i, nil, class: "fa fa-history") + ' Last install'),
 				installing_application_installation_path,
 				class: 'btn-lg trigger-response-modal' %>
@@ -23,4 +23,3 @@
 
   </ul>
 </div>
-

@@ -2,7 +2,7 @@ class SystemBugReports
 
   include Engines::Api
   include ActiveModel::Model
-  
+
   attr_accessor :enable
 
   def self.new(params={})
@@ -24,11 +24,11 @@ class SystemBugReports
     else
       engines_api.disable_remote_exception_logging
     end.was_success
-    System.cache_send_bug_reports_enabled
+    System.cache_send_bug_reports
   end
-  
+
   def new_record?
     false
   end
-  
+
 end
