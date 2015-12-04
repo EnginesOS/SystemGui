@@ -8,35 +8,22 @@ module System
 
   def self.update_base
     result = engines_api.update_system
-    cache_system_update_status
+    SystemDataCache.cache_system_update_status
     result
   end
 
   def self.update_engines
     result = engines_api.update_engines_system_software
-    cache_system_update_status
+    SystemDataCache.cache_system_update_status
     result
   end
 
   def self.system_status_from_api
-    cache_system_update_status if defined?(@system_update_status_from_api).nil?
-    engines_api.system_status.merge @system_update_status_from_api
+    engines_api.system_status.merge(SystemDataCache.system_update_status).merge(@build_status_from_api)
   end
 
   def self.build_status_from_api
     engines_api.build_status
-  end
-
-  def self.system_monitor_data
-    @system_monitor_data
-  end
-
-  def self.cache_system_update_status
-    @system_update_status_from_api = SystemStatus.system_update_status
-  end
-
-  def self.cache_system_monitor_data
-    @system_monitor_data = SystemInfo.monitor_data
   end
 
   def self.restart_mgmt
@@ -76,9 +63,6 @@ module System
 
   def self.cache_build_status
     @build_status_from_api = build_status_from_api
-    if @build_status_from_api[:did_build_fail]
-      @failed_build_flag = true
-    end
   end
 
   def self.status
@@ -121,11 +105,7 @@ module System
   end
 
   def self.waiting_for_installation_to_commence
-    !@build_status_from_api[:is_building] && @failed_build_flag != true
-  end
-
-  def self.clear_failed_build_flag
-    @failed_build_flag = false
+    !@build_status_from_api[:is_building] && SystemDataCache.instance.failed_build_flag != true
   end
 
 end

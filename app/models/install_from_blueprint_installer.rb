@@ -7,7 +7,7 @@ class InstallFromBlueprintInstaller
   end
 
   def install
-    System.clear_failed_build_flag
+    SystemDataCache.clear_failed_build_flag
     result = engines_api.build_engine engine_build_params
     if result.was_success
       persist_application

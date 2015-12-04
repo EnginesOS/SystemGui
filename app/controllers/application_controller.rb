@@ -17,6 +17,17 @@ protected
     set_bug_reports_enabled_flag
     set_system_status unless ajax_call_not_needing_status?
     set_page_title unless is_an_ajax_call?
+    check_for_build_fail if waiting_for_installation?
+  end
+
+  def check_for_build_fail
+    if @system_status[:did_build_fail]
+      SystemDataCache.turn_on_failed_build_flag
+    end
+  end
+
+  def waiting_for_installation?
+    params[:controller] == 'application_installations' && params[:action] == 'progress'
   end
 
   def set_bug_reports_enabled_flag
@@ -115,7 +126,7 @@ protected
 
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
-    System.cache_system_update_status
+    SystemDataCache.cache_system_update_status
     if FirstRun.required? && !Rails.env.development?
       first_run_path
     else
