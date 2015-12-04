@@ -76,15 +76,14 @@ module System
 
   def self.cache_build_status
     @build_status_from_api = build_status_from_api
+    if @build_status_from_api[:did_build_fail]
+      @failed_build_flag = true
+    end
   end
 
   def self.status
     cache_build_status
     status_from_api = system_status_from_api
-    if @build_status_from_api[:did_build_fail]
-p :________________________________________________________________________________________________________________________turn_on_failed_build_flag
-      @failed_build_flag = true
-    end
     {system: status_from_api}.merge(
       if status_from_api[:is_rebooting]
         {state: :restarting, message: "System rebooting", message_class: :warning, title: 'Please wait for system to reboot', reload: true}
@@ -122,14 +121,10 @@ p :_____________________________________________________________________________
   end
 
   def self.waiting_for_installation_to_commence
-p :________________________________________________________________________________________________________________________waiting_for_installation_to_commence
-p !@build_status_from_api[:is_building]
-p @failed_build_flag
     !@build_status_from_api[:is_building] && @failed_build_flag != true
   end
 
   def self.clear_failed_build_flag
-p :________________________________________________________________________________________________________________________clear_failed_build_flag
     @failed_build_flag = false
   end
 

@@ -106,8 +106,8 @@ protected
 
   def authenticate
     return authenticate_user! if user_signed_in?
-    if is_an_ajax_call? # || params[:controller] == 'first_runs'
-      render text: "Yo", status: 401
+    if is_an_ajax_call?
+      render text: "Your session expired. Please sign in again to continue.", status: 401
     else
       redirect_to desktop_path
     end
