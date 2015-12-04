@@ -1,5 +1,12 @@
 class SystemMonitorChartsController < ApplicationController
 
+  before_action :putput
+
+  def putput
+p :data
+p System.system_monitor_data
+  end
+
   def system_cpu_usage
     send_data(SystemMonitorCharts.system_cpu_usage_bar_chart, :filename => "engines_system_chart.png", :type => 'image/png')
   end
