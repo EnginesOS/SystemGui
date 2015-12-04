@@ -35,24 +35,7 @@ module Engines::Application
 
   def task_at_hand_state
     current_task_state = container.task_at_hand
-    if current_task_state.present?
-      case current_task_state
-        when :stop
-          {label: 'Stopping'}
-        when :start
-          {label: 'Starting'}
-        when :pause
-          {label: 'Pausing'}
-        when :unpause
-          {label: 'Unpausing'}
-        when :destroy
-          {label: 'Unbuilding'}
-        when :create
-          {label: 'Building'}
-        else
-          {label: "#{current_task_state.to_s}-ing"}
-      end.merge({state: :working, task_at_hand: current_task_state})
-    end
+    {label: current_task_state, state: :working, task_at_hand: current_task_state} if current_task_state.present?
   end
 
   def application_container_state
@@ -69,8 +52,6 @@ module Engines::Application
     return 'Restart required' if restart_required?
     # return last_error if is_error?
     err = last_error if is_error?
-    p :error
-    p err
     err
   end
 

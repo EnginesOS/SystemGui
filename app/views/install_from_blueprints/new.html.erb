@@ -22,7 +22,6 @@
 		</div>
 	</div>
 
-
 		<%= form_for @install_from_blueprint, url: install_from_blueprint_path(title: @install_from_blueprint.title) do |f| %>
 			<%= f.hidden_field :advanced_selected %>
 			<%= f.hidden_field :repository_url %>
@@ -31,7 +30,7 @@
 			<%= render 'shared/form/errors', f: f %>
 			<%= render 'application_fields', f: f %>
 			<!-- < %= render 'displays/form_fields', f: f %> -->
-			
+
 			<div class="row">
 		    	<%= render 'shared/form/legend', text: 'Licence' %>
 			</div>
@@ -61,4 +60,3 @@
 		</div>
 	</div>
 </div>
-

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resource :control_panel_applications
   resource :control_panel_services
   resource :services_registry
+  resource :control_panel_engines_to_reload
 
 #System
 

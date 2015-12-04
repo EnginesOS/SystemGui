@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151122235720) do
+ActiveRecord::Schema.define(version: 20151204034854) do
 
   create_table "application_display_properties", force: :cascade do |t|
     t.integer "application_id"
@@ -119,6 +119,12 @@ ActiveRecord::Schema.define(version: 20151122235720) do
 
   create_table "services", force: :cascade do |t|
     t.string "container_name"
+  end
+
+  create_table "system_data_caches", force: :cascade do |t|
+    t.boolean "failed_build_flag"
+    t.text    "memory_statistics"
+    t.text    "system_update_status"
   end
 
   create_table "system_security_certificates", force: :cascade do |t|

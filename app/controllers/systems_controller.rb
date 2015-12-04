@@ -7,10 +7,12 @@ class SystemsController < ApplicationController
   end
 
   def status
+    SystemDataCache.cache_system_update_status
   end
 
   def monitor
-    System.cache_system_monitor_data
+    SystemDataCache.cache_memory_statistics
+    @application_data_present = SystemMonitorCharts.new.application_data_present?
     # render text: Vmstat.methods
   end
 #
