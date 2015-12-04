@@ -1,7 +1,7 @@
 class SystemMonitorCharts
 
   def memory_statistics
-    @memory_statistics ||= SystemDataCache.memory_statistics.deep_symbolize_keys
+    @memory_statistics ||= SystemDataCache.memory_statistics
 
 p :memory_statistics
 p @memory_statistics
@@ -21,13 +21,13 @@ p @memory_statistics
   end
 
   def application_memory_usage
-    memory_statistics[:containers][:applications].
+    @application_memory_usage ||= memory_statistics[:containers][:applications].
       select { |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }.
       sort.to_h.sort_by { |keys, values| 1.0/values[:limit].to_i }.to_h
   end
 
   def services_memory_usage
-    memory_statistics[:containers][:services].
+    @services_memory_usage ||= memory_statistics[:containers][:services].
       select{ |keys, values| (values.is_a? Hash) && values.present? && (values[:limit].to_i > 0) }.
       sort.to_h.sort_by { |keys, values| 1.0/values[:limit].to_i }.to_h
   end
@@ -53,6 +53,10 @@ p @memory_statistics
         {}
       end
     )
+  end
+
+  def application_data_present?
+    application_memory_usage.present?
   end
 
   def system_cpu_usage_bar_chart
@@ -232,14 +236,26 @@ p @memory_statistics
     @g = Gruff::SideStackedBar.new('800x235')
 
     application_totals = memory_statistics[:containers][:totals][:applications]
-    applications_currently_in_use  = application_totals[:in_use].to_f/application_totals[:allocated].to_f*100
-    applications_peak_usage = ( application_totals[:peak_sum].to_f - application_totals[:in_use].to_f)/application_totals[:allocated].to_f*100
-    applications_headroom = ( application_totals[:allocated].to_f - application_totals[:peak_sum].to_f)/application_totals[:allocated].to_f*100
+    if application_totals[:allocated] > 0
+      applications_currently_in_use  = ( application_totals[:in_use].to_f/application_totals[:allocated].to_f*100 ).to_i
+      applications_peak_usage = (( application_totals[:peak_sum].to_f - application_totals[:in_use].to_f)/application_totals[:allocated].to_f*100 ).to_i
+      applications_headroom = (( application_totals[:allocated].to_f - application_totals[:peak_sum].to_f)/application_totals[:allocated].to_f*100 ).to_i
+    else
+      applications_currently_in_use  = 0
+      applications_peak_usage = 0
+      applications_headroom = 0
+    end
 
     services_totals = memory_statistics[:containers][:totals][:services]
-    services_currently_in_use  = services_totals[:in_use].to_f/services_totals[:allocated].to_f*100
-    services_peak_usage = ( services_totals[:peak_sum].to_f - services_totals[:in_use].to_f) /services_totals[:allocated].to_f*100
-    services_headroom = ( services_totals[:allocated].to_f - services_totals[:peak_sum].to_f)/services_totals[:allocated].to_f*100
+    if services_totals[:allocated] > 0
+      services_currently_in_use  = ( services_totals[:in_use].to_f/services_totals[:allocated].to_f*100 ).to_i
+      services_peak_usage = (( services_totals[:peak_sum].to_f - services_totals[:in_use].to_f) /services_totals[:allocated].to_f*100 ).to_i
+      services_headroom = (( services_totals[:allocated].to_f - services_totals[:peak_sum].to_f)/services_totals[:allocated].to_f*100 ).to_i
+    else
+      services_currently_in_use  = 0
+      services_peak_usage = 0
+      services_headroom = 0
+    end
 
     {
       :"Current" => [ applications_currently_in_use, services_currently_in_use ],
@@ -254,6 +270,7 @@ p @memory_statistics
 
   def total_applications_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x400')
+    (@g.data '', 0) if application_memory_usage.empty?
     application_memory_usage.each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
     @g.hide_labels_less_than = 5
@@ -276,6 +293,7 @@ p @memory_statistics
     application_in_use_memory_values = application_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
     application_peak_memory_values = application_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
     application_headroom_values = application_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
+
     @g.data "Current", application_in_use_memory_values
     @g.data "Peak", application_peak_memory_values
     @g.data "Headroom", application_headroom_values
@@ -289,7 +307,7 @@ p @memory_statistics
     @g.hide_labels_less_than = 5
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
     @g.hide_legend = true
-    @g.title = "Services #{memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576} MB"
+    @g.title = "Services #{memory_statistics[:containers][:totals][:services][:allocated].to_i/1048576} MB"
     @g.text_offset_percentage = 0
     render_pie_chart
   end

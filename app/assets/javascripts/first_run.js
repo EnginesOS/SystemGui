@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
 	if ($('#first_run_form').length > 0) {
-		
-	
+
+
 		function setup_first_run_form() {
 			var submit_button_area = $('#first_run_form').find('.form-button-submit').parent();
 			var template = $("#first_run_submit_validation_template").html();
@@ -16,11 +16,11 @@ $(document).ready(function() {
 			first_run_animate_setup_domain();
 			bind_domain_name_type_events();
 		};
-		
+
 		function bind_domain_name_type_events() {
 			$('#first_run_networking').click( function() {first_run_animate_setup_domain();} );
 		};
-		
+
 		function first_run_animate_setup_domain() {
 			if ($('#first_run_networking_zeroconf').prop('checked')) {
 				$('#first_run_networking_zeroconf_message').fadeIn();
@@ -36,10 +36,10 @@ $(document).ready(function() {
 			} else {
 				$('#first_run_networking_dns_local_only_field').hide();
 			};
-			
-			
-			
-			
+
+
+
+
 			if ($('#first_run_networking_dynamic_dns').prop('checked')) {
 				$('#first_run_networking_domain_name_field').show();
 				$('#first_run_networking_dynamic_dns_fields').fadeIn();
@@ -47,8 +47,8 @@ $(document).ready(function() {
 				$('#first_run_networking_dynamic_dns_fields').hide();
 			};
 		};
-		
-	
+
+
 		function bind_first_form_submit_validation_button_events() {
 
 			$("#first_run_submit_validation_button").click( function () {
@@ -74,24 +74,25 @@ $(document).ready(function() {
 			});
 
 		};
-	
+
 		function submit_first_run_form() {
 			var submit_button = $('#first_run_form').find('.form-button-submit');
 			var submit_button_area = submit_button.parent();
 			submit_button_area.show();
 			submit_button.click();
 		};
-	
+
 		function first_run_form_validation() {
 			var admin_ok = (first_run_admin_password_validation() && first_run_admin_password_confirmation_validation());
 			var console_ok = (first_run_console_password_validation() && first_run_console_password_confirmation_validation());
 			var email_ok = first_run_admin_email_validation();
 			var mysql_ok = (first_run_mysql_password_validation() && first_run_mysql_password_confirmation_validation());
+			var hostname_ok = hostname_validation();
 			var domain_ok = (first_run_domain_name_validation() && first_run_dynamic_dns_validation());
 			var ssl_ok = first_run_ssl_validation();
-			return (admin_ok && console_ok && email_ok && mysql_ok && domain_ok && ssl_ok);
+			return (admin_ok && console_ok && email_ok && mysql_ok && hostname_ok && domain_ok && ssl_ok);
 		};
-	
+
 		function show_field_error_message_for(field, message, position) {
 			position = position || 1;
 			var template = $("#first_run_field_error_template").html();
@@ -103,7 +104,7 @@ $(document).ready(function() {
 			error_area.attr('id', error_id);
 			error_area.find('.first_run_error_message').text(message);
 		};
-	
+
 		function clear_field_error_message_for(field, position) {
 			position = position || 1;
 			var field_area = $(field).parents().eq(position);
@@ -112,22 +113,36 @@ $(document).ready(function() {
 				error_area.remove();
 			};
 		};
-	
+
+		function hostname_validation() {
+			var field = $("#first_run_system_hostname");
+			clear_field_error_message_for(field);
+			if ( field.val().length == 0 ) {
+				show_field_error_message_for(field, "Hostname can't be blank.");
+				return false;
+			} else if (field.val().length < 2 || field.val().length > 40) {
+				show_field_error_message_for(field, "Hostname must be 2 to 32 characters.");
+				return false;
+			} else {
+				return true;
+			};
+		};
+
 		function first_run_admin_password_validation() {
 			var field = $("#first_run_admin_password");
-	 		clear_field_error_message_for(field);
-		 	if ( field.val().length == 0 ) {
-		 		show_field_error_message_for(field, "Admin password can't be blank.");
-		 		return false;
+			clear_field_error_message_for(field);
+			if ( field.val().length == 0 ) {
+				show_field_error_message_for(field, "Admin password can't be blank.");
+				return false;
 			} else if (field.val().length < 6 || field.val().length > 40) {
-		 		show_field_error_message_for(field, "Admin password must be 6 to 40 characters.");
-		 		return false;
-		 	} else if (field.val() == $("#first_run_console_password").val() ) { 
-		 		show_field_error_message_for(field, "Admin password and Console password can't be the same.");
-		 		return false;
-		 	} else {
-		 		return true;
-		 	};
+				show_field_error_message_for(field, "Admin password must be 6 to 40 characters.");
+				return false;
+			} else if (field.val() == $("#first_run_console_password").val() ) {
+				show_field_error_message_for(field, "Admin password and Console password can't be the same.");
+				return false;
+			} else {
+				return true;
+			};
 		};
 
 		function first_run_admin_email_validation() {
@@ -136,7 +151,7 @@ $(document).ready(function() {
 	 		clear_field_error_message_for(admin_email_field);
 	 		var email_input_val = admin_email_field.val();
 		 	if ( email_regex.test(email_input_val) ) {
-		 		return true; 
+		 		return true;
 		 	} else {
 		 		show_field_error_message_for(admin_email_field, "Valid email required.");
 		 		return false;
@@ -303,10 +318,10 @@ $(document).ready(function() {
 		 		return true;
 		 	};
 		};
-	
-	
+
+
 		function bind_field_change_events() {
-	
+
 			 $("#first_run_admin_password").change( function() {
 			 	if ($('#first_run_admin_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.admin_password').text()) {
 					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #31708f, text-decoration:inherit');
@@ -314,7 +329,7 @@ $(document).ready(function() {
 					$('#first_run_form_auto_generated_passwords').find('.admin_password_area').attr('style', 'color: #B7CDD8; text-decoration:line-through');
 				};
 			 });
-			
+
 			 $("#first_run_console_password").change( function() {
 			 	if ($('#first_run_console_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.console_password').text()) {
 					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #31708f, text-decoration:inherit');
@@ -322,7 +337,7 @@ $(document).ready(function() {
 					$('#first_run_form_auto_generated_passwords').find('.console_password_area').attr('style', 'color: #B7CDD8; text-decoration:line-through');
 				};
 			 });
-			
+
 			 $("#first_run_mysql_password").change( function() {
 			 	if ($('#first_run_mysql_password').val() ==  $('#first_run_form_auto_generated_passwords').find('.mysql_password').text()) {
 					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #31708f, text-decoration:inherit');
@@ -330,28 +345,28 @@ $(document).ready(function() {
 					$('#first_run_form_auto_generated_passwords').find('.mysql_password_area').attr('style', 'color: #B7CDD8; text-decoration:line-through');
 				};
 			 });
-		
+
 			$("#first_run_form_auto_generate_passwords_button").click(function() {
 			    var admin_password = randomPassword();
 			    var console_password = randomPassword();
 			    var mysql_password = randomPassword();
 			    var passwords_html = $('#first_run_auto_generated_passwords_template').html();
-			
+
 			    $("#first_run_form_auto_generated_passwords").html(passwords_html);
 			    $("#first_run_form_auto_generated_passwords").find('.admin_password').text(admin_password);
 			    $("#first_run_form_auto_generated_passwords").find('.console_password').text(console_password);
 			    $("#first_run_form_auto_generated_passwords").find('.mysql_password').text(mysql_password);
-			
+
 				$("#first_run_admin_password").val(admin_password);
 				$("#first_run_admin_password_confirmation").val(admin_password);
 				$("#first_run_console_password").val(console_password);
 				$("#first_run_console_password_confirmation").val(console_password);
 				$("#first_run_mysql_password").val(mysql_password);
 				$("#first_run_mysql_password_confirmation").val(mysql_password);
-			
+
 			  });
 			};
-	
+
 	  function randomPassword() {
 	    var chars = "23456789ABCDEFGHJKLMNPQRSTUVWXTZabcdefghikmnpqrstuvwxyz";
 	    var string_length = 10;
@@ -362,7 +377,7 @@ $(document).ready(function() {
 	      };
 	    return randomstring;
 	  };
-	  
+
 	  setup_first_run_form();
 
 	};

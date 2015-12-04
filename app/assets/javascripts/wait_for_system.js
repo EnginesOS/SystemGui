@@ -58,9 +58,14 @@ $(document).ready(function() {
 				};
 			},
 			error: function(response, status, error){
-				if (response.status == 0) {
+        if (response.status == 500) {
+  				document.write(response.responseText);
+  			} else if (response.status == 401) {
+  				alert(response.responseText);
+  				window.location.reload();
+        } else if (response.status == 0) {
 				    setTimeout(function() {wait_for_system_polling();}, poll_period * 1000);
-				} else {
+  			} else {
 					document.write(response.responseText);
 				};
 			},

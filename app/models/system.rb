@@ -62,7 +62,7 @@ module System
   end
 
   def self.cache_build_status
-    @build_status_from_api = build_status_from_api
+    @build_status_from_api = build_status_from_api.deep_symbolize_keys
   end
 
   def self.status

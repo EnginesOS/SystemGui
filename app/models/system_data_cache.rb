@@ -12,7 +12,7 @@ p :cache_memory_statistics
   def self.memory_statistics
 p :memory_statistics
     cache_memory_statistics if instance.memory_statistics.nil?
-    JSON.parse instance.memory_statistics
+    JSON.parse(instance.memory_statistics).deep_symbolize_keys
   end
 
 
@@ -35,7 +35,7 @@ p :turn_on_failed_build_flag
   def self.system_update_status
 p :system_update_status
       cache_system_update_status if instance.system_update_status.nil?
-      JSON.parse instance.system_update_status # || {}
+      JSON.parse(instance.system_update_status).deep_symbolize_keys # || {}
   end
 
   def self.cache_system_update_status
