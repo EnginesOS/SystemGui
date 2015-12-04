@@ -5,7 +5,7 @@
     		params[:controller] == 'domains', params[:controller] == 'domain_settings', params[:controller] == 'domains_managers',
     		params[:controller] == 'desktop_settings', params[:controller] == 'system_settings', params[:controller] == 'system_engines_update',
     		params[:controller] == 'system_bug_reports', params[:controller] == 'desktop_settings', params[:controller] == 'services_registries',
-    		params[:controller] == 'system_security_keys', params[:controller] == 'system_security_certificates', params[:controller] == 'users'   
+    		params[:controller] == 'system_security_keys', params[:controller] == 'system_security_certificates', params[:controller] == 'users'
       :system
     else
       :control_panel
@@ -25,7 +25,7 @@
     	  </div>
 
 	    </div>
-	
+
 	    <div class="collapse navbar-collapse" id="main-navbar-collapse">
 	      <ul class="nav navbar-nav">
 	        <li class="<%= 'active' if active_menu_item == :desktop %>">
@@ -37,14 +37,19 @@
 			    <li>
 		       	  <%= link_to content_tag(:i, "", class: "fa fa-tablet") + " Applications", control_panel_path, class: 'trigger-response-modal' %>
 			    </li>
+          <li>
+		       	  <%= link_to content_tag(:i, "", class: "fa fa-server") + " Services", services_control_panel_path, class: 'trigger-response-modal' %>
+			    </li>
+          <li class="divider"></li>
 			    <li>
 		       	  <%= link_to content_tag(:i, "", class: "fa fa-play-circle-o") + " Installer", installer_path, class: 'trigger-response-modal' %>
 			    </li>
-				<li class="divider"></li>
-			    <li>
-		       	  <%= link_to content_tag(:i, "", class: "fa fa-server") + " Services", services_control_panel_path, class: 'trigger-response-modal' %>
-			    </li>
-	          </ul>	        	
+          <li>
+				      <%= link_to (content_tag(:i, nil, class: "fa fa-history") + ' Last install'),
+				              installing_application_installation_path,
+				              class: 'trigger-response-modal' %>
+	        </li>
+        </ul>
 	        </li>
 	        <li class="dropdown <%= 'active' if active_menu_item == :system %>">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" title='System'><%= content_tag(:i, "", class: "fa fa-cloud") %> System <span class="caret"></span></a>
@@ -96,7 +101,7 @@
 	      <ul class="nav navbar-nav navbar-right">
 			<li>
 				  <% link_body = content_tag(:i, '', class: 'fa fa-question').html_safe %>
-				  <%= link_to link_body, help_path(lookup: "#{params[:controller]}.#{params[:action]}.help"), data: {toggle: 'modal', target: '#help_modal'}, title: 'Help' %>				  
+				  <%= link_to link_body, help_path(lookup: "#{params[:controller]}.#{params[:action]}.help"), data: {toggle: 'modal', target: '#help_modal'}, title: 'Help' %>
 			</li>
 	        <li class="dropdown">
 	          <a id="navbar_user_menu_toggle" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -119,7 +124,7 @@
 	    </div>
 	  </div>
 	</nav>
-	
+
 <% else %>
 
 <nav class="navbar user_signed_out navbar-default navbar-fixed-top" role="navigation">

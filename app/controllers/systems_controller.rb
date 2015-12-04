@@ -7,10 +7,11 @@ class SystemsController < ApplicationController
   end
 
   def status
+    SystemDataCache.cache_system_update_status
   end
 
   def monitor
-    System.cache_system_monitor_data
+    SystemDataCache.cache_memory_statistics
     # render text: Vmstat.methods
   end
 #

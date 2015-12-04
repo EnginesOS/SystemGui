@@ -32,11 +32,6 @@ class ApplicationDisplayProperties < ActiveRecord::Base
     self.defaults_set = true
     self.save
     url_for_new_icon = installer_icon_url.present? ? installer_icon_url : icon_url_from_blueprint
-    
-p :url_for_new_icon
-p url_for_new_icon    
-
-    
     self.icon = file_from(url_for_new_icon)
     self.save
   end
@@ -60,7 +55,7 @@ p url_for_new_icon
     elsif params[:set_icon] == "Upload icon"
       self.assign_attributes(params)
     end
-    (valid? && save) 
+    (valid? && save)
   end
 
   def load_icon_from_blueprint_icon_url
@@ -87,13 +82,13 @@ private
     basename = File.basename(icon_url, extname)
     file = Tempfile.new([basename, extname])
     file.binmode
-    open(URI.parse(icon_url)) do |data|  
+    open(URI.parse(icon_url)) do |data|
       file.write data.read
     end
     file.rewind
     return file
   rescue
     return nil
-  end  
+  end
 
 end
