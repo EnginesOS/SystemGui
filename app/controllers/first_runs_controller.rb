@@ -9,7 +9,10 @@ class FirstRunsController < ApplicationController
   end
 
   def create
-    if FirstRun.required? && current_user.valid_password?('password')
+    #
+    # uncomment once James finished testing first run form. Form will then submit once only.
+    #
+    if true # FirstRun.required? && current_user.valid_password?('password')
       @first_run = FirstRun.new first_run_params
       if @first_run.valid?
         result = @first_run.submit
@@ -21,7 +24,7 @@ class FirstRunsController < ApplicationController
             )
           redirect_to done_first_run_path
         else
-          flash[:alert] =  'There was a problem with the setup wizard. ' + result.result_mesg
+          flash[:alert] =  'There was a problem with the setup wizard. ' + result.result_mesg[0..500]
           redirect_to first_run_path(first_run: first_run_params)
         end
       else
@@ -32,12 +35,12 @@ class FirstRunsController < ApplicationController
       redirect_to(desktop_path)
     end
   end
-  
+
   def cancel
     sign_out current_user
     redirect_to desktop_path
   end
-  
+
   def done
     render layout: 'empty_navbar'
   end

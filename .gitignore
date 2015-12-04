@@ -4,6 +4,7 @@ log
 bundle
 db/development.sqlite3
 db/production.sqlite3
+db/schema.rb
 Gemfile.lock
 public/assets
 public/system

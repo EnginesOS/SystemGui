@@ -1,7 +1,12 @@
-module SystemInfoCharts
+module SystemMonitorCharts
+
+
+
+
+
 
   def self.system_cpu_usage_bar_chart
-    cpu_load_data = SystemInfo.monitor_cpu.cpus
+    cpu_load_data = System.system_monitor_data[:cpu].cpus
     cpus_count = cpu_load_data.count
     labels = {}
     cpus_count.times.each_with_index{ |label, i| labels[i] = "CPU #{i}" }
@@ -13,13 +18,13 @@ module SystemInfoCharts
     system_cpus_usage = cpu_load_data.map(&:system)
     nice_cpus_usage = cpu_load_data.map(&:nice)
     idle_cpus_usage = cpu_load_data.map(&:idle)
-    
+
     total_cpu_usage = []
-    
+
     cpus_count.times.each do |i|
       total_cpu_usage << users_cpus_usage[i] + system_cpus_usage[i] + nice_cpus_usage[i] + idle_cpus_usage[i]
     end
-    
+
     users_cpus_usage = users_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
     system_cpus_usage = system_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
     nice_cpus_usage = nice_cpus_usage.map.with_index{ |d, i| d.to_i*1000/total_cpu_usage[i].to_i }
@@ -50,7 +55,7 @@ module SystemInfoCharts
   def self.system_cpu_usage_averages_bar_chart
     @g = Gruff::Bar.new("600x300")
     @g.title = 'Processes waiting to run'
-    cpu_load_data = SystemInfo.monitor_cpu
+    cpu_load_data = System.system_monitor_data[:cpu]
 
     @g.data "One min #{cpu_load_data.load_average.one_minute}", cpu_load_data.load_average.one_minute
     @g.data "Five mins #{cpu_load_data.load_average.five_minutes}", cpu_load_data.load_average.five_minutes
@@ -73,9 +78,9 @@ module SystemInfoCharts
     }
     @g.to_blob
   end
-  
+
   def self.disk_usage_bar_chart
-    disk_data = SystemInfo.disk_usage_data
+    disk_data = System.system_monitor_data[:disks]
 
     available_disk_data = disk_data.map{ |d| d.available_blocks*100/d.total_blocks}
     used_disk_data = available_disk_data.map{ |d| 100 - d}
@@ -108,9 +113,9 @@ module SystemInfoCharts
     }
     @g.to_blob
   end
-    
+
   def self.network_usage_bar_chart
-    network_data = SystemInfo.network_interfaces_data
+    network_data = System.system_monitor_data[:network_interfaces]
     network_count = network_data.count
     @g = Gruff::SideBar.new("800x#{50*network_count+ 155}")
 
@@ -153,19 +158,19 @@ module SystemInfoCharts
 
   def self.total_system_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x500')
-    SystemInfo.total_system_memory_usage.each { |k,v| @g.data k, v }
+    System.system_monitor_data[:memory][:totals].each { |k,v| @g.data k, v }
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
     @g.hide_labels_less_than = 5
     @g.hide_legend = false
-    @g.title = "System #{SystemInfo.memory_statistics[:system][:total].to_i/1024} MB"
+    @g.title = "System #{System.system_monitor_data[:memory][:statistics][:system][:total].to_i/1024} MB"
     @g.text_offset_percentage = 0
     render_pie_chart
   end
-    
+
   def self.total_container_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x400')
-    application_totals = SystemInfo.memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576
-    services_totals = SystemInfo.memory_statistics[:containers][:totals][:services][:allocated].to_i/1048576
+    application_totals = System.system_monitor_data[:memory][:statistics][:containers][:totals][:applications][:allocated].to_i/1048576
+    services_totals = System.system_monitor_data[:memory][:statistics][:containers][:totals][:services][:allocated].to_i/1048576
     { "Applications #{application_totals} MB" => application_totals, "Services #{services_totals} MB" => services_totals }.each { |k,v| @g.data k, v }
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
     @g.hide_labels_less_than = 5
@@ -174,16 +179,16 @@ module SystemInfoCharts
     @g.text_offset_percentage = 0
     render_pie_chart
   end
-    
+
   def self.total_container_memory_usage_bar_chart
     @g = Gruff::SideStackedBar.new('800x235')
 
-    application_totals = SystemInfo.memory_statistics[:containers][:totals][:applications]
+    application_totals = System.system_monitor_data[:memory][:statistics][:containers][:totals][:applications]
     applications_currently_in_use  = application_totals[:in_use].to_f/application_totals[:allocated].to_f*100
     applications_peak_usage = ( application_totals[:peak_sum].to_f - application_totals[:in_use].to_f)/application_totals[:allocated].to_f*100
     applications_headroom = ( application_totals[:allocated].to_f - application_totals[:peak_sum].to_f)/application_totals[:allocated].to_f*100
 
-    services_totals = SystemInfo.memory_statistics[:containers][:totals][:services]
+    services_totals = System.system_monitor_data[:memory][:statistics][:containers][:totals][:services]
     services_currently_in_use  = services_totals[:in_use].to_f/services_totals[:allocated].to_f*100
     services_peak_usage = ( services_totals[:peak_sum].to_f - services_totals[:in_use].to_f) /services_totals[:allocated].to_f*100
     services_headroom = ( services_totals[:allocated].to_f - services_totals[:peak_sum].to_f)/services_totals[:allocated].to_f*100
@@ -195,23 +200,23 @@ module SystemInfoCharts
     }.each { |k,v| @g.data k, v }
 
     @g.labels = { 0 => "Applications #{application_totals[:allocated].to_i/1048576} MB", 1 => "Services #{services_totals[:allocated].to_i/1048576} MB" };
-    
+
     render_memory_usage_bar_chart
   end
 
   def self.total_applications_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x400')
-    SystemInfo.application_memory_usage.each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
+    System.system_monitor_data[:memory][:applications].each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
     @g.hide_labels_less_than = 5
     @g.hide_legend = true
-    @g.title = "Applications #{SystemInfo.memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576} MB"
+    @g.title = "Applications #{System.system_monitor_data[:memory][:statistics][:containers][:totals][:applications][:allocated].to_i/1048576} MB"
     @g.text_offset_percentage = 0
     render_pie_chart
   end
-    
+
   def self.applications_memory_usage_bar_chart
-    application_names = SystemInfo.application_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
+    application_names = System.system_monitor_data[:memory][:applications].map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
     application_count = application_names.count
     labels = {}
     application_names.each_with_index{ |label, i| labels[i] = label.to_s }
@@ -219,30 +224,30 @@ module SystemInfoCharts
     @g = Gruff::SideStackedBar.new("800x#{50*application_count+ 135}")
     @g.labels = labels
 
-    application_usage_values = SystemInfo.application_memory_usage.values
+    application_usage_values = System.system_monitor_data[:memory][:applications].values
     application_in_use_memory_values = application_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
     application_peak_memory_values = application_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
     application_headroom_values = application_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
     @g.data "Current", application_in_use_memory_values
     @g.data "Peak", application_peak_memory_values
     @g.data "Headroom", application_headroom_values
-    
+
     render_memory_usage_bar_chart
   end
-  
+
   def self.total_services_memory_usage_pie_chart
     @g = Gruff::Pie.new('800x400')
-    SystemInfo.services_memory_usage.each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
+    System.system_monitor_data[:memory][:services].each { |key, value| @g.data "#{key} #{value[:limit].to_i/1048576} MB", value[:limit].to_i }
     @g.hide_labels_less_than = 5
     @g.label_formatter = Proc.new { |data_row| data_row[0] }
     @g.hide_legend = true
-    @g.title = "Services #{SystemInfo.memory_statistics[:containers][:totals][:applications][:allocated].to_i/1048576} MB"
+    @g.title = "Services #{System.system_monitor_data[:memory][:statistics][:containers][:totals][:applications][:allocated].to_i/1048576} MB"
     @g.text_offset_percentage = 0
     render_pie_chart
   end
-    
+
   def self.services_memory_usage_bar_chart
-    services_names = SystemInfo.services_memory_usage.map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
+    services_names = System.system_monitor_data[:memory][:services].map { |key, value| "#{key} #{value[:limit].to_i/1048576} MB" }
     services_count = services_names.count
     labels = {}
     services_names.each_with_index{ |label, i| labels[i] = label.to_s }
@@ -250,7 +255,7 @@ module SystemInfoCharts
     @g = Gruff::SideStackedBar.new("800x#{50*services_count+ 135}")
     @g.labels = labels
 
-    services_usage_values = SystemInfo.services_memory_usage.values
+    services_usage_values = System.system_monitor_data[:memory][:services].values
     services_in_use_memory_values = services_usage_values.map{ |values| values[:current].to_f / values[:limit].to_f * 100 }
     services_peak_memory_values = services_usage_values.map{ |values| ( values[:maximum].to_f - values[:current].to_f ) / values[:limit].to_f * 100 }
     services_headroom_values = services_usage_values.map{ |values| ( values[:limit].to_f - values[:maximum].to_f ) / values[:limit].to_f * 100 }
@@ -260,7 +265,7 @@ module SystemInfoCharts
 
     render_memory_usage_bar_chart
   end
-  
+
   def self.render_memory_usage_bar_chart
     @g.title_font_size = 18
     @g.legend_font_size = 18

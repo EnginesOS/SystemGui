@@ -1,13 +1,13 @@
 module Engines::Service
 
   include Engines::Api
-   
 
-  
   def system_service_object
-    @system_service_object ||= engines_api.getManagedService container_name
-    @system_service_object = nil if @system_service_object.is_a? EnginesOSapiResult
-    @system_service_object
+    @system_service_object ||= load_container_api_call.is_a?(EnginesOSapiResult) ? nil : load_container_api_call
+  end
+
+  def load_container_api_call
+    @load_container_api_call ||= engines_api.getManagedService(container_name)
   end
 
   def title_data
@@ -21,7 +21,7 @@ module Engines::Service
   def fa_icon
     title_data.present? ? title_data[:fa_icon] : 'circle'
   end
-  
+
   def label
     "#{container_name} - #{human_name}"
   end
@@ -45,7 +45,7 @@ module Engines::Service
     # background_class = "engine_" + service.state_indicator.to_s
 
   def state
-    return {state: :no_service, label: 'No service'} if system_service_object.blank?
+    return {state: :error, label:  'Cannot load - Error'} if system_service_object.blank?
     return {state: :error, label: service_container_state[:label] + ' - Error', detail: status_detail} if is_error?
     return task_at_hand_state if task_at_hand_state.present?
     service_container_state
@@ -53,21 +53,25 @@ module Engines::Service
 
   def task_at_hand_state
     current_task_state = system_service_object.task_at_hand
-    if current_task_state.present?
-      case current_task_state
-        when :stop
-          {label: 'Stopping'}
-        when :start
-          {label: 'Starting'}
-        when :pause
-          {label: 'Pausing'}
-        when :unpause
-          {label: 'Unpausing'}
-        else
-          {label: "#{current_task_state.to_s}-ing"}
-      end.merge({state: :working, task_at_hand: current_task_state})
-    end
+    {label: current_task_state, state: :working, task_at_hand: current_task_state} if current_task_state.present?
   end
+
+  #   def task_at_hand_state
+  #   if current_task_state.present?
+  #     case current_task_state
+  #       when :stop
+  #         {label: 'Stopping'}
+  #       when :start
+  #         {label: 'Starting'}
+  #       when :pause
+  #         {label: 'Pausing'}
+  #       when :unpause
+  #         {label: 'Unpausing'}
+  #       else
+  #         {label: "#{current_task_state.to_s}-ing"}
+  #     end.merge({state: :working, task_at_hand: current_task_state})
+  #   end
+  # end
 
   def service_container_state
     service_state = system_service_object.read_state
@@ -77,7 +81,7 @@ module Engines::Service
       {state: service_state.to_sym, label: service_state.to_s.humanize, detail: status_detail}
     end
   end
-  
+
   def status_detail
     return 'Rebuild required' if rebuild_required?
     return 'Restart required' if restart_required?
@@ -99,11 +103,11 @@ module Engines::Service
   def is_error?
     system_service_object.blank? ? true : system_service_object.is_error?
   end
-  
+
   def restart_required?
     system_service_object.blank? ? false : system_service_object.restart_required?
   end
-  
+
   def rebuild_required?
     system_service_object.blank? ? false : system_service_object.rebuild_required?
   end
@@ -175,11 +179,11 @@ module Engines::Service
     return {} unless result.is_a? Hash
     result
   end
-  
+
   def type_path
     system_service_object.blank? ? nil : system_service_object.type_path
   end
-  
+
   def publisher_namespace
     system_service_object.blank? ? nil : system_service_object.publisher_namespace
   end
@@ -195,7 +199,7 @@ module Engines::Service
   def configurator_params_without_values
     @configurator_params_without_values ||= configurators_from_service_definition.map{ |c| c[:variables_attributes] = c[:params].values ; c }.map{ |c| c.delete :params ; c }
   end
-  
+
   def configurator_params
     @configurator_params ||= configurator_params_without_values.map do |c|
       variables_values = service_configuration_variables_for(c[:name])
@@ -214,7 +218,7 @@ module Engines::Service
   def configurator_params_for configurator_name
     configurator_params.find{|c| c[:name] == configurator_name }
   end
-  
+
   def service_configuration_variables_for(configurator_name)
     result = engines_api.retrieve_service_configuration(service_name: container_name, configurator_name: configurator_name)
     (result.is_a?(EnginesOSapiResult) ? {} : result[:variables]) || {}

@@ -29,10 +29,11 @@ Rails.application.routes.draw do
   resource :control_panel_applications
   resource :control_panel_services
   resource :services_registry
-  
+  resource :control_panel_engines_to_reload
+
 #System
 
-  resource :charts do
+  resource :system_monitor_charts do
     get :system_cpu_usage
     get :system_cpu_usage_averages
     get :total_system_memory_usage
@@ -45,7 +46,9 @@ Rails.application.routes.draw do
     get :disk_usage
     get :network_usage
   end
-  
+
+  resource :system_monitor_charts
+
   resource :system do
     get :monitor, :status, :info, :logs, :base_system, :updater, :restart
   end
@@ -64,7 +67,7 @@ Rails.application.routes.draw do
   resource :system_restart_registry do
     get :progress
   end
-  
+
   resource :system_security
   resource :system_security_certificate do
     get :download
@@ -84,7 +87,7 @@ Rails.application.routes.draw do
   resource :domain_default_site
 
 #Desktop settings
-  
+
   resource :desktop_settings
 
 #Libraries
@@ -121,7 +124,7 @@ Rails.application.routes.draw do
       :start, :stop, :pause, :unpause, :restart,
       :create_container, :destroy_container,
       :reinstall, :delete_image,
-      :build, :recreate, :open, :reload)
+      :build, :recreate, :open_first_run, :reload)
   end
 
 #Services
@@ -155,5 +158,5 @@ Rails.application.routes.draw do
 #Help
 
   resource :help
-  
+
 end

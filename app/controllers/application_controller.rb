@@ -1,45 +1,51 @@
 class ApplicationController < ActionController::Base
 
+  rescue_from Exception, :with => :render_500 if ( ENV['SEND_BUG_REPORTS'].present? && ENV['SEND_BUG_REPORTS'] == 'true' ) #if ( defined?(@bug_reports_enabled) && @bug_reports_enabled  )
+
   protect_from_forgery with: :reset_session
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
-
-  rescue_from Exception, :with => :render_500 if Rails.env.production?
+  before_action :setup
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
   require 'awesome_print'
 
-  before_action :setup
-  
 protected
 
   def setup
-    return if no_status_or_page_title
-    set_system_status
-    return if no_page_title
-    set_page_title
+    set_bug_reports_enabled_flag
+    set_system_status unless ajax_call_not_needing_status?
+    set_page_title unless is_an_ajax_call?
   end
 
-  def no_page_title
+  def set_bug_reports_enabled_flag
+    System.send_bug_reports_enabled?
+  end
+
+  def is_an_ajax_call?
+    ajax_call_not_needing_status? || ajax_call_needing_status?
+  end
+
+  def ajax_call_needing_status?
     ['navbar_system_statuses'].include?(params[:controller]) ||
     ['progress'].include?(params[:action])
   end
 
-  def no_status_or_page_title
+  def ajax_call_not_needing_status?
     [
       'helps',
       'applications',
-      'services', 
+      'services',
       'control_panel_applications',
-      'control_panel_services', 
-      'desktop_applications', 
-      'application_reports', 
-      'service_reports', 
-      'application_abouts', 
-      'service_abouts', 
-      'gallery_softwares', 
-      'charts'
+      'control_panel_services',
+      'desktop_applications',
+      'application_reports',
+      'service_reports',
+      'application_abouts',
+      'service_abouts',
+      'gallery_softwares',
+      'system_monitor_charts'
     ].include? params[:controller]
   end
 
@@ -54,7 +60,7 @@ protected
           if params[:controller] != 'system_restarts'
       when :base_updating
         redirect_to system_base_update_path,
-          alert: 'Please wait for system to update.' \
+          alert: 'Please wait for base operating system to update.' \
           if params[:controller] != 'system_base_updates'
       when :engines_updating
         redirect_to system_engines_update_path,
@@ -100,17 +106,17 @@ protected
 
   def authenticate
     return authenticate_user! if user_signed_in?
-    if no_status_or_page_title
-      render text: "Your session expired. Please sign in again to continue.", status: 401
+    if is_an_ajax_call? # || params[:controller] == 'first_runs'
+      render text: "Yo", status: 401
     else
       redirect_to desktop_path
     end
   end
-  
+
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
     System.cache_system_update_status
-    if FirstRun.required?
+    if FirstRun.required? && !Rails.env.development?
       first_run_path
     else
       control_panel_path

@@ -1,27 +1,21 @@
-<legend class="top-gap">Settings</legend>
-
 <div class="panel panel-default top-gap">
-  <div class="panel-heading clearfix">
-    <div class="col-sm-12">
+  <div class="panel-body">
+    <div class='col-sm-12'>
       <div class="pull-right">
       	<%= link_to content_tag(:i, '', class: 'fa fa-edit') + ' Edit', edit_domain_default_name_path, class: 'btn btn-default btn-noborder btn-lg trigger-response-modal' %>
       </div>
     </div>
-  </div>
-  <div class="panel-body">
-      <%= render 'shared/show/text_field', object: @domain_default_name, field: :default_domain  %>
+    <%= render 'shared/show/text_field', object: @domain_default_name, field: :default_domain  %>
   </div>
 </div>
 
 <div class="panel panel-default top-gap">
-  <div class="panel-heading clearfix">
-    <div class="col-sm-12">
+  <div class="panel-body">
+    <div class='col-sm-12'>
       <div class="pull-right">
       	<%= link_to content_tag(:i, '', class: 'fa fa-edit') + ' Edit', edit_domain_default_site_path, class: 'btn btn-default btn-noborder btn-lg trigger-response-modal' %>
       </div>
     </div>
-  </div>
-  <div class="panel-body">
-      <%= render 'shared/show/text_field', object: @domain_default_site, field: :default_site  %>
+    <%= render 'shared/show/text_field', object: @domain_default_site, field: :default_site  %>
   </div>
 </div>

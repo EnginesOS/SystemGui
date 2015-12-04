@@ -1,28 +1,40 @@
-<div class="col-sm-12">
-	<h2><%= content_tag(:i, "", class: "fa fa-repeat") %> System update</h2>
+<div class="col-md-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-repeat") %> Update</h2>
 	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 </div>
 
-<div class="col-sm-12">
-  <div>
-	<div style="display: inline-block" class="top-gap">
-	    <%= link_to content_tag(:i, "", class: "fa fa-level-up") + ' Update Engines system', system_engines_update_path, class: "btn btn-lg btn-default",
-			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to update the Engines system software?" } %>
+<div class="col-md-8 col-md-offset-2">
+	<div class="panel panel-default top-gap">
+	  <div class="panel-body">
+	    <%= render 'shared/show/label_and_text', label: 'Engines version', text: "0.0.0 #{SystemInfo.summary[:engines_release]}",
+	    		label_width: 4, text_width: 8  %>
+	    <%= render 'shared/show/label_and_text', label: 'Base OS version', text: "#{SystemInfo.base_os_data['NAME']} #{SystemInfo.base_os_data['VERSION']}",
+	    		label_width: 4, text_width: 8  %>
+	  </div>
 	</div>
-	<div style="display: inline-block" class="dropdown top-gap">
-	  <button class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
-	    <strong>v </strong>Engines release
-	    <span class="caret"></span>
-	  </button>
-	  <ul class="dropdown-menu">
-	    <li class='panel-body'>
-			<%= SystemInfo.summary[:engines_release] %>
-		</li>
-	  </ul>
-	</div><br>
-    <%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Update base system', system_base_update_path, class: "btn btn-lg btn-default top-gap",
-			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to update the base system software?" } %>
-  </div>
 </div>
 
-
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+	    <%= link_to image_tag('engines_icon_40px.png', height: '20') + ' Update Engines', system_engines_update_path, class: "btn btn-lg btn-default",
+			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to update the Engines system software?" },
+		 class: 'btn btn-default btn-lg' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Update Engines system software.
+		</p></small>	    
+	</div>
+</div>
+<div class='row top-gap'>
+	<div class="col-md-3 col-md-offset-2">
+    <%= link_to content_tag(:i, "", class: "fa fa-linux") + ' Update base OS', system_base_update_path, class: "btn btn-lg btn-default top-gap",
+			data: {confirm: "Are you sure?", confirmdetail: "Are you sure that you want to update the base system software?" },
+			class: 'btn btn-default btn-lg' %>
+	</div>
+	<div class="col-md-7">
+		<p><small>
+		  Update base operating system.
+		</p></small>
+	</div>
+</div>

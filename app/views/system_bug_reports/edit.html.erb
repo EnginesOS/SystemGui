@@ -1,13 +1,8 @@
 <div class="col-sm-12">
   <h2><%= content_tag(:i , nil, class: "fa fa-bug") %> Bug reports</h2>
-
-  <div class="col-sm-12">
-	<legend>System</legend>
-  </div>
-  <%= form_for @system_bug_reports, url: system_bug_reports_path, method: :patch do |f| %>
-    <%= render 'shared/form/checkbox', name: :enable, label: 'Send reports', f: f %>
-    <%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: system_path %>
-  <% end %>
-
-
 </div>
+
+<%= form_for @system_bug_reports, url: system_bug_reports_path, method: :patch do |f| %>
+	<%= render 'shared/form/checkbox', name: :enable, label: 'Send reports', f: f %>
+	<%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: system_path %>
+<% end %>

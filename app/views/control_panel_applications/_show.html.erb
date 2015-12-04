@@ -28,12 +28,13 @@ web_sites = application.web_sites
 <% end %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-	<div class="engine-gadget application btn-group" title='<%= [@application.application_display_properties.title, @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
+	<div class="engine-gadget btn-group" data-state='<%= application_state[:state].to_s %>' title='<%= [@application.application_display_properties.title,
+      @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
 		<button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
 			<div class="status_area">
 		      <div class="icon_holder">
   		        <div class="icon">
-		      	  <%= image_tag(application.application_display_properties.icon_url(:small), class: "engine_icon", alt: "") -%>
+		      	  <%= image_tag(application.application_display_properties.icon_url(:small), class: "engine_icon", alt: "") %>
 		        </div>
 		      </div>
 		      <div class="text_holder">
@@ -130,7 +131,7 @@ web_sites = application.web_sites
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
 					</li>
-	
+
 				<% elsif application_state[:state] == :error %>
 					<li>
 						<div class="<%= indicator_class %> dropdown-title">
@@ -277,7 +278,3 @@ web_sites = application.web_sites
 		</div>
 	</div>
 </div>
-
-
-
-
