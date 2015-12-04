@@ -53,21 +53,25 @@ module Engines::Service
 
   def task_at_hand_state
     current_task_state = system_service_object.task_at_hand
-    if current_task_state.present?
-      case current_task_state
-        when :stop
-          {label: 'Stopping'}
-        when :start
-          {label: 'Starting'}
-        when :pause
-          {label: 'Pausing'}
-        when :unpause
-          {label: 'Unpausing'}
-        else
-          {label: "#{current_task_state.to_s}-ing"}
-      end.merge({state: :working, task_at_hand: current_task_state})
-    end
+    {label: current_task_state, state: :working, task_at_hand: current_task_state} if current_task_state.present?
   end
+
+  #   def task_at_hand_state
+  #   if current_task_state.present?
+  #     case current_task_state
+  #       when :stop
+  #         {label: 'Stopping'}
+  #       when :start
+  #         {label: 'Starting'}
+  #       when :pause
+  #         {label: 'Pausing'}
+  #       when :unpause
+  #         {label: 'Unpausing'}
+  #       else
+  #         {label: "#{current_task_state.to_s}-ing"}
+  #     end.merge({state: :working, task_at_hand: current_task_state})
+  #   end
+  # end
 
   def service_container_state
     service_state = system_service_object.read_state

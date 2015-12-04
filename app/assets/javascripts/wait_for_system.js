@@ -14,17 +14,24 @@ $(document).ready(function() {
 	};
 
 	function initial_wait_for_system() {
+    function finished() {
+      done = 1;
+      wait_for_system_polling();
+      wait_for_system_to_come_up();
+    };
+    if (wait == 0) {
+      finished();
+    } else {
 	    setTimeout(function () {
 			if (done == 99) {
-				done = 1;
-				wait_for_system_polling();
-				wait_for_system_to_come_up();
+        finished();
 			} else {
 				done = done + 1;
 				set_progress_bar_width(done);
 		        initial_wait_for_system();
 			};
 	    }, wait * 10);
+    };
 	};
 
 	function wait_for_system_to_come_up() {
@@ -49,7 +56,7 @@ $(document).ready(function() {
 				} else {
 		        	setTimeout(function() {wait_for_system_polling();}, poll_period * 1000);
 				};
-			}, 
+			},
 			error: function(response, status, error){
 				if (response.status == 0) {
 				    setTimeout(function() {wait_for_system_polling();}, poll_period * 1000);
@@ -64,7 +71,7 @@ $(document).ready(function() {
 	if (done == 0) {
 		initial_wait_for_system();
 	 };
-	
+
   };
 
 });
