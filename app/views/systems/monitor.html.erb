@@ -8,14 +8,22 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#system" aria-controls="home" role="tab" data-toggle="tab">System</a></li>
     <li role="presentation"><a href="#containers" aria-controls="profile" role="tab" data-toggle="tab">Containers</a></li>
-    <li role="presentation"><a href="#applications" aria-controls="messages" role="tab" data-toggle="tab">Applications</a></li>
+		<li role="presentation"><a href="#applications" aria-controls="messages" role="tab" data-toggle="tab">Applications</a></li>
     <li role="presentation"><a href="#services" aria-controls="settings" role="tab" data-toggle="tab">Services</a></li>
   </ul>
 
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="system"><%= render 'system_monitor_charts/system' %></div>
     <div role="tabpanel" class="tab-pane" id="containers"><%= render 'system_monitor_charts/containers' %></div>
-    <div role="tabpanel" class="tab-pane" id="applications"><%= render 'system_monitor_charts/applications' %></div>
+    <div role="tabpanel" class="tab-pane" id="applications">
+			<% if @application_data_present %>
+				<%= render 'system_monitor_charts/applications' %>
+			<% else %>
+				<div class="col-sm-12 top-gap">
+					<p class="">No applications are running.</p>
+				</div>
+			<% end %>
+		</div>
     <div role="tabpanel" class="tab-pane" id="services"><%= render 'system_monitor_charts/services' %></div>
   </div>
 
