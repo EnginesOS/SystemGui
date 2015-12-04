@@ -8,7 +8,7 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def preparing_installation_progress
-    if System.waiting_for_installation
+    if System.waiting_for_installation_to_commence
       render text: 'busy'
     else
       render text: 'done'

@@ -50,7 +50,7 @@ function load_modal_content(obj) {
 				alert(response.responseText);
 				window.location.reload();
 			} else {
-					var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' load error</small>';
+					var msg = '<small><i class="fa fa-thumbs-o-down"></i> Error. ' + response.status.toString() + '</small>';
 					obj.find(modal_body_id).html(msg);
 			};
 		}
@@ -86,7 +86,7 @@ function load_control_panel_object(obj) {
 				alert(response.responseText);
 				window.location.reload();
 			} else if (response.status == 0) {
-				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Response error. Reloading</small>';
+				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
 				obj.find(".object_status").html(msg);
 				setTimeout(function(){
 					load_control_panel_object(obj);
@@ -126,7 +126,7 @@ function perform_control_panel_object_action(obj) {
 				alert(response.responseText);
 				window.location.reload();
 			} else if (response.status == 0) {
-				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Response error. Reloading</small>';
+				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
 				parent_obj.find(".object_status").html(msg);
 				setTimeout(function(){
 					load_control_panel_object(parent_obj);

@@ -58,12 +58,12 @@ module System
   end
 
   def self.cache_send_bug_reports
-    @send_bug_reports = ( engines_api.is_remote_exception_logging? == true )
+    ENV['SEND_BUG_REPORTS'] = ( engines_api.is_remote_exception_logging? == true ).to_s
   end
 
   def self.send_bug_reports_enabled?
-    defined?(@send_bug_reports) || cache_send_bug_reports
-    @send_bug_reports == true
+    ENV['SEND_BUG_REPORTS'].present? || cache_send_bug_reports
+    ENV['SEND_BUG_REPORTS'] == 'true'
   end
 
   def self.execute_command(command)
@@ -82,6 +82,7 @@ module System
     cache_build_status
     status_from_api = system_status_from_api
     if @build_status_from_api[:did_build_fail]
+p :________________________________________________________________________________________________________________________turn_on_failed_build_flag
       @failed_build_flag = true
     end
     {system: status_from_api}.merge(
@@ -109,13 +110,8 @@ module System
   end
 
   def self.build_params
-c = engines_api.current_build_params
-l = engines_api.last_build_params
-p :current_build_params
-p c
-p :last_build_params
-p l
-c.present? ? c : l
+    current_build_params = engines_api.current_build_params
+    current_build_params.present? ? current_build_params : engines_api.last_build_params
   end
 
   def self.installing_params
@@ -125,11 +121,15 @@ c.present? ? c : l
      domain_name: params[:domain_name] }
   end
 
-  def self.waiting_for_installation
+  def self.waiting_for_installation_to_commence
+p :________________________________________________________________________________________________________________________waiting_for_installation_to_commence
+p !@build_status_from_api[:is_building]
+p @failed_build_flag
     !@build_status_from_api[:is_building] && @failed_build_flag != true
   end
 
   def self.clear_failed_build_flag
+p :________________________________________________________________________________________________________________________clear_failed_build_flag
     @failed_build_flag = false
   end
 

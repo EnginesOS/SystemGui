@@ -1,17 +1,15 @@
 class ApplicationController < ActionController::Base
 
-  rescue_from Exception, :with => :render_500 #if ( defined?(@bug_reports_enabled) && @bug_reports_enabled  )
+  rescue_from Exception, :with => :render_500 if ( ENV['SEND_BUG_REPORTS'].present? && ENV['SEND_BUG_REPORTS'] == 'true' ) #if ( defined?(@bug_reports_enabled) && @bug_reports_enabled  )
 
   protect_from_forgery with: :reset_session
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
   before_action :setup
 
-
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'
   require 'awesome_print'
-
 
 protected
 
@@ -22,12 +20,8 @@ protected
   end
 
   def set_bug_reports_enabled_flag
-    @bug_reports_enabled = System.send_bug_reports_enabled?
+    System.send_bug_reports_enabled?
   end
-
-  # def status_not_needed_and_page_title_needed?
-  #   ( ['desktops'].include? params[:controller] && !user_signed_in? )
-  # end
 
   def is_an_ajax_call?
     ajax_call_not_needing_status? || ajax_call_needing_status?
