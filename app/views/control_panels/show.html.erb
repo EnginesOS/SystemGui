@@ -5,9 +5,11 @@
 		</div>
 		<div class="col-sm-6">
 			<h2><%= content_tag(:i, "", class: "fa fa-tablet") %>&nbspApplications</h2>
+			<%# = link_to "get_engines_states", control_panel_applications_states_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+			<%# = link_to "get_services_states", control_panel_services_states_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 		</div>
 	</div>
-	
+
 	<div class='row'>
 		<% if @application_names.present? %>
 			<% @application_names.each do |application_name| %>
@@ -32,4 +34,4 @@
 		<% end %>
 	</div>
 
-</div>	
+</div>
