@@ -7,7 +7,6 @@ class SystemsController < ApplicationController
   end
 
   def status
-    SystemDataCache.cache_system_update_status
   end
 
   def monitor
