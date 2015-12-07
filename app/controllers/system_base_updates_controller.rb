@@ -1,7 +1,6 @@
 class SystemBaseUpdatesController < ApplicationController
 
   def show
-    SystemDataCache.cache_system_update_status
     if @system_status[:state] != :base_updating
       result = System.update_base
       if result.kind_of?(EnginesOSapiResult)
@@ -17,7 +16,6 @@ class SystemBaseUpdatesController < ApplicationController
   end
 
   def progress
-    SystemDataCache.cache_system_update_status
     if @system_status[:state] == :base_updating
       render text: "busy"
     else

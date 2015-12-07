@@ -31,10 +31,14 @@ class ApplicationInstallationsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     send_event :installation_progress, "Starting build...\n"
     send_installation_progress
-    send_event :message, 'done'
+p :installation_progress_done
     send_installation_report
+p :installation_report_done
+    send_event :message, 'done'
+p :installation_done_done
   ensure
     response.stream.close
+p :installation_stream_close_done
   end
 
 private
@@ -48,20 +52,24 @@ private
       f.tail do |line|
         send_event :installation_progress, line
         if line.start_with?('Build Finished')
-          break
+          return
         end
-
       end
     end
   end
 
   def send_installation_report
     ApplicationInstallationProgress.new(application_name: params[:application_name]).installation_report_lines.each do |line|
+      # line = '' if line.blank?
       send_event :installation_report, line
     end
+  rescue
   end
 
   def send_event(event, data='')
+    p :event_data
+    p event
+    p data
        response.stream.write "event: #{event}\n"
        response.stream.write "data: #{data}\n\n"
   end

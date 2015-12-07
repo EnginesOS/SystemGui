@@ -17,7 +17,7 @@ class DomainDefaultName # < ActiveRecord::Base
   end
 
   def self.engines_default_domain
-    @engines_default_domain ||= engines_api.get_default_domain
+    engines_api.get_default_domain
   end
 
   def update_default_domain

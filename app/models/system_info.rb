@@ -22,10 +22,9 @@ module SystemInfo
     Vmstat.network_interfaces.reject{ |ni| ni[:name].to_s.include?('veth') || ni[:name].to_s.include?('lo') }
   end
 
-  # def self.memory_statistics
-  #   SystemDataCache.memory_statistics
-  # end
-
+  def self.engines_version
+    System.engines_api.version_string
+  end
 
   def self.base_os_data
     SystemUtils.get_os_release_data
