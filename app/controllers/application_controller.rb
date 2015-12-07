@@ -60,8 +60,20 @@ protected
     ].include? params[:controller]
   end
 
+
+  def cache_system_update_status
+    if (
+        ( params[:controller] == 'systems' && params[:action] == 'status' ) ||
+        params[:controller] == 'system_base_updates' ||
+        params[:controller] == 'system_engines_updates'
+      )
+      SystemDataCache.cache_system_update_status
+    end
+  end
+
   def set_system_status
     if user_signed_in?
+      cache_system_update_status
       @system_status = System.status
       return if params[:controller] == 'navbar_system_statuses'
       case @system_status[:state]

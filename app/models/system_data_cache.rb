@@ -39,9 +39,10 @@ p :system_update_status
   end
 
   def self.cache_system_update_status
+x = SystemInfo.system_update_status
 p :cache_system_update_status
-p SystemInfo.system_update_status
-    instance.update(system_update_status: SystemInfo.system_update_status.to_json)
+p x
+    instance.update(system_update_status: x.to_json)
   end
 
 end

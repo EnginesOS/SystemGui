@@ -3,7 +3,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   include Engines::Api
 
   attr_accessor(:license_terms_and_conditions, :advanced_selected, :repository_url, :installer_icon_url, :engines_api_error)
-    
+
   belongs_to :application
   accepts_nested_attributes_for :application
 
@@ -33,7 +33,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   def license_sourceurl
     blueprint_software[:license_sourceurl]
   end
-  
+
   def resolved_repository_url
     repository_url
   end
@@ -69,7 +69,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def new_application_attributes
-    { 
+    {
       application_attributes: {
           container_name: unique_application_name,
           variables_attributes: blueprint_software[:variables] || [],
@@ -86,12 +86,12 @@ class InstallFromBlueprint < ActiveRecord::Base
         }
      }
   end
-  
+
   def template_variables
     application.variables.each do |application_variable|
       application_variable.value = engines_api.get_resolved_string(application_variable.value)
-    end 
-  end  
+    end
+  end
 
   def application_services_connector_params
     service_configurations = blueprint_software[:service_configurations]
@@ -131,7 +131,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   def existing_engine_names
     @existing_engine_names ||= (engines_api.reserved_engine_names || [])
   end
-  
+
   def existing_host_names
     @existing_host_names ||= (engines_api.reserved_hostnames || [])
   end
@@ -145,11 +145,11 @@ class InstallFromBlueprint < ActiveRecord::Base
     end
     unique_application_name_candidate
   end
-  
+
   def install
     valid? && send_install
   end
-  
+
   def send_install
     result = InstallFromBlueprintInstaller.new(self).install
     if result.was_success
@@ -158,10 +158,9 @@ class InstallFromBlueprint < ActiveRecord::Base
       @engines_api_error = "Install failed. " + (result.result_mesg.present? ? result.result_mesg : "No result message given by engines api.")
     end
   end
-  
+
   def engine_build_params
     InstallFromBlueprintInstaller.new(self).engine_build_params
   end
 
 end
-
