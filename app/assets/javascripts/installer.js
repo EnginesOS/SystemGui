@@ -89,8 +89,7 @@ $(document).ready(function(){
 	    evtSource.addEventListener("message", complete_listener);
 			evtSource.addEventListener("error", function(e) {
 				evtSource.close();
-				alert('Error.');
-				window.location.href = '/control_panel';
+				alert('Error.' + e.error.message);
 			});
 		};
    };

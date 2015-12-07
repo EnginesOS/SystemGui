@@ -6,7 +6,7 @@
 <div class="col-md-8 col-md-offset-2">
 	<div class="panel panel-default top-gap">
 	  <div class="panel-body">
-	    <%= render 'shared/show/label_and_text', label: 'Engines version', text: "0.0.0 #{SystemInfo.summary[:engines_release]}",
+	    <%= render 'shared/show/label_and_text', label: 'Engines version', text: SystemInfo.engines_version,
 	    		label_width: 4, text_width: 8  %>
 	    <%= render 'shared/show/label_and_text', label: 'Base OS version', text: "#{SystemInfo.base_os_data['NAME']} #{SystemInfo.base_os_data['VERSION']}",
 	    		label_width: 4, text_width: 8  %>
@@ -23,7 +23,7 @@
 	<div class="col-md-7">
 		<p><small>
 		  Update Engines system software.
-		</p></small>	    
+		</p></small>
 	</div>
 </div>
 <div class='row top-gap'>
