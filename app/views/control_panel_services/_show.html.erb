@@ -20,7 +20,7 @@
 <% end %>
 
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-  <div class="engine-gadget service btn-group">
+  <div class="engine-gadget service btn-group" data-state='<%= service_state[:state].to_s %>'>
     <button type="button" class="btn btn-default dropdown-toggle <%= background_class %>" data-toggle="dropdown">
 		<div class="status_area">
 	      <div class="icon_holder">
@@ -81,7 +81,7 @@
 					<li><%= link_to content_tag(:i, "", class: "fa fa-play") + " Start", "javascript:void(0);", class: 'object_action', data: { action: "start", url: start_services_path(service_name: service_name) } %></li>
 	  		  <li><%= link_to content_tag(:i, "", class: "fa fa-repeat") + " Rebuild", "javascript:void(0);", class: 'object_action', data: { action: "rebuild", url: recreate_services_path(service_name: service_name) } %> </li>
 	  			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "create", url: create_container_services_path(service_name: service_name) } %></li>
-	  		<% elsif  service_state[:state] == :no_container %>
+	  		<% elsif  service_state[:state] == :nocontainer %>
 	        <li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-ban") %> Disabled</div></li>
 			  	<li><div class="indicator_error dropdown-title"><%= service_state[:detail] %></div></li>
 	  			<li><%= link_to content_tag(:i, "", class: "fa fa-check") + " Enable", "javascript:void(0);", class: 'object_action', data: { action: "create", url: create_container_services_path(service_name: service_name) } %></li>

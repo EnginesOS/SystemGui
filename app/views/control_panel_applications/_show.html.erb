@@ -115,7 +115,7 @@ web_sites = application.web_sites
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
 					</li>
-				<% elsif  application_state[:state] == :no_container %>
+				<% elsif  application_state[:state] == :nocontainer %>
 					<li>
 						<div class="<%= indicator_class %> dropdown-title">
 							<%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt
