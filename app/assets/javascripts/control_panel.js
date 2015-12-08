@@ -1,7 +1,9 @@
 $(document).ready(function() {
 
-	load_control_panel_objects();
-	control_panel_call_to_action();
+ if ($(".control_panel").length) {
+	 load_control_panel_objects();
+ 	 control_panel_call_to_action();
+ };
 
 });
 
