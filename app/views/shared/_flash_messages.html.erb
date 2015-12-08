@@ -9,6 +9,7 @@
 
 <% flash.each do |name, msg| %>
   <% unless name == 'timedout' %>
+	<%= name %>
 	 <%= content_tag :div, msg.to_s, class:"hidden flash_message_data", data: {alertclass: name.to_s == 'notice' ? 'success' : 'danger'} %>
   <% end %>
 <% end %>

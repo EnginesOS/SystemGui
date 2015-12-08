@@ -29,7 +29,6 @@ function check_for_object_reload_required(obj){
 function monitor_object_states(){
 	setTimeout(function(){
 			monitor_object_states_ajax_call();
-			monitor_object_states();
 	}, 5000);
 };
 
@@ -50,8 +49,12 @@ function monitor_object_states_ajax_call(){
 		error: function(response, status, error){
 			if (response.status == 500) {
 				document.write(response.responseText);
+			} else if (response.status == 401) {
+				alert(response.responseText);
+				window.location.reload();
 			};
-		}
+		},
+		complete: function(){	monitor_object_states();}
 	});
 };
 
@@ -65,7 +68,6 @@ function monitor_object_states_success(container_states_json) {
 				load_control_panel_object(control_panel_object);
 			};
 		};
-
 	});
 };
 
@@ -140,9 +142,6 @@ function load_control_panel_object(obj) {
 		error: function(response, status, error){
 			if (response.status == 500) {
 				document.write(response.responseText);
-			} else if (response.status == 401) {
-				alert(response.responseText);
-				window.location.reload();
 			} else if (response.status == 0) {
 				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
 				obj.find(".object_status").html(msg);
@@ -180,9 +179,6 @@ function perform_control_panel_object_action(obj) {
 		error: function(response, status, error){
 			if (response.status == 500) {
 				document.write(response.responseText);
-			} else if (response.status == 401) {
-				alert(response.responseText);
-				window.location.reload();
 			} else if (response.status == 0) {
 				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
 				parent_obj.find(".object_status").html(msg);
