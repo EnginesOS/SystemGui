@@ -1,7 +1,7 @@
 class ControlPanelApplicationsStatesController < ApplicationController
 
   def show
-    render text: System.get_engines_states
+    render text: System.get_engines_states.to_json
   end
 
 end

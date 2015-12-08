@@ -12,17 +12,73 @@ function bind_control_panel_object_events(obj) {
 	obj.find(".object_action").click(function() {
 		perform_control_panel_object_action($(this));
 	});
-	check_for_reload_required(obj);
+	check_for_object_reload_required(obj);
 	bind_trigger_response_modal_events();
 };
 
-function check_for_reload_required(obj){
+function check_for_object_reload_required(obj){
 	if ( $(obj).find('.reload_control_panel_object').length ) {
 		setTimeout(function(){
 				load_control_panel_object(obj);
 		}, 1000);
 	};
 };
+
+function monitor_object_states(){
+	setTimeout(function(){
+			monitor_object_states_ajax_call();
+			monitor_object_states();
+	}, 5000);
+};
+
+function monitor_object_states_ajax_call(){
+	if ( $('.control_panel.applications').length ) {
+		url = '/control_panel_applications_states';
+	} else {
+		url = '/control_panel_services_states';
+	};
+
+	$.ajax({
+		url : url,
+		cache : false,
+		timeout: 10000,
+		success : function(response) {
+			monitor_object_states_success(response)
+		},
+		error: function(response, status, error){
+			if (response.status == 500) {
+				document.write(response.responseText);
+			};
+		}
+	});
+};
+
+function monitor_object_states_success(container_states_json) {
+	var container_states = JSON.parse(container_states_json);
+	$.each(container_states, function(container_name, container_state) {
+		var control_panel_object = $('#control_panel_object_' + container_name );
+		if ( !control_panel_object.find('.reload_control_panel_object').length ) {
+			var displayed_state = control_panel_object.find('.engine-gadget').data('state');
+			if ((displayed_state != 'error') && (container_state != displayed_state)){
+				load_control_panel_object(control_panel_object);
+			};
+		};
+
+	});
+};
+
+// function check_all_objects_for_reload_required(container_states_json) {
+//
+// };
+//
+//
+// function reload_object_unless_already_working() {
+// 	if ( $(obj).find('.reload_control_panel_object').length ) {
+// 		setTimeout(function(){
+// 				load_control_panel_object(obj);
+// 		}, 1000);
+// 	};
+// };
 
 function load_modal_content(obj) {
 
@@ -59,14 +115,14 @@ function load_modal_content(obj) {
 };
 
 function load_control_panel_objects() {
-	$(".control_panel .load_control_panel_object").each(function() {
-		var applicationName = $(this).attr('id');
+	$(".control_panel .control_panel_object").each(function() {
+		// var applicationName = $(this).attr('id');
 		load_control_panel_object($(this));
 	});
+	monitor_object_states();
 }
 
 function load_control_panel_object(obj) {
-
 
 	var url = obj.attr("data-url");
 	// obj.next().html(obj.html());
@@ -102,7 +158,7 @@ function load_control_panel_object(obj) {
 
 function perform_control_panel_object_action(obj) {
 
-	var parent_obj = obj.closest(".load_control_panel_object");
+	var parent_obj = obj.closest(".control_panel_object");
 
 	var url = obj.attr("data-url");
 	var action = obj.attr("data-action");
@@ -137,7 +193,6 @@ function perform_control_panel_object_action(obj) {
 			};
 		}
 	});
-
 
 }
 
