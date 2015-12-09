@@ -8,8 +8,7 @@
 <div id="flash_message_display_area"></div>
 
 <% flash.each do |name, msg| %>
-  <% unless name == 'timedout' %>
-	<%= name %>
+  <% unless name == 'timedout' || msg.blank? %>
 	 <%= content_tag :div, msg.to_s, class:"hidden flash_message_data", data: {alertclass: name.to_s == 'notice' ? 'success' : 'danger'} %>
   <% end %>
 <% end %>
