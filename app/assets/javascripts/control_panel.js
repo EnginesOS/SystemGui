@@ -51,6 +51,7 @@ function monitor_object_states_ajax_call(){
 				document.write(response.responseText);
 			} else if (response.status == 401) {
 				alert(response.responseText);
+				show_waiting_for_response_modal();
 				window.location.reload();
 			};
 		},
