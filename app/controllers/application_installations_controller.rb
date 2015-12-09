@@ -31,14 +31,10 @@ class ApplicationInstallationsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     send_event :installation_progress, "Starting build...\n"
     send_installation_progress
-p :installation_progress_done
     send_installation_report
-p :installation_report_done
     send_event :message, 'done'
-p :installation_done_done
   ensure
     response.stream.close
-p :installation_stream_close_done
   end
 
 private
@@ -67,9 +63,6 @@ private
   end
 
   def send_event(event, data='')
-    p :event_data
-    p event
-    p data
        response.stream.write "event: #{event}\n"
        response.stream.write "data: #{data}\n\n"
   end

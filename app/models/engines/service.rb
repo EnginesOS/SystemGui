@@ -30,7 +30,7 @@ module Engines::Service
     # if is_error?
       # 'error'
     # else
-      # if state.to_s == "no_container"
+      # if state.to_s == "nocontainer"
         # "disabled"
       # else
         # state
@@ -76,7 +76,7 @@ module Engines::Service
   def service_container_state
     service_state = system_service_object.read_state
     if service_state == 'nocontainer'
-      {state: :no_container, label: 'Unbuilt', detail: status_detail}
+      {state: :nocontainer, label: 'Unbuilt', detail: status_detail}
     else
       {state: service_state.to_sym, label: service_state.to_s.humanize, detail: status_detail}
     end
