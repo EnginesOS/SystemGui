@@ -56,7 +56,9 @@ protected
       'application_abouts',
       'service_abouts',
       'gallery_softwares',
-      'system_monitor_charts'
+      'system_monitor_charts',
+      'control_panel_applications_states',
+      'control_panel_services_states'
     ].include? params[:controller]
   end
 
@@ -129,10 +131,14 @@ protected
 
   def authenticate
     return authenticate_user! if user_signed_in?
+    respond_to_unauthenticated_request
+  end
+
+  def respond_to_unauthenticated_request
     if is_an_ajax_call?
       render text: "Your session expired. Please sign in again to continue.", status: 401
     else
-      redirect_to desktop_path
+      redirect_to desktop_path, alert: "Your session expired. Please sign in again to continue."
     end
   end
 

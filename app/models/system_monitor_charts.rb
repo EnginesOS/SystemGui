@@ -2,10 +2,6 @@ class SystemMonitorCharts
 
   def memory_statistics
     @memory_statistics ||= SystemDataCache.memory_statistics
-
-p :memory_statistics
-p @memory_statistics
-@memory_statistics
   end
 
   def cpus_usage_data

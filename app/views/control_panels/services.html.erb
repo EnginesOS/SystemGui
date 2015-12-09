@@ -1,5 +1,5 @@
-<div class='control_panel'>
-	
+<div class='control_panel services'>
+
 	<div class='row'>
 		<div class="col-sm-6 pull-right bring-forward">
 			<%#= render 'control_panel_service_actions' %>
@@ -9,12 +9,13 @@
 			<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 		</div>
 	</div>
-	
+
 	<div class='row'>
 		<% if @service_names.present? %>
 			<% @service_names.each do |service_name| %>
 
-				<div class="service load_control_panel_object", id="<%= service_name %>", data-url="<%= control_panel_services_path(service_name: service_name) %>">
+				<div class="service control_panel_object"  id='control_panel_object_<%= service_name %>'
+					 			data-url="<%= control_panel_services_path(service_name: service_name) %>">
 					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
   						<div class="control_panel_object_placeholder">
   							<%= service_name %>
@@ -27,6 +28,4 @@
 				<% end %>
 		<% end %>
 	</div>
-</div>	
-
-
+</div>
