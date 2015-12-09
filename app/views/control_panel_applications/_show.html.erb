@@ -28,6 +28,7 @@ web_sites = application.web_sites
 <% end %>
 
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+  <%#= application_state %>
 	<div class="engine-gadget btn-group" data-state='<%= application_state[:state].to_s %>' title='<%= [@application.application_display_properties.title,
       @application.application_display_properties.detail].reject(&:blank?).join(' - ') %>'>
 		<button type="button" class="btn btn-default dropdown-toggle <%= engine_state %>" data-toggle="dropdown">
@@ -114,7 +115,7 @@ web_sites = application.web_sites
 					<li>
 						<%= link_to content_tag(:i, "", class: "fa fa-arrow-circle-right") + " Reinstall", "javascript:void(0);", class: 'object_action', data: { action: "reinstall", url: reinstall_applications_path(application_name: application_name) } %>
 					</li>
-				<% elsif  application_state[:state] == :no_container %>
+				<% elsif  application_state[:state] == :nocontainer %>
 					<li>
 						<div class="<%= indicator_class %> dropdown-title">
 							<%= content_tag(:i, "", class: "fa fa-circle-o") %> Unbuilt

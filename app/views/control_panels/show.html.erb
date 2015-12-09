@@ -1,19 +1,20 @@
-<div class='control_panel'>
+<div class='control_panel applications'>
 	<div class='row'>
 		<div class="col-sm-6 pull-right bring-forward">
 			<%= render 'control_panel_actions' %>
 		</div>
 		<div class="col-sm-6">
 			<h2><%= content_tag(:i, "", class: "fa fa-tablet") %>&nbspApplications</h2>
-			<%= link_to "get_engines_states", control_panel_applications_states_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
-			<%= link_to "get_services_states", control_panel_services_states_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+			<%#= link_to "get_engines_states", control_panel_applications_states_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
+			<%#= link_to "get_services_states", control_panel_services_states_path, class: 'btn btn-default btn-lg trigger-response-modal' %>
 		</div>
 	</div>
 
 	<div class='row'>
 		<% if @application_names.present? %>
 			<% @application_names.each do |application_name| %>
-				<div class="application load_control_panel_object", id="<%= application_name %>", data-url="<%= control_panel_applications_path(application_name: application_name) %>">
+				<div class="application control_panel_object" id='control_panel_object_<%= application_name %>' 
+					data-url="<%= control_panel_applications_path(application_name: application_name) %>">
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
   						<div class="control_panel_object_placeholder">
   							<%= application_name %>

@@ -41,7 +41,7 @@ module Engines::Application
   def application_container_state
     application_state = container.read_state
     if application_state == 'nocontainer'
-      {state: :no_container, label: 'Unbuilt'}
+      {state: :nocontainer, label: 'Unbuilt'}
     else
       {state: application_state.to_sym, label: application_state.to_s.humanize, detail: status_detail}
     end
