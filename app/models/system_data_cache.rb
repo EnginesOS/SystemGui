@@ -33,7 +33,10 @@ class SystemDataCache < ActiveRecord::Base
   end
 
   def self.cache_system_update_status
-    instance.update(system_update_status: SystemInfo.system_update_status.to_json)
+    x = SystemInfo.system_update_status
+    p :system_update_status_returned_by_engines_api
+    p x
+    instance.update(system_update_status: x.to_json)
   end
 
 end
