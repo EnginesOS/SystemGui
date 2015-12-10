@@ -32,8 +32,7 @@ gem 'net_http_unix'
 gem 'rails'
 # Use sqlite3 as the database for Active Record, in development
 # .. and mysql in production
-gem 'sqlite3', group: :development
-gem 'mysql2', group: :production
+gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
