@@ -18,11 +18,12 @@
 </nav>
 
 <div id="content" class="navbar-buffer">
+  <%= render partial: 'layouts/prominent_system_label' %>
   <%= render partial: 'shared/flash_messages' %>
   <div class="container">
     <div class="row">
       <%= yield %>
-    </div>      
+    </div>
   </div>
 </div>
 

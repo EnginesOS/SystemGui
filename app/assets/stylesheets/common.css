@@ -6,7 +6,7 @@
 
 .bring-forward{
 	position: relative;
-	z-index: 999;	
+	z-index: 999;
 }
 
 .alert {
@@ -79,4 +79,13 @@ hr {
 .dropdown_help {
   padding: 10px;
   min-width: 200px;
+}
+
+.prominent_system_label {
+	font-size: 48px;
+	text-align: center;
+}
+
+.container-full-width {
+	padding: 0px;
 }

@@ -1,0 +1,7 @@
+<% if @display_settings.show_label %>
+  <div class="container-fluid container-full-width">
+    <div class="row prominent_system_label" style="background-color: <%= @display_settings.background_color %>; color: <%= @display_settings.icon_text_color %>">
+      <%= @display_settings.system_label %>
+    </div>
+  </div>
+<% end %>

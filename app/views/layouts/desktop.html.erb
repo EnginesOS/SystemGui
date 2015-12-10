@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<% if @desktop_settings.wallpaper.exists? %>
-  <html style="<%= "background: " + @desktop_settings.background_color + " url(" + @desktop_settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: 100% 100%;" %>">
+<% if @display_settings.wallpaper.exists? %>
+  <html style="<%= "background: " + @display_settings.background_color + " url(" + @display_settings.wallpaper.url + ") no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: 100% 100%;" %>">
 <% else %>
-  <html style="background-color: <%= @desktop_settings.background_color %>">
+  <html style="background-color: <%= @display_settings.background_color %>">
 <% end %>
 
 <head>
@@ -19,6 +19,7 @@
 	<%= render partial: 'layouts/navbar' %>
 
 	<div id="content" class="navbar-buffer">
+    <%= render partial: 'layouts/prominent_system_label' %>
 	  <%= render partial: 'shared/flash_messages' %>
 	  <div class="container-fluid">
 	    <div class="row">
