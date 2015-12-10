@@ -16,7 +16,7 @@ protected
   def setup
     set_bug_reports_enabled_flag
     set_system_status unless ajax_call_not_needing_status?
-    set_page_title unless is_an_ajax_call?
+    set_display_settings unless is_an_ajax_call?
     check_for_build_fail if waiting_for_installation?
   end
 
@@ -110,9 +110,9 @@ protected
     end
   end
 
-  def set_page_title
-    @@page_title ||= "#{System.unit_name.to_s.humanize} Engines"
-    @page_title = @@page_title
+  def set_display_settings
+    @display_settings = DisplaySettings.instance
+    @page_title = @display_settings.system_label
   end
 
   def configure_permitted_parameters

@@ -3,8 +3,8 @@
       :desktop
     when params[:controller] == 'systems', params[:controller] == 'system_securities', params[:controller] == 'system_securities',
     		params[:controller] == 'domains', params[:controller] == 'domain_settings', params[:controller] == 'domains_managers',
-    		params[:controller] == 'desktop_settings', params[:controller] == 'system_settings', params[:controller] == 'system_engines_update',
-    		params[:controller] == 'system_bug_reports', params[:controller] == 'desktop_settings', params[:controller] == 'services_registries',
+    		params[:controller] == 'display_settings', params[:controller] == 'system_settings', params[:controller] == 'system_engines_update',
+    		params[:controller] == 'system_bug_reports', params[:controller] == 'display_settings', params[:controller] == 'services_registries',
     		params[:controller] == 'system_security_keys', params[:controller] == 'system_security_certificates', params[:controller] == 'users'
       :system
     else
@@ -23,7 +23,6 @@
 	      <%= link_to image_tag("engines_icon.png", class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
 		  <div id="status_message_area_when_menu_collpased">
     	  </div>
-
 	    </div>
 
 	    <div class="collapse navbar-collapse" id="main-navbar-collapse">
@@ -63,8 +62,8 @@
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-th") + ' Libraries', galleries_path, class: 'trigger-response-modal' %>
 				</li>
-				<li>
-					<%= link_to content_tag(:i, "", class: "fa fa-desktop") + ' Desktop', edit_desktop_settings_path, class: 'trigger-response-modal' %>
+        <li>
+					<%= link_to content_tag(:i, "", class: "fa fa-tv") + ' Display', edit_display_settings_path, class: 'trigger-response-modal' %>
 				</li>
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-bug") + ' Bug reports', edit_system_bug_reports_path, class: "trigger-response-modal" %>

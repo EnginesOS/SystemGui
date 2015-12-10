@@ -34,7 +34,7 @@ module System
     engines_api.abort_build
   end
 
-  def self.unit_name
+  def self.system_hostname
     engines_api.system_hostname
   rescue
     "system_hostname api method missing"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204034854) do
+ActiveRecord::Schema.define(version: 20151210045458) do
 
   create_table "application_display_properties", force: :cascade do |t|
     t.integer "application_id"
@@ -70,13 +70,15 @@ ActiveRecord::Schema.define(version: 20151204034854) do
     t.integer "docker_hub_installation_id"
   end
 
-  create_table "desktop_settings", force: :cascade do |t|
+  create_table "display_settings", force: :cascade do |t|
     t.string   "wallpaper_file_name"
     t.string   "wallpaper_content_type"
     t.integer  "wallpaper_file_size"
     t.datetime "wallpaper_updated_at"
     t.string   "background_color"
     t.string   "icon_text_color"
+    t.string   "system_label"
+    t.boolean  "show_label"
   end
 
   create_table "domain_certificates", force: :cascade do |t|

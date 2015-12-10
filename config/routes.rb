@@ -87,9 +87,9 @@ Rails.application.routes.draw do
   resource :domain_default_name
   resource :domain_default_site
 
-#Desktop settings
+#Display settings
 
-  resource :desktop_settings
+  resource :display_settings
 
 #Libraries
 

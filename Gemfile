@@ -30,7 +30,8 @@ gem 'net_http_unix'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
-# Use sqlite3 as the database for Active Record
+# Use sqlite3 as the database for Active Record, in development
+# .. and mysql in production
 gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
