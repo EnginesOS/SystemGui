@@ -16,7 +16,7 @@
         </button>
       </div>
     </div>
- 
+
     <div class="col-sm-12">
       <h4>Keep a safe record of your passwords. You will need them later.</h4>
       <div id='first_run_dynamic_form_validation'></div>
@@ -26,16 +26,16 @@
       <legend>Admin</legend>
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"],
-    		comment: "Password for the Engines system administrator. Use this password to sign in with the admin account.", 
+    		comment: "Password for the Engines system administrator. Use this password to sign in with the admin account.",
     		label: "Admin password"} %>
-    <%= render partial: 'shared/form/text_field', locals: {name: :admin_email, f: f, 
+    <%= render partial: 'shared/form/text_field', locals: {name: :admin_email, f: f,
     		comment: "Password reset instructions for the admin account will be sent to this email address.", label: "email address"} %>
     <div class="col-sm-12">
       <legend>Base OS</legend>
     </div>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f, 
-    		hint: "Console password must be different from admin password.", 
-    		placeholder: ["Enter", "Re-enter"], label: "Console password", 
+    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f,
+    		hint: "Console password must be different from admin password.",
+    		placeholder: ["Enter", "Re-enter"], label: "Console password",
     		comment: "Password for the engines user account on the base system."} %>
     <div class="col-sm-12">
       <legend>Database</legend>
@@ -45,15 +45,15 @@
     <div class="col-sm-12">
       <legend>System</legend>
     </div>
-    <%= render partial: 'shared/form/text_field', locals: {name: :system_hostname, label: "Hostname", f: f, value: System.unit_name} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :system_hostname, label: "Hostname", f: f, value: System.system_hostname} %>
 
     <div class="col-sm-12">
       <legend>Domain</legend>
     </div>
 
-	<div id="first_run_networking">	
+	<div id="first_run_networking">
     	<%= render partial: 'shared/form/radio_buttons', locals: {name: :networking, label: false, value: :zeroconf,
-    		select_collection: 
+    		select_collection:
     			[[:zeroconf, 'Local'], [:self_hosted_dns, 'Self-hosted DNS'], [:external_dns, 'Hosted DNS'], [:dynamic_dns, 'Dynamic DNS']],
     		value_method: :first, text_method: :last, f: f } %>
 	</div>
@@ -75,16 +75,16 @@
 	</div>
 	</div>
 	<div id="first_run_networking_domain_name_field">
-	    <%= render partial: 'shared/form/text_field', locals: {name: :domain_name, 
+	    <%= render partial: 'shared/form/text_field', locals: {name: :domain_name,
 				label: "Domain name", f: f, } %>
 	</div>
 	<div id="first_run_networking_dns_local_only_field">
-	    <%= render partial: 'shared/form/checkbox', locals: {name: :self_dns_local_only, 
+	    <%= render partial: 'shared/form/checkbox', locals: {name: :self_dns_local_only,
 				label: "Local LAN only", f: f, } %>
 	</div>
 	<div id="first_run_networking_dynamic_dns_fields">
 	    <%= render partial: 'shared/form/select', locals: {
-	    		name: :dynamic_dns_provider, 
+	    		name: :dynamic_dns_provider,
 				label: "Provider",
 				select_collection: [['dyn-dns', 'DynDNS dyn.com'], ['no-ip', 'No-IP noip.com']],
     			value_method: :first, text_method: :last,
@@ -134,4 +134,3 @@
   		</div>
     </div>
 </div>
-
