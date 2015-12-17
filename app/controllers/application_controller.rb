@@ -2,10 +2,15 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, :with => :render_500 if ( ENV['SEND_BUG_REPORTS'].present? && ENV['SEND_BUG_REPORTS'] == 'true' ) #if ( defined?(@bug_reports_enabled) && @bug_reports_enabled  )
 
-  protect_from_forgery with: :reset_session
+  protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize
   before_action :setup
+
+  rescue_from ActionController::InvalidAuthenticityToken do
+    reset_session
+    redirect_to desktop_path, notice: 'Token error. Please sign in again.'
+  end
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
   require 'git'

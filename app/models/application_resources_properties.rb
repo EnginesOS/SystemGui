@@ -6,8 +6,8 @@ class ApplicationResourcesProperties < ActiveRecord::Base
 
   belongs_to :application
 
-  # validate :sufficient_memory
-  # validates :memory, presence: true
+  validate :sufficient_memory
+  validates :memory, presence: true
 
   def application_name
     application.container_name
@@ -27,11 +27,11 @@ class ApplicationResourcesProperties < ActiveRecord::Base
   def save
     update_memory
   end
-  
+
   def new_record?
     false
   end
-  
+
 private
 
   def sufficient_memory
@@ -45,5 +45,5 @@ private
   def update_memory
     engines_api.set_engine_runtime_properties engine_name: application_name, memory: memory
   end
- 
+
 end
