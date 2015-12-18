@@ -22,6 +22,7 @@ $(document).ready(function(){
 			$("#gallery_software_holder").html(data);
 			$("#gallery_software_holder").show();
 			$("#gallery_software_loader").remove();
+			update_pagination_link_class();
 			bind_trigger_response_modal_events();
 			});
 	};
