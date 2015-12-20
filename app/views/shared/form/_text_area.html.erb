@@ -1,4 +1,4 @@
-<%  label ||= name.to_s.humanize.capitalize
+<%  label = label.nil? ? name.to_s.humanize.capitalize : label
     tooltip ||= nil
     value = value.nil? ? f.object.send(name) : value
     value = nil if value.blank? #placeholder is visible to user only when value is nil

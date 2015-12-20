@@ -8,17 +8,20 @@
 
 <head>
   <title><%= @page_title || 'Engines desktop' %></title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <% if @display_settings.icon.present? %>
+    <%= favicon_link_tag @display_settings.icon.url(:default) %>
+  <% else %>
+    <%= favicon_link_tag%>
+  <% end %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<div id="content">
-
 	<%= render partial: 'layouts/navbar' %>
 
-	<div id="content" class="navbar-buffer">
+	<div id="content" class="<%= 'navbar-buffer' if ( @display_settings.icon.present? || @display_settings.show_desktop_signin ) %>">
     <%= render partial: 'layouts/prominent_system_label' %>
 	  <%= render partial: 'shared/flash_messages' %>
 	  <div class="container-fluid">
@@ -28,9 +31,7 @@
 	  </div>
 	</div>
 
-    <div id="footer"></div>
-
-</div>
+  <div id="footer"></div>
 
 <%= render partial: 'shared/waiting_for_response' %>
 

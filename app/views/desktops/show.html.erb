@@ -1,18 +1,29 @@
   <div class="contaner-fluid">
-    <div class="desktop-view">
+    <div class="desktop-view" style="color: <%= @display_settings.icon_text_color %>;">
 
-      	<% if @applications.present? %>
-		    <% @applications.each do |application| %>
-				<div class="application desktop_object", id="<%= application.container_name %>", data-url="<%= desktop_applications_path(application_name: application.container_name) %>"></div>
-		    <% end %>
-		<% else %>
-		    <p class="top-gap" style="color: <%= @display_settings.icon_text_color %>;">No applications are running.<br>
-		<% end %>
+    <div class='row'>
+			<div class="col-sm-12">
+        <%= Markdown.new(@display_settings.desktop_header, :hard_wrap, :filter_html, :autolink, :no_intra_emphasis, :fenced_code_blocks).to_html.html_safe %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <% if @applications.present? %>
+    		    <% @applications.each do |application| %>
+    				<div class="application desktop_object", id="<%= application.container_name %>", data-url="<%= desktop_applications_path(application_name: application.container_name) %>"></div>
+    		    <% end %>
+    		<% else %>
+    		    <p class="top-gap">No applications are running.<br>
+    		<% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <%= Markdown.new(@display_settings.desktop_footer).to_html.html_safe %>
+      </div>
+    </div>
 
     </div>
   </div>
-
-
-
-
-

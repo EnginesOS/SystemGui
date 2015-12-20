@@ -4,18 +4,31 @@
     <%= render partial: 'shared/form/errors', locals: {f: f} %>
 </div>
 <div class="col-sm-12">
-    <legend>Label</legend>
-    <%= render partial: 'shared/form/text_field', locals: {name: :system_label, label: false, comment: 'The label will be displayed as the browser tab title. Prominent label shown on each page.', f: f} %>
-    <%= render partial: 'shared/form/checkbox', locals: {name: :show_label, label: 'Prominent label', f: f} %>
+    <legend>Title</legend>
+    <%= render partial: 'shared/form/text_field', locals: {name: :system_title, label: false, comment: 'Page title for use by the client browser.', f: f} %>
 </div>
 <div class="col-sm-12">
-    <legend>Colors</legend>
-    <%= render partial: 'shared/form/color_field', locals: {name: :icon_text_color, label: 'Text', f: f} %>
-    <%= render partial: 'shared/form/color_field', locals: {name: :background_color, label: 'Background', f: f} %>
+    <legend>Colours</legend>
+    <%= render partial: 'shared/form/color_field', locals: {name: :icon_text_color, label: 'Text', f: f, width: 2, buffer: 0} %>
+    <%= render partial: 'shared/form/color_field', locals: {name: :background_color, label: 'Background', f: f, offset: 0, width: 4, buffer: 0} %>
 </div>
 <div class="col-sm-12">
-    <legend>Desktop wallpaper</legend>
+    <legend>Header/footer</legend>
+    <%= render partial: 'shared/form/text_area', locals: {name: :desktop_header, label: false, comment: 'Use markdown.', f: f} %>
+    <%= render partial: 'shared/form/text_area', locals: {name: :desktop_footer, label: false, f: f} %>
+</div>
+<div class="col-sm-12">
+    <legend>Wallpaper</legend>
     <%= render partial: 'shared/form/image_field', locals: {name: :wallpaper, label: false, tooltip: "Change wallpaper.", f: f} %>
+</div>
+<div class="col-sm-12">
+    <legend>Icon</legend>
+    <%= render partial: 'shared/form/image_field', locals: {name: :icon, label: false, f: f, image_style: :default} %>
+</div>
+<div class="col-sm-12">
+    <legend>Admin</legend>
+    <%= render partial: 'shared/form/checkbox', locals: {name: :show_desktop_signin, label: 'Show sign in', f: f} %>
+    <%= render partial: 'shared/form/text_field', locals: {name: :system_label, label: 'Banner', comment: 'Shown as a prominent banner on each page when admin is signed in.', f: f} %>
 </div>
 <div class="col-sm-12">
     <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: system_path} %>

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
 #Users
 
+  get 'sign_in', to: redirect('/users/sign_in')
+
   devise_for :users, skip: :registrations
   resource :user, only: :show
   as :user do

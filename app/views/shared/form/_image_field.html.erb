@@ -1,5 +1,6 @@
 <%  label = label.nil? ? name.to_s.humanize.capitalize : label
-	hide_delete ||= false
+		image_style ||= nil
+		hide_delete ||= false
     tooltip ||= nil
     hint ||= nil
     comment ||= nil
@@ -17,11 +18,11 @@
     <% if f.object.send(name).present? %>
       <div class='form-image-control'>
         <div class='form-image-centering'>
-          <%= image_tag(f.object.send(name).url, class: 'form-image') %><br>
+          <%= image_tag(f.object.send(name).url(image_style), class: 'form-image') %><br>
         </div>
       </div>
       <% if !hide_delete %>
-	      <%= f.check_box('delete_' + name.to_s) %> Delete
+	      <label class='form-text-lg'><%= f.check_box('delete_' + name.to_s) %> Delete</label>
 	  <% end %>
     <% end %>
     <%= f.file_field name, class: 'choose_file_form_control top-gap' %>
@@ -44,7 +45,3 @@
     <% end %>
   </div>
 </div>
-
-
-
-

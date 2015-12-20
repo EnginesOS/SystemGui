@@ -117,7 +117,7 @@ protected
 
   def set_display_settings
     @display_settings = DisplaySettings.instance
-    @page_title = @display_settings.system_label
+    @page_title = @display_settings.system_title || 'Engines'
   end
 
   def configure_permitted_parameters
@@ -141,9 +141,9 @@ protected
 
   def respond_to_unauthenticated_request
     if is_an_ajax_call?
-      render text: "Your session expired. Please sign in again to continue.", status: 401
+      render text: "Please sign in to continue.", status: 401
     else
-      redirect_to desktop_path, alert: "Your session expired. Please sign in again to continue."
+      redirect_to desktop_path, alert: "Please sign in to continue."
     end
   end
 
