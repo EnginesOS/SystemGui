@@ -64,7 +64,7 @@ private
   end
 
   def regex_validation
-    if (do_validations? && regex_validator.present? && !Regexp.new(regex_validator.to_s).match(value.to_s))
+    if (do_validations? && value.present? && regex_validator.present? && !Regexp.new(regex_validator.to_s).match(value.to_s))
       errors.add(name, [label, regex_invalid_message] || [label, "is invalid. (Expects regex /#{regex_validator}/ but got `#{value}` from user.)"])
     end
   end
