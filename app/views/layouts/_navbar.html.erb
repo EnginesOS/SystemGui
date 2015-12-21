@@ -124,23 +124,6 @@
 	  </div>
 	</nav>
 
-<% else %>
-
-  <% if @display_settings.icon.present? || @display_settings.show_desktop_signin %>
-    <nav class="navbar user_signed_out navbar-default navbar-fixed-top" role="navigation">
-    	<div class="container-fluid">
-        <% if @display_settings.icon.present? %>
-    		  <%= link_to image_tag(@display_settings.icon.url(:default), class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
-        <% end %>
-    		<div class="pull-right">
-          <% if @display_settings.show_desktop_signin %>
-            <%= render 'layouts/navbar_sign_in' %>
-          <% end %>
-    		</div>
-    	</div>
-    </nav>
-  <% end %>
-
 <% end %>
 
 <!-- Help modal -->

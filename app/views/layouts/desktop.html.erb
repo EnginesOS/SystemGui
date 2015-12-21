@@ -21,9 +21,34 @@
 
 	<%= render partial: 'layouts/navbar' %>
 
-	<div id="content" class="<%= 'navbar-buffer' if ( @display_settings.icon.present? || @display_settings.show_desktop_signin ) %>">
+<%
+  display_icon = @display_settings.icon_size != 'Hide' && @display_settings.icon.present?
+  display_sign_in = @display_settings.show_desktop_signin && !user_signed_in?
+%>
+
+	<div id="content" class="desktop-navbar-buffer <%= 'desktop-navbar-visible' if display_icon || display_sign_in %> <%= user_signed_in? ? 'user-signed-in' : 'user-signed-out' %>">
     <%= render partial: 'layouts/prominent_system_label' %>
 	  <%= render partial: 'shared/flash_messages' %>
+    <% display_icon = @display_settings.icon_size != 'Hide' && @display_settings.icon.present?
+       display_sign_in = @display_settings.show_desktop_signin && !user_signed_in?
+       if display_icon || display_sign_in %>
+        <div class="desktop-navbar <%= user_signed_in? ? 'user-signed-in' : 'user-signed-out' %>">
+        	<div class="container-fluid">
+            <% if display_icon %>
+        		  <%= link_to image_tag(@display_settings.icon.url(@display_settings.icon_size.downcase), class: "desktop-navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
+            <% end %>
+        		<div class="pull-right">
+              <% if display_sign_in %>
+                <%= render 'layouts/navbar_sign_in' %>
+              <% end %>
+        		</div>
+        	</div>
+        </div>
+      <% end %>
+   </div>
+
+
+
 	  <div class="container-fluid">
 	    <div class="row">
 	      <%= yield %>

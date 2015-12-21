@@ -16,6 +16,7 @@
     <legend>Header/footer</legend>
     <%= render partial: 'shared/form/text_area', locals: {name: :desktop_header, label: false, comment: 'Use markdown.', f: f} %>
     <%= render partial: 'shared/form/text_area', locals: {name: :desktop_footer, label: false, f: f} %>
+    <%= render partial: 'shared/form/checkbox', locals: {name: :center_align, f: f} %>
 </div>
 <div class="col-sm-12">
     <legend>Wallpaper</legend>
@@ -23,7 +24,8 @@
 </div>
 <div class="col-sm-12">
     <legend>Icon</legend>
-    <%= render partial: 'shared/form/image_field', locals: {name: :icon, label: false, f: f, image_style: :default} %>
+    <%= render partial: 'shared/form/image_field', locals: {name: :icon, label: false, f: f, image_style: :large} %>
+    <%= render partial: 'shared/form/radio_buttons', locals: {name: :icon_size, f: f, select_collection: ['Hide', 'Small', 'Medium', 'Large']} %>
 </div>
 <div class="col-sm-12">
     <legend>Admin</legend>
