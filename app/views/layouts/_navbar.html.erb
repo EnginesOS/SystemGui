@@ -126,7 +126,7 @@
 
 <% else %>
 
-  <% if @display_settings.icon.present? || !@display_settings.show_desktop_signin %>
+  <% if @display_settings.icon.present? || @display_settings.show_desktop_signin %>
     <nav class="navbar user_signed_out navbar-default navbar-fixed-top" role="navigation">
     	<div class="container-fluid">
         <% if @display_settings.icon.present? %>
