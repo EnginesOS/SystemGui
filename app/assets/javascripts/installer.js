@@ -90,7 +90,7 @@ $(document).ready(function(){
 	    evtSource.addEventListener("message", complete_listener);
 			evtSource.addEventListener("error", function(e) {
 				evtSource.close();
-				alert('Error.' + e.error.message);
+				alert('Connection error.');
 			});
 		};
    };
