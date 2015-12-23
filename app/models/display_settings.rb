@@ -19,7 +19,6 @@ class DisplaySettings < ActiveRecord::Base
     self.icon_text_color = "#ffffff"
     self.background_color = "#5481df"
     self.system_title = "#{System.system_hostname.to_s.humanize} Engines".strip
-    self.show_desktop_icon = true
     self.show_desktop_signin = true
     self.center_align = true
     self.icon_size = 'Small'
