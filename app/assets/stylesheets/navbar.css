@@ -40,8 +40,26 @@ i.fa.navbar_user_icon {
 }
 
 .navbar-icon {
-  height: 30px;
+  height: 32px;
   margin-top: -3px;
+}
+
+.navbar.desktop-navbar.user-signed-in {
+  margin-top: 50px;
+}
+
+.desktop-navbar-icon {
+  margin-top: -3px;
+}
+
+.navbar {
+  z-index: 1040;
+}
+.navbar.desktop-navbar {
+  z-index: 1030;
+}
+.navbar.desktop-navbar a:hover{
+  background-color: rgba(0, 0, 0, 0);;
 }
 
 .navbar .dropdown-menu {
@@ -52,16 +70,26 @@ i.fa.navbar_user_icon {
   margin-top: 50px;
 }
 
+.desktop-navbar-buffer.user-signed-in {
+  margin-top: 50px;
+}
+/*.desktop-navbar-buffer.desktop-navbar-visible.user-signed-in {
+  margin-top: 100px;
+}*/
+
 .navbar-default {
 	background-color: #fff;
+}
+
+.navbar.desktop-navbar {
+	background-color: rgba(255,255,255,0);
+	border-color: rgba(255,255,255,0);
 }
 
 .navbar.user_signed_out {
 	background-color: rgba(255,255,255,0);
 	border-color: rgba(255,255,255,0);
 }
-
-
 
 .navbar li a.dropdown-toggle {
 	background-color: rgba(255,255,255,0);

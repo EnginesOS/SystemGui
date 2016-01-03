@@ -22,6 +22,9 @@ gem 'newrelic_rpm'
 gem 'gruff', git: 'https://github.com/jds13/gruff.git'
 gem 'rest-client'
 
+# Markdown
+gem 'redcarpet'
+
 # Faster json
 gem 'yajl-ruby'
 

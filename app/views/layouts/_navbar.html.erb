@@ -124,21 +124,6 @@
 	  </div>
 	</nav>
 
-<% else %>
-
-<nav class="navbar user_signed_out navbar-default navbar-fixed-top" role="navigation">
-	<div class="container-fluid">
-		<%= link_to image_tag("engines_logo.png", class: "navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
-
-		<div class="pull-right">
-
-			<%= render 'layouts/navbar_sign_in' %>
-
-		</div>
-	</div>
-</nav>
-
-
 <% end %>
 
 <!-- Help modal -->
