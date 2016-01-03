@@ -1,10 +1,10 @@
 <% form_object = f.object
-   label ||= form_object.class.to_s.humanize.downcase
+   label ||= form_object.model_name.human
    verb ||= :saved %>
 
 
 <div class="row">
-	
+
 	<% if form_object.respond_to?(:engines_api_error) %>
 		<% if form_object.engines_api_error.present? %>
 		  <div class="col-sm-8 col-sm-offset-2 form_errors">
@@ -15,7 +15,7 @@
 		  </div>
 		<% end %>
 	<% end %>
-	
+
 	<% if form_object.errors.any? %>
 	  <div class="col-sm-8 col-sm-offset-2 form_errors">
 		<div class="alert alert-warning alert-dismissible">

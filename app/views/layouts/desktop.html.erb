@@ -8,19 +8,47 @@
 
 <head>
   <title><%= @page_title || 'Engines desktop' %></title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <% if @display_settings.icon.present? %>
+    <%= favicon_link_tag @display_settings.icon.url(:default) %>
+  <% else %>
+    <%= favicon_link_tag%>
+  <% end %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<div id="content">
-
 	<%= render partial: 'layouts/navbar' %>
 
-	<div id="content" class="navbar-buffer">
+<%
+  display_icon = @display_settings.icon_size != 'Hide' && @display_settings.icon.present?
+  display_sign_in = @display_settings.show_desktop_signin && !user_signed_in?
+%>
+
+	<div id="content" class="desktop-navbar-buffer <%= 'desktop-navbar-visible' if display_icon || display_sign_in %> <%= user_signed_in? ? 'user-signed-in' : 'user-signed-out' %>">
     <%= render partial: 'layouts/prominent_system_label' %>
 	  <%= render partial: 'shared/flash_messages' %>
+    <% display_icon = @display_settings.icon_size != 'Hide' && @display_settings.icon.present?
+       display_sign_in = @display_settings.show_desktop_signin && !user_signed_in?
+       if display_icon || display_sign_in %>
+        <div class="desktop-navbar <%= user_signed_in? ? 'user-signed-in' : 'user-signed-out' %>">
+        	<div class="container-fluid">
+            <% if display_icon %>
+        		  <%= link_to image_tag(@display_settings.icon.url(@display_settings.icon_size.downcase), class: "desktop-navbar-icon"), root_path, class: 'trigger-response-modal navbar-brand' %>
+            <% end %>
+        		<div class="pull-right">
+              <% if display_sign_in %>
+                <%= render 'layouts/navbar_sign_in' %>
+              <% end %>
+        		</div>
+        	</div>
+        </div>
+      <% end %>
+   </div>
+
+
+
 	  <div class="container-fluid">
 	    <div class="row">
 	      <%= yield %>
@@ -28,9 +56,7 @@
 	  </div>
 	</div>
 
-    <div id="footer"></div>
-
-</div>
+  <div id="footer"></div>
 
 <%= render partial: 'shared/waiting_for_response' %>
 

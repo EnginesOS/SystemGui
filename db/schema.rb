@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151210045458) do
+ActiveRecord::Schema.define(version: 20151221030920) do
 
   create_table "application_display_properties", force: :cascade do |t|
     t.integer "application_id"
@@ -78,7 +78,16 @@ ActiveRecord::Schema.define(version: 20151210045458) do
     t.string   "background_color"
     t.string   "icon_text_color"
     t.string   "system_label"
-    t.boolean  "show_label"
+    t.text     "desktop_header"
+    t.text     "desktop_footer"
+    t.string   "system_title"
+    t.string   "icon_file_name"
+    t.string   "icon_content_type"
+    t.integer  "icon_file_size"
+    t.datetime "icon_updated_at"
+    t.boolean  "show_desktop_signin"
+    t.boolean  "center_align"
+    t.string   "icon_size"
   end
 
   create_table "domain_certificates", force: :cascade do |t|
