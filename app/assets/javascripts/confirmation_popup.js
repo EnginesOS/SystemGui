@@ -28,7 +28,7 @@ $.rails.showConfirmDialog = function(link) {
 
 	$(document).on('click', '#confirmation_popup_accept_button', function() {
 		$('#confirmation_popup').modal('hide');
-		$('#waiting-for-response-modal').modal('show');
+		show_waiting_for_response_modal();
 		$.rails.confirmed(link);
 	});
 };

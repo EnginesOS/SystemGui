@@ -127,8 +127,12 @@ function load_control_panel_objects() {
 	monitor_object_states();
 }
 
-function load_control_panel_object(obj) {
+function close_modals_for(obj) {
+  obj.find(".modal .close").click();
+};
 
+function load_control_panel_object(obj) {
+  close_modals_for(obj);
 	var url = obj.attr("data-url");
 	// obj.next().html(obj.html());
 	$.ajax({
