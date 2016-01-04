@@ -8,7 +8,7 @@ $(document).ready(function(){
 				$('#installer_find_button').html($('#find_button_when_tags_present').html());
 				$('#search_result_summary').html($('#search_result_summary_when_tags_present').html());
 				bind_trigger_response_modal_events();
-			}
+			};
 			$("#find_by_tags_list_loader").remove();
 		});
 	};
@@ -24,11 +24,11 @@ $(document).ready(function(){
 			$("#gallery_software_loader").remove();
 			update_pagination_link_class();
 			bind_trigger_response_modal_events();
-			});
+		});
 	};
 
-    if ($("#installation_status").length > 0) {
-    	if ($("#installation_progress").html() == '') {
+	if ($("#installation_status").length > 0) {
+		if ($("#installation_progress").html() == '') {
 			$("#installation_progress").html('Starting installation.');
 			var asciiart = "  ______                   _                      \n |  ____|                 (_)                     \n | |__     _ __     __ _   _   _ __     ___   ___ \n |  __|   | '_ \\   / _` | | | | '_ \\   / _ \\ / __|\n | |____  | | | | | (_| | | | | | | | |  __/ \\__ \\\n |______| |_| |_|  \\__, | |_| |_| |_|  \\___| |___/\n                    __/ |                         \n                   |___/\n\n";
 			$("#installation_report").html(asciiart + '       Waiting for installation to complete.');
@@ -58,7 +58,7 @@ $(document).ready(function(){
 				new_line = e.data;
 				if ($("#installation_report").html().indexOf("Waiting for installation to complete.") > -1 ) {
 					$("#installation_report").html('');
-					};
+				};
 				var html = ansi_up.ansi_to_html(new_line);
 				$("#installation_report").append(html + '<br>');
 			};
@@ -66,7 +66,7 @@ $(document).ready(function(){
 			var complete_listener = function(e) {
 				if ($("#installation_report").html().indexOf("Waiting for installation to complete.") > -1 ) {
 					$("#installation_report").html('No report');
-					};
+				};
 				if (e.data == 'done') {
 					var flash_message = build_progress_log_result_message;
 					evtSource.close();
@@ -85,14 +85,21 @@ $(document).ready(function(){
 				};
 			};
 
+			$("#installation_cancel_button").click(
+				function () {
+					evtSource.close();
+					window.location.href = "/application_installation/cancel"
+				}
+			);
+
 			evtSource.addEventListener("installation_report", report_listener);
 			evtSource.addEventListener("installation_progress", progress_listener);
-	    evtSource.addEventListener("message", complete_listener);
+			evtSource.addEventListener("message", complete_listener);
 			evtSource.addEventListener("error", function(e) {
 				evtSource.close();
-				alert('Connection error.');
+				alert('Connection closed. Try reloading the page.');
 			});
 		};
-   };
+	};
 
 });
