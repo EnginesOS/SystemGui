@@ -25,7 +25,7 @@ class Application < ActiveRecord::Base
   accepts_nested_attributes_for :eports
 
   name_regex = /^[A-Za-z0-9]*$/
-  validates :container_name, {format: { with:name_regex, multiline: true, 
+  validates :container_name, {format: { with:name_regex, multiline: true,
       message: "is invalid (please use characters a-z and 0-9)" },
     length: {minimum: 3, maximum: 24}}
 
@@ -34,7 +34,7 @@ class Application < ActiveRecord::Base
   end
 
 # class methods
-  
+
   def self.load_all
     application_container_names_list.map do |container_name|
       load_by_container_name(container_name)
@@ -47,15 +47,15 @@ class Application < ActiveRecord::Base
       application.build_application_display_properties
     end
     unless application.application_display_properties.defaults_set
-      application.build_application_display_properties.set_defaults
+      application.application_display_properties.set_defaults
     end
     application
   end
-  
+
   def self.desktop_applications
-    load_all.select { |application| application.show_on_desktop? }    
+    load_all.select { |application| application.show_on_desktop? }
   end
-  
+
   def self.application_container_names_list
     engines_api.list_apps.sort
   end
