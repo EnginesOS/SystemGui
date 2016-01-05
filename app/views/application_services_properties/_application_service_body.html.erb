@@ -1,8 +1,8 @@
-<div class="col-sm-12">	
-	
+<div class="col-sm-12">
+
 	<div class="pull-right">
 		<% unless application_service.existing_connection.service_detail.immutable %>
-			<%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', 
+			<%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit',
 				edit_application_service_path(application_service.edit_connection_params),
 				class: 'btn btn-default btn-noborder btn-lg trigger-response-modal', title: 'Edit record' %>
 		<% end %>
@@ -18,7 +18,8 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
-				
+				<li class="dropdown-header">Please note: Interconnection of services<br>is a feature that is still under development.</li>
+
 				<% if application_service.existing_connection.available_subservices.present? %>
 					<% application_service.existing_connection.available_subservices.each do |available_subservice| %>
 						<%#= available_subservice.application_service_connection.connection_params %>
@@ -44,24 +45,24 @@
 				<% end %>
 			</ul>
 		</div>
-		
+
 			<%#= application_service.application_subservices.size %>
-		
-		
+
+
 			<% application_service.existing_connection.existing_subservices.each do |existing_subservice| %>
 				<%= application_subservice.to_json %>
 			<% end %>
-		
+
 		<% else %>
-		
+
 		<div class="btn-group dropdown">
-		
+
 			<button class="btn btn-lg btn-noborder btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 				<%= content_tag(:i, "", class: "fa fa-crosshairs") + " Actions" %>
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
-		
+
 				<% [:register, :deregister, :reregister].each do |service_action| %>
 				<li>
 					<%= link_to(
@@ -76,10 +77,10 @@
 					class: "btn-lg trigger-response-modal") %>
 				</li>
 				<% end %>
-		
+
 			</ul>
 		</div>
-		
+
 		<% end %>
 
 	</div>
