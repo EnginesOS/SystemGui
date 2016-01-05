@@ -1,6 +1,7 @@
 class ApplicationDisplayProperties < ActiveRecord::Base
 
   include Rails.application.routes.url_helpers
+  require 'open_uri_redirections'
 
   attr_accessor :set_icon
 
@@ -91,7 +92,7 @@ private
     basename = File.basename(icon_url, extname)
     file = Tempfile.new([basename, extname])
     file.binmode
-    open(URI.parse(icon_url)) do |data|
+    open(URI.parse(icon_url), :allow_redirections => :safe) do |data|
       file.write data.read
     end
     file.rewind
