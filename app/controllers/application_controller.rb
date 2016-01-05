@@ -130,6 +130,7 @@ protected
      params[:controller] == 'desktops' ||
      params[:controller] == 'desktop_applications' ||
      params[:controller] == 'helps' ||
+     (params[:controller] == 'first_runs' && params[:action] == 'done') ||
      devise_controller? ||
      authenticate
   end
@@ -150,7 +151,7 @@ protected
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
     SystemDataCache.cache_system_update_status
-    if FirstRun.required? && !Rails.env.development?
+    if FirstRun.required? ##&& !Rails.env.development?
       first_run_path
     else
       control_panel_path

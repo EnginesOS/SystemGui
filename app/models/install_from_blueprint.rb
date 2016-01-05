@@ -111,6 +111,19 @@ class InstallFromBlueprint < ActiveRecord::Base
     end
   end
 
+  def application_services_to_start
+    @application_services_to_start ||= blueprint_software[:service_configurations].map do |service_configuration|
+      service_container = engines_api.software_service_definition(
+                                        publisher_namespace: service_configuration[:publisher_namespace],
+                                        type_path: service_configuration[:type_path])
+      service_container_name = service_container[:service_container]
+      Service.load_by_container_name(service_container_name).state[:state]
+      if Service.load_by_container_name(service_container_name).state[:state] != :running
+        service_container[:title]
+      end
+    end.compact
+  end
+
   def license_terms_and_conditions_accepted_validation
     if license_terms_and_conditions != "1"
       errors.add(:license_terms_and_conditions, ["License", "must be accepted"])
@@ -138,9 +151,13 @@ class InstallFromBlueprint < ActiveRecord::Base
 
   def unique_application_name
     unique_application_name_candidate = default_name
+    unique_application_name_base = default_name
     index = 2
     while existing_engine_names.include? unique_application_name_candidate do
-      unique_application_name_candidate = default_name + index.to_s
+      while (unique_application_name_base.length + index.to_s.length) > 16 do
+        unique_application_name_base.chop
+      end
+      unique_application_name_candidate = unique_application_name_base + index.to_s
       index += 1
     end
     unique_application_name_candidate
