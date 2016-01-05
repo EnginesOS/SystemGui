@@ -144,7 +144,8 @@ Rails.application.routes.draw do
 
   resource :installer
   resource :application_installation do
-    get(:preparing_installation, :preparing_installation_progress, :installing, :progress, :cancel)
+    get(:preparing_installation, :preparing_installation_progress, :installing,
+     :progress, :cancel)
   end
   resource :install_from_blueprint
   resource :install_from_repository_url
@@ -155,7 +156,6 @@ Rails.application.routes.draw do
 
   resource :first_run do
     get :cancel
-    get :done
   end
 
 #Help

@@ -22,7 +22,8 @@ class FirstRunsController < ApplicationController
             password: first_run_params[:admin_password],
             password_confirmation: first_run_params[:admin_password_confirmation],
             )
-          redirect_to done_first_run_path
+          flash[:notice] = 'The setup wizard ran successfully. Please sign in again, using your new admin passord.'
+          redirect_to desktop_path
         else
           flash[:alert] =  'There was a problem with the setup wizard. ' + result.result_mesg[0..500]
           redirect_to first_run_path(first_run: first_run_params)
@@ -39,10 +40,6 @@ class FirstRunsController < ApplicationController
   def cancel
     sign_out current_user
     redirect_to desktop_path
-  end
-
-  def done
-    render layout: 'empty_navbar'
   end
 
 private

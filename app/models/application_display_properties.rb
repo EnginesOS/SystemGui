@@ -96,7 +96,10 @@ private
     end
     file.rewind
     return file
-  rescue
+  rescue => e
+    p :failed_to_load_icon
+    p e.message
+    p e.backtrace
     return nil
   end
 
