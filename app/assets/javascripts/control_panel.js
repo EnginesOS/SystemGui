@@ -146,6 +146,7 @@ function load_control_panel_object(obj) {
 		},
 		error: function(response, status, error){
 			if (response.status == 500) {
+        obj.remove();
 				document.write(response.responseText);
 			} else if (response.status == 0) {
 				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
