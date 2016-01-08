@@ -1,0 +1,17 @@
+<div class="col-sm-12">
+  <h2><%= content_tag(:i, "", class: "fa fa-th") %> Libraries</h2>
+
+  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+  <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_library_path, class: "btn btn-primary btn-lg trigger-response-modal" %>
+
+  <% if @libraries.present? %>
+      <% @libraries.each do |library| %>
+          <%= render partial: "show", locals: { library: library } %>
+      <% end %>
+  <% else %>
+      <p class='top-gap'>No libraries.</p>
+  <% end %>
+
+  <%= render 'settings' %>
+
+</div>
