@@ -134,15 +134,15 @@ module Engines::Application
   end
 
   {
-    stop: 'stopEngine',
-    start: 'startEngine',
-    pause: 'pauseEngine',
-    unpause: 'unpauseEngine',
+    stop_container: 'stopEngine',
+    start_container: 'startEngine',
+    pause_container: 'pauseEngine',
+    unpause_container: 'unpauseEngine',
     destroy_container: 'destroyEngine',
-    reinstall_software: 'reinstall_engine',
-    restart: 'restartEngine',
+    reinstall: 'reinstall_engine',
+    restart_container: 'restartEngine',
     create_container: 'createEngine',
-    recreate: 'recreateEngine'
+    recreate_container: 'recreateEngine'
   }.
   each do |method, instruction|
     define_method(method) do |options={}|
