@@ -3,25 +3,25 @@
 <div class="row">
   <div class="col-sm-12">
     <table>
-      <tr><td><label>Name</label></td><td><%= @application.container_name %></td></tr> 
+      <tr><td><label>Name</label></td><td><%= @application.container_name %></td></tr>
       <tr><td><label>Websites</label></td><td>
       	<% @application.web_sites.each do |web_site| %>
       		<a href=<%= web_site %>><%= web_site %></a>
         <% end %>
-      </td></tr> 
-      <tr><td><label>Current state</label></td><td><%= state %></td></tr>
-      <tr><td><label>Default state</label></td><td><%= @application.default_startup_state %></td></tr> 
+      </td></tr>
       <tr><td><label>Memory</label></td><td><%= @application.memory %> MB</td></tr>
       <tr><td><label>Framework</label></td><td><%= @application.framework %>/<%= @application.runtime %></td></tr>
       <tr><td><label>Image</label></td><td><%= @application.image %></td></tr>
       <tr><td><label>Blue print source</label></td><td><%= @application.repository %></td></tr>
+      <tr><td><label>Default state</label></td><td><%= @application.default_startup_state %></td></tr>
     </table>
+    <label>Current state</label>
+    <%= (ap state, plain: true, index: false).html_safe %>
   </div>
-
 </div>
 
 <div class="row">
-  <div class="col-sm-12 top-gap">
+  <div class="col-sm-12">
 
     <label>Installation report</label>
      <% report = @application.installation_report %>
@@ -65,11 +65,11 @@
 	<label>Last error</label>
 	<% last_error = @application.last_error %>
 	<% if last_error.present? %>
-		<pre><%= last_error %></pre>		
+		<pre><%= last_error %></pre>
     <% else %>
  		<pre>None</pre>
   	<% end %>
-  
+
     <label>Variables</label>
     <% software_variables = @application.build_application_variables_properties.variables %>
       <% if software_variables.is_a? Array %>
@@ -86,11 +86,11 @@
         <% end %>
     <% else %>
       <pre>None</pre>
-    <% end %>  
+    <% end %>
 
-     <label>Statistics</label>  
-    <% if state != "nocontainer" 
-	       stats = @application.stats 
+     <label>Statistics</label>
+    <% if state != "nocontainer"
+	       stats = @application.stats
 	       if stats.present?  %>
 		    <pre><table>
 	          <tr><td>State: <%= stats.state  %></tr></td>
@@ -111,18 +111,18 @@
      <% else %>
       <pre>None</pre>
      <% end %>
-  
+
      <label>Processes</label>
      <% processes = @application.ps_container %>
      <% if processes.is_a? Array %>
        <pre><table>
-         <% processes.each_line do |line | 
+         <% processes.each_line do |line |
            vals = line.split %>
            <tr>
-             <% vals.each do |v| %>  
+             <% vals.each do |v| %>
                <td><%= v %></td>
              <% end %>
-           </tr>    
+           </tr>
          <% end %>
        </table></pre>
      <% else %>
