@@ -4,24 +4,24 @@ module EnginesServicesSystemActions
     do_service_action :create_container
   end
 
-  def recreate
-    do_service_action :recreate
+  def recreate_container
+    do_service_action :recreate_container
   end
 
-  def stop
-    do_service_action :stop
+  def stop_container
+    do_service_action :stop_container
   end
 
-  def start
-    do_service_action :start
+  def start_container
+    do_service_action :start_container
   end
 
-  def pause
-    do_service_action :pause
+  def pause_container
+    do_service_action :pause_container
   end
 
-  def unpause
-    do_service_action :unpause
+  def unpause_container
+    do_service_action :unpause_container
   end
 
   def register_website
@@ -39,7 +39,7 @@ module EnginesServicesSystemActions
   def deregister_dns
     do_service_action :deregister_dns
   end
-  
+
   def reload
     sleep(0.2)
     render partial: 'control_panel_services/show'
