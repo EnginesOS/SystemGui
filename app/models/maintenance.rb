@@ -11,6 +11,11 @@ class Maintenance
     elsif Library.first.url != "engineslibrary.engines.onl"
       Library.first.update(url: "engineslibrary.engines.onl", name: "Engines Library")
     end
+    LibrarySettings.instance.update(default_library_id: 1) if deafult_library_id_invalid
+  end
+
+  def self.deafult_library_id_invalid
+    Library.where(id: LibrarySettings.instance.default_library_id).empty?
   end
 
   def self.remove_orphaned_softwares
