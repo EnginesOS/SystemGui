@@ -4,7 +4,7 @@ class SettingsController < ApplicationController
   def index
     @users = User.all
     @backup_tasks = BackupTask.all
-    @galleries = Gallery.all
+    @libraries = Library.all
     @domains = Domain.all
   end
 
