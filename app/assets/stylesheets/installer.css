@@ -21,7 +21,6 @@
   vertical-align: middle;
   max-height: 96px;
   max-width: 250px;
-  border-radius: 5px;
 }
 
 .installer .engine-install-name {
@@ -45,11 +44,11 @@
 }
 
 @media (max-width:991px) {
-	
+
 	.installer .engine-install-name {
 	  height: 24px;
 	}
-	
+
 	.installer .engine-install-detail {
 		height: 39px;
 	}
@@ -57,7 +56,7 @@
 	#installer_find_button .btn{
 		width: inherit;
 	}
-	
+
 	#installer_library_select .btn{
 		width: inherit;
 	}
@@ -90,7 +89,7 @@
 	padding: 3px 20px;
 	line-height: 1.42857;
 	min-width: 100%;
-	text-align: left;	
+	text-align: left;
 	border: none;
 	border-radius: 0px;
 	background-color: #FFF;
