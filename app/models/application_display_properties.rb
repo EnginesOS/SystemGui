@@ -11,7 +11,6 @@ class ApplicationDisplayProperties < ActiveRecord::Base
         medium: "128x128>",
         large: "256x256>" }
   validates_attachment_content_type :icon, :content_type => /\Aimage\/.*\Z/
-  # validates :icon, image_dimensions: { width: 128, height: 128 }
 
   belongs_to :application
 
