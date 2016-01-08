@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken do
     reset_session
-    redirect_to desktop_path, notice: 'Token error. Please sign in again.'
+    redirect_to desktop_path, alert: 'Token error. Please sign in again.'
   end
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
