@@ -1,6 +1,6 @@
-<%= form_for @gallery do |f| %>
+<%= form_for @library do |f| %>
   <%= render partial: 'shared/form/errors', locals: {f: f} %>
   <%= render partial: 'shared/form/text_field', locals: {name: :url, label: 'URL', f: f} %>
   <%= render partial: 'shared/form/text_field', locals: {name: :name, label: 'Name', f: f} %>
-  <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: galleries_path} %>
+  <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: libraries_path} %>
 <% end %>

@@ -5,8 +5,8 @@
   <% license_title = ff.object.license_label || ff.object.license_name %>
   <%= render 'shared/form/link', link_text: license_title, label_text: false, url: ff.object.license_sourceurl, target: license_title.underscore %>
   <%= render 'shared/form/checkbox', name: :license_terms_and_conditions, label: 'Accept', f: ff %>
-  <%= ff.hidden_field :gallery_url %>
-  <%= ff.hidden_field :gallery_software_id %>
+  <%= ff.hidden_field :library_url %>
+  <%= ff.hidden_field :library_software_id %>
   <%= ff.hidden_field :default_image_url %>
   <%= ff.hidden_field :repository_url %>
   <%= ff.hidden_field :license_name %>

@@ -224,19 +224,29 @@ module Engines::Service
     (result.is_a?(EnginesOSapiResult) ? {} : result[:variables]) || {}
   end
 
-  def stop
+  def actionators
+    system_service_object.blank? ? nil : system_service_object.get_readers
+  end
+
+  def action_result_for(action)
+    system_service_object.blank? ? nil : system_service_object.get_reader(action)
+  rescue => e
+   e.to_s
+  end
+
+  def stop_container
     engines_api.stopService container_name
   end
 
-  def start
+  def start_container
     engines_api.startService container_name
   end
 
-  def pause
+  def pause_container
     engines_api.pauseService container_name
   end
 
-  def unpause
+  def unpause_container
     engines_api.unpauseService container_name
   end
 
@@ -244,7 +254,7 @@ module Engines::Service
     engines_api.createService container_name
   end
 
-  def recreate
+  def recreate_container
     engines_api.recreateService container_name
   end
 

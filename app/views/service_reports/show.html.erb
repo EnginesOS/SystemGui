@@ -3,19 +3,20 @@
 <div class="row">
   <div class="col-sm-12">
     <table>
-      <tr><td><label>name</label></td><td><%= @service.container_name %></td></tr> 
+      <tr><td><label>name</label></td><td><%= @service.container_name %></td></tr>
       <tr><td><label>Websites</label></td><td>
       	<% @service.web_sites.each do |web_site| %>
       		<a href=http://<%= web_site %>><%= web_site %></a>
         <% end %>
-      </td></tr> 
-      <tr><td><label>Current state</label></td><td><%= state %></td></tr>
-      <tr><td><label>Default state</label></td><td><%= @service.default_startup_state %></td></tr> 
+      </td></tr>
       <tr><td><label>Memory</label></td><td><%= @service.memory %> MB</td></tr>
       <tr><td><label>Framework</label></td><td><%= @service.framework %>/<%= @service.runtime %></td></tr>
       <tr><td><label>Image</label></td><td><%= @service.image %> </td></tr>
       <tr><td><label>Blue print source</label></td><td><%= @service.repository %> </td></tr>
+      <tr><td><label>Default state</label></td><td><%= @service.default_startup_state %></td></tr>
     </table>
+    <label>Current state</label>
+    <%= (ap state, plain: true, index: false).html_safe %>
   </div>
 
 </div>
@@ -52,7 +53,7 @@
 
     <label>Last error</label>
     <pre><table><tr><td><%= @service.last_error %></td></tr></table></pre>
-  
+
     <label>Environment</label>
     <% environments = @service.environments %>
     <% if environments.is_a?(Array) && environments.length > 0 %>
@@ -83,10 +84,10 @@
       </table></pre>
     <% else %>
       <pre>None</pre>
-    <% end %>  
+    <% end %>
 
     <label>Consumers</label>
-    <% if @service.consumers.is_a?(Array) %>                
+    <% if @service.consumers.is_a?(Array) %>
       <pre><table>
         <% @service.consumers.each do |cons|%>
            <tr><td><%= cons %></td></tr>
@@ -94,10 +95,10 @@
       </table></pre>
     <% else %>
       <pre>None</pre>
-    <% end %>  
+    <% end %>
 
-     <label>Statistics</label>  
-    <% if state != "nocontainer" 
+     <label>Statistics</label>
+    <% if state != "nocontainer"
       stats = @service.stats
       if stats != nil && stats != false  %>
         <pre><table>
@@ -114,18 +115,18 @@
     <% else %>
       <pre>None</pre>
      <% end %>
-  
+
      <label>Processes</label>
      <% processes = @service.ps_container %>
      <% if processes.is_a? Array %>
        <pre><table>
-         <% processes.each_line do |line | 
+         <% processes.each_line do |line |
            vals = line.split %>
            <tr>
-             <% vals.each do |v| %>  
+             <% vals.each do |v| %>
                <td><%= v %></td>
              <% end %>
-           </tr>    
+           </tr>
          <% end %>
        </table></pre>
      <% else %>

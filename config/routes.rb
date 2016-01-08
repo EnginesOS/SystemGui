@@ -95,11 +95,11 @@ Rails.application.routes.draw do
 
 #Libraries
 
-  resources :galleries
-  resource :gallery_software do
+  resources :libraries
+  resource :library_software do
     get :tags_list
   end
-  resource :gallery_settings
+  resource :library_settings
 
 #Applications
 
@@ -124,27 +124,31 @@ Rails.application.routes.draw do
   resource :application_uninstall
   resource :applications do
     get(
-      :start, :stop, :pause, :unpause, :restart,
-      :create_container, :destroy_container,
-      :reinstall, :delete_image,
-      :build, :recreate, :open_first_run, :reload)
+      :start_container, :stop_container, :pause_container, :unpause_container, :restart_container,
+      :create_container, :destroy_container, :recreate_container,
+      :reinstall, :open_first_run, :reload)
   end
 
 #Services
 
   resource :service_report
   resource :service_configuration
+  resources :service_actions
+  resource :service_action_display_text
+  resource :service_action_open_url
+  resource :service_action_download_file
   resource :services do
     get(
-      :pause, :unpause, :start, :stop,
-      :restart, :recreate, :create_container, :reload) # :show,
+      :pause_container, :unpause_container, :start_container, :stop_container,
+      :restart_container, :recreate_container, :create_container, :reload) # :show,
   end
 
 #Installer
 
   resource :installer
   resource :application_installation do
-    get(:preparing_installation, :preparing_installation_progress, :installing, :progress, :cancel)
+    get(:preparing_installation, :preparing_installation_progress, :installing,
+     :progress, :cancel)
   end
   resource :install_from_blueprint
   resource :install_from_repository_url
@@ -155,7 +159,6 @@ Rails.application.routes.draw do
 
   resource :first_run do
     get :cancel
-    get :done
   end
 
 #Help

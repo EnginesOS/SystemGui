@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken do
     reset_session
-    redirect_to desktop_path, notice: 'Token error. Please sign in again.'
+    redirect_to desktop_path, alert: 'Token error. Please sign in again.'
   end
 
   require '/opt/engines/lib/ruby/api/public/engines_osapi.rb'
@@ -60,7 +60,7 @@ protected
       'service_reports',
       'application_abouts',
       'service_abouts',
-      'gallery_softwares',
+      'library_softwares',
       'system_monitor_charts',
       'control_panel_applications_states',
       'control_panel_services_states'
@@ -159,6 +159,12 @@ protected
   end
 
   def render_500(exception)
+
+# ENV['SEND_BUG_REPORTS'] = false.to_s
+p :send_bug_reports_check
+p ENV['SEND_BUG_REPORTS']
+
+
     SystemUtils.log_exception exception
     @exception = exception
     render 'systems/500', :status => 500, layout: 'empty_navbar'
