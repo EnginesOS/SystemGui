@@ -10,7 +10,6 @@ class ApplicationUninstallsController < ApplicationController
   def create
     @application_uninstall = ApplicationUninstall.new application_uninstall_params
     if @application_uninstall.uninstall
-p :redirect_to_control_panel      
       redirect_to control_panel_path, notice: "Successfully uninstalled #{@application_uninstall.application_name}."
     else
       msg = @application_uninstall.engines_api_error
