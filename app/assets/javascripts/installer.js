@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
 	if ($("#find_by_tags_list_loader").length > 0) {
-		var gallery_id = $("#find_by_tags_list_loader").data('galleryid');
-		$.get("gallery_software/tags_list", {gallery_id: gallery_id}, function(tags_list){
+		var library_id = $("#find_by_tags_list_loader").data('libraryid');
+		$.get("library_software/tags_list", {library_id: library_id}, function(tags_list){
 			if (tags_list) {
 				$("#find_by_tags_list_holder").html(tags_list);
 				$('#installer_find_button').html($('#find_button_when_tags_present').html());
@@ -13,15 +13,15 @@ $(document).ready(function(){
 		});
 	};
 
-	if ($("#gallery_software_loader").length > 0 ) {
-		var gallery_id = $("#gallery_software_loader").data('galleryid');
-		var search = $("#gallery_software_loader").data('search');
-		var tags = $("#gallery_software_loader").data('tags');
-		var page = $("#gallery_software_loader").data('page');
-		$.get("gallery_software", {gallery_id: gallery_id, search: search, tags: tags, page: page}, function(data){
-			$("#gallery_software_holder").html(data);
-			$("#gallery_software_holder").show();
-			$("#gallery_software_loader").remove();
+	if ($("#library_software_loader").length > 0 ) {
+		var library_id = $("#library_software_loader").data('libraryid');
+		var search = $("#library_software_loader").data('search');
+		var tags = $("#library_software_loader").data('tags');
+		var page = $("#library_software_loader").data('page');
+		$.get("library_software", {library_id: library_id, search: search, tags: tags, page: page}, function(data){
+			$("#library_software_holder").html(data);
+			$("#library_software_holder").show();
+			$("#library_software_loader").remove();
 			update_pagination_link_class();
 			bind_trigger_response_modal_events();
 		});
