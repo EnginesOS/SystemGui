@@ -63,8 +63,13 @@ module Engines::Application
     end
   end
 
+  def get_first_run_web_site
+    result = engines_api.get_resolved_engine_string(blueprint_software_details['first_run_url'], container)
+    result if result.is_a? String
+  end
+
   def first_run_web_site
-    blueprint['first_run_url'] || primary_web_site
+    @first_run_web_site ||= get_first_run_web_site || primary_web_site
   end
 
   {
