@@ -6,10 +6,10 @@ class Maintenance
   end
 
   def self.check_default_library
-    if Gallery.count == 0
-      Gallery.create(url: "engineslibrary.engines.onl", name: "Engines Library")
-    elsif Gallery.first.url != "engineslibrary.engines.onl"
-      Gallery.first.update(url: "engineslibrary.engines.onl", name: "Engines Library")
+    if Library.count == 0
+      Library.create(url: "engineslibrary.engines.onl", name: "Engines Library")
+    elsif Library.first.url != "engineslibrary.engines.onl"
+      Library.first.update(url: "engineslibrary.engines.onl", name: "Engines Library")
     end
   end
 

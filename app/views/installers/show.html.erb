@@ -15,7 +15,7 @@
 
     <%= form_tag installer_path(), method: 'get' do %>
         <%= hidden_field_tag :tags, params[:tags] %>
-	    <%= hidden_field_tag :gallery_id, @gallery.id %>
+	    <%= hidden_field_tag :library_id, @library.id %>
 
 		<div class="col-md-3 top-gap">
 	  		<%= render 'library_select' %>
@@ -27,7 +27,7 @@
 	          </button>
             </div>
 
-            <div id="find_by_tags_list_loader" class="hidden" data-galleryid="<%= @gallery.id %>"></div>
+            <div id="find_by_tags_list_loader" class="hidden" data-libraryid="<%= @library.id %>"></div>
             <div id="find_button_when_tags_present" style="display:none;">
             	<div class="dropdown">
 	          	  <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">
@@ -62,20 +62,20 @@
 					<span id="search_result_summary">
 				  		<%= ("search '#{params[:search]}'") if params[:search].present? %>
 				  	</span>
-					<%= link_to content_tag(:i, nil, class: "fa fa-times"), installer_path(gallery_id: @gallery.id), title: "Clear", class: 'search-clear-button trigger-response-modal' %>
+					<%= link_to content_tag(:i, nil, class: "fa fa-times"), installer_path(library_id: @library.id), title: "Clear", class: 'search-clear-button trigger-response-modal' %>
 			  	</h3>
 			</div>
 		<% else %>
 			<br>
 		<% end %>
-		<div id="gallery_software_loader" data-galleryid="<%= @gallery.id %>"
+		<div id="library_software_loader" data-libraryid="<%= @library.id %>"
 						data-search="<%= params[:search] %>" data-tags="<%= params[:tags] == 'All' ? nil : params[:tags] %>"
 						data-page="<%= params[:page] %>">
-			<div class="text-center" id="gallery_softwares_loading_spinner">
+			<div class="text-center" id="library_softwares_loading_spinner">
 				<%= content_tag(:i, nil, class: "fa fa-spinner fa-spin text-center") + " Loading..."%>
 			</div>
 		</div>
-		<div class="col-sm-12" id="gallery_software_holder"></div>
+		<div class="col-sm-12" id="library_software_holder"></div>
 	</div>
 
 </div>

@@ -22,6 +22,7 @@ class SystemBaseUpdatesController < ApplicationController
       render text: "busy"
     else
       render text: "done"
+      SystemDataCache.cache_system_update_status
     end
   end
 
