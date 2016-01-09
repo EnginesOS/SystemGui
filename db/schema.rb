@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221030920) do
+ActiveRecord::Schema.define(version: 20160105200757) do
 
   create_table "application_display_properties", force: :cascade do |t|
     t.integer "application_id"
@@ -108,21 +108,21 @@ ActiveRecord::Schema.define(version: 20151221030920) do
     t.integer "application_id"
   end
 
-  create_table "galleries", force: :cascade do |t|
-    t.string "url"
-    t.string "name"
-  end
-
-  create_table "gallery_settings", force: :cascade do |t|
-    t.integer "default_gallery_id"
-  end
-
   create_table "install_from_blueprints", force: :cascade do |t|
     t.integer "application_id"
   end
 
   create_table "install_from_docker_hubs", force: :cascade do |t|
     t.integer "application_id"
+  end
+
+  create_table "libraries", force: :cascade do |t|
+    t.string "url"
+    t.string "name"
+  end
+
+  create_table "library_settings", force: :cascade do |t|
+    t.integer "default_library_id"
   end
 
   create_table "service_configurations", force: :cascade do |t|

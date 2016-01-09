@@ -6,6 +6,8 @@ class ApplicationsController < ApplicationController
 
   def open_first_run
     if @application.first_run_web_site.present?
+      p :first_run_site
+      p @application.first_run_web_site
       redirect_to @application.first_run_web_site, target: @application.container_name
     else
       render text: "No website URL for #{@application.container_name}", target: @application.container_name

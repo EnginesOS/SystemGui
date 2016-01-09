@@ -4,28 +4,28 @@ module EnginesApplicationSystemActions
     do_service_action :create_container
   end
 
-  def recreate
-    do_service_action :recreate
+  def recreate_container
+    do_service_action :recreate_container
   end
 
-  def stop
-    do_service_action :stop
+  def stop_container
+    do_service_action :stop_container
   end
 
-  def start
-    do_service_action :start
+  def start_container
+    do_service_action :start_container
   end
 
-  def restart
-    do_service_action :restart
+  def restart_container
+    do_service_action :restart_container
   end
 
-  def pause
-    do_service_action :pause
+  def pause_container
+    do_service_action :pause_container
   end
 
-  def unpause
-    do_service_action :unpause
+  def unpause_container
+    do_service_action :unpause_container
   end
 
   def register_website
@@ -48,12 +48,12 @@ module EnginesApplicationSystemActions
     do_service_action :destroy_container
   end
 
-  def delete_image
-    do_service_action :delete_image
-  end
+  # def delete_image
+  #   do_service_action :delete_image
+  # end
 
-  def restart
-    do_service_action :restart
+  def restart_container
+    do_service_action :restart_container
   end
 
   def reinstall
@@ -81,7 +81,7 @@ private
       render partial: 'control_panel_applications/show'
     else
       render partial: 'control_panel_applications/show', alert: "Error. #{result.result_mesg[0..500]}"
-    end      
+    end
   end
 
 

@@ -1,6 +1,6 @@
-<% if @gallery.software_tags_list.present? %>
+<% if @library.software_tags_list.present? %>
     <li class="divider"></li>
-    <% @gallery.software_tags_list.each do |tag_name| %>
+    <% @library.software_tags_list.each do |tag_name| %>
       <li>
         <%= submit_tag tag_name, name: 'tags', class: 'btn-lg trigger-response-modal find_by_dropdown_submit_button' %>
       </li>

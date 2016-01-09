@@ -6,8 +6,8 @@
 		  software_detail = software[:detail]
 		  library_page_url = software[:library_page_url]
 		  image_url =
-			  if software[:icon_url_from_gallery].present?
-			    software[:icon_url_from_gallery]
+			  if software[:icon_url_from_library].present?
+			    software[:icon_url_from_library]
 			  elsif software[:icon_url].present?
 			    software[:icon_url]
 			  else
@@ -22,7 +22,7 @@
 		  						tags: params[:tags],
 								search: params[:search],
 								page: params[:page],
-								gallery_id: params[:gallery_id]) 
+								library_id: params[:library_id]) 
 		%>
 
 			<div class="col-md-3 install-software-panel">

@@ -1,6 +1,5 @@
 class ServiceConfigurationsController < ApplicationController
 
-  
   def show
     @service = Service.where(container_name: params[:service_name]).new
   end
@@ -18,14 +17,11 @@ class ServiceConfigurationsController < ApplicationController
       render :edit
     end
   end
- 
+
 private
- 
+
   def service_configuration_params
     params.require(:service_configuration).permit!
   end
-  
+
 end
-
-
-  

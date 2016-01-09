@@ -1,4 +1,4 @@
-class Gallery < ActiveRecord::Base
+class Library < ActiveRecord::Base
 
   validates :url, presence: true
   validates :name, presence: true
@@ -11,12 +11,12 @@ class Gallery < ActiveRecord::Base
     all.sort_by{|d| d.name}
   end
 
-  def self.gallery_names
+  def self.library_names
     all_sorted.map(&:name)
   end
 
   def softwares(find_software_params={})
-    @softwares ||= ( load_gallery_data(softwares_url(find_software_params)) || [] )
+    @softwares ||= ( load_library_data(softwares_url(find_software_params)) || [] )
     if @softwares.is_a? Array
       @softwares = {softwares: @softwares, total_pages: 1}
     end
@@ -24,7 +24,7 @@ class Gallery < ActiveRecord::Base
   end
   
   def software_tags_list
-    @software_tags_list ||= load_gallery_data(software_tags_url)
+    @software_tags_list ||= load_library_data(software_tags_url)
   end
 
   
@@ -39,11 +39,11 @@ class Gallery < ActiveRecord::Base
 
 private
 
-  def load_gallery_data(gallery_data_url)
-    gallery_uri = URI(gallery_data_url)
-    return nil if (gallery_uri.host.nil? || gallery_uri.port.nil?)
-    Net::HTTP.start(gallery_uri.host, gallery_uri.port) do |http|
-      request = Net::HTTP::Get.new gallery_uri
+  def load_library_data(library_data_url)
+    library_uri = URI(library_data_url)
+    return nil if (library_uri.host.nil? || library_uri.port.nil?)
+    Net::HTTP.start(library_uri.host, library_uri.port) do |http|
+      request = Net::HTTP::Get.new library_uri
       http.read_timeout = 10 #Default is 60 seconds
       response = http.request request 
       if response.code.to_i >= 200 && response.code.to_i < 400 
