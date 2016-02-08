@@ -66,10 +66,17 @@ protected
   end
 
   def cache_system_update_status
+    current_system_update_status = SystemDataCache.system_update_status
+    is_updating = current_system_update_status[:is_base_system_updating] || current_system_update_status[:is_engines_system_updating]
+
+p :is_updating
+p is_updating
+
+
     if (
         ( params[:controller] == 'systems' && params[:action] == 'status' ) ||
         params[:controller] == 'system_base_updates' ||
-        params[:controller] == 'system_engines_updates'
+        params[:controller] == 'system_engines_updates' || is_updating
       )
       SystemDataCache.cache_system_update_status
     end

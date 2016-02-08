@@ -12,6 +12,8 @@ class UserSessionsController < Devise::SessionsController
 
   def create
 
+p :create_new_user_session
+
     Maintenance.full_maintenance
     SystemDataCache.cache_system_update_status
 
