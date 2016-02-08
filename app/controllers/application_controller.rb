@@ -80,6 +80,7 @@ protected
       cache_system_update_status
       @system_status = System.status
 
+p :params
 p :system_status_set_to
 p @system_status
 
