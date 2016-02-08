@@ -11,14 +11,18 @@ class UserSessionsController < Devise::SessionsController
   # end
 
   def create
+
+    Maintenance.full_maintenance
+    SystemDataCache.cache_system_update_status
+
+p :cached_system_update_status
+p SystemDataCache.system_update_status
+
+    p :about_to_sign_in
+
     super
       p :now_signed_in
-    
-          Maintenance.full_maintenance
-          SystemDataCache.cache_system_update_status
 
-      p :cached_system_update_status
-      p SystemDataCache.system_update_status
 
   end
 
