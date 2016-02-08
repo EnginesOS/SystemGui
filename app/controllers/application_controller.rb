@@ -68,11 +68,6 @@ protected
   def cache_system_update_status
     current_system_update_status = SystemDataCache.system_update_status
     is_updating = current_system_update_status[:is_base_system_updating] || current_system_update_status[:is_engines_system_updating]
-
-p :is_updating
-p is_updating
-
-
     if (
         ( params[:controller] == 'systems' && params[:action] == 'status' ) ||
         params[:controller] == 'system_base_updates' ||
@@ -86,12 +81,6 @@ p is_updating
     if user_signed_in?
       cache_system_update_status
       @system_status = System.status
-
-p :params
-p params
-p :system_status_set_to
-p @system_status
-
       return if params[:controller] == 'navbar_system_statuses'
       case @system_status[:state]
       when :restarting
@@ -103,9 +92,6 @@ p @system_status
           alert: 'Please wait for base operating system to update.' \
           if params[:controller] != 'system_base_updates'
       when :engines_updating
-
-p :REDIRECT_TO_system_engines_update_path
-
         redirect_to system_engines_update_path,
           alert: "Please wait for Engines to update." \
           if params[:controller] != 'system_engines_updates'
@@ -170,12 +156,6 @@ p :REDIRECT_TO_system_engines_update_path
   end
 
   def render_500(exception)
-
-# ENV['SEND_BUG_REPORTS'] = false.to_s
-p :send_bug_reports_check
-p ENV['SEND_BUG_REPORTS']
-
-
     SystemUtils.log_exception exception
     @exception = exception
     render 'systems/500', :status => 500, layout: 'empty_navbar'

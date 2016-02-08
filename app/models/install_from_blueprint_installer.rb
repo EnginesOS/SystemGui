@@ -18,15 +18,7 @@ class InstallFromBlueprintInstaller
   def persist_application
     Application.where(container_name: @install_from_blueprint.application.container_name).first_or_create.tap do |application|
       application.build_application_display_properties unless application.build_application_display_properties.present?
-
-p :install_from_blueprint_installer_icon_url
-p @install_from_blueprint.installer_icon_url
-
       application.assign_attributes(application_display_properties_attributes: { installer_icon_url: @install_from_blueprint.installer_icon_url })
-
-      p :application_application_display_properties_installer_icon_url
-      p application.application_display_properties.installer_icon_url
-
       application.save
     end
   end

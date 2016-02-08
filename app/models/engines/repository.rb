@@ -21,13 +21,9 @@ private
   rescue
     false
   end
-  
+
   def load_blueprint_with_http_get
     url = URI.parse(@url)
-    
-p :url
-p url
-
     request = Net::HTTP::Get.new(url.to_s)
     result = Net::HTTP.start(url.host, url.port) {|http|
       http.request(request)
@@ -55,7 +51,7 @@ p url
 
   def backup_lastbuild
     buildname = File.basename(@url)
-    segments = buildname.split('.')   
+    segments = buildname.split('.')
     buildname = segments[0]
     dir = SystemConfig.DeploymentDir + "/" + buildname
     if Dir.exists?(dir)
@@ -64,7 +60,7 @@ p url
         FileUtils.rm_rf backup
       end
       FileUtils.mv(dir,backup)
-    end     
+    end
   end
 
 end
