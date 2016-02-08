@@ -15,7 +15,9 @@ module System
   end
 
   def self.cache_status_from_api
-    @status_from_api = engines_api.system_status.merge(SystemDataCache.system_update_status).merge(build_status_from_api)
+    @status_from_api = engines_api.system_status.
+              merge(SystemDataCache.system_update_status).
+              merge({did_build_fail: SystemDataCache.failed_build_flag})
   end
 
   def self.build_status_from_api
@@ -82,6 +84,8 @@ module System
         {state: :needs_engines_update ,message: "Engines update required", message_class: :danger, title: 'Click to update Engines', button_url: '/system/updater'}
       elsif @status_from_api[:needs_base_update]
         {state: :needs_base_update ,message: "Base OS update required", message_class: :danger, title: 'Click to update the base system', button_url: '/system/updater'}
+      # elsif @status_from_api[:did_build_fail]
+      #   {state: :install_failed ,message: "Installation failed", message_class: :danger, title: 'Click to update the base system'}
       else
         {state: :ok, message: "OK", message_class: :ok, title: 'System status'}
       end)
@@ -107,8 +111,8 @@ module System
     engines_api.get_services_states
   end
 
-  def self.waiting_for_installation_to_commence
-    !@status_from_api[:is_building] && SystemDataCache.instance.failed_build_flag != true
-  end
+  # def self.waiting_for_installation_to_commence
+  #   !@status_from_api[:is_building] && SystemDataCache.instance.failed_build_flag != true
+  # end
 
 end

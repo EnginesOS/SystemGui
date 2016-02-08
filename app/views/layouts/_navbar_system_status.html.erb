@@ -1,6 +1,6 @@
 <div id='system_status_area' class="<%= @system_status[:message_class] %>" data-reload="<%= @system_status[:reload] %>" title="<%= @system_status[:title] %>">
 	<% if @system_status[:state] == :ok %>
-	  
+
 	<% elsif @system_status[:button_url].nil? %>
 	  <span id="system_status_navbar_message_button" class="<%= @system_status[:message_class] %>">
 	  	<div id="system_status_navbar_message_icon">

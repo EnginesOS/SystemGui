@@ -14,15 +14,27 @@ class SystemDataCache < ActiveRecord::Base
   end
 
 
+  def self.cache_system_build_fail
+    if System.build_status_from_api[:did_build_fail]
+      turn_on_failed_build_flag
+    end
+  end
+
   def self.failed_build_flag
+p :check_failed_build_flag
+p instance.failed_build_flag
+p :done_check_failed_build_flag
+
     instance.failed_build_flag == true
   end
 
   def self.clear_failed_build_flag
+p :turn_off_failed_build_flag
     instance.update(failed_build_flag: false)
   end
 
   def self.turn_on_failed_build_flag
+p :turn_on_failed_build_flag
     instance.update(failed_build_flag: true)
   end
 

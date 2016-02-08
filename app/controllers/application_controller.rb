@@ -26,9 +26,7 @@ protected
   end
 
   def check_for_build_fail
-    if @system_status[:did_build_fail]
-      SystemDataCache.turn_on_failed_build_flag
-    end
+    SystemDataCache.cache_system_build_fail
   end
 
   def waiting_for_installation?
@@ -67,7 +65,6 @@ protected
     ].include? params[:controller]
   end
 
-
   def cache_system_update_status
     if (
         ( params[:controller] == 'systems' && params[:action] == 'status' ) ||
@@ -82,6 +79,10 @@ protected
     if user_signed_in?
       cache_system_update_status
       @system_status = System.status
+
+p :system_status_set_to
+p @system_status
+
       return if params[:controller] == 'navbar_system_statuses'
       case @system_status[:state]
       when :restarting
@@ -151,9 +152,17 @@ protected
   def after_sign_in_path_for(resource)
     Maintenance.full_maintenance
     SystemDataCache.cache_system_update_status
+
+p :cached_system_update_status
+p SystemDataCache.system_update_status
+
+
     if FirstRun.required? ##&& !Rails.env.development?
       first_run_path
     else
+
+p :signed_in__redirect_to_control_panel
+      
       control_panel_path
     end
   end

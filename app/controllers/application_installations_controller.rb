@@ -8,7 +8,10 @@ class ApplicationInstallationsController < ApplicationController
   end
 
   def preparing_installation_progress
-    if System.waiting_for_installation_to_commence
+    if @system_status[:state] == :install_failed
+      SystemDataCache.clear_failed_build_flag
+      render text: 'done'
+    elsif @system_status[:state] == :installing
       render text: 'busy'
     else
       render text: 'done'

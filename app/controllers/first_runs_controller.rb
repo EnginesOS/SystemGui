@@ -22,7 +22,7 @@ class FirstRunsController < ApplicationController
             password: first_run_params[:admin_password],
             password_confirmation: first_run_params[:admin_password_confirmation],
             )
-          flash[:notice] = 'The setup wizard ran successfully. Please sign in again, using your new admin passord.'
+          flash[:notice] = 'The setup wizard ran successfully. Please sign in again, using your new admin password.'
           redirect_to desktop_path
         else
           flash[:alert] =  'There was a problem with the setup wizard. ' + result.result_mesg[0..500]
