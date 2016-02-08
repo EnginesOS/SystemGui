@@ -7,6 +7,9 @@ module SystemInfo
   end
 
   def self.system_update_status
+
+p :reading_system_update_status
+
     SystemStatus.system_update_status
   end
 
