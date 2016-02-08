@@ -1,11 +1,12 @@
-<div class="top-gap">
-  <div class="typea_indexer_panel">
-    <div class="input-group btn-group btn-group-lg">
-      <% if library.id != 1 %>
-	      <span class="input-group-addon"><%= library.name %></span>
-    	  <%= link_to (content_tag(:i, "", class: "fa fa-edit") + ' Edit'), edit_library_path(library), class: "btn btn-default library-entry-button trigger-response-modal" %>
-	      <%= link_to content_tag(:i, "", class: "fa fa-trash-o"), library, method: :delete, data: { confirm: "Are you sure?", confirmdetail: "Are you sure that you want to remove this library?" } , class: 'btn btn-default' %>
-	  <% end %>
+<div class="panel panel-default top-gap">
+  <div class="panel-body">
+    <div class='col-sm-12'>
+      <div class="pull-right">
+        <%= link_to content_tag(:i , nil, class: 'fa fa-edit') + ' Edit', edit_library_path(library), class: 'btn btn-default btn-noborder btn-lg trigger-response-modal', title: 'Edit record' %>
+        <%= link_to content_tag(:i , nil, class: 'fa fa-trash') + ' Delete', library_path(library), method: :delete, class: 'btn btn-default btn-noborder btn-lg', data: { confirmdetail: "Are you sure that you want to delete #{library.name}?", confirm: 'Confirm delete' }, title: 'Delete' %>
+      </div>
     </div>
+    <%= render 'shared/show/text_field', object: library, field: :name  %>
+    <%= render 'shared/show/text_field', object: library, field: :url, label: 'URL'  %>
   </div>
 </div>
