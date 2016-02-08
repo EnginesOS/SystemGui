@@ -95,6 +95,9 @@ p @system_status
           alert: 'Please wait for base operating system to update.' \
           if params[:controller] != 'system_base_updates'
       when :engines_updating
+
+p :REDIRECT_TO_system_engines_update_path
+
         redirect_to system_engines_update_path,
           alert: "Please wait for Engines to update." \
           if params[:controller] != 'system_engines_updates'
