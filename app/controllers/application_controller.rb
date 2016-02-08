@@ -150,22 +150,9 @@ p @system_status
   end
 
   def after_sign_in_path_for(resource)
-
-p :now_signed_in
-
-    Maintenance.full_maintenance
-    SystemDataCache.cache_system_update_status
-
-p :cached_system_update_status
-p SystemDataCache.system_update_status
-
-
     if FirstRun.required? ##&& !Rails.env.development?
       first_run_path
     else
-
-p :signed_in__redirect_to_control_panel
-
       control_panel_path
     end
   end
