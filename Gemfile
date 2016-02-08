@@ -9,9 +9,9 @@ gem 'twitter-bootstrap-rails-confirm'
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 gem 'rubytree'
-gem "paperclip", "~> 4.2"
+gem "paperclip" #, "~> 4.2"
 gem 'country_select'
-gem 'awesome_print', '~> 1.2.0'
+gem 'awesome_print' #, '~> 1.2.0'
 gem 'ansi_up-rails'
 gem 'open_uri_redirections'
 gem 'file-tail'
