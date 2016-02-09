@@ -116,6 +116,7 @@ class InstallFromBlueprint < ActiveRecord::Base
       service_container = engines_api.software_service_definition(
                                         publisher_namespace: service_configuration[:publisher_namespace],
                                         type_path: service_configuration[:type_path])
+      return nil if !service_container.is_a? Hash
       service_container_name = service_container[:service_container]
       Service.load_by_container_name(service_container_name).state[:state]
       if Service.load_by_container_name(service_container_name).state[:state] != :running
@@ -146,7 +147,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def existing_host_names
-    @existing_host_names ||= (engines_api.reserved_hostnames || [])
+    @existing_host_names ||= [] #(engines_api.reserved_hostnames || [])
   end
 
   def unique_application_name

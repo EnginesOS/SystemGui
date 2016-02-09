@@ -26,9 +26,7 @@ protected
   end
 
   def check_for_build_fail
-    if @system_status[:did_build_fail]
-      SystemDataCache.turn_on_failed_build_flag
-    end
+    SystemDataCache.cache_system_build_fail
   end
 
   def waiting_for_installation?
@@ -67,12 +65,13 @@ protected
     ].include? params[:controller]
   end
 
-
   def cache_system_update_status
+    current_system_update_status = SystemDataCache.system_update_status
+    is_updating = current_system_update_status[:is_base_system_updating] || current_system_update_status[:is_engines_system_updating]
     if (
         ( params[:controller] == 'systems' && params[:action] == 'status' ) ||
         params[:controller] == 'system_base_updates' ||
-        params[:controller] == 'system_engines_updates'
+        params[:controller] == 'system_engines_updates' || is_updating
       )
       SystemDataCache.cache_system_update_status
     end
@@ -149,8 +148,6 @@ protected
   end
 
   def after_sign_in_path_for(resource)
-    Maintenance.full_maintenance
-    SystemDataCache.cache_system_update_status
     if FirstRun.required? ##&& !Rails.env.development?
       first_run_path
     else
@@ -159,12 +156,6 @@ protected
   end
 
   def render_500(exception)
-
-# ENV['SEND_BUG_REPORTS'] = false.to_s
-p :send_bug_reports_check
-p ENV['SEND_BUG_REPORTS']
-
-
     SystemUtils.log_exception exception
     @exception = exception
     render 'systems/500', :status => 500, layout: 'empty_navbar'

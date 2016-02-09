@@ -1,17 +1,25 @@
-<div class="col-sm-12">
-  <h2><%= content_tag(:i, "", class: "fa fa-th") %> Libraries</h2>
+<div class='row'>
 
-  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
-  <%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_library_path, class: "btn btn-primary btn-lg trigger-response-modal" %>
+	<div class="col-sm-12">
+		<h2><i class="fa fa-th"></i> Libraries</h2>
+		<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+	</div>
 
-  <% if @libraries.present? %>
-      <% @libraries.each do |library| %>
+	<div class="col-sm-12">
+		<%= render 'settings' %>
+		<legend class="top-gap">Added libraries</legend>
+		<%= link_to content_tag(:i, "", class: "fa fa-plus") + " Add", new_library_path, class: "btn btn-lg btn-primary trigger-response-modal" %>
+		<% if @libraries.present? %>
+			<% @libraries.each do |library| %>
+        <% if library.id != 1 %>
           <%= render partial: "show", locals: { library: library } %>
-      <% end %>
-  <% else %>
-      <p class='top-gap'>No libraries.</p>
-  <% end %>
-
-  <%= render 'settings' %>
+	      <% end %>
+			<% end %>
+		<% else %>
+			<p class='top-gap'>
+				No Libraries.
+			</p>
+		<% end %>
+	</div>
 
 </div>
