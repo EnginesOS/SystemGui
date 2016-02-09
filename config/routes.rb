@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   get 'sign_in', to: redirect('/users/sign_in')
 
-  devise_for :users, skip: :registrations
+  devise_for :users, skip: :registrations, :controllers => { :sessions => "user_sessions" }
   resource :user, only: :show
   as :user do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user'

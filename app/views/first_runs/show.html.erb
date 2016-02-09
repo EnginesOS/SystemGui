@@ -5,20 +5,7 @@
 
     <%= render partial: 'shared/form/errors', locals: {f: f, label: 'Setup wizard', verb: 'run'} %>
 
-    <div class="col-sm-8 clearfix" id="first_run_form_auto_generated_passwords">
-      &nbsp
-    </div>
-
-    <div class="col-sm-4 clearfix">
-      <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default btn-lg" id="first_run_form_auto_generate_passwords_button">
-          <%= content_tag(:i, '', class: 'fa fa-paint-brush') %> Auto-generate passwords
-        </button>
-      </div>
-    </div>
-
     <div class="col-sm-12">
-      <h4>Keep a safe record of your passwords. You will need them later.</h4>
       <div id='first_run_dynamic_form_validation'></div>
     </div>
 
@@ -27,21 +14,9 @@
     </div>
     <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :admin_password, f: f, placeholder: ["Enter", "Re-enter"],
     		comment: "Password for the Engines system administrator. Use this password to sign in with the admin account.",
-    		label: "Admin password"} %>
+    		label: "Password"} %>
     <%= render partial: 'shared/form/text_field', locals: {name: :admin_email, f: f,
     		comment: "Password reset instructions for the admin account will be sent to this email address.", label: "email address"} %>
-    <div class="col-sm-12">
-      <legend>Base OS</legend>
-    </div>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :console_password, f: f,
-    		hint: "Console password must be different from admin password.",
-    		placeholder: ["Enter", "Re-enter"], label: "Console password",
-    		comment: "Password for the engines user account on the base system."} %>
-    <div class="col-sm-12">
-      <legend>Database</legend>
-    </div>
-    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :mysql_password, f: f,
-    		placeholder: ["Enter", "Re-enter"], label: "MySQL Password", comment: "Password for the default database."} %>
     <div class="col-sm-12">
       <legend>System</legend>
     </div>

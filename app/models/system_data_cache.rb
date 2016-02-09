@@ -13,6 +13,11 @@ class SystemDataCache < ActiveRecord::Base
     JSON.parse(instance.memory_statistics).deep_symbolize_keys
   end
 
+  def self.cache_system_build_fail
+    if System.build_status_from_api[:did_build_fail]
+      turn_on_failed_build_flag
+    end
+  end
 
   def self.failed_build_flag
     instance.failed_build_flag == true

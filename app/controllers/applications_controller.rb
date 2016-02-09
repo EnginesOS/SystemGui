@@ -6,11 +6,13 @@ class ApplicationsController < ApplicationController
 
   def open_first_run
     if @application.first_run_web_site.present?
-      p :first_run_site
-      p @application.first_run_web_site
       redirect_to @application.first_run_web_site, target: @application.container_name
+    elsif @application.primary_web_site.present?
+      redirect_to @application.primary_web_site, target: @application.container_name
+    elsif @application.deployment_type.to_sym == :worker
+      render
     else
-      render text: "No website URL for #{@application.container_name}", target: @application.container_name
+      render text: "No website URL for #{@application.container_name} (#{@application.deployment_type})", target: @application.container_name
     end
   end
 

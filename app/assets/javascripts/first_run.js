@@ -84,13 +84,11 @@ $(document).ready(function() {
 
 		function first_run_form_validation() {
 			var admin_ok = (first_run_admin_password_validation() && first_run_admin_password_confirmation_validation());
-			var console_ok = (first_run_console_password_validation() && first_run_console_password_confirmation_validation());
 			var email_ok = first_run_admin_email_validation();
-			var mysql_ok = (first_run_mysql_password_validation() && first_run_mysql_password_confirmation_validation());
 			var hostname_ok = hostname_validation();
 			var domain_ok = (first_run_domain_name_validation() && first_run_dynamic_dns_validation());
 			var ssl_ok = first_run_ssl_validation();
-			return (admin_ok && console_ok && email_ok && mysql_ok && hostname_ok && domain_ok && ssl_ok);
+			return (admin_ok && email_ok && hostname_ok && domain_ok && ssl_ok);
 		};
 
 		function show_field_error_message_for(field, message, position) {

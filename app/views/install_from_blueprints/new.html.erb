@@ -39,18 +39,15 @@
 
 			<%= render 'shared/form/errors', f: f %>
 			<%= render 'application_fields', f: f %>
-			<!-- < %= render 'displays/form_fields', f: f %> -->
 
 			<div class="row">
-		    	<%= render 'shared/form/legend', text: 'Licence' %>
+		    	<%= render 'shared/form/legend', text: 'License' %>
 			</div>
 			<% license_title = f.object.license_label %>
 			<%= render 'shared/form/link', link_text: f.object.license_label, label_text: false, url: f.object.license_sourceurl, target: f.object.browser_target %>
-			<%= render 'shared/form/checkbox', name: :license_terms_and_conditions, label: 'Accept', f: f %>
+			<%= render 'shared/form/checkbox', name: :license_terms_and_conditions, label: 'I have read and accept the license', f: f %>
 			<%= render 'shared/form/cancel_and_submit_buttons', f: f, cancel_path: installer_path(
 							library_id: params[:library_id], tags: params[:tags], search: params[:search], page: params[:page]), submit_label: 'Install', submitted_message: "Installing..." %>
-			<%#= f.fields_for :display do |ff| %>
-			<%#= ff.hidden_field :display_name %>
 	 	<% end %>
 
 </div>

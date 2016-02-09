@@ -102,7 +102,8 @@ module Engines::Application
     logs_container: 'logs_container',
     environments: 'environments',
     volumes_hash: 'volumes',
-    consumers_hash: 'consumers'
+    consumers_hash: 'consumers',
+    deployment_type: 'deployment_type'
   }.
   each do |method, instruction|
     define_method(method) do
