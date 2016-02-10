@@ -38,7 +38,7 @@ class FirstRun
   def self.required?
     engines_api.first_run_required?
   end
-  
+
   def submit
     engines_api.set_first_run_parameters submit_params
   end
@@ -51,7 +51,7 @@ class FirstRun
       # errors.add(:domain_name, ["Default domain", "is invalid"])
     # end
   # end
-# 
+#
   # def ssl_fields_valid
     # if ssl_person_name.blank?
       # errors.add(:ssl_person_name, ["Person name", "can't be blank"])
@@ -69,7 +69,7 @@ class FirstRun
       # errors.add(:ssl_country, ["Country", "can't be blank"])
     # end
   # end
-# 
+#
   # def password_confirmation_validation
     # password_types.each do |password_name|
       # if send("#{password_name.downcase}_password") != send("#{password_name.downcase}_password_confirmation")
@@ -77,7 +77,7 @@ class FirstRun
       # end
     # end
   # end
-# 
+#
   # def password_present_and_length_validation
     # password_types.each do |password_name|
       # password_field = "#{password_name.downcase}_password"
@@ -89,26 +89,26 @@ class FirstRun
       # end
     # end
   # end
-# 
+#
   # def admin_password_different_to_console_password_validation
     # if admin_password != "" && admin_password == console_password
       # errors.add(:console_password, ["Console password", "must be different from Admin password"])
     # end
   # end
-#   
+#
   # def encrypt_password
-#     
+#
   # end
 
   # def password_types
     # ["Admin", "Console", "MySQL"]
   # end
-  
+
   def submit_params
     {
       admin_password: admin_password,
-      console_password: console_password.crypt('$1$' + SecureRandom.hex(6)),
-      mysql_password: mysql_password,
+      # console_password: console_password.crypt('$1$' + SecureRandom.hex(6)),
+      # mysql_password: mysql_password,
       hostname: system_hostname,
       networking: networking,
       domain_name: domain_name,
