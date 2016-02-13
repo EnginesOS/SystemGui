@@ -4,7 +4,7 @@ class FirstRunsController < ApplicationController
   include Engines::FirstRun
 
   def show
-      @first_run = FirstRun.new first_run_params
+      @first_run = FirstRun.new(system_hostname: System.system_hostname)
       render :show, layout: 'empty_navbar'
   end
 
@@ -26,7 +26,7 @@ class FirstRunsController < ApplicationController
           redirect_to desktop_path
         else
           flash[:alert] =  'There was a problem with the setup wizard. ' + result.result_mesg[0..500]
-          redirect_to first_run_path(first_run: first_run_params)
+          render :show, layout: 'empty_navbar'
         end
       else
         render :show, layout: 'empty_navbar'
@@ -45,12 +45,8 @@ class FirstRunsController < ApplicationController
 private
 
   def first_run_params
-    if params[:first_run].nil?
-      {}
-    else
       params[:first_run][:ssl_country] = "" if params[:first_run][:ssl_country] == "Select a country..."
       params.require(:first_run).permit!
-    end
   end
 
 end

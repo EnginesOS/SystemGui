@@ -37,9 +37,9 @@ module System
   end
 
   def self.system_hostname
-    engines_api.system_hostname
+    %x 'hostname'
   rescue
-    "system_hostname api method missing"
+    ''
   end
 
   def self.cache_send_bug_reports
