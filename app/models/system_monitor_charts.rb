@@ -44,7 +44,7 @@ class SystemMonitorCharts
       "Free #{memory_statistics[:system][:free].to_i/1024} MB" => memory_statistics[:system][:free].to_i/1024,
     }.merge(
       if unaccounted_memory > 0
-        {"Other #{other} MB" => unaccounted_memory}
+        {"Other #{unaccounted_memory} MB" => unaccounted_memory}
       else
         {}
       end
