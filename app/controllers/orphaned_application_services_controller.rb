@@ -2,10 +2,9 @@ class OrphanedApplicationServicesController < ApplicationController
 
   include Engines::Api
 
-
   def destroy
     title = params[:service][:service_container_name].to_s + " on " + params[:service][:parent_engine].to_s
-    result = engines_api.delete_orphaned_service(orphaned_service_params_as_hash)
+    result = engines_api.delete_orphaned_service(orphaned_service_params_hash)
     if result.was_success
       flash[:notice] = "Deleted " + title
     else
@@ -13,12 +12,12 @@ class OrphanedApplicationServicesController < ApplicationController
     end
     redirect_to services_registry_path
   end
-  
+
   def orphaned_service_params
     params.require(:service).permit!
   end
 
-  def orphaned_service_params_as_hash
+  def orphaned_service_params_hash
     {
       container_type: orphaned_service_params[:container_type],
       parent_engine: orphaned_service_params[:parent_engine],
