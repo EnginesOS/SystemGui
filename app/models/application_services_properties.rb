@@ -3,7 +3,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
   include Engines::Api
 
   belongs_to :application
-  
+
    def build_application_services
       application_services = application.application_services.build(existing_connections_params)
       application_services.each do |application_service|
@@ -14,7 +14,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
   def properties_from_system
     @properties ||= (application.services_properties || [])
   end
-  
+
   def existing_connections_params
     properties_from_system.map do |existing_connection_params|
       {
@@ -25,7 +25,7 @@ class ApplicationServicesProperties < ActiveRecord::Base
           service_handle: existing_connection_params[:service_handle],
           container_type: existing_connection_params[:container_type],
           service_container_name: existing_connection_params[:service_container_name]
-        }.to_json
+        } #.to_json
       }
     end
   end
