@@ -18,29 +18,29 @@ class Domain < ActiveRecord::Base
       new domain_name_params
     end
   end
-  
+
   def self.build_new
     self.new(new_record: true)
   end
-  
+
   def self.build_edit_for domain_name
     self.new(new_record: false, domain_name: domain_name, original_domain_name: domain_name).load_domain_properties
   end
-  
-  def load_domain_properties 
+
+  def load_domain_properties
     self.assign_attributes(engines_domain_params)
     self
   end
-  
+
 
   def destroy
     self.class.engines_api.remove_domain(domain_name: domain_name)
   end
 
-  def new_record? 
+  def new_record?
     self.new_record.to_s == 'true'
   end
-  
+
   def create
     valid? && create_domain
   end
@@ -83,17 +83,17 @@ class Domain < ActiveRecord::Base
   end
 
   def self.domain_names_list
-    @domain_names_list = all_engines_domain_names_details.keys.map(&:to_s).sort
+    @domain_names_list ||= all_engines_domain_names_details.keys.map(&:to_s).sort
   end
-  
+
   def engines_domain_params
-    @engines_domain_params = self.class.all_engines_domain_names_details[domain_name.to_s]
+    @engines_domain_params ||= self.class.all_engines_domain_names_details[domain_name.to_s]
   end
 
   def self.all_engines_domain_names_details
-    @all_engines_domain_names_details = engines_api.list_domains
+    @all_engines_domain_names_details ||= engines_api.list_domains
   end
-  
+
   def self.all_engines_domain_names_params
     engines_domains = all_engines_domain_names_details
     engines_domains[:domain_name] = engines_domains[:name]

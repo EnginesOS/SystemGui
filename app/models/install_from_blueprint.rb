@@ -147,7 +147,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def existing_host_names
-    @existing_host_names ||= [] #(engines_api.reserved_hostnames || [])
+    @existing_host_names ||= (engines_api.reserved_hostnames || [])
   end
 
   def unique_application_name

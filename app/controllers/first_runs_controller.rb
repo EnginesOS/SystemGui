@@ -1,7 +1,7 @@
 class FirstRunsController < ApplicationController
 
 
-  include Engines::FirstRun
+  # include Engines::FirstRun
 
   def show
       @first_run = FirstRun.new(system_hostname: System.system_hostname)
