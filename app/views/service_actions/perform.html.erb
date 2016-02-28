@@ -1,0 +1,30 @@
+<div class="col-sm-12">
+
+	<h2 class=''><%= content_tag(:i, "", class: "fa fa-crosshairs") + " " + @service_action.label %></h2>
+  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back',
+        service_action_path(service_name: @service_action.service.container_name),
+        class: "btn btn-warning btn-lg trigger-response-modal" %>
+
+</div>
+
+<% case @service_action.return_type.to_sym %>
+<% when :json %>
+	<div class="col-sm-12 top-gap">
+  	<%= (ap @service_action.action_result, plain: true, index: false, multiline: true).gsub('\n', '<br>').html_safe %>
+	</div>
+<% when :url %>
+	<div class="col-sm-12 top-gap">
+		<%= render 'shared/form/legend', text: 'URL' %>
+	</div>
+	<div class="col-sm-8 col-sm-offset-2 top-gap">
+	  <%= link_to "#{@service_action.action_result}", @service_action.action_result, class: 'btn btn-lg', target: '_blank' %>
+	</div>
+<% when :markdown %>
+	<div class="col-sm-8 col-sm-offset-2 top-gap">
+	  <%= Markdown.new(@service_action.action_result, :hard_wrap, :filter_html, :autolink, :no_intra_emphasis, :fenced_code_blocks).to_html.html_safe %>
+	</div>
+<% else %>
+	<div class="col-sm-8 col-sm-offset-2 top-gap">
+	  <%= @service_action.action_result %>
+	</div>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105200757) do
+ActiveRecord::Schema.define(version: 20160225035218) do
 
   create_table "application_display_properties", force: :cascade do |t|
     t.integer "application_id"
@@ -123,6 +123,9 @@ ActiveRecord::Schema.define(version: 20160105200757) do
 
   create_table "library_settings", force: :cascade do |t|
     t.integer "default_library_id"
+  end
+
+  create_table "service_actions", force: :cascade do |t|
   end
 
   create_table "service_configurations", force: :cascade do |t|

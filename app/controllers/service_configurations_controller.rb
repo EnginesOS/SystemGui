@@ -1,16 +1,18 @@
 class ServiceConfigurationsController < ApplicationController
 
   def show
-    @service = Service.where(container_name: params[:service_name]).new
+    @service = Service.load_by_container_name params[:service_name]
   end
 
   def edit
-    @service = Service.where(container_name: params[:service_name]).new
-    @service_configuration = @service.build_service_configuration_for params[:configurator_name]
+    @service = Service.load_by_container_name params[:service_name]
+    @service_configuration = @service.build_configuration_for params[:configurator_name]
   end
 
   def update
-    @service_configuration = ServiceConfiguration.new(service_configuration_params)
+    @service = Service.load_by_container_name params[:service_name]
+    @service_configuration = ServiceConfiguration.new(service: @service)
+    @service_configuration.assign_attributes(service_configuration_params)
     if @service_configuration.persist!
       redirect_to service_configuration_path(service_name: params[:service_name]), notice: "Successfully updated configuration for #{@service_configuration.label}."
     else

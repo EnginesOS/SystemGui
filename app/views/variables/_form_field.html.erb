@@ -1,4 +1,4 @@
-<% select_collection = f.object.select_collection 
+<% select_collection = f.object.select_collection
   f.object.select_collection = ActiveSupport::JSON.encode(select_collection) if select_collection.class != String %>
 
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :name} %>
@@ -17,7 +17,7 @@
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :select_collection} %>
 <%= render partial: 'shared/form/hidden_field', locals: {f: f, name: :skip_validations, input_class: :skip_validation_input} %>
 
-<% 
+<%
 field_type = f.object.field_type.present? ? f.object.field_type : 'text_field'
 name = f.object.name
 label = f.object.label.present? ? f.object.label : f.object.name.humanize
