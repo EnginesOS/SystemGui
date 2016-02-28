@@ -133,10 +133,9 @@ Rails.application.routes.draw do
 
   resource :service_report
   resource :service_configuration
-  resources :service_actions
-  resource :service_action_display_text
-  resource :service_action_open_url
-  resource :service_action_download_file
+  resource :service_action do
+    get :perform
+  end
   resource :services do
     get(
       :pause_container, :unpause_container, :start_container, :stop_container,
