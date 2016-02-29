@@ -228,7 +228,7 @@ module Engines::Service
 
   def actionators_from_api
     result = engines_api.list_actionators system_service_object
-    (result.is_a?(EnginesOSapiResult) ? [] : result) || []
+    (result.is_a?(EnginesOSapiResult) ? [] : result.values) || []
   end
 
 
