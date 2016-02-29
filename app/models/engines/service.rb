@@ -269,7 +269,7 @@ module Engines::Service
   end
 
   def resolve_templated_value(unresolved_value)
-    engines_api.get_resolved_engine_string(unresolved_value, system_service_object)
+    engines_api.get_resolved_service_string(unresolved_value, system_service_object)
   end
 
   def stop_container
