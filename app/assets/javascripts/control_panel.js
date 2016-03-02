@@ -60,7 +60,7 @@ function monitor_object_states_ajax_call(){
 };
 
 function monitor_object_states_success(container_states_json) {
-	var container_states = JSON.parse(container_states_json);
+	var container_states = decode_json(container_states_json);
 	$.each(container_states, function(container_name, container_state) {
 		var control_panel_object = $('#control_panel_object_' + container_name );
 		if ( !control_panel_object.find('.reload_control_panel_object').length ) {

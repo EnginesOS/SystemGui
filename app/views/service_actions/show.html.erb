@@ -11,7 +11,8 @@
             <%= link_to service_actionator[:label] || 'No label',
 									new_service_action_path(service_name: @service.container_name,
 																			action_name: service_actionator[:name]),
-									class: 'btn btn-default btn-lg top-gap trigger-response-modal'	%>
+									class: 'btn btn-default btn-lg top-gap trigger-response-modal' +
+										(' service-action-file-download-button' if service_actionator[:return_type] == 'file').to_s %>
         	</div>
         	<div class="col-md-7">
         		<p class="top-gap"><small>
