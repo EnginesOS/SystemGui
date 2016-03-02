@@ -7,6 +7,45 @@ $(document).ready(function() {
 
 });
 
+function load_control_panel_objects() {
+	$(".control_panel .control_panel_object").each(function() {
+		load_control_panel_object($(this));
+	});
+	monitor_object_states();
+}
+
+function load_control_panel_object(obj) {
+  close_modals_for(obj);
+	var url = obj.attr("data-url");
+	// obj.next().html(obj.html());
+	$.ajax({
+		url : url,
+		cache : false,
+		timeout: 10000,
+		success : function(html) {
+				obj.html(html);
+				do_flash_messages();
+				bind_control_panel_object_events(obj);
+		},
+		error: function(response, status, error){
+			if (response.status == 500) {
+        obj.remove();
+				document.write(response.responseText);
+			} else if (response.status == 0) {
+				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
+				obj.find(".object_status").html(msg);
+				setTimeout(function(){
+					load_control_panel_object(obj);
+				}, 5000);
+			} else {
+					var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' load error</small>';
+					obj.find(".object_status").html(msg);
+			};
+		}
+	});
+
+};
+
 function bind_control_panel_object_events(obj) {
 	obj.find(".modal_menu_item").click(function() {
 		load_modal_content($(this));
@@ -60,7 +99,7 @@ function monitor_object_states_ajax_call(){
 };
 
 function monitor_object_states_success(container_states_json) {
-	var container_states = decode_json(container_states_json);
+	var container_states = JSON.parse(container_states_json);
 	$.each(container_states, function(container_name, container_state) {
 		var control_panel_object = $('#control_panel_object_' + container_name );
 		if ( !control_panel_object.find('.reload_control_panel_object').length ) {
@@ -119,48 +158,8 @@ function load_modal_content(obj) {
 
 };
 
-function load_control_panel_objects() {
-	$(".control_panel .control_panel_object").each(function() {
-		// var applicationName = $(this).attr('id');
-		load_control_panel_object($(this));
-	});
-	monitor_object_states();
-}
-
 function close_modals_for(obj) {
   obj.find(".modal .close").click();
-};
-
-function load_control_panel_object(obj) {
-  close_modals_for(obj);
-	var url = obj.attr("data-url");
-	// obj.next().html(obj.html());
-	$.ajax({
-		url : url,
-		cache : false,
-		timeout: 10000,
-		success : function(html) {
-				obj.html(html);
-				do_flash_messages();
-				bind_control_panel_object_events(obj);
-		},
-		error: function(response, status, error){
-			if (response.status == 500) {
-        obj.remove();
-				document.write(response.responseText);
-			} else if (response.status == 0) {
-				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
-				obj.find(".object_status").html(msg);
-				setTimeout(function(){
-					load_control_panel_object(obj);
-				}, 5000);
-			} else {
-					var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' load error</small>';
-					obj.find(".object_status").html(msg);
-			};
-		}
-	});
-
 };
 
 function perform_control_panel_object_action(obj) {
