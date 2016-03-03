@@ -17,7 +17,6 @@ function load_control_panel_objects() {
 function load_control_panel_object(obj) {
   close_modals_for(obj);
 	var url = obj.attr("data-url");
-	// obj.next().html(obj.html());
 	$.ajax({
 		url : url,
 		cache : false,
@@ -111,19 +110,6 @@ function monitor_object_states_success(container_states_json) {
 	});
 };
 
-// function check_all_objects_for_reload_required(container_states_json) {
-//
-// };
-//
-//
-// function reload_object_unless_already_working() {
-// 	if ( $(obj).find('.reload_control_panel_object').length ) {
-// 		setTimeout(function(){
-// 				load_control_panel_object(obj);
-// 		}, 1000);
-// 	};
-// };
-
 function load_modal_content(obj) {
 
 	modal_id = obj.attr("data-target");
@@ -159,7 +145,9 @@ function load_modal_content(obj) {
 };
 
 function close_modals_for(obj) {
-  obj.find(".modal .close").click();
+  obj.find(".modal").each(function(){
+    $(this).modal('hide');
+  });
 };
 
 function perform_control_panel_object_action(obj) {
