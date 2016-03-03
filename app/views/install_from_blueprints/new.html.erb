@@ -22,16 +22,6 @@
 		</div>
 	</div>
 
-	<% if @install_from_blueprint.application_services_to_start.present? %>
-		<div class="col-sm-8 col-sm-offset-2">
-			<div class="alert alert-info" role="alert">Please note that
-				<strong>
-					<%= @install_from_blueprint.application_services_to_start.to_sentence %>
-				</strong>
-				will be started during installation.</div>
-		</div>
-	<% end %>
-
 		<%= form_for @install_from_blueprint, url: install_from_blueprint_path(title: @install_from_blueprint.title) do |f| %>
 			<%= f.hidden_field :advanced_selected %>
 			<%= f.hidden_field :repository_url %>

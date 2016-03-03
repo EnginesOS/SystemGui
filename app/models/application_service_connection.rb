@@ -6,13 +6,9 @@ class ApplicationServiceConnection
     @application_service = application_service
   end
 
-  def connection_params #_json
+  def connection_params
     @application_service.connection_params
   end
-
-  # def connection_params
-  #   JSON.parse(connection_params_json).symbolize_keys
-  # end
 
   def type_path
     connection_params[:type_path]

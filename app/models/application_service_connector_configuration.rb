@@ -36,7 +36,7 @@ class ApplicationServiceConnectorConfiguration < ActiveRecord::Base
         end
         result[variable.name.to_sym] = value
       end
-    end    
+    end
   end
 
 end

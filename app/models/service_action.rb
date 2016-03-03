@@ -13,7 +13,7 @@ class ServiceAction < ActiveRecord::Base
   end
 
   def perform_action
-    result = engines_api.perform_service_action(perform_service_action_params)
+    result = engines_api.perform_service_action(service.container_name, name, update_service_action_variables_params)
     if result.is_a? EnginesOSapiResult
       @engines_api_error = "Unable perform action. " +
                             (result.result_mesg.present? ? result.result_mesg : "Called 'perform_service_action'. No result message given by engines api.")
