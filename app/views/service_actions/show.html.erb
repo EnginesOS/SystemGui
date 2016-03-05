@@ -8,13 +8,15 @@
 			<% service_actionators.each do |service_actionator| %>
         <div class='row'>
         	<div class="col-md-3 col-md-offset-2">
+						<% download_a_file_without_showing_a_form =
+						service_actionator[:variables_attributes].blank? && service_actionator[:return_type] == 'file' %>
             <%= link_to service_actionator[:label] || 'No label',
 									new_service_action_path(service_name: @service.container_name,
 																			action_name: service_actionator[:name]),
 									class: 'btn btn-default btn-lg top-gap trigger-response-modal' +
-										(' service-action-file-download-button' if service_actionator[:return_type] == 'file').to_s %>
+										(' service-action-formless-file-download-button' if download_a_file_without_showing_a_form ).to_s %>
         	</div>
-        	<div class="col-md-7">
+					<div class="col-md-7">
         		<p class="top-gap"><small>
               <%= service_actionator[:description] %>
         		</p></small>

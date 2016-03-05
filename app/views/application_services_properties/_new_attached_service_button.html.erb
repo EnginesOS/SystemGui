@@ -14,7 +14,7 @@
 		  	<% fa_icon = title_data.present? ? title_data[:fa_icon] : 'circle' %>
 		  	<% title = title_data.present? ? title_data[:title] : 'No title' %>
 			<%= link_to(
-			fa(fa_icon) + ' ' + available_service[:title] + ' - ' + title,
+			content_tag(:i, nil, class: 'fa fa-' + fa_icon.to_s) + ' ' + available_service[:title] + ' - ' + title,
 			new_application_service_connector_type_path(
 				application_name: @application_services_properties.application.container_name,
 				application_service_connector: {

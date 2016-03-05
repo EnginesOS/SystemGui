@@ -97,17 +97,11 @@
 	       stats = @application.stats
 	       if stats.present?  %>
 		    <pre><table>
-	          <tr><td>State: <%= stats.state  %></tr></td>
-	          <tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
-	          <tr><td>
-	            <% if state == "stopped" %>
-	              Stopped: <%=stats.stopped_ts %>
-	            <% else %>
-	              Started: <%=stats.started_ts %>
-	            <%end%>
-	          </tr></td>
-	          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></tr></td>
-	          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
+	          <tr><td>State: <%= stats.state  %></td></tr>
+	          <tr><td>Processes: <%=stats.proc_cnt %></td></tr>
+	          <tr><td><% if state == "stopped" %>Stopped: <%=stats.stopped_ts %><% else %>Started: <%=stats.started_ts %><%end%></td></tr>
+	          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s %></td></tr>
+	          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</td></tr>
 	      </table></pre>
 	     <% else %>
 	      <pre>None</pre>
@@ -117,21 +111,23 @@
      <% end %>
 
      <label>Processes</label>
-     <% processes = @application.ps_container %>
-     <% if processes.is_a? Array %>
-       <pre><table>
-         <% processes.each_line do |line |
-           vals = line.split %>
-           <tr>
-             <% vals.each do |v| %>
-               <td><%= v %></td>
-             <% end %>
-           </tr>
-         <% end %>
-       </table></pre>
-     <% else %>
-      <pre>None</pre>
-     <% end %>
+     <% processes = @application.ps_container["Processes"]
+         titles = @application.ps_container["Titles"] %>
+     <pre><table>
+       <tr>
+       <% titles.each do |v| %>
+         <td><%= v %> </td>
+       <% end %>
+       </tr>
+       <% processes.each do |line | %>
+         <tr>
+           <% line.each do |v| %>
+             <td><%= v %> </td>
+           <% end %>
+         </tr>
+       <% end %>
+     </table></pre>
+
 
     <label>Logs</label>
      <% logs = @application.logs_container %>
