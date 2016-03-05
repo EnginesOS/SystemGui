@@ -1,6 +1,6 @@
-<%= legend('Icon') %>
+<%= render 'shared/form/legend', text: 'Icon' %>
 
-<% installer_icon_url = f.object.installer_icon_url 
+<% installer_icon_url = f.object.installer_icon_url
    blueprint_icon_url = f.object.icon_url_from_blueprint
    select_collection = ['Keep existing icon',
   						('Blueprint icon' if blueprint_icon_url.present?),
@@ -9,7 +9,7 @@
 %>
 
 <div id="display_properties_set_icon_radios">
-	<%= f.form_input :set_icon, as: :radio_buttons, label: false, select_collection: select_collection %>
+  <%= render partial: 'shared/form/radio_buttons', locals: {f: f, name: :set_icon, label: false, select_collection: select_collection} %>
 </div>
 
 <div class="col-sm-8 col-sm-offset-2">
@@ -52,7 +52,3 @@
         <% end %>
 	</div>
 </div>
-
-
-
-

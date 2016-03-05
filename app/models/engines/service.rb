@@ -59,7 +59,7 @@ module Engines::Service
   #   def task_at_hand_state
   #   if current_task_state.present?
   #     case current_task_state
-  #       when :stop
+  #       when :s      actionators_from_api.map{ |actionator|top
   #         {label: 'Stopping'}
   #       when :start
   #         {label: 'Starting'}
@@ -196,12 +196,12 @@ module Engines::Service
     configurators_from_service_definition.present?
   end
 
-  def configurator_params_without_values
-    @configurator_params_without_values ||= configurators_from_service_definition.map{ |c| c[:variables_attributes] = c[:params].values ; c }.map{ |c| c.delete :params ; c }
+  def configurator_params_with_unpopulated_values
+    @configurator_params_with_unpopulated_values ||= configurators_from_service_definition.map{ |c| c[:variables_attributes] = c[:params].values ; c }.map{ |c| c.delete :params ; c }
   end
 
   def configurator_params
-    @configurator_params ||= configurator_params_without_values.map do |c|
+    @configurator_params ||= configurator_params_with_unpopulated_values.map do |c|
       variables_values = service_configuration_variables_for(c[:name])
       c[:variables_attributes].compact.each do |v|
         variable_name = v[:name].to_sym
@@ -224,14 +224,52 @@ module Engines::Service
     (result.is_a?(EnginesOSapiResult) ? {} : result[:variables]) || {}
   end
 
-  def actionators
-    system_service_object.blank? ? nil : system_service_object.get_readers
+
+
+  def actionators_from_api
+    result = engines_api.list_actionators system_service_object
+    (result.is_a?(EnginesOSapiResult) ? [] : result.values) || []
   end
 
-  def action_result_for(action)
-    system_service_object.blank? ? nil : system_service_object.get_reader(action)
-  rescue => e
-   e.to_s
+
+  # def is_actionable?
+  #   actionators_from_service_definition.present?
+  # end
+
+  def actionator_params_with_unpopulated_values
+    @actionator_params_with_unpopulated_values ||=
+      actionators_from_api.map{ |actionator|
+         actionator[:variables_attributes] = actionator[:params].present? ? actionator[:params].values : []
+         actionator.delete :params
+         actionator
+       }
+  end
+
+  # def actionator_params
+  #   @actionator_params ||= actionator_params_with_unpopulated_values.map do |actionator|
+  #     variables_values = service_action_variables_for(actionator[:name])
+  #     actionator[:variables_attributes].compact.each do |v|
+  #       variable_name = v[:name].to_sym
+  #       v[:value] = variables_values.present? ? variables_values[variable_name] : nil
+  #     end
+  #     actionator
+  #   end
+  # end
+
+  # def actionators_from_service_definition
+  #   @actionators_from_service_definition ||= ( ( service_definition[:actionators] || {} ).values || [] )
+  # end
+
+  def actionator_params_for(actionator_name)
+    actionator_params_with_unpopulated_values.find{|c| c[:name] == actionator_name }.tap do |actionator|
+      actionator[:variables_attributes].compact.each do |variable|
+        v[:value] = resolve_templated_value v[:value]
+      end
+    end
+  end
+
+  def resolve_templated_value(unresolved_value)
+    engines_api.get_resolved_service_string(unresolved_value, system_service_object)
   end
 
   def stop_container

@@ -1,0 +1,10 @@
+<div class="col-sm-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-play-circle-o") %> Install <%= @install_from_blueprint.title %></h2>
+</div>
+
+<div class="col-sm-8 col-sm-offset-2">
+	Please start the following services before installing <%= @install_from_blueprint.title %>
+	<strong>
+		<%= @install_from_blueprint.application_services_to_start.to_sentence %>
+	</strong>
+</div>

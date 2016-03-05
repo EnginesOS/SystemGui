@@ -1,6 +1,6 @@
 class FirstRun
 
-  include Engines::FirstRun
+  # include Engines::FirstRun
   include ActiveModel::Model
   include ActiveModel::Validations
   extend Engines::Api

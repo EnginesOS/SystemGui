@@ -88,7 +88,7 @@
 	        	<li><div class="indicator_error dropdown-title"><%= content_tag(:i, "", class: "fa fa-warning") %> State error<br></div></li>
 	      <%  end %>
 			<li class="divider"></li>
-      <% if @service.is_configurable? %>
+      <% if true #@service.is_configurable? %>
 				<li>
 					<%= link_to content_tag(:i, "", class: "fa fa-gear") + " Configure", service_configuration_path(service_name: service_name), class: 'trigger-response-modal' %>
 				</li>
@@ -98,7 +98,7 @@
 				</li>
 		  <% end %>
 			<li>
-				<%= link_to content_tag(:i, "", class: "fa fa-crosshairs") + " Actions", service_actions_path(service_name: service_name), class: 'trigger-response-modal' %>
+				<%= link_to content_tag(:i, "", class: "fa fa-crosshairs") + " Actions", service_action_path(service_name: service_name), class: 'trigger-response-modal' %>
 			</li>
   	  <li class="divider"></li>
 		  <li>

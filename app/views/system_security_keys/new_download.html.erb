@@ -5,17 +5,20 @@
 <div class="col-sm-12 top-gap">
 
 	<%= form_for @system_security_key, url: download_system_security_key_path do |f| %>
-	    <%= render partial: 'shared/form/errors', locals: {f: f} %>
+
+		<span id="access_key_download_form_fields">
+			<%= render partial: 'shared/form/errors', locals: {f: f} %>
 	    <%= render partial: 'shared/form/password', locals: {name: :admin_password, f: f} %>
+		</span>
 
 		<div class="col-sm-8 col-sm-offset-2">
 		  <div class="form-buttons">
 		    <div class="form-group", style="margin-top:15px;">
-		      <div class="btn-group pull-left"> 
+		      <div class="btn-group pull-left">
 		        <%= link_to((content_tag(:i, "", class: "fa fa-times") + " Cancel"), system_security_path, class: "btn btn-lg btn-warning form-button-cancel") %>
 		        </div>
 		        <div class="btn-group pull-right">
-		          <%= button_tag(type: "submit", id: 'access_key_download_from_submit_button', class: "btn btn-lg btn-primary") do %>
+		          <%= button_tag(type: "submit", id: 'access_key_download_form_submit_button', class: "btn btn-lg btn-primary") do %>
 		            <%= content_tag(:i, "", class: "fa fa-download") + ' Download' %>
 		          <% end %>
 		        </div>
@@ -23,7 +26,7 @@
 		  </div>
 		  <div class="text-center" style="margin-top: 20px;">
 		    <div class="submit-message" style="display: none;">
-		      <p>Click back once download has completed.</p>
+		      <p>Please wait for download to commence.</p>
 			  <%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', system_security_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
 		    </div>
 		    <div class="cancel-message" style="display: none;">
@@ -35,4 +38,3 @@
 	<% end %>
 
 </div>
-

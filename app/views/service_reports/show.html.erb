@@ -102,36 +102,34 @@
       stats = @service.stats
       if stats != nil && stats != false  %>
         <pre><table>
-          <tr><td>State: <%= stats.state  %></tr></td>
-          <tr><td>Processes: <%=stats.proc_cnt %> <b>List in ps list in .stats</b></tr></td>
-          <% if state == "stopped" %>
-            <tr><td>Stopped: <%=stats.stopped_ts %><% else %>Started: <%=stats.started_ts %></tr></td>
-          <%end%>
-          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></tr></td>
-          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</tr></td>
+          <tr><td>State: <%= stats.state %></td></tr>
+          <tr><td>Processes: <%=stats.proc_cnt %></td></tr>
+          <tr><td><% if state == "stopped" %>Stopped: <%=stats.stopped_ts %><% else %>Started: <%=stats.started_ts %><%end%></td></tr>
+          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></td></tr>
+          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</td></tr>
         </table></pre>
       <%end%>
-      <pre>None</pre>
     <% else %>
       <pre>None</pre>
      <% end %>
 
-     <label>Processes</label>
-     <% processes = @service.ps_container %>
-     <% if processes.is_a? Array %>
-       <pre><table>
-         <% processes.each_line do |line |
-           vals = line.split %>
-           <tr>
-             <% vals.each do |v| %>
-               <td><%= v %></td>
-             <% end %>
-           </tr>
-         <% end %>
-       </table></pre>
-     <% else %>
-      <pre>None</pre>
-     <% end %>
+    <label>Processes</label>
+    <% processes = @service.ps_container["Processes"]
+        titles = @service.ps_container["Titles"] %>
+    <pre><table>
+      <tr>
+      <% titles.each do |v| %>
+        <td><%= v %> </td>
+      <% end %>
+      </tr>
+      <% processes.each do |line | %>
+        <tr>
+          <% line.each do |v| %>
+            <td><%= v %> </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table></pre>
 
     <label>Logs</label>
     <% logs = @service.logs_container%>

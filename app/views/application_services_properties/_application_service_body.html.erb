@@ -26,7 +26,7 @@
 						<%#= available_subservice.new_subservice_connection_params %>
 						<li>
 							<%= link_to(
-							fa(available_subservice.fa_icon) + ' ' + available_subservice.title,
+							content_tag(:i, nil, class: 'fa fa-' + available_subservice.fa_icon.to_s) + ' ' + available_subservice.title,
 							new_application_service_connection_subservice_connector_configuration_path(
 								application_service_connection_subservice_connector_configuration: {
 									application_name: application_service.application.container_name,

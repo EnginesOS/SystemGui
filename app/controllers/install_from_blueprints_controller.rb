@@ -3,9 +3,13 @@ class InstallFromBlueprintsController < ApplicationController
   def new
     @install_from_blueprint = InstallFromBlueprint.new(install_from_blueprint_params)
     @install_from_blueprint.build_new
-    redirect_to installer_path,
-      alert: "Unable to install #{install_from_blueprint_params[:software_title]}. Can't load from repository #{params[:repository_url]}." \
-        if @install_from_blueprint.blueprint == false
+    if @install_from_blueprint.blueprint == false
+      redirect_to installer_path(search: params[:search], page: params[:page], tags: params[:tags]),
+        alert: "Unable to install #{install_from_blueprint_params[:software_title]}. Can't load from repository #{params[:repository_url]}."
+    elsif @install_from_blueprint.application_services_to_start.present?
+      redirect_to installer_path(search: params[:search], page: params[:page], tags: params[:tags]),
+        alert: "Please start the following services before installing #{@install_from_blueprint.title}: #{@install_from_blueprint.application_services_to_start.to_sentence}."
+    end
   end
 
   def create
