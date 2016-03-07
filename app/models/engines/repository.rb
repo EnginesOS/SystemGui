@@ -29,6 +29,8 @@ private
       http.request(request)
     }
     JSON.parse(result.body).symbolize_keys!
+  rescue
+    {}
   end
 
   def load_blueprint_from_git
