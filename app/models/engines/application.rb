@@ -188,7 +188,7 @@ module Engines::Application
   end
 
   def resolve_templated_value(unresolved_value)
-    engines_api.get_resolved_application_string(unresolved_value, container)
+    engines_api.get_resolved_engine_string(unresolved_value, container)
   end
 
 
