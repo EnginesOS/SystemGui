@@ -13,7 +13,7 @@ class ApplicationAction < ActiveRecord::Base
   end
 
   def perform_action
-    result = engines_api.perform_application_action(application.container_name, name, update_application_action_variables_params)
+    result = engines_api.perform_engine_action(application.container_name, name, update_application_action_variables_params)
     if result.is_a? EnginesOSapiResult
       @engines_api_error = "Unable perform action. " +
                             (result.result_mesg.present? ? result.result_mesg : "Called 'perform_application_action'. No result message given by engines api.")
