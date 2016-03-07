@@ -26,24 +26,6 @@ module Engines::Service
     "#{container_name} - #{human_name}"
   end
 
-  # def state_indicator
-    # if is_error?
-      # 'error'
-    # else
-      # if state.to_s == "nocontainer"
-        # "disabled"
-      # else
-        # state
-      # end
-    # end
-  # end
-
-    # if service_state.kind_of?(EnginesOSapiResult)
-      # service_state = "state_error"
-    # end
-    # indicator_class = "indicator_" + service.state_indicator.to_s
-    # background_class = "engine_" + service.state_indicator.to_s
-
   def state
     return {state: :error, label:  'Cannot load - Error'} if system_service_object.blank?
     return {state: :error, label: service_container_state[:label] + ' - Error', detail: status_detail} if is_error?
@@ -55,23 +37,6 @@ module Engines::Service
     current_task_state = system_service_object.task_at_hand
     {label: current_task_state, state: :working, task_at_hand: current_task_state} if current_task_state.present?
   end
-
-  #   def task_at_hand_state
-  #   if current_task_state.present?
-  #     case current_task_state
-  #       when :s      actionators_from_api.map{ |actionator|top
-  #         {label: 'Stopping'}
-  #       when :start
-  #         {label: 'Starting'}
-  #       when :pause
-  #         {label: 'Pausing'}
-  #       when :unpause
-  #         {label: 'Unpausing'}
-  #       else
-  #         {label: "#{current_task_state.to_s}-ing"}
-  #     end.merge({state: :working, task_at_hand: current_task_state})
-  #   end
-  # end
 
   def service_container_state
     service_state = system_service_object.read_state
@@ -192,9 +157,9 @@ module Engines::Service
     @service_definition ||= ( engines_api.get_service_definition(type_path, publisher_namespace) || {} )
   end
 
-  def is_configurable?
-    configurators_from_service_definition.present?
-  end
+  # def is_configurable?
+  #   configurators_from_service_definition.present?
+  # end
 
   def configurator_params_with_unpopulated_values
     @configurator_params_with_unpopulated_values ||= configurators_from_service_definition.map{ |c| c[:variables_attributes] = c[:params].values ; c }.map{ |c| c.delete :params ; c }
@@ -224,13 +189,10 @@ module Engines::Service
     (result.is_a?(EnginesOSapiResult) ? {} : result[:variables]) || {}
   end
 
-
-
   def actionators_from_api
     result = engines_api.list_actionators system_service_object
     (result.is_a?(EnginesOSapiResult) ? [] : result.values) || []
   end
-
 
   # def is_actionable?
   #   actionators_from_service_definition.present?
@@ -244,21 +206,6 @@ module Engines::Service
          actionator
        }
   end
-
-  # def actionator_params
-  #   @actionator_params ||= actionator_params_with_unpopulated_values.map do |actionator|
-  #     variables_values = service_action_variables_for(actionator[:name])
-  #     actionator[:variables_attributes].compact.each do |v|
-  #       variable_name = v[:name].to_sym
-  #       v[:value] = variables_values.present? ? variables_values[variable_name] : nil
-  #     end
-  #     actionator
-  #   end
-  # end
-
-  # def actionators_from_service_definition
-  #   @actionators_from_service_definition ||= ( ( service_definition[:actionators] || {} ).values || [] )
-  # end
 
   def actionator_params_for(actionator_name)
     actionator_params_with_unpopulated_values.find{|c| c[:name] == actionator_name }.tap do |actionator|

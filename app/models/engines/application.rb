@@ -160,4 +160,36 @@ module Engines::Application
     end
   end
 
+
+  def actionators_from_api
+    result = engines_api.list_actionators container
+    (result.is_a?(EnginesOSapiResult) ? [] : result.values) || []
+  end
+
+  # def is_actionable?
+  #   actionators_from_application_definition.present?
+  # end
+
+  def actionator_params_with_unpopulated_values
+    @actionator_params_with_unpopulated_values ||=
+      actionators_from_api.map{ |actionator|
+         actionator[:variables_attributes] = actionator[:params].present? ? actionator[:params].values : []
+         actionator.delete :params
+         actionator
+       }
+  end
+
+  def actionator_params_for(actionator_name)
+    actionator_params_with_unpopulated_values.find{|c| c[:name] == actionator_name }.tap do |actionator|
+      actionator[:variables_attributes].compact.each do |variable|
+        v[:value] = resolve_templated_value v[:value]
+      end
+    end
+  end
+
+  def resolve_templated_value(unresolved_value)
+    engines_api.get_resolved_application_string(unresolved_value, container)
+  end
+
+
 end

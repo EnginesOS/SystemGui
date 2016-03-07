@@ -2,7 +2,7 @@ class ServiceAction < ActiveRecord::Base
 
   include Engines::Api
 
-  attr_accessor :service, :name, :return_type, :label, :description, :action_result, :engines_api_error
+  attr_accessor :service, :name, :return_type, :return_file_name, :label, :description, :action_result, :engines_api_error
 
   has_many :variables, as: :variable_consumer, dependent: :destroy
   accepts_nested_attributes_for :variables

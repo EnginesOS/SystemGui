@@ -34,7 +34,8 @@ class ServiceActionsController < ApplicationController
     if @service_action.perform_action
       case @service_action.return_type.to_sym
       when :file
-        send_data @service_action.action_result, filename: "engines_#{@service_action.service.container_name}_#{@service_action.name}"
+        send_data @service_action.action_result,
+        filename: @service_action.return_file_name || "engines_#{@service_action.service.container_name}_#{@service_action.name}"
       when :none
         redirect_to service_action_path(service_name: params[:service_name]), notice: "Successfully performed action #{@service_action.label}."
       else
