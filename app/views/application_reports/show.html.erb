@@ -111,23 +111,27 @@
      <% end %>
 
      <label>Processes</label>
-     <% processes = @application.ps_container["Processes"]
-         titles = @application.ps_container["Titles"] %>
-     <pre><table>
-       <tr>
-       <% titles.each do |v| %>
-         <td><%= v %> </td>
-       <% end %>
-       </tr>
-       <% processes.each do |line | %>
-         <tr>
-           <% line.each do |v| %>
-             <td><%= v %> </td>
-           <% end %>
-         </tr>
-       <% end %>
-     </table></pre>
-
+     <% ps_container =  @application.ps_container
+        if ps_container
+          processes = ps_container["Processes"]
+          titles = ps_container["Titles"] %>
+           <pre><table>
+             <tr>
+             <% titles.each do |v| %>
+               <td><%= v %> </td>
+             <% end %>
+             </tr>
+             <% processes.each do |line | %>
+               <tr>
+                 <% line.each do |v| %>
+                   <td><%= v %> </td>
+                 <% end %>
+               </tr>
+             <% end %>
+           </table></pre>
+      <% else %>
+      <pre>None</pre>
+      <% end %>
 
     <label>Logs</label>
      <% logs = @application.logs_container %>
