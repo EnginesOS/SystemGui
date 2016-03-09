@@ -182,7 +182,7 @@ module Engines::Application
   def actionator_params_for(actionator_name)
     actionator_params_with_unpopulated_values.find{|c| c[:name] == actionator_name }.tap do |actionator|
       actionator[:variables_attributes].compact.each do |variable|
-        v[:value] = resolve_templated_value v[:value]
+        variable[:value] = resolve_templated_value variable[:value]
       end
     end
   end

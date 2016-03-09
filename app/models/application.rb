@@ -61,7 +61,7 @@ class Application < ActiveRecord::Base
   end
 
   def build_action_for actionator_name
-    ApplicationAction.new(service: self, name: actionator_name).load
+    ApplicationAction.new(application: self, name: actionator_name).load
   end
 
 end
