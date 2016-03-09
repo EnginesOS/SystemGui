@@ -62,7 +62,7 @@ class ApplicationServiceConnector < ActiveRecord::Base
   end
   
   def no_existing_connections?
-    !service_detail[:persistant] || (connectable_active_connected_services.empty? && connectable_orphan_connected_services.empty?)
+    !service_detail[:persistent] || (connectable_active_connected_services.empty? && connectable_orphan_connected_services.empty?)
   end
   
   def connectable_active_connected_services
