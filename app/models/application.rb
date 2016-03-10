@@ -60,4 +60,8 @@ class Application < ActiveRecord::Base
     engines_api.list_apps.sort
   end
 
+  def build_action_for actionator_name
+    ApplicationAction.new(application: self, name: actionator_name).load
+  end
+
 end

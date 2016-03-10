@@ -10,7 +10,7 @@
 				application_service_path(application_service.edit_connection_params),
 				method: :delete, class: 'btn btn-default btn-noborder btn-lg',
 				data: { confirmdetail: "Are you sure that you want to delete #{application_service.existing_connection.service_detail.title}?", confirm: 'Confirm delete' }, title: 'Delete' %>
-		<% if application_service.existing_connection.service_detail.persistant %>
+				<% if application_service.existing_connection.service_detail.persistent %>
 		<div class="btn-group dropdown">
 
 			<button class="btn btn-lg btn-default btn-noborder dropdown-toggle" type="button" data-toggle="dropdown">

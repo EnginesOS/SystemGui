@@ -12,7 +12,7 @@ class ApplicationServiceConnectionServiceDetail
                                       publisher_namespace: @publisher_namespace,
                                       type_path: @type_path)
   end
-  
+
   def variables_params_without_values
     service_detail[:consumer_params].values
   end
@@ -20,19 +20,19 @@ class ApplicationServiceConnectionServiceDetail
   def title
     service_detail[:title] || '?'
   end
-  
+
   def description
     service_detail[:description] || '?'
   end
-  
-  def persistant
-    service_detail[:persistant] || false
+
+  def persistent
+    service_detail[:persistent] || false
   end
-  
+
   def immutable
     !mutable
   end
-  
+
   def mutable
     service_detail[:immutable] != true
   end
@@ -40,7 +40,7 @@ class ApplicationServiceConnectionServiceDetail
   def connectable
     service_detail[:shareable] || false
   end
-  
+
   def service_container_name
     service_detail[:service_container].to_sym
   end

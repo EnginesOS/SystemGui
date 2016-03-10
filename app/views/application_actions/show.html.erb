@@ -1,0 +1,30 @@
+<% application_actionators = @application.actionator_params_with_unpopulated_values %>
+
+<div class="col-sm-12">
+	<h2 class=''><%= content_tag(:i, "", class: "fa fa-crosshairs") + " Actions for " + @application.container_name %></h2>
+	<%= link_to content_tag(:i, "", class: "fa fa-arrow-left") + ' Back', control_panel_path, class: "btn btn-warning btn-lg trigger-response-modal" %>
+	<div class="top-gap">
+		<% if application_actionators.present? %>
+			<% application_actionators.each do |application_actionator| %>
+        <div class='row'>
+        	<div class="col-md-3 col-md-offset-2">
+						<% download_a_file_without_showing_a_form =
+						application_actionator[:variables_attributes].blank? && application_actionator[:return_type] == 'file' %>
+            <%= link_to application_actionator[:label] || 'No label',
+									new_application_action_path(application_name: @application.container_name,
+																			action_name: application_actionator[:name]),
+									class: 'btn btn-default btn-lg top-gap trigger-response-modal' +
+										(' application-action-formless-file-download-button' if download_a_file_without_showing_a_form ).to_s %>
+        	</div>
+					<div class="col-md-7">
+        		<p class="top-gap"><small>
+              <%= application_actionator[:description] %>
+        		</p></small>
+        	</div>
+        </div>
+			<% end %>
+		<% else %>
+		  This application has no actions.
+		<% end %>
+	</div>
+</div>

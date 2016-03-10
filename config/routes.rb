@@ -113,7 +113,9 @@ Rails.application.routes.draw do
   end
   resource :application_service_connector_type
   resource :application_service_connector_configuration
-
+  resource :application_action do
+    get :perform
+  end
   resource :application_report do
     get :installation_report
   end

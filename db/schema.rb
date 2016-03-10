@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225035218) do
+ActiveRecord::Schema.define(version: 20160309231320) do
+
+  create_table "application_actions", force: :cascade do |t|
+  end
 
   create_table "application_display_properties", force: :cascade do |t|
     t.integer "application_id"

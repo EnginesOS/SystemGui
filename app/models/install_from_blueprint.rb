@@ -112,7 +112,7 @@ class InstallFromBlueprint < ActiveRecord::Base
   end
 
   def application_services_to_start
-    @application_services_to_start ||= blueprint_software[:service_configurations].map do |service_configuration|
+    @application_services_to_start ||= (blueprint_software[:service_configurations] || [] ).map do |service_configuration|
       service_container = engines_api.software_service_definition(
                                         publisher_namespace: service_configuration[:publisher_namespace],
                                         type_path: service_configuration[:type_path])
