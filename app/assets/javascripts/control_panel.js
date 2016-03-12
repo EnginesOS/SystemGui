@@ -31,7 +31,7 @@ function load_control_panel_object(obj) {
         obj.remove();
 				document.write(response.responseText);
 			} else if (response.status == 0) {
-				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
+				var msg = '<small><i class="fa fa-circle fa-pulse"></i> Reloading</small>';
 				obj.find(".object_status").html(msg);
 				setTimeout(function(){
 					load_control_panel_object(obj);
@@ -157,8 +157,9 @@ function perform_control_panel_object_action(obj) {
 	var url = obj.attr("data-url");
 	var action = obj.attr("data-action");
 	var placeholder = parent_obj.find(".text_holder").find(".object_status");
+	placeholder.html('<small><i class="fa fa-circle fa-pulse"></i> Preparing to ' + action + '</small>');
 
-	placeholder.html('<small><i class="fa fa-spinner fa-spin"></i> Preparing to ' + action + '</small>');
+  parent_obj.find(".engine-gadget-dropdown-menu").remove();
 
 	$.ajax({
 		url : url,
@@ -173,7 +174,7 @@ function perform_control_panel_object_action(obj) {
 			if (response.status == 500) {
 				document.write(response.responseText);
 			} else if (response.status == 0) {
-				var msg = '<small><i class="fa fa-spinner fa-spin"></i> Reloading</small>';
+				var msg = '<small><i class="fa fa-circle fa-pulse"></i> Reloading</small>';
 				parent_obj.find(".object_status").html(msg);
 				setTimeout(function(){
 					load_control_panel_object(parent_obj);

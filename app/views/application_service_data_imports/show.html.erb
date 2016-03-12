@@ -1,0 +1,15 @@
+<div class="col-sm-12">
+	<h2><%= content_tag(:i, "", class: "fa fa-upload") %> Data import</h2>
+</div>
+
+<div class="col-sm-12 top-gap">
+	<%= form_for @application_service_data_import, url: application_service_data_import_path do |f| %>
+			<%= render partial: 'shared/form/errors', locals: {f: f} %>
+			<%= render 'shared/form/hidden_field', f: f, name: :application_name %>
+			<%= render 'shared/form/hidden_field', f: f, name: :connection_params %>
+	    <%= render partial: 'shared/form/file_upload_field', locals: {name: :data_file, errors: false, tooltip: "Upload a file", f: f} %>
+			<%= render partial: 'shared/form/radio_buttons', locals: {name: :import_method, select_collection: { :replace => 'Replace existing data with imported data', :overwrite => 'Write imported data over existing data'}, f: f} %>
+	    <%= render partial: 'shared/form/cancel_and_submit_buttons', locals: {f: f, cancel_path: application_services_properties_path(application_name: @application_service_data_import.application_name), submit_label: 'Upload', submit_fa: 'upload'} %>
+	<% end %>
+
+</div>

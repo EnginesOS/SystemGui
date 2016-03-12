@@ -14,7 +14,7 @@
 									new_application_action_path(application_name: @application.container_name,
 																			action_name: application_actionator[:name]),
 									class: 'btn btn-default btn-lg top-gap trigger-response-modal' +
-										(' application-action-formless-file-download-button' if download_a_file_without_showing_a_form ).to_s %>
+										(' auto-close-response-modal' if download_a_file_without_showing_a_form ).to_s %>
         	</div>
 					<div class="col-md-7">
         		<p class="top-gap"><small>

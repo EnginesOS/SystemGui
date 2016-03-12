@@ -44,7 +44,7 @@ web_sites = application.web_sites
 		    	  <div class='object_status'>
 				      <div class='object_status_indicator'>
 				  		  <% if application_state[:state] == :working %>
-				            <%= content_tag(:i, "", class: "fa fa-spinner fa-spin indicator " + indicator_class) %>
+				            <%= content_tag(:i, "", class: "fa fa-spinner indicator " + indicator_class) %>
 						  <% else %>
 						  	<%= content_tag(:i, "", class: "fa fa-circle indicator " + indicator_class) %>
 						  <% end %>
@@ -172,7 +172,7 @@ web_sites = application.web_sites
 						<%= link_to content_tag(:i, "", class: "fa fa-trash-o") + " Uninstall", application_uninstall_path(application_name: application_name), class: "trigger-response-modal" %>
 					</li>
 				<% elsif application_state[:state] == :working %>
-	    	    	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-spinner fa-spin") %> <%= application_state[:label] %></div></li>
+	    	    	<li><div class="<%= indicator_class %> dropdown-title"><%= content_tag(:i, "", class: "fa fa-spinner") %> <%= application_state[:label] %></div></li>
 				<% else %>
 					<li>
 						<div class="<%= indicator_class %> dropdown-title">

@@ -123,6 +123,8 @@ Rails.application.routes.draw do
   resource :orphaned_application_service
   resource :application_service_connection_subservice_connection
   resource :application_service_connection_subservice_connector_configuration
+  resource :application_service_data_export
+  resource :application_service_data_import
   resource :application_uninstall
   resource :applications do
     get(
