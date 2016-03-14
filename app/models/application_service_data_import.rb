@@ -40,7 +40,7 @@ private
 
   def persist_params
     {
-      service_connection: JSON.parse(connection_params),
+      service_connection: JSON.parse(connection_params).deep_symbolize_keys,
       data: file_content,
       import_method: import_method
     }
