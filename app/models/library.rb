@@ -54,7 +54,7 @@ private
       http.read_timeout = 10 #Default is 60 seconds
       response = http.request request
       if response.code.to_i >= 200 && response.code.to_i < 400
-        JSON.parse(response.body)
+        JSON.parse(response.body).deep_symbolize_keys
       else
         nil
       end

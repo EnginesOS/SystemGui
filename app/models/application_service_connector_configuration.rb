@@ -11,7 +11,7 @@ class ApplicationServiceConnectorConfiguration < ActiveRecord::Base
   accepts_nested_attributes_for :variables
 
   def existing_service_params
-    @existing_service_params ||= existing_service.present? ? JSON.parse(existing_service).symbolize_keys : {}
+    @existing_service_params ||= existing_service.present? ? JSON.parse(existing_service).deep_symbolize_keys : {}
   end
 
   def service_handle

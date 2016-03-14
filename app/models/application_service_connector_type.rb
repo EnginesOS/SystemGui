@@ -29,7 +29,7 @@ class ApplicationServiceConnectorType < ActiveRecord::Base
   end
 
   def existing_service_params
-    JSON.parse(existing_service_params_json).symbolize_keys
+    JSON.parse(existing_service_params_json).deep_symbolize_keys
   end
 
 

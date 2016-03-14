@@ -52,7 +52,7 @@ class InstallFromBlueprint < ActiveRecord::Base
 
   def blueprint_software
     @blueprint_software ||= if blueprint.is_a?(Hash) && blueprint[:software].present?
-                              blueprint[:software].symbolize_keys
+                              blueprint[:software].deep_symbolize_keys
                             else
                               {}
                             end

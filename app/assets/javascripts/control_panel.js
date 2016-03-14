@@ -31,14 +31,14 @@ function load_control_panel_object(obj) {
         obj.remove();
 				document.write(response.responseText);
 			} else if (response.status == 0) {
-				var msg = '<small><i class="fa fa-circle fa-pulse"></i> Reloading</small>';
-				obj.find(".object_status").html(msg);
+				obj.find(".object_status_indicator").html('<i class="fa fa-circle indicator fa-pulse"></i>');
+				obj.find(".object_status_text").html('Reloading');
 				setTimeout(function(){
 					load_control_panel_object(obj);
 				}, 5000);
 			} else {
-					var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' load error</small>';
-					obj.find(".object_status").html(msg);
+        obj.find(".object_status_indicator").html('<i class="fa fa-circle-o"></i>');
+				obj.find(".object_status_text").html(response.status.toString());
 			};
 		}
 	});
@@ -156,8 +156,9 @@ function perform_control_panel_object_action(obj) {
 
 	var url = obj.attr("data-url");
 	var action = obj.attr("data-action");
-	var placeholder = parent_obj.find(".text_holder").find(".object_status");
-	placeholder.html('<small><i class="fa fa-circle fa-pulse"></i> Preparing to ' + action + '</small>');
+
+  parent_obj.find(".object_status_indicator").html('<i class="fa fa-circle indicator fa-pulse"></i>');
+  parent_obj.find(".object_status_text").html('Preparing to ' + action);
 
   parent_obj.find(".engine-gadget-dropdown-menu").remove();
 
@@ -174,14 +175,14 @@ function perform_control_panel_object_action(obj) {
 			if (response.status == 500) {
 				document.write(response.responseText);
 			} else if (response.status == 0) {
-				var msg = '<small><i class="fa fa-circle fa-pulse"></i> Reloading</small>';
-				parent_obj.find(".object_status").html(msg);
+        obj.find(".object_status_indicator").html('<i class="fa fa-circle indicator fa-pulse"></i>');
+        obj.find(".object_status_text").html('Reloading');
 				setTimeout(function(){
 					load_control_panel_object(parent_obj);
 				}, 5000);
 			} else {
-				var msg = '<small><i class="fa fa-thumbs-o-down"></i> ' + response.status.toString() + ' action error</small>';
-				parent_obj.find(".object_status").html(msg);
+        obj.find(".object_status_indicator").html('<i class="fa fa-circle-o"></i>');
+        obj.find(".object_status_text").html(response.status.toString());
 			};
 		}
 	});

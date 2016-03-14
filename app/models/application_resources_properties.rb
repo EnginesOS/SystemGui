@@ -16,7 +16,7 @@ class ApplicationResourcesProperties < ActiveRecord::Base
   def load
     assign_attributes(
       memory: application.memory,
-      required_memory: application.blueprint_software_details["required_memory"] )
+      required_memory: application.blueprint_software_details[:required_memory] )
   end
 
   def update(application_resources_properties_params)
