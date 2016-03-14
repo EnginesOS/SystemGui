@@ -31,7 +31,7 @@ private
   end
 
   def set_defaults
-    @import_method = :replace
+    @import_method ||= :replace
   end
 
   def file_content

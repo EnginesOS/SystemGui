@@ -13,8 +13,8 @@ private
     params[:application_name]
   end
 
-  def application_services_properties_params
-    params.require(:application_services_properties).permit!
-  end
+  # def application_services_properties_params
+  #   params.require(:application_services_properties).permit!
+  # end
 
 end
