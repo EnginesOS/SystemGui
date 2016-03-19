@@ -35,6 +35,10 @@ class Service < ActiveRecord::Base
     engines_api.get_configurations_tree
   end
 
+  def self.services_tree_by_shares
+    engines_api.get_shares_tree
+  end
+
   def build_configuration_for configurator_name
     ServiceConfiguration.new(service: self, name: configurator_name).load
   end

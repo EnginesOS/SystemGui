@@ -36,9 +36,7 @@ field_class = mandatory ? "" : "advanced_fields"
 <div class="row <%= field_class %>">
 
     <div class="">
-	  <% if field_type == 'text_field' || field_type == 'string' || field_type == 'text' %>
-	    <%= render partial: 'shared/form/text_field', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-	  <% elsif field_type == 'text_area' %>
+	  <% if field_type == 'text_area' %>
 	    <%= render partial: 'shared/form/text_area', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 	  <% elsif field_type == 'checkbox' || field_type == 'boolean' %>
 	    <%= render partial: 'shared/form/checkbox', locals: {name: :value, errors: errors, label: label, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
@@ -54,12 +52,10 @@ field_class = mandatory ? "" : "advanced_fields"
 	    <%= render partial: 'shared/form/password_with_confirmation', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 	  <% elsif field_type == 'password' %>
 	    <%= render partial: 'shared/form/password', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
-	  <% elsif field_type == 'hidden' %>
+	  <% elsif field_type == 'hidden' || field_type == 'hidden_field' %>
 	    <%= f.hidden_field :value %>
 	  <% else %>
-	    <div class="col-sm-8 col-sm-offset-2">
-	      Error: '<%= field_type == 'boolean' %>' field type is not defined.
-	    </div>
+      <%= render partial: 'shared/form/text_field', locals: {name: :value, errors: errors, label: label, placeholder: placeholder, tooltip: tooltip, comment: comment, hint: hint, value: value, f: f} %>
 	  <% end %>
   </div>
 

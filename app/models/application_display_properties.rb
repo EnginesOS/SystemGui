@@ -26,9 +26,9 @@ class ApplicationDisplayProperties < ActiveRecord::Base
   end
 
   def set_defaults
-    title_from_blueprint = application.blueprint_software_details["short_title"]
+    title_from_blueprint = application.blueprint_software_details[:short_title]
     self.title = title_from_blueprint.present? ? title_from_blueprint : application.container_name
-    self.detail = application.blueprint_software_details["long_title"]
+    self.detail = application.blueprint_software_details[:long_title]
     self.defaults_set = true
     self.save
     url_for_new_icon = installer_icon_url.present? ? installer_icon_url : icon_url_from_blueprint
@@ -67,7 +67,7 @@ class ApplicationDisplayProperties < ActiveRecord::Base
   end
 
   def icon_url_from_blueprint
-    application.blueprint_software_details["icon_url"]
+    application.blueprint_software_details[:icon_url]
   end
 
 private
