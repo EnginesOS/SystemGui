@@ -26,14 +26,14 @@ class ApplicationServiceConnector < ActiveRecord::Base
       {}
     end
   end
-    
+
   def service_detail_call
     @service_detail_call ||= engines_api.software_service_definition(
                                       publisher_namespace: publisher_namespace,
                                       type_path: type_path)
   end
 
-  def templated_service_detail 
+  def templated_service_detail
     @templated_service_detail ||= engines_api.templated_software_service_definition(
                                                 parent_engine: parent_engine_name || application.container_name,
                                                 publisher_namespace: publisher_namespace,
@@ -52,19 +52,19 @@ class ApplicationServiceConnector < ActiveRecord::Base
       mutable_variables_params
     end
   end
-  
+
   def templated_variables_params
     templated_service_detail[:consumer_params].values
   end
-  
+
   def mutable_variables_params
     templated_variables_params.reject{|variable_params| variable_params[:immutable] == true}
   end
-  
+
   def no_existing_connections?
-    !service_detail[:persistant] || (connectable_active_connected_services.empty? && connectable_orphan_connected_services.empty?)
+    !service_detail[:persistent] || (connectable_active_connected_services.empty? && connectable_orphan_connected_services.empty?)
   end
-  
+
   def connectable_active_connected_services
     result = engines_api.get_registered_against_service(type_path: type_path, publisher_namespace: publisher_namespace)
     result = [] unless result.is_a? Array
@@ -123,22 +123,22 @@ class ApplicationServiceConnector < ActiveRecord::Base
       connect_existing_application_service
     end
   end
-  
+
   def connect_new_application_service
     result = engines_api.attach_service(connect_params)
     if !result.was_success
-      errors.add(:base, "Unable to connect service. " + 
-                            (result.result_mesg.present? ? result.result_mesg[0..500] : 
+      errors.add(:base, "Unable to connect service. " +
+                            (result.result_mesg.present? ? result.result_mesg[0..500] :
                                         "No result message given by engines api."))
     end
     result.was_success
   end
-  
+
   def connect_existing_application_service
     result = engines_api.attach_existing_service_to_engine(connect_params)
     if !result.was_success
-      errors.add(:base, "Unable to connect service. " + 
-                            (result.result_mesg.present? ? result.result_mesg[0..500] : 
+      errors.add(:base, "Unable to connect service. " +
+                            (result.result_mesg.present? ? result.result_mesg[0..500] :
                                         "No result message given by engines api."))
     end
     result.was_success
@@ -146,13 +146,12 @@ class ApplicationServiceConnector < ActiveRecord::Base
 
   def connect_params
     {
+      create_type: application_service_connector_configuration.create_type,
       parent_engine: application.container_name,
+      container_type: application.container_type,
       type_path: type_path,
       publisher_namespace: publisher_namespace,
-      create_type: application_service_connector_configuration.create_type,
-      service_handle: application_service_connector_configuration.service_handle,
-      container_type: application.container_type,
-      service_container_name: application_service_connector_configuration.service_container_name,
+      existing_service: application_service_connector_configuration.existing_service_params,
       variables: application_service_connector_configuration.variable_values_params
     }
   end

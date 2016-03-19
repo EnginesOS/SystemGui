@@ -13,13 +13,13 @@
 	<div class='row'>
 		<% if @application_names.present? %>
 			<% @application_names.each do |application_name| %>
-				<div class="application control_panel_object" id='control_panel_object_<%= application_name %>' 
+				<div class="application control_panel_object" id='control_panel_object_<%= application_name %>'
 					data-url="<%= control_panel_applications_path(application_name: application_name) %>">
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
   						<div class="control_panel_object_placeholder">
   							<%= application_name %>
 							<div class="object_status">
-								<small><%= content_tag(:i, nil, class: "fa fa-spinner fa-spin") %></small>
+								<small><%= content_tag(:i, nil, class: "fa fa-spinner") %></small>
 							</div>
 						</div>
 					</div>

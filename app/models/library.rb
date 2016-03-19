@@ -6,7 +6,7 @@ class Library < ActiveRecord::Base
   def destroy
     super if id != first
   end
-    
+
   def self.all_sorted
     all.sort_by{|d| d.name}
   end
@@ -22,19 +22,26 @@ class Library < ActiveRecord::Base
     end
     @softwares
   end
-  
+
   def software_tags_list
     @software_tags_list ||= load_library_data(software_tags_url)
   end
 
-  
+
   def softwares_url(find_software_params)
-    search_string = "search=#{find_software_params[:search]}&tags=#{find_software_params[:tags]}&page=#{find_software_params[:page]}&per_page=#{find_software_params[:per_page]}"
-    "http://#{url}/api/v0/software?#{search_string}"
+    split_url = url.split('?')
+    base_url = split_url[0]
+    url_params = split_url[1]
+    search_string = "search=#{find_software_params[:search]}&tags=#{find_software_params[:tags]}&page=#{find_software_params[:page]}&per_page=#{find_software_params[:per_page]}&#{url_params}"
+a =    "http://#{base_url}/api/v0/software?#{search_string}"
+p :softwares_url
+p a
+a
+
   end
 
   def software_tags_url
-    "http://" + url + "/api/v0/software_tags"
+    "http://" + url[0] + "/api/v0/software_tags?" + url[1]
   end
 
 private
@@ -45,9 +52,9 @@ private
     Net::HTTP.start(library_uri.host, library_uri.port) do |http|
       request = Net::HTTP::Get.new library_uri
       http.read_timeout = 10 #Default is 60 seconds
-      response = http.request request 
-      if response.code.to_i >= 200 && response.code.to_i < 400 
-        JSON.parse(response.body)
+      response = http.request request
+      if response.code.to_i >= 200 && response.code.to_i < 400
+        JSON.parse(response.body).deep_symbolize_keys
       else
         nil
       end
@@ -55,5 +62,5 @@ private
   rescue
     nil
   end
-  
+
 end

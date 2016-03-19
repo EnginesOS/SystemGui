@@ -51,7 +51,7 @@ class ApplicationServiceConnectionSubserviceConnectorConfiguration < ActiveRecor
   end
 
   def deserialize_application_service_connection_params
-    self.application_service_connection_params = JSON.parse(application_service_connection_params).symbolize_keys
+    self.application_service_connection_params = JSON.parse(application_service_connection_params).deep_symbolize_keys
   end
 
   def application_service_connection_service_name

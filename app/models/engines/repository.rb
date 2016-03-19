@@ -28,7 +28,9 @@ private
     result = Net::HTTP.start(url.host, url.port) {|http|
       http.request(request)
     }
-    JSON.parse(result.body).symbolize_keys!
+    JSON.parse(result.body).deep_symbolize_keys
+  rescue
+    {}
   end
 
   def load_blueprint_from_git
@@ -38,8 +40,7 @@ private
     clone_repo buildname
     blueprint_filename =  SystemConfig.DeploymentDir + "/" + buildname + "/blueprint.json"
     blueprint_json_str = File.read(blueprint_filename)
-    bluePrint = JSON.parse(blueprint_json_str)
-    return bluePrint.symbolize_keys!
+    JSON.parse(blueprint_json_str).deep_symbolize_keys
   rescue Exception => e
     SystemUtils.log_exception(e)
   end
