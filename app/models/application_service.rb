@@ -13,7 +13,7 @@ class ApplicationService < ActiveRecord::Base
   def existing_connection
     @existing_connection ||= ApplicationServiceConnection.new(self)
   end
-  
+
   def edit_connection_params
     {
       application_name: application.container_name,

@@ -7,7 +7,12 @@ class ApplicationServiceConnection
   end
 
   def connection_params
-    @application_service.connection_params
+    @connection_params ||=
+      if @application_service.connection_params.is_a? Hash
+        @application_service.connection_params
+      else
+        JSON.parse @application_service.connection_params
+      end.symbolize_keys
   end
 
   def type_path
@@ -102,21 +107,22 @@ class ApplicationServiceConnection
   end
 
   def perform_action
-    action = @application_service.service_action.to_sym
-    if action == :register
-      api_method = :register_attached_service
-    elsif action == :deregister
-      api_method = :deregister_attached_service
-    elsif action == :reregister
-      api_method = :reregister_attached_service
-    end
-    result = engines_api.send(api_method, connection_params)
-    if !result.was_success
-      @application_service.engines_api_error = "Unable to #{action} connected service. " +
-                            (result.result_mesg.present? ? result.result_mesg[0..500] :
-                                        "No result message given by engines api.")
-    end
-    result.was_success
+    # action = @application_service.service_action.to_sym
+    # if action == :register
+    #   api_method = :register_attached_service
+    # elsif action == :deregister
+    #   api_method = :deregister_attached_service
+    # elsif action == :reregister
+    #   api_method = :reregister_attached_service
+    # end
+    # result = engines_api.send(api_method, connection_params)
+    # if !result.was_success
+    #   @application_service.engines_api_error = "Unable to #{action} connected service. " +
+    #                         (result.result_mesg.present? ? result.result_mesg[0..500] :
+    #                                     "No result message given by engines api.")
+    # end
+    # result.was_success
+    false
   end
 
   def update_params
