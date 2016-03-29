@@ -36,7 +36,16 @@ class ApplicationServiceConnection
   end
 
   def api_service_hash
-    @api_service_hash ||= engines_api.retrieve_service_hash(connection_params).symbolize_keys
+    @api_service_hash ||= load_api_service_hash
+  end
+
+  def load_api_service_hash
+    service_hash = engines_api.retrieve_service_hash(connection_params)
+    if service_hash.is_a? Hash
+      service_hash.symbolize_keys
+    else
+      {}
+    end
   end
 
   def build
