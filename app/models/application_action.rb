@@ -2,7 +2,7 @@ class ApplicationAction < ActiveRecord::Base
 
   include Engines::Api
 
-  attr_accessor :application, :name, :command, :return_type, :return_file_name, :label, :description, :action_result, :engines_api_error
+  attr_accessor :application, :name, :command, :return_type, :return_file_name, :label, :description, :action_result, :engines_api_error, :log
 
   has_many :variables, as: :variable_consumer, dependent: :destroy
   accepts_nested_attributes_for :variables
