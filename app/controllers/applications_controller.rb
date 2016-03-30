@@ -10,7 +10,7 @@ class ApplicationsController < ApplicationController
     elsif @application.primary_web_site.present?
       redirect_to @application.primary_web_site, target: @application.container_name
     elsif @application.deployment_type.to_sym == :worker
-      render
+      render text: "#{@application.container_name} does not have a web interface."
     else
       render text: "No website URL for #{@application.container_name} (#{@application.deployment_type})", target: @application.container_name
     end
