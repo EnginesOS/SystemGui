@@ -87,7 +87,7 @@
     <% end %>
 
     <label>Consumers</label>
-    <% if @service.consumers.is_a?(Array) %>
+    <% if @service.consumers.is_a?(Array) && @service.consumers.present? %>
       <pre><table>
         <% @service.consumers.each do |cons|%>
            <tr><td><%= cons %></td></tr>
@@ -98,38 +98,47 @@
     <% end %>
 
      <label>Statistics</label>
-    <% if state != "nocontainer"
-      stats = @service.stats
-      if stats != nil && stats != false  %>
-        <pre><table>
-          <tr><td>State: <%= stats.state %></td></tr>
-          <tr><td>Processes: <%=stats.proc_cnt %></td></tr>
-          <tr><td><% if state == "stopped" %>Stopped: <%=stats.stopped_ts %><% else %>Started: <%=stats.started_ts %><%end%></td></tr>
-          <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></td></tr>
-          <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</td></tr>
-        </table></pre>
-      <%end%>
+    <%  if state != "nocontainer"
+          stats = @service.stats
+          if stats != nil && stats != false  %>
+            <pre><table>
+              <tr><td>State: <%= stats.state %></td></tr>
+              <tr><td>Processes: <%=stats.proc_cnt %></td></tr>
+              <tr><td><% if state == "stopped" %>Stopped: <%=stats.stopped_ts %><% else %>Started: <%=stats.started_ts %><%end%></td></tr>
+              <tr><td>Memory Used:Virtual <%=stats.VSSMemory.to_s  %> Resident <%=stats.RSSMemory.to_s  %></td></tr>
+              <tr><td>CPU Time: <%=stats.cpuTime.to_s %> seconds *Since Engine start</td></tr>
+            </table></pre>
+          <% else %>
+              <pre>None</pre>
+          <% end %>
     <% else %>
       <pre>None</pre>
      <% end %>
 
     <label>Processes</label>
-    <% processes = @service.ps_container["Processes"]
-        titles = @service.ps_container["Titles"] %>
-    <pre><table>
-      <tr>
-      <% titles.each do |v| %>
-        <td><%= v %> </td>
-      <% end %>
-      </tr>
-      <% processes.each do |line | %>
-        <tr>
-          <% line.each do |v| %>
+    <%  ps_container = @service.ps_container %>
+
+      <% if ps_container.is_a? Hash %>
+        <%  processes = @service.ps_container["Processes"] || []
+            titles = @service.ps_container["Titles"] || [] %>
+        <pre><table>
+          <tr>
+          <% titles.each do |v| %>
             <td><%= v %> </td>
           <% end %>
-        </tr>
+          </tr>
+          <% processes.each do |line | %>
+            <tr>
+              <% line.each do |v| %>
+                <td><%= v %> </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table></pre>
+      <% else %>
+        <pre>None</pre>
       <% end %>
-    </table></pre>
+
 
     <label>Logs</label>
     <% logs = @service.logs_container%>

@@ -7,7 +7,12 @@ class ApplicationServiceConnection
   end
 
   def connection_params
-    @application_service.connection_params
+    @connection_params ||=
+      if @application_service.connection_params.is_a? Hash
+        @application_service.connection_params
+      else
+        JSON.parse @application_service.connection_params
+      end.symbolize_keys
   end
 
   def type_path
@@ -36,7 +41,16 @@ class ApplicationServiceConnection
   end
 
   def api_service_hash
-    @api_service_hash ||= engines_api.retrieve_service_hash(connection_params).symbolize_keys
+    @api_service_hash ||= load_api_service_hash
+  end
+
+  def load_api_service_hash
+    service_hash = engines_api.retrieve_service_hash(connection_params)
+    if service_hash.is_a? Hash
+      service_hash.symbolize_keys
+    else
+      {}
+    end
   end
 
   def build
@@ -108,6 +122,7 @@ class ApplicationServiceConnection
                                         "No result message given by engines api.")
     end
     result.was_success
+    # false
   end
 
   def update_params
